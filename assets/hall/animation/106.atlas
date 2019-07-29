@@ -1,0 +1,48 @@
+
+huanle30miao.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+30miao-di
+  rotate: false
+  xy: 2, 2
+  size: 287, 220
+  orig: 287, 220
+  offset: 0, 0
+  index: -1
+a
+  rotate: true
+  xy: 550, 59
+  size: 163, 188
+  orig: 163, 188
+  offset: 0, 0
+  index: -1
+caidai
+  rotate: false
+  xy: 291, 118
+  size: 257, 104
+  orig: 257, 104
+  offset: 0, 0
+  index: -1
+heitao
+  rotate: true
+  xy: 907, 99
+  size: 123, 115
+  orig: 123, 115
+  offset: 0, 0
+  index: -1
+k
+  rotate: true
+  xy: 740, 93
+  size: 129, 165
+  orig: 129, 165
+  offset: 0, 0
+  index: -1
+shanguang
+  rotate: false
+  xy: 291, 14
+  size: 100, 102
+  orig: 100, 102
+  offset: 0, 0
+  index: -1
