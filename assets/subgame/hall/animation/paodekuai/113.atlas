@@ -1,0 +1,69 @@
+
+paodekuai.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+daizi
+  rotate: false
+  xy: 291, 48
+  size: 274, 206
+  orig: 274, 206
+  offset: 0, 0
+  index: -1
+diku
+  rotate: false
+  xy: 903, 95
+  size: 45, 57
+  orig: 45, 57
+  offset: 0, 0
+  index: -1
+paodekuai-di
+  rotate: false
+  xy: 2, 34
+  size: 287, 220
+  orig: 287, 220
+  offset: 0, 0
+  index: -1
+pd
+  rotate: false
+  xy: 567, 56
+  size: 202, 198
+  orig: 202, 198
+  offset: 0, 0
+  index: -1
+shenzi
+  rotate: true
+  xy: 771, 53
+  size: 99, 130
+  orig: 99, 130
+  offset: 0, 0
+  index: -1
+youshou
+  rotate: false
+  xy: 919, 158
+  size: 67, 96
+  orig: 67, 96
+  offset: 0, 0
+  index: -1
+yuojiao
+  rotate: false
+  xy: 771, 154
+  size: 146, 100
+  orig: 146, 100
+  offset: 0, 0
+  index: -1
+zuojiao
+  rotate: false
+  xy: 291, 2
+  size: 62, 44
+  orig: 62, 44
+  offset: 0, 0
+  index: -1
+zuoshou
+  rotate: false
+  xy: 355, 7
+  size: 47, 39
+  orig: 47, 39
+  offset: 0, 0
+  index: -1

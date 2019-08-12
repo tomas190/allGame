@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.1",
   "uuid": "f14795f9-3aeb-4697-bee4-b49161424ed8",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,7 +8,7 @@
   "platformSettings": {},
   "subMetas": {
     "plaza_top_bg": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "9aab64e0-bee5-4755-be77-05f735eb95d9",
       "rawTextureUuid": "f14795f9-3aeb-4697-bee4-b49161424ed8",
       "trimType": "auto",

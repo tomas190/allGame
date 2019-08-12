@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.1",
   "uuid": "8c155fee-c87e-455d-a8b0-6078140dfc79",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,7 +8,7 @@
   "platformSettings": {},
   "subMetas": {
     "chongzhi": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "6abd3d45-059d-4039-b2dc-4e441ffa3229",
       "rawTextureUuid": "8c155fee-c87e-455d-a8b0-6078140dfc79",
       "trimType": "auto",

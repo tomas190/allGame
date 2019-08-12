@@ -1,0 +1,41 @@
+
+majiang.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+majiang
+  rotate: false
+  xy: 291, 49
+  size: 162, 173
+  orig: 162, 173
+  offset: 0, 0
+  index: -1
+majing-di
+  rotate: false
+  xy: 2, 2
+  size: 287, 220
+  orig: 287, 220
+  offset: 0, 0
+  index: -1
+saizi1
+  rotate: false
+  xy: 455, 57
+  size: 53, 61
+  orig: 53, 61
+  offset: 0, 0
+  index: -1
+saizi2
+  rotate: false
+  xy: 557, 139
+  size: 89, 83
+  orig: 89, 83
+  offset: 0, 0
+  index: -1
+shanguang
+  rotate: false
+  xy: 455, 120
+  size: 100, 102
+  orig: 100, 102
+  offset: 0, 0
+  index: -1

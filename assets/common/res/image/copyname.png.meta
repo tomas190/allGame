@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.1",
   "uuid": "97721a3b-10ba-4840-8192-c43e75aae850",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,7 +8,7 @@
   "platformSettings": {},
   "subMetas": {
     "copyname": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "14063220-bbb7-4e40-b47c-934cbdcfa8d1",
       "rawTextureUuid": "97721a3b-10ba-4840-8192-c43e75aae850",
       "trimType": "auto",

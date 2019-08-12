@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.1",
   "uuid": "0c6f30cd-938d-4edb-8efc-3c5365a83f9d",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,7 +8,7 @@
   "platformSettings": {},
   "subMetas": {
     "Joker_1": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "d3acc9b9-ffec-49b3-99ed-9ed029618ca6",
       "rawTextureUuid": "0c6f30cd-938d-4edb-8efc-3c5365a83f9d",
       "trimType": "auto",

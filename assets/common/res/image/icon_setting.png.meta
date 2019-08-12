@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.1",
   "uuid": "ad1e572f-b103-46a6-9f3d-b8dd5c061572",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,7 +8,7 @@
   "platformSettings": {},
   "subMetas": {
     "icon_setting": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "ece8fd97-116a-4e66-a02d-80c01c44f33b",
       "rawTextureUuid": "ad1e572f-b103-46a6-9f3d-b8dd5c061572",
       "trimType": "auto",

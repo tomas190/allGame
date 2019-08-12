@@ -1,0 +1,62 @@
+
+suoha.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+meihua_10
+  rotate: true
+  xy: 285, 7
+  size: 140, 154
+  orig: 140, 154
+  offset: 0, 0
+  index: -1
+meihua_a
+  rotate: true
+  xy: 291, 315
+  size: 190, 192
+  orig: 190, 192
+  offset: 0, 0
+  index: -1
+meihua_j
+  rotate: true
+  xy: 2, 159
+  size: 124, 152
+  orig: 124, 152
+  offset: 0, 0
+  index: -1
+meihua_k
+  rotate: true
+  xy: 2, 2
+  size: 145, 175
+  orig: 145, 175
+  offset: 0, 0
+  index: -1
+meihua_q
+  rotate: false
+  xy: 179, 140
+  size: 104, 143
+  orig: 104, 143
+  offset: 0, 0
+  index: -1
+shanguang
+  rotate: true
+  xy: 179, 38
+  size: 100, 102
+  orig: 100, 102
+  offset: 0, 0
+  index: -1
+suoha_di
+  rotate: false
+  xy: 2, 285
+  size: 287, 220
+  orig: 287, 220
+  offset: 0, 0
+  index: -1
+suohachouma
+  rotate: false
+  xy: 291, 149
+  size: 164, 164
+  orig: 164, 164
+  offset: 0, 0
+  index: -1

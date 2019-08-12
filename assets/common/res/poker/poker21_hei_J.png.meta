@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.1",
   "uuid": "2a8c0ef6-06fe-4a58-afa8-8ca2458a353c",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,7 +8,7 @@
   "platformSettings": {},
   "subMetas": {
     "poker21_hei_J": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "53bd3ce0-eac9-4f81-a5ba-6dfd3d18da44",
       "rawTextureUuid": "2a8c0ef6-06fe-4a58-afa8-8ca2458a353c",
       "trimType": "auto",

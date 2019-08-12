@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.1",
   "uuid": "af05f410-7746-4579-8d00-42c328944bce",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,7 +8,7 @@
   "platformSettings": {},
   "subMetas": {
     "sp_coin2": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "225ddb1e-7b43-4870-91b0-72f1264e51ff",
       "rawTextureUuid": "af05f410-7746-4579-8d00-42c328944bce",
       "trimType": "auto",

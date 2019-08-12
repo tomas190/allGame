@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.0",
+  "ver": "2.3.1",
   "uuid": "3cd14da8-d4c9-4dc8-8eeb-c45d228d7f48",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,7 +8,7 @@
   "platformSettings": {},
   "subMetas": {
     "poker12_hon_6": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "1ab82bb2-8ff2-483a-b439-2a10cbe0f690",
       "rawTextureUuid": "3cd14da8-d4c9-4dc8-8eeb-c45d228d7f48",
       "trimType": "auto",

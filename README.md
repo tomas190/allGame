@@ -18,6 +18,9 @@ niuniu目录：
 	从hall场景点击游戏按钮，跳转场景进入子游戏场景，进入子游戏
 }
 
+main_generator.js 主包更新配置文件生成脚本
+sub_generator.js 子游戏更新配置文件生成脚本
+
 新开项目流程：{
 	先拉取master分支 （git clone http: //git.0717996.com/burt/allNativeGame.git）
 	进入allNativeGame目录，在本地新建分支 （git checkout -b [分支名称]）

@@ -1,0 +1,118 @@
+
+bengchibaoma.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+baoma
+  rotate: true
+  xy: 728, 570
+  size: 146, 149
+  orig: 146, 149
+  offset: 0, 0
+  index: -1
+bcbm-di
+  rotate: false
+  xy: 2, 792
+  size: 287, 220
+  orig: 287, 220
+  offset: 0, 0
+  index: -1
+beichi
+  rotate: false
+  xy: 2, 2
+  size: 131, 134
+  orig: 131, 134
+  offset: 0, 0
+  index: -1
+guang1
+  rotate: false
+  xy: 2, 582
+  size: 250, 208
+  orig: 250, 208
+  offset: 0, 0
+  index: -1
+sg10001
+  rotate: false
+  xy: 291, 866
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10002
+  rotate: false
+  xy: 2, 434
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10003
+  rotate: false
+  xy: 528, 866
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10004
+  rotate: false
+  xy: 2, 286
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10005
+  rotate: false
+  xy: 765, 866
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10006
+  rotate: false
+  xy: 2, 138
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10007
+  rotate: false
+  xy: 291, 718
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10008
+  rotate: false
+  xy: 528, 718
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10009
+  rotate: false
+  xy: 765, 718
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10010
+  rotate: false
+  xy: 254, 570
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+sg10011
+  rotate: false
+  xy: 491, 570
+  size: 235, 146
+  orig: 235, 146
+  offset: 0, 0
+  index: -1
+shanguang
+  rotate: false
+  xy: 879, 614
+  size: 100, 102
+  orig: 100, 102
+  offset: 0, 0
+  index: -1
