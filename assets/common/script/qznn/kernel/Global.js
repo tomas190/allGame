@@ -42,7 +42,7 @@ cc.Class({
             this.socket = socketHeader + socket;
             this.file = this.url + "/upload";
         } else {
-            this.socket = 'ws://10.63.90.40:7778';
+            this.socket = 'ws://47.75.152.229:7778';
             this.file = "http://im.80rxjhsf.com/upload";
         }
         this.chatObjID = null;
