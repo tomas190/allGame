@@ -35,9 +35,9 @@ cc.Class({
     },
     addEvenListener: function(e) {
         for (var i = 0; i < 4; i++) {
-            cc.gg.utils.addClickEventEND(this.roomListArr[i], this.createRoom.bind(this));
+            cc.gg.utils.addClickEventEND(this.roomListArr[i], this.createRoom.bind(this), { flag: true });
         }
-        cc.gg.utils.addClickEventEND(this.youkeBottom, this.login.bind(this));
+        cc.gg.utils.addClickEventEND(this.youkeBottom, this.login.bind(this), { flag: true });
     },
     login: function() {
         cc.gg.global.userID = this.editBox.getComponent(cc.EditBox).string

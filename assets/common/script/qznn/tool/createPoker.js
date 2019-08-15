@@ -150,6 +150,8 @@ cc.Class({
                 this.back.active = !0,
                 this.card_bg.scaleX = 0.2,
                 this.back.scaleX = 1;
+            // this.back.skewX = 0;
+            // this.back.skewY = 0;
             var i = cc.sequence(cc.scaleTo(.2, .2, 1),
                 cc.callFunc(function() {
                     t.back.active = !1;

@@ -12,7 +12,7 @@ cc.Class({
         n.customEventData = o
         e.getComponent(cc.Button).clickEvents.push(n)
         e.on(cc.Node.EventType.TOUCH_END, function(e) {
-            // o && o.flag || cc.gg.audioMgr.playSFX()
+            // o && o.flag && cc.gg.audioMgr.playSFX()
         })
     },
     addTextChanged: function(t, i) {
@@ -37,7 +37,8 @@ cc.Class({
     },
     addClickEventEND: function(t, i, a) {
         t.on(cc.Node.EventType.TOUCH_END, function(e) {
-            e.stopPropagation(), i && i(t, a), a && a.flag || cc.gg.audioMgr.playSFX()
+            e.stopPropagation(),
+                i && i(t, a), a && a.flag && cc.gg.audioMgr.playSFX()
         })
     },
     addClickEventENDOne: function(t, i, a, self) {

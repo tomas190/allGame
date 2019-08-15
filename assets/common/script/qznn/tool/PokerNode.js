@@ -98,7 +98,11 @@ cc.Class({
             a = this.cardNodes[e].getChildByName("poker2"),
             o = this.cardNodes[e].getChildByName("poker3"),
             n = this.cardNodes[e].getChildByName("poker4");
-        t.getComponent("createPoker").createPoker(0), i.getComponent("createPoker").createPoker(0), a.getComponent("createPoker").createPoker(0), o.getComponent("createPoker").createPoker(0), n.getComponent("createPoker").createPoker(0)
+        t.getComponent("createPoker").createPoker(0),
+            i.getComponent("createPoker").createPoker(0),
+            a.getComponent("createPoker").createPoker(0),
+            o.getComponent("createPoker").createPoker(0),
+            n.getComponent("createPoker").createPoker(0)
     },
     setSendCardAni: function(e, t, i) {
         var a;
@@ -166,45 +170,63 @@ cc.Class({
         }
         fun && fun()
     },
-    // 摊牌 
-
-    setOpenCardAni: function(e, t, i) {
-        if (console.log("我进入了几次？？" + e),
-            e < 0 || e >= y.GAME_PLAYER)
-            console.log("error..............setOpenCardAni");
+    //摊牌动画
+    setOpenCardAni: function(e, t, fun) {
+        if (this.setUserCount(y.GAME_PLAYER), e < 0 || e >= y.GAME_PLAYER || !t) console.log("error--\x3e>>展示动画有错");
         else {
-            var a = 0,
-                o = 0,
-                n = this.cardNodes[e];
-            var s = n.getChildByName("poker0"),
-                c = n.getChildByName("poker1"),
-                r = n.getChildByName("poker2"),
-                l = n.getChildByName("poker3"),
-                d = n.getChildByName("poker4"),
-                h = parseInt(s.getPosition().x),
-                g = parseInt(c.getPosition().x),
-                u = parseInt(r.getPosition().x),
-                m = parseInt(l.getPosition().x),
-                _ = parseInt(d.getPosition().x);
-            s.getComponent("createPoker").createPoker(t.cards[0]),
-                c.getComponent("createPoker").createPoker(t.cards[1]),
-                r.getComponent("createPoker").createPoker(t.cards[2]),
-                l.getComponent("createPoker").createPoker(t.cards[3]),
-                d.getComponent("createPoker").createPoker(t.cards[4]);
-            // s.runAction(cc.moveTo(.1, cc.v2(h + 3 * a + -o, 0))),
-            // console.log(h + 3 * a + -o + "我是第一张牌"),
-            // c.runAction(cc.moveTo(.1, cc.v2(g + a + 2 * -o, 0))),
-            // console.log(h + a + 2 * o + "我是第二张牌"),
-            // r.runAction(cc.moveTo(.1, cc.v2(u + -a + 3 * -o, 0))),
-            // console.log(u + -a + 3 * -o + "我是第三张牌"),
-            // l.runAction(cc.moveTo(.1, cc.v2(m + -a + 3 * o, 0))),
-            // console.log(m + -a + 3 * o + "我是第四张牌"),
-            // d.runAction(cc.sequence(cc.moveTo(.1, cc.v2(_ + 3 * -a + o, 0)),
-            //     cc.callFunc(function() {
-            //         console.log(_ + 3 * -a + o + "我是第五张牌"), i && i()
-            //     })))
+            var i = this.cardNodes[e];
+            i.active = !0;
+            if (e == 0) {
+                for (var k = t.length - 1; k > t.length - 3; k--) {
+                    // console.log("我进入了几次 ???????? 自己摊牌");
+                    i.getChildByName("poker" + k).getComponent("createPoker").setCardAni(t[k])
+                }
+            } else {
+                for (var j = 0; j < t.length; j++) {
+                    i.getChildByName("poker" + j).getComponent("createPoker").setCardAni(t[j])
+                }
+            }
         }
+        fun && fun()
     },
+
+    // setOpenCardAni: function(e, t, i) {
+    //     if (console.log("我进入了几次？？" + e),
+    //         e < 0 || e >= y.GAME_PLAYER)
+    //         console.log("error..............setOpenCardAni");
+    //     else {
+    //         var a = 0,
+    //             o = 0,
+    //             n = this.cardNodes[e];
+    //         var s = n.getChildByName("poker0"),
+    //             c = n.getChildByName("poker1"),
+    //             r = n.getChildByName("poker2"),
+    //             l = n.getChildByName("poker3"),
+    //             d = n.getChildByName("poker4"),
+    //             h = parseInt(s.getPosition().x),
+    //             g = parseInt(c.getPosition().x),
+    //             u = parseInt(r.getPosition().x),
+    //             m = parseInt(l.getPosition().x),
+    //             _ = parseInt(d.getPosition().x);
+    //         s.getComponent("createPoker").createPoker(t.cards[0]),
+    //             c.getComponent("createPoker").createPoker(t.cards[1]),
+    //             r.getComponent("createPoker").createPoker(t.cards[2]),
+    //             l.getComponent("createPoker").createPoker(t.cards[3]),
+    //             d.getComponent("createPoker").createPoker(t.cards[4]);
+    //         // s.runAction(cc.moveTo(.1, cc.v2(h + 3 * a + -o, 0))),
+    //         // console.log(h + 3 * a + -o + "我是第一张牌"),
+    //         // c.runAction(cc.moveTo(.1, cc.v2(g + a + 2 * -o, 0))),
+    //         // console.log(h + a + 2 * o + "我是第二张牌"),
+    //         // r.runAction(cc.moveTo(.1, cc.v2(u + -a + 3 * -o, 0))),
+    //         // console.log(u + -a + 3 * -o + "我是第三张牌"),
+    //         // l.runAction(cc.moveTo(.1, cc.v2(m + -a + 3 * o, 0))),
+    //         // console.log(m + -a + 3 * o + "我是第四张牌"),
+    //         // d.runAction(cc.sequence(cc.moveTo(.1, cc.v2(_ + 3 * -a + o, 0)),
+    //         //     cc.callFunc(function() {
+    //         //         console.log(_ + 3 * -a + o + "我是第五张牌"), i && i()
+    //         //     })))
+    //     }
+    // },
     // setOpenCardAni: function(e, t, i) {
     //     if (console.log("我进入了几次？？" + e),
     //         e < 0 || e >= y.GAME_PLAYER)
@@ -250,6 +272,7 @@ cc.Class({
     //                 })))
     //     }
     // },
+
     setTurnCardAni: function(e) {
         var t = this.mycardNode
         if (e) {
