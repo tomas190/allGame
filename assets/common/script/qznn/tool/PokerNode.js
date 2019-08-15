@@ -14,6 +14,7 @@ cc.Class({
             this.initView(),
             this.initNode(),
             this.gameCardType = this._gameView.gameCardType;
+        this.pokerDianshu = this._gameView.pokerDianshu
     },
     initView: function() {
         for (var e = 0; e < 5; e++)
@@ -271,18 +272,23 @@ cc.Class({
         var valueBox = a.getChildByName("valueBox");
         var value = valueBox.getChildByName("value");
         var bet = valueBox.getChildByName("beishu");
-        value.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame("poker" + i);
+        value.getComponent(cc.Sprite).spriteFrame = this.pokerDianshu.getSpriteFrame("poker" + i);
         a.active = !0;
         if (t) {
             var o = "nn/game/" + t + "/" + i + ".mp3";
             cc.gg.audioMgr.playSFX(o)
         }
+        bet.active = true;
         if (i == 7 || i == 8 || i == 9) {
             bet.getComponent(cc.Label).string = "/" + 2
         } else if (i == 10) {
             bet.getComponent(cc.Label).string = "/" + 3
         } else if (i > 10) {
             bet.getComponent(cc.Label).string = "/" + 4
+        } else if (i == 0) {
+            bet.active = false
+        } else {
+            bet.getComponent(cc.Label).string = "/" + 1
         }
     },
     setBtnLook: function(e, t) {

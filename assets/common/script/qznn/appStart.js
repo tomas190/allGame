@@ -1,3 +1,10 @@
+/*
+ * @Author: burt
+ * @Date: 2019-08-13 13:18:16
+ * @LastEditors: burt
+ * @LastEditTime: 2019-08-14 08:25:48
+ * @Description: 
+ */
 /**
  * Dawnson 2019-08-01
  * 15302765815@163.com
@@ -8,12 +15,12 @@ cc.Class({
     properties: {
 
     },
-    onLoad: function () {
+    onLoad: function() {
         this.initMgr();
     },
 
-    initMgr: function () {
-        cc.gg = cc.gg || {};
+    initMgr: function() {
+        cc.gg = {};
 
         cc.debug.setDisplayStats(false);
 
@@ -38,11 +45,10 @@ cc.Class({
         var ProtoBuf = require('Protobuf');
         cc.gg.protoBuf = new ProtoBuf();
         cc.gg.protoBuf.connect(cc.gg.global.socket, false)
-
     },
 
 
-    onDestroy: function () {
+    onDestroy: function() {
         //注销掉所有监听事件
         cc.gg.protoBuf.removeAllHandler();
     }

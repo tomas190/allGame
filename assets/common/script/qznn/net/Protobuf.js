@@ -1,8 +1,8 @@
 /*
  * @Author: burt
- * @Date: 2019-08-12 10:15:11
+ * @Date: 2019-08-13 13:18:17
  * @LastEditors: burt
- * @LastEditTime: 2019-08-12 10:20:28
+ * @LastEditTime: 2019-08-14 10:56:44
  * @Description: 
  */
 // var proto = require("bundle")
@@ -88,6 +88,7 @@ cc.Class({
         this.connect(this.ip, false);
     },
     connect: function(ip, whetherClose) {
+        console.log("connect ---",ip)
         if (this.ISclose) {
             return
         }
@@ -99,7 +100,18 @@ cc.Class({
             this.reconnectCount = 0;
         }
         self.socket = new WebSocket(self.ip);
+        self.socket.onerror = function(err) {
+            cc.gg.utils.ccLog("webSocket异常断开断开", err);
+            // this.closeCouzz++;
+            // self.onmessage("500", err);
+        }
+        self.socket.onclose = function(err) {
+            cc.gg.utils.ccLog("webSocket断开连接", err);
+            // this.closeCouzz++;
+            // self.onmessage("500", err);
+        }
         self.socket.onopen = function() {
+            console.log("protobuf onopen")
             self.onmessage("OnOpen", {}, true)
             self.reconnectCount = 0;
             if (self.timer) {
@@ -108,16 +120,6 @@ cc.Class({
             };
             self.socket.onmessage = function(data) {
                 self.parseProtoBufId(data);
-            }
-            self.socket.onclose = function(err) {
-                cc.gg.utils.ccLog("webSocket断开连接", err);
-                // this.closeCouzz++;
-                // self.onmessage("500", err);
-            }
-            self.socket.onerror = function(err) {
-                cc.gg.utils.ccLog("webSocket异常断开断开", err);
-                // this.closeCouzz++;
-                // self.onmessage("500", err);
             }
 
             var urlData = cc.gg.utils.urlParse(window.location.href);
@@ -149,7 +151,7 @@ cc.Class({
                         self.cbPongCount++;
 
                     } else {
-                        // this.closeCouzz++;
+                        self.closeCount++;
                         self.onmessage(500, {}, );
                         cc.gg.utils.ccLog("用户断线");
                         //clearInterval(self.pong)

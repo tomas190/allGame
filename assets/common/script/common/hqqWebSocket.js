@@ -2,11 +2,13 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-08-12 16:24:30
+ * @LastEditTime: 2019-08-15 10:29:43
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
-let hqqWebSocket = {
+
+let hqqWebSocket = function(){}
+hqqWebSocket.prototype = {
     ip: "",
     ws: null,
     pingTime: 0,
@@ -14,37 +16,35 @@ let hqqWebSocket = {
     reConnectTime: 0,
     reConnectDelayTime: 5, // 多久重连一次（秒）
     heartbeatTime: 3, // 心跳间隔（秒）
-    protoType: 0, // 0 json格式解析 1 pb格式解析 2 leaf框架
+    protoType: 2, // 0 json格式解析 1 pb格式解析 2 leaf框架
     events: {},
     handlers: {},
-    msgDealFunc: (msg) => { // 重载的接收消息数据处理函数
-        let data;
-        if (this.protoType == 0) {
-            data = JSON.parse(msg);
-        } else if (this.protoType == 1) {
-            // data = pbfunc(data);
-        } else {
-            return gHandler.logManager.log("消息协议类型错误");
-        }
-        let event = data.name;
-        if (this.handlers[event]) {
-            this.handlers[event](data);
-        } else {
-            gHandler.logManager.log("消息处理函数未注册");
-        }
-    },
-    sendDealFunc: (msg) => { // 重载的发送消息数据处理函数
-        // todo 消息转换处理
-        return msg;
-    },
+
     init(param) {
-        this.protoType = param.protoType || this.protoType;
-        this.ip = param.ip || this.ip;
-        this.reConnectTime = param.reConnectTime || this.reConnectTime;
-        this.reConnectDelayTime = param.reConnectDelayTime || this.reConnectDelayTime;
-        this.msgDealFunc = param.msgDealFunc || this.msgDealFunc;
-        this.sendDealFunc = param.sendDealFunc || this.sendDealFunc;
-        this.heartbeatTime = param.heartbeatTime || this.heartbeatTime;
+        if (!param.protoDeal) {
+            return console.log("请提供消息处理模块")
+        }
+        this.protoDeal = param.protoDeal;
+        this.protoType = param && param.protoType || this.protoType;
+        this.ip = param && param.ip || this.ip;
+        this.reConnectTime = param && param.reConnectTime || this.reConnectTime;
+        this.reConnectDelayTime = param && param.reConnectDelayTime || this.reConnectDelayTime;
+        this.heartbeatTime = param && param.heartbeatTime || this.heartbeatTime;
+        this.removeAllHandler();
+        this.removeAllEvent();
+    },
+    startPingPong() {
+        let self = this
+        this.heartbeat = setInterval(() => {
+            self.m_checkPingPong();
+        }, 1000)
+        // this.addHandler(0, this.m_receivePong.bind(this))
+    },
+    sendPing() {
+        console.log("发送心跳")
+        this.pingTime = 0;
+        let msg = this.protoDeal.createHeartBeat();
+        this.ws.send(msg);
     },
     connect(param) {
         this.ip = param || this.ip
@@ -54,15 +54,18 @@ let hqqWebSocket = {
         this.ws.onerror = this.m_onerror.bind(this)
         this.ws.onclose = this.m_onclose.bind(this)
     },
-    sendMessage(msg) {
-        let data = this.sendDealFunc(msg);
-        (this.ws || console.log("websocket未初始化")) && this.ws.send(data);
+    sendMessage(name, msg) {
+        if (this.protoType == 2) {
+            let data = this.protoDeal.createMsgByName(name, msg);
+            (this.ws || console.log("websocket未初始化")) && this.ws.send(data);
+        }
     },
     close() {
         this.ws && this.ws.close();
         this.ws = null;
     },
     addHandler(event, callback) {
+        console.log("addHandler", event)
         if (this.handlers[event]) {
             console.log("该事件已经监听")
         } else {
@@ -96,10 +99,21 @@ let hqqWebSocket = {
     },
     m_onopen() {
         this.reConnectTime = 0;
-        this.m_startPingPong();
+        this.startPingPong();
     },
     m_onmessage(msg) {
-        this.msgDealFunc(msg);
+        if (this.protoType == 2) {
+            this.protoDeal.decodeMsg(msg);
+        } else {
+            // 解析数据
+        }
+    },
+    m_EmitMsg() {
+        if (this.handlers[info.id]) {
+            this.handlers[info.id](info.data);
+        } else {
+            console.log('没有注册回调函数')
+        }
     },
     m_onerror(e) {
         gHandler.logManager.logerror(e);
@@ -108,19 +122,13 @@ let hqqWebSocket = {
     m_onclose() {
         this.m_stopPingPong();
     },
-    /** 开始心跳 */
-    m_startPingPong() {
-        this.heartbeat = setInterval(() => {
-            this.m_checkPingPong();
-        }, this.heartbeatTime * 1000)
-    },
     m_stopPingPong() {
         clearInterval(this.heartbeat);
     },
     /** 心跳逻辑 */
     m_checkPingPong() {
-        if (this.pingTime >= 3) {
-            this.m_sendPing();
+        if (this.pingTime >= this.heartbeatTime) {
+            this.sendPing();
         } else {
             this.pingTime++;
         }
@@ -130,14 +138,9 @@ let hqqWebSocket = {
             this.pongTime++;
         }
     },
-    m_sendPing() {
-        this.pingTime = 0;
-        this.ws.send('ping');
-    },
     m_receivePong() {
+        console.log("接受心跳")
         this.pongTime = 0;
     },
-
 }
-
 module.exports = hqqWebSocket

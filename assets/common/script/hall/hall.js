@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-08-12 13:36:11
+ * @LastEditTime: 2019-08-15 10:30:42
  * @Description: 大厅场景
  */
 const gameConfig = require('gameConfig');
@@ -12,6 +12,8 @@ let hqqCommonTools = require("hqqCommonTools");
 let hqqLocalStorage = require("hqqLocalStorage");
 let hqqLogMgr = require("hqqLogMgr");
 let hqqAudioMgr = require("hqqAudioMgr");
+let hqqWebSocket = require("hqqWebSocket");
+
 
 cc.Class({
     extends: cc.Component,
@@ -33,6 +35,8 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
+        console.log("CC_DEBUG", CC_DEBUG)
+        CC_JSB = !CC_DEBUG
         if (!CC_JSB) {
             gHandler.localStorage = hqqLocalStorage.init();
             gHandler.logManager = hqqLogMgr.init();
@@ -53,23 +57,35 @@ cc.Class({
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
         gHandler.audioMgr.playBg("hallbg");
 
-        this.infolabel = "";
+        gHandler.hallWebSocket = new hqqWebSocket();
+        let hallSocket = require("hallSocket")
+        gHandler.hallWebSocket.init({
+            protoDeal: hallSocket,
+        });
+        hallSocket.init({
+            webSocket: gHandler.hallWebSocket,
+        })
+        gHandler.hallWebSocket.connect("ws://127.0.0.1:52288");
+
         this.topbubble.active = false;
-        //  todo 设置按钮红点
-        this.chatbtn.getChildByName("redpoint").active = false;
-        this.duihuanbtn.getChildByName("redpoint").active = false;
-        this.huodongbtn.getChildByName("redpoint").active = false;
         gHandler.commonTools.setDefaultHead(this.headimg);
         if (cc.sys.isBrowser) {
             this.browserDeal();
         }
         this.addSubgame();
-
+        this.checkSubModule();
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
     /** 通常用于初始化中间状态操作 */
     start() {
+    },
+    /** 子模块更新检查 im，充提 */
+    checkSubModule() {
+        // todo 检查子模块
+        this.chatbtn.getChildByName("redpoint").active = false;
+        this.duihuanbtn.getChildByName("redpoint").active = false;
+        this.huodongbtn.getChildByName("redpoint").active = false;
     },
     /** 子游戏初始化 */
     addSubgame() {
@@ -141,13 +157,14 @@ cc.Class({
         clickEventHandler.customEventData = data;
         let subgamev = this.getRemoteSubgame(data.game_id).version;
         let localsubv = gHandler.localStorage.get(data.enname, "versionKey");
+        let txt = "local version: " + localsubv + " | remote version:" + subgamev;
         if (!localsubv || subgamev.split(".")[2] !== localsubv.split(".")[2]) { // 判断是否需要更新
-            console.log("subgame : " + data.enname + " need update");
+            console.log(txt + " | subgame : " + data.enname + " need update");
             downflag.active = true;
             progress.active = true;
             clickEventHandler.handler = "downloadSubGame";
         } else {
-            console.log("subgame : " + data.enname + " not need update")
+            console.log(txt + " | subgame : " + data.enname + " not need update")
             downflag.active = false;
             progress.active = false;
             clickEventHandler.handler = "onClickSubgame";

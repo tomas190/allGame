@@ -15,6 +15,7 @@ cc.Class({
     properties: {
         backMsgLock: true,
         gameCardType: cc.SpriteAtlas, // 17381
+        pokerDianshu: cc.SpriteAtlas,
     },
 
     onLoad: function() {
@@ -207,19 +208,32 @@ cc.Class({
             t = [],
             i = [],
             n = [],
+            h = {},
             s = [];
-        for (var c in o.game_scores) {
-            var r = c,
-                l = y.getLocalIndex(r),
-                d = o.game_scores[r];
-            n.push(l), s.push(d), d <= 0 ? r != o.banker_id && t.push(this._avatarPanel.player[l]) : r != o.banker_id && i.push(this._avatarPanel.player[l])
-        }
-        var h = {};
-        for (var g in o.scores) {
-            r = g, l = y.getLocalIndex(r);
-            var u = o.scores[g];
+        for (var k = 0; k < o.cards_scores.length; k++) {
+            var item = o.cards_scores[k];
+            var r = item.account_id;
+            var l = nnTool.getLocalIndex(r),
+                d = item.game_scores;
+            n.push(l),
+                s.push(d),
+                d <= 0 ? r != o.banker_id && t.push(this._avatarPanel.player[l]) :
+                r != o.banker_id && i.push(this._avatarPanel.player[l]);
+            var u = item.scores;
             h[l] = u
         }
+        // for (var c in o.game_scores) {
+        //     var r = c,
+        //         l = y.getLocalIndex(r),
+        //         d = o.game_scores[r];
+        //     n.push(l), s.push(d), d <= 0 ? r != o.banker_id && t.push(this._avatarPanel.player[l]) : r != o.banker_id && i.push(this._avatarPanel.player[l])
+        // }
+        // var h = {};
+        // for (var g in o.scores) {
+        //     r = g, l = y.getLocalIndex(r);
+        //     var u = o.scores[g];
+        //     h[l] = u
+        // }
         var m = nnTool.getLocalIndex(o.banker_id),
             _ = this._avatarPanel.player[m],
             p = this.gameCardType.getSpriteFrame("chip_s"),
@@ -260,37 +274,53 @@ cc.Class({
             })
         }
     },
+    // setViewScoreAni: function(e, t, i) {
+    //     console.log("setViewScoreAni-----\x3e>>>飘分动画"), 0 == e.length && i && i();
+    //     for (var a = 0; a < e.length; a++) {
+    //         var o = e[a],
+    //             n = t[a];
+    //         this._avatarPanel.flutterScore(o, n)
+    //     }
+    //     this.scheduleOnce(function() { i && i() }, 2.1)
+    // },
     setViewScoreAni: function(e, t, i) {
-        console.log("setViewScoreAni..>....................>setViewScoreAni");
-        var a = this.node_gold;
-        o = new cc.Color(255, 246, 0),
-            n = new cc.Color(36, 255, 0);
-        0 == e.length && i && i();
-        for (var s = 0; s < e.length; s++) {
-            var c = e[s],
-                r = this.players[c].getPosition(),
-                l = !0;
-            c < Math.floor(cmd.GAME_PLAYER / 2) && (l = !1);
-            var d = new cc.Node,
-                h = new cc.Node,
-                g = new cc.Node;
-            h.addComponent(cc.Sprite),
-                h.getComponent(cc.Sprite).spriteFrame = this.publicAtlas.getSpriteFrame("df_1"),
-                t[c] < 0 && (h.getComponent(cc.Sprite).spriteFrame = this.publicAtlas.getSpriteFrame("df_2")),
-                r.y = r.y + 40, 1 == l ? (r.x = r.x + 95, d.anchorX = 0) : (r.x = r.x - 95, d.anchorX = 1),
-                d.setPosition(r), d.addChild(h),
-                a.addChild(d),
-                g.addComponent(cc.Label),
-                g.getComponent(cc.Label).string = 0 < t[c] ? "+" + t[c] : t[c],
-                g.color = o, t[c] < 0 && (g.color = n), d.addChild(g);
-            var u = cc.sequence(cc.moveTo(1, cc.v2(r.x, r.y - 40)),
-                cc.delayTime(1.4),
-                cc.callFunc(function() {
-                    a.removeAllChildren(),
-                        i && i()
-                }));
-            d.runAction(u)
+        console.log("setViewScoreAni-----\x3e>>>飘分动画"), 0 == e.length && i && i();
+        for (var a = 0; a < e.length; a++) {
+            var o = e[a],
+                n = t[a];
+            this._avatarPanel.flutterScore(o, n)
         }
+        this.scheduleOnce(function() { i && i() }, 2.1)
+            // console.log("setViewScoreAni..>....................>setViewScoreAni");
+            // var a = this.node_gold,
+            //     o = new cc.Color(255, 246, 0),
+            //     n = new cc.Color(36, 255, 0);
+            // 0 == e.length && i && i();
+            // for (var s = 0; s < e.length; s++) {
+            //     var c = e[s],
+            //         r = this.players[c].getPosition(),
+            //         l = !0;
+            //     c < Math.floor(cmd.GAME_PLAYER / 2) && (l = !1);
+            //     var d = new cc.Node,
+            //         h = new cc.Node,
+            //         g = new cc.Node;
+            //     h.addComponent(cc.Sprite),
+            //         h.getComponent(cc.Sprite).spriteFrame = this.publicAtlas.getSpriteFrame("df_1"),
+            //         t[c] < 0 && (h.getComponent(cc.Sprite).spriteFrame = this.publicAtlas.getSpriteFrame("df_2")),
+            //         r.y = r.y + 40, 1 == l ? (r.x = r.x + 95, d.anchorX = 0) : (r.x = r.x - 95, d.anchorX = 1),
+            //         d.setPosition(r), d.addChild(h),
+            //         a.addChild(d),
+            //         g.addComponent(cc.Label),
+            //         g.getComponent(cc.Label).string = 0 < t[c] ? "+" + t[c] : t[c],
+            //         g.color = o, t[c] < 0 && (g.color = n), d.addChild(g);
+            //     var u = cc.sequence(cc.moveTo(1, cc.v2(r.x, r.y - 40)),
+            //         cc.delayTime(1.4),
+            //         cc.callFunc(function() {
+            //             a.removeAllChildren(),
+            //                 i && i()
+            //         }));
+            //     d.runAction(u)
+            // }
     },
     setViewOpenCard: function(e) {
         var self = this,

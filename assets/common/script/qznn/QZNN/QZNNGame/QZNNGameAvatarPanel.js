@@ -175,7 +175,7 @@ cc.Class({
             this.player[e].status.active = !1
     },
     flutterScore: function(e, t, i) {
-        this.player[e].getChildByName("ScoreFlutterNode").getComponent("ScoreFlutterNode").actionFlutterScore({ x: 0, y: 30 }, t, i)
+        this.actionFlutterScore(this.player[e], { x: 0, y: 20 }, t, i)
     },
     showGoldAni: function(e, t, i, a) {
         for (var o = this.player[e].x, n = this.player[e].y, s = i, c = 0; c < t; c++) {
@@ -189,5 +189,37 @@ cc.Class({
             r.runAction(g)
         }
         cc.gg.audioMgr.playSFX("sg/game/drop_gold.mp3")
-    }
+    },
+    actionFlutterScore: function(node, e, t, i) {
+        // var a = this;
+        // a.node.x = a.firstX, a.node.y = a.firstY;
+        var firstX = node.x;
+        var firstY = node.y;
+        var scoreBox = node.getChildByName("windUp");
+        var addNode = scoreBox.getChildByName("addGold");
+        var minusNode = scoreBox.getChildByName("subGold");
+        scoreBox.active = true;
+        var o = e.x,
+            n = e.y;
+        if (parseFloat(t) >= 0) {
+            scoreBox.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame("eff_win");
+        } else {
+            scoreBox.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame("eff_lose");
+        }
+        addNode.active = 0 <= parseFloat(t),
+            minusNode.active = parseFloat(t) < 0,
+            t < 0 && (t = (t + "").substr(1, t.length)),
+            addNode.getChildByName("score").getComponent(cc.Label).string = this.ModifyStr(t),
+            minusNode.getChildByName("score").getComponent(cc.Label).string = this.ModifyStr(t),
+            scoreBox.opacity = 100;
+        var s = cc.moveBy(.5, o, n),
+            c = cc.spawn(s, cc.fadeTo(.2, 255)),
+            r = cc.callFunc(function(e) { node.x = firstX, node.y = firstY, i && i() }),
+            l = cc.sequence(c, cc.delayTime(.5), cc.fadeTo(1, 0), r);
+        scoreBox.runAction(l)
+    },
+    ModifyStr: function(str) {
+        str += "";
+        return str.replace(".", "/")
+    },
 })

@@ -1,8 +1,8 @@
 /*
  * @Author: burt
- * @Date: 2019-08-12 10:15:12
+ * @Date: 2019-08-13 11:45:43
  * @LastEditors: burt
- * @LastEditTime: 2019-08-12 13:37:55
+ * @LastEditTime: 2019-08-13 11:49:09
  * @Description: 
  */
 /*
@@ -46,7 +46,7 @@ cc.Class({
     funBack: function() {
         console.log("返回大厅")
         let gHandler = require("gHandler");
-        cc.director.loadScene(gHandler.gameConfig.hallconfig.lanchscene);
+        cc.director.loadScene(gHandler.gameConfig.hallconfig.lanchscene)
             //cc.gg.client.send('__backtohall', {}, () => {})
     },
     funModify: function() {

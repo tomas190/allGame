@@ -1,8 +1,15 @@
+/*
+ * @Author: burt
+ * @Date: 2019-08-13 13:18:16
+ * @LastEditors: burt
+ * @LastEditTime: 2019-08-14 10:52:36
+ * @Description: 
+ */
 /**
  *  274 appStart
  * 
  * dev WS   http://im.80rxjhsf.com/upload  ws://im.80rxjhsf.com  pre  im.sempxw.com
- * test         
+ * test     47.75.152.229:7778   10.63.90.40:7778
  */
 cc.Class({
     extends: cc.Component,
@@ -35,7 +42,7 @@ cc.Class({
             this.socket = socketHeader + socket;
             this.file = this.url + "/upload";
         } else {
-            this.socket = 'ws://10.63.90.40:7778';
+            this.socket = 'ws://47.75.152.229:7778';
             this.file = "http://im.80rxjhsf.com/upload";
         }
         this.chatObjID = null;
