@@ -35,7 +35,7 @@ cc.Class({
     },
     onEvenHandle: function() {
         var listenArr = ["JoinRoom", "GameStart", "GrabBanker", "StartBet",
-            "PlayerMultiples", "ShowCard", "Win", "leaveRoom", "StartLimitTime", "UpdateAccountStatus",
+            "PlayerMultiples", "ShowCard", "Win", "LeaveRoom", "StartLimitTime", "UpdateAccountStatus",
             "StarBet",
         ];
         for (var i = 0; i < listenArr.length; i++) {
@@ -163,7 +163,7 @@ cc.Class({
         var datas = JSON.parse(data)
         console.log(datas, "抢庄数据");
         var pos = nnTool.getLocalIndex(datas.account_id);
-        this._GameView._avatarPanel.setUserGrabMultiple(pos, cmd.GrabMultiple[datas.grab_multiple + ""])
+        this._GameView._avatarPanel.setUserGrabMultiple(pos, datas.grab_multiple)
     },
     //用户下注
     managePlayerMultiples: function(data) {
@@ -173,7 +173,10 @@ cc.Class({
         var datas = JSON.parse(data)
         console.log(datas, "用户下注");
         var pos = nnTool.getLocalIndex(datas.account_id);
-        this._GameView._avatarPanel.setUserMultiple(pos, cmd.Multiple[datas.multiples + ""])
+        if (datas.multiples === 0) {
+            datas.multiples = "5";
+        }
+        this._GameView._avatarPanel.setUserMultiple(pos, datas.multiples)
     },
     //通知抢庄结果 到达下注阶段
     manageStartBet: function(data) {
@@ -215,8 +218,9 @@ cc.Class({
     },
     //退出房间
     manageLeaveRoom: function(data) {
-
+        console.log("退出游戏 manageLeaveRoom" + data);
     },
+    //加入房间:
     //游戏开始倒计时
     manageStartLimitTime: function(data) {
         if (!data || data == "") {
@@ -236,6 +240,17 @@ cc.Class({
     },
     //通知用户状态改变
     manageUpdateAccountStatus: function(data) {
+        if (!data || data == "") {
+            return
+        }
+        var datas = JSON.parse(data);
+        console.log("manageUpdateAccountStatus", datas);
+
+        for (var t = datas, i = !1, a = 0; a < cmd.PLAYER_DATAS.length; a++) {
+            var o = cmd.PLAYER_DATAS[a];
+            o.account_id == t.account_id && (o = t, i = !0)
+        }
+        0 == i && cmd.PLAYER_DATAS.push(t), this._GameView.onUpdateUser(t)
 
     },
     //请求进入房间 
@@ -260,7 +275,7 @@ cc.Class({
         //恢复她人的场景
         this._GameView.onScenePlayerView(datas);
         this._wMeStatus = datas.account_status;
-        2 == datas.room_status && this.onScenePlaying(datas)
+        2 <= datas.room_status && this.onScenePlaying(datas)
     },
     onClientAllGamer: function(data) {
         var t = data;
@@ -274,23 +289,19 @@ cc.Class({
     onSceneFree: function(data) {
 
     },
-    onScenePlaying: function(data) {
-        if (!data || data == "") {
-            return
-        }
-        var datas = JSON.parse(data);
+    onScenePlaying: function(datas) {
         if (console.log("用户游戏状态："),
             this._lGameStatus = cmd.GAME_SCENE_PLAYING,
             this._wMeStatus < 2 && 1 == nnTool.UserisExist()) {
-            this._GameView._centerPanel.setViewStatus("Wait")
+            this._GameView._centerPanel.showWait()
         }
-        if (this._GameView.onKillTimer(), datas.left_time) {
-            var t = e.limit_time;
-            this._GameView.setGameTimer(t)
+        if (datas.left_time) {
+            var t = datas.left_time;
+            this._GameView.setGameTimer(t);
         }
-        if (0 < e.banker_id) {
+        if (0 < datas.banker_id) {
             //设置庄家
-            var i = g.getLocalIndex(e.banker_id);
+            var i = nnTool.getLocalIndex(datas.banker_id);
             this._GameView._avatarPanel.setViewBankerSign(i, !0)
         }
         // if (6 == this._playMode) {
@@ -299,7 +310,7 @@ cc.Class({
         //     var o = a / h.PourValueArray[this._PourNum][0];
         //     this._GameView.recoverThrowGold(o)
         // }
-        this._GameView.onSceneView(e)
+        this._GameView.onSceneView(datas)
     },
 
     setTableUserCount: function(player_count) {
@@ -342,5 +353,12 @@ cc.Class({
             "account_id": cc.gg.global.userID,
         }
         cc.gg.protoBuf.send("PlayerMultiples", 1, data)
+    },
+    //退出游戏请求
+    sendLeaveRoom: function(data) {
+        var data = {
+            "account_id": cc.gg.global.userID,
+        }
+        cc.gg.protoBuf.send("LeaveRoom", 1, data);
     },
 });

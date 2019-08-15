@@ -21,17 +21,17 @@ cc.Class({
     addEvenListener: function(e) {
         //抢庄按钮事件
         for (var i = 0; i < this.grabBankerBtn.childrenCount; i++) {
-            cc.gg.utils.addClickEventEND(this.grabBankerBtn.children[i], this.funGrandBanker.bind(this));
+            cc.gg.utils.addClickEventEND(this.grabBankerBtn.children[i], this.funGrandBanker.bind(this), { flag: true });
         }
 
         //闲家下注事件
         for (var i = 0; i < this.betBtn.childrenCount; i++) {
-            cc.gg.utils.addClickEventEND(this.betBtn.children[i], this.funBetBtn.bind(this));
+            cc.gg.utils.addClickEventEND(this.betBtn.children[i], this.funBetBtn.bind(this), { flag: true });
         }
 
         //测试按钮事件
         for (var i = 0; i < this.test.childrenCount; i++) {
-            cc.gg.utils.addClickEventEND(this.test.children[i], this.funTest.bind(this));
+            cc.gg.utils.addClickEventEND(this.test.children[i], this.funTest.bind(this), { flag: true });
         }
     },
     initView: function() {
@@ -60,11 +60,16 @@ cc.Class({
         //测试按钮
         this.test = this.node.getChildByName("test");
 
-
+        //wait等待下一局标示
+        this.wait = this.node.getChildByName("wait");
     },
     //重置视图
     resetView: function() {
         this.status.active = false;
+        this.wait.active = false;
+    },
+    showWait: function() {
+        this.wait.active = true;
     },
     funTest: function(target) {
         //测试
@@ -142,7 +147,7 @@ cc.Class({
         target.name += "";
         var num = target.name.substr(target.name.length - 1);
         //派发下注事件
-        this._GameView._scene.sendPlayerMultiples(num - 1)
+        this._GameView._scene.sendPlayerMultiples(num)
     },
 
     funModify: function() {

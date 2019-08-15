@@ -16,9 +16,9 @@ cc.Class({
         this.addEvenListener(this.node);
     },
     addEvenListener: function(e) {
-        cc.gg.utils.addClickEventEND(this.backRoomList, this.funBack.bind(this));
-        cc.gg.utils.addClickEventEND(this.rule, this.funRule.bind(this));
-        cc.gg.utils.addClickEventEND(this.music, this.funMusic.bind(this));
+        cc.gg.utils.addClickEventEND(this.backRoomList, this.funBack.bind(this), { flag: true });
+        cc.gg.utils.addClickEventEND(this.rule, this.funRule.bind(this), { flag: true });
+        cc.gg.utils.addClickEventEND(this.music, this.funMusic.bind(this), { flag: true });
     },
     initView: function() {
         this.backRoomList = this.node.getChildByName("backRoomList");
@@ -29,7 +29,7 @@ cc.Class({
 
     },
     funBack: function() {
-        console.log("返回大厅")
+        console.log("返回游戏列表")
         this._GameView.backRoomList()
     },
     funRule: function() {

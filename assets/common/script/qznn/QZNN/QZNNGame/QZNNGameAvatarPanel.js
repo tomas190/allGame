@@ -41,11 +41,11 @@ cc.Class({
     },
     resetView: function(e) {
         for (var t = 0; t < e; t++)
-            this.player[t].head.spriteFrame = null,
-            // this.player[t].head_bg.active = !1,
-            this.player[t].username.string = "",
-            this.player[t].score.string = "",
-            // this.player[t].leave.active = !1,
+        //this.player[t].head.spriteFrame = null,
+        // this.player[t].head_bg.active = !1,
+        //this.player[t].username.string = "",
+        //this.player[t].score.string = "",
+        // this.player[t].leave.active = !1,
             this.player[t].blink.active = !1,
             // this.player[t].ready.active = !1,
             this.player[t].banker.active = !1,
@@ -193,14 +193,16 @@ cc.Class({
     actionFlutterScore: function(node, e, t, i) {
         // var a = this;
         // a.node.x = a.firstX, a.node.y = a.firstY;
-        var firstX = node.x;
-        var firstY = node.y;
+
         var scoreBox = node.getChildByName("windUp");
+        var firstX = scoreBox.x;
+        var firstY = scoreBox.y;
         var addNode = scoreBox.getChildByName("addGold");
         var minusNode = scoreBox.getChildByName("subGold");
         scoreBox.active = true;
         var o = e.x,
             n = e.y;
+        t = parseFloat(t).toFixed(2);
         if (parseFloat(t) >= 0) {
             scoreBox.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame("eff_win");
         } else {
@@ -214,7 +216,7 @@ cc.Class({
             scoreBox.opacity = 100;
         var s = cc.moveBy(.5, o, n),
             c = cc.spawn(s, cc.fadeTo(.2, 255)),
-            r = cc.callFunc(function(e) { node.x = firstX, node.y = firstY, i && i() }),
+            r = cc.callFunc(function(e) { scoreBox.x = 0, scoreBox.y = 63, i && i() }),
             l = cc.sequence(c, cc.delayTime(.5), cc.fadeTo(1, 0), r);
         scoreBox.runAction(l)
     },

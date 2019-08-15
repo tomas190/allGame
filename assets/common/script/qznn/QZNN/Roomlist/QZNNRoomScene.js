@@ -23,13 +23,14 @@ cc.Class({
     },
     resetSence: function() {
         this.area_number = null;
+        cc.gg.global.gameRoomData = null;
         this.onEvenHandle();
     },
     initData: function() {
 
     },
     onEvenHandle: function() {
-        var listenArr = ["GameAreaDetail", "OnOpen", "JoinRoom"];
+        var listenArr = ["GameAreaDetail", "OnOpen", "JoinRoom", "LeaveRoom"];
         for (var i = 0; i < listenArr.length; i++) {
             cc.gg.protoBuf.addHandler(listenArr[i], this.listenEvent.bind(this))
         }
@@ -58,6 +59,8 @@ cc.Class({
                 this.manageGameAreaDetail(datas);
             } else if (instructionsName == "JoinRoom") {
                 this.manageJoinRoom(datas);
+            } else if (instructionsName == "LeaveRoom") {
+                this.manageLeaveRoom(data)
             }
 
         } else {
@@ -73,6 +76,14 @@ cc.Class({
         var datas = JSON.parse(data);
         console.log("manageJoinRoom", datas);
         this._gameView.joinGameRoom(data);
+    },
+    //退出房间的监听
+    manageLeaveRoom: function(data) {
+        if (!data || data == "") {
+            return
+        }
+        var datas = JSON.parse(data);
+        console.log("manageLeaveRoom", datas);
     },
     manageGameAreaDetail: function(data) {
         if (!data || data == "") {

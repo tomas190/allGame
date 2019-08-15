@@ -1,10 +1,3 @@
-/*
- * @Author: burt
- * @Date: 2019-08-13 13:18:17
- * @LastEditors: burt
- * @LastEditTime: 2019-08-14 10:56:44
- * @Description: 
- */
 // var proto = require("bundle")
 cc.Class({
     extends: cc.Component,
@@ -18,7 +11,7 @@ cc.Class({
         this.closeCount = 2; //断网次数开始重连配置 默认2次断网开始重连
         this.timer = null;
         this.handlers = {};
-        this.pongTime = 1000;
+        this.pongTime = 2000;
         this.socket = null;
         this.events = {};
         this.reconnectCount = 0; //重连次数
@@ -88,7 +81,6 @@ cc.Class({
         this.connect(this.ip, false);
     },
     connect: function(ip, whetherClose) {
-        console.log("connect ---",ip)
         if (this.ISclose) {
             return
         }
@@ -100,18 +92,7 @@ cc.Class({
             this.reconnectCount = 0;
         }
         self.socket = new WebSocket(self.ip);
-        self.socket.onerror = function(err) {
-            cc.gg.utils.ccLog("webSocket异常断开断开", err);
-            // this.closeCouzz++;
-            // self.onmessage("500", err);
-        }
-        self.socket.onclose = function(err) {
-            cc.gg.utils.ccLog("webSocket断开连接", err);
-            // this.closeCouzz++;
-            // self.onmessage("500", err);
-        }
         self.socket.onopen = function() {
-            console.log("protobuf onopen")
             self.onmessage("OnOpen", {}, true)
             self.reconnectCount = 0;
             if (self.timer) {
@@ -120,6 +101,16 @@ cc.Class({
             };
             self.socket.onmessage = function(data) {
                 self.parseProtoBufId(data);
+            }
+            self.socket.onclose = function(err) {
+                cc.gg.utils.ccLog("webSocket断开连接", err);
+                // this.closeCouzz++;
+                // self.onmessage("500", err);
+            }
+            self.socket.onerror = function(err) {
+                cc.gg.utils.ccLog("webSocket异常断开断开", err);
+                // this.closeCouzz++;
+                // self.onmessage("500", err);
             }
 
             var urlData = cc.gg.utils.urlParse(window.location.href);
@@ -189,19 +180,29 @@ cc.Class({
         }
     },
     //把数据解析成ID 和 data
-    parseProtoBufId: function(data) {
-        var arrayBuffer = data.data;
-        //var dataUnit8Array = new Uint8Array(arrayBuffer);
-        var reader = new FileReader();
-        reader.readAsArrayBuffer(arrayBuffer);
-        var self = this
-        reader.onload = function(e) {
-            //cc.gg.utils.ccLog("解析 加载", e)
-            var dataUnit8Array = new Uint8Array(e.target.result)
-            var msgId = self.Uint8ArrayToInt(dataUnit8Array.slice(0, 2))
-            dataUnit8Array = dataUnit8Array.slice(2)
-            self.onmessage(msgId, dataUnit8Array)
+    parseProtoBufId: function(obj) {
+        var self = this;
+        if (cc.sys.isBrowser) {
+            var arrayBuffer = obj.data;
+            //var dataUnit8Array = new Uint8Array(arrayBuffer);
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(arrayBuffer);
+            var self = this
+            reader.onload = function(e) {
+                //cc.gg.utils.ccLog("解析 加载", e)
+                var dataUnit8Array = new Uint8Array(e.target.result)
+                var msgId = self.Uint8ArrayToInt(dataUnit8Array.slice(0, 2))
+                dataUnit8Array = dataUnit8Array.slice(2)
+                self.onmessage(msgId, dataUnit8Array)
+            }
+        } else if (cc.sys.isNative) {
+            var arrbuf = obj.data // ArrayBuffer
+            var uint8buf = new Uint8Array(arrbuf)
+            let id = this.Uint8ArrayToInt(uint8buf.slice(0, 2))
+            uint8buf = uint8buf.slice(2)
+            this.onmessage(id, uint8buf);
         }
+
     },
     //把ID 和数据解析成二进制
     protoBufAddtag: function(tag, buffer) {

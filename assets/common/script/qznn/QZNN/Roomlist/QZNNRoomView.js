@@ -24,6 +24,7 @@ cc.Class({
         this.addEvenListener();
         var e = cc.view.getVisibleSize();
         e.width / 750 < 1 && this.node_center.setScale(e.width / 750, e.height / 1334);
+        //播放音乐
 
     },
     initView: function() {
