@@ -36,7 +36,7 @@ cc.Class({
     onEvenHandle: function() {
         var listenArr = ["JoinRoom", "GameStart", "GrabBanker", "StartBet",
             "PlayerMultiples", "ShowCard", "Win", "LeaveRoom", "StartLimitTime", "UpdateAccountStatus",
-            "StarBet",
+            "StarBet", "OnOpen"
         ];
         for (var i = 0; i < listenArr.length; i++) {
             cc.gg.protoBuf.addHandler(listenArr[i], this.listenEvent.bind(this))
@@ -51,8 +51,11 @@ cc.Class({
         if (isCustom) {
             //自定义指令
             if (instructionsName == "OnOpen") {
-                //拉取房间信息
-                //this.sendGameAreaDetail();
+                var data = {
+                    "account_id": cc.gg.global.userID,
+                    area_number: parseInt(cc.gg.global.area_number),
+                }
+                cc.gg.protoBuf.send("JoinRoom", 1, data)
             }
             return;
         }

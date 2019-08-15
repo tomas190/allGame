@@ -96,6 +96,7 @@ cc.Class({
     },
     //发送用户进入房间
     sendsendJoinRoom: function(area_number) {
+        cc.gg.global.area_number = area_number;
         var data = {
             "account_id": cc.gg.global.userID,
             area_number: parseInt(area_number),
