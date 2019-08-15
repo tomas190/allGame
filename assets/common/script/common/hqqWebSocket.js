@@ -2,12 +2,12 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-08-15 10:29:43
+ * @LastEditTime: 2019-08-15 10:54:31
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
 
-let hqqWebSocket = function(){}
+let hqqWebSocket = function () { }
 hqqWebSocket.prototype = {
     ip: "",
     ws: null,
@@ -16,6 +16,7 @@ hqqWebSocket.prototype = {
     reConnectTime: 0,
     reConnectDelayTime: 5, // 多久重连一次（秒）
     heartbeatTime: 3, // 心跳间隔（秒）
+    closeTime: 9, // 断线判断时间
     protoType: 2, // 0 json格式解析 1 pb格式解析 2 leaf框架
     events: {},
     handlers: {},
@@ -30,6 +31,7 @@ hqqWebSocket.prototype = {
         this.reConnectTime = param && param.reConnectTime || this.reConnectTime;
         this.reConnectDelayTime = param && param.reConnectDelayTime || this.reConnectDelayTime;
         this.heartbeatTime = param && param.heartbeatTime || this.heartbeatTime;
+        this.closeTime = 3 * this.heartbeatTime;
         this.removeAllHandler();
         this.removeAllEvent();
     },
@@ -132,7 +134,7 @@ hqqWebSocket.prototype = {
         } else {
             this.pingTime++;
         }
-        if (this.pongTime >= 9) {
+        if (this.pongTime >= this.closeTime) {
             this.m_reconnect();
         } else {
             this.pongTime++;
