@@ -4282,7 +4282,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "87hRCdG7NLZKWsLM9xnHtS"
+    "_id": "84aX3PNk1IYKs3NVwHqUPh"
   },
   {
     "__type__": "cc.Label",
@@ -4312,7 +4312,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "3bJ8xMY2BNSp0lvh6W9Zx0"
+    "_id": "f37o6rwQRAtpArPabUHLve"
   },
   {
     "__type__": "cc.RichText",
@@ -7193,7 +7193,7 @@
     "_id": "23vXBaa4BGXr3464ADcfyN"
   },
   {
-    "__type__": "38608rKz4dGSpsqTFRTu0z+",
+    "__type__": "fb837RYI3VAVLRcnXWL6yM+",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -7230,6 +7230,6 @@
     "subgameview": {
       "__id__": 58
     },
-    "_id": "71Vq/l669EXJKAbJLgO3cY"
+    "_id": "3bzT0Wt0ZME7DB4vdY5lfF"
   }
 ]

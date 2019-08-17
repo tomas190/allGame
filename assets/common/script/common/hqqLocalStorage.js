@@ -2,10 +2,10 @@
  * @Author: burt
  * @Date: 2019-07-30 10:44:15
  * @LastEditors: burt
- * @LastEditTime: 2019-08-10 13:15:16
+ * @LastEditTime: 2019-08-17 15:42:42
  * @Description: 本地化保存
  */
-let gameConfig = require("gameConfig");
+let gHandler = require("gHandler");
 let localStorage = {
     subgameKey: "subgameKey",
     subdata: {},
@@ -16,8 +16,8 @@ let localStorage = {
         if (cc.sys.localStorage.getItem(this.subgameKey)) {
             this.subdata = JSON.parse(cc.sys.localStorage.getItem(this.subgameKey));
         } else {
-            for (let i = 0; i < gameConfig.gamelist.length; i++) {
-                this.subdata[gameConfig.gamelist[i].enname] = gameConfig.gamelist[i];
+            for (let i = 0; i < gHandler.gameConfig.gamelist.length; i++) {
+                this.subdata[gHandler.gameConfig.gamelist[i].enname] = gHandler.gameConfig.gamelist[i];
             }
             cc.sys.localStorage.setItem(this.subgameKey, JSON.stringify(this.subdata));
         }
