@@ -2,11 +2,9 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-08-15 10:30:42
+ * @LastEditTime: 2019-08-17 14:03:59
  * @Description: 大厅场景
  */
-const gameConfig = require('gameConfig');
-let gameGlobal = require("gameGlobal");
 let gHandler = require("gHandler");
 let hqqCommonTools = require("hqqCommonTools");
 let hqqLocalStorage = require("hqqLocalStorage");
@@ -53,7 +51,6 @@ cc.Class({
                 cc.audioEngine.resumeAllEffects();
             });
         }
-        gHandler.gameConfig = gameConfig;
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
         gHandler.audioMgr.playBg("hallbg");
 
@@ -89,9 +86,9 @@ cc.Class({
     },
     /** 子游戏初始化 */
     addSubgame() {
-        this.subgameview.content.width = Math.ceil(gameConfig.gamelist.length / 2) * (this.itembtn.width + 5) + this.pageview.node.width + 15;
-        for (let i = 0; i < gameConfig.gamelist.length; i++) {
-            let tempdata = gameConfig.gamelist[i];
+        this.subgameview.content.width = Math.ceil(gHandler.gameConfig.gamelist.length / 2) * (this.itembtn.width + 5) + this.pageview.node.width + 15;
+        for (let i = 0; i < gHandler.gameConfig.gamelist.length; i++) {
+            let tempdata = gHandler.gameConfig.gamelist[i];
             let itembtn = cc.instantiate(this.itembtn);
             itembtn.x = Math.floor(i / 2) * (this.itembtn.width + 5) + this.itembtn.width / 2 + 15 + this.pageview.node.width;
             itembtn.y = -i % 2 * this.itembtn.height - this.itembtn.height * 0.5 - 20;
