@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-08-15 10:30:42
+ * @LastEditTime: 2019-08-17 14:50:40
  * @Description: 大厅场景
  */
 const gameConfig = require('gameConfig');
@@ -55,17 +55,17 @@ cc.Class({
         }
         gHandler.gameConfig = gameConfig;
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
-        gHandler.audioMgr.playBg("hallbg");
+        // gHandler.audioMgr.playBg("hallbg");
 
-        gHandler.hallWebSocket = new hqqWebSocket();
-        let hallSocket = require("hallSocket")
-        gHandler.hallWebSocket.init({
-            protoDeal: hallSocket,
-        });
-        hallSocket.init({
-            webSocket: gHandler.hallWebSocket,
-        })
-        gHandler.hallWebSocket.connect("ws://127.0.0.1:52288");
+        // gHandler.hallWebSocket = new hqqWebSocket();
+        // let hallSocket = require("hallSocket")
+        // gHandler.hallWebSocket.init({
+        //     protoDeal: hallSocket,
+        // });
+        // hallSocket.init({
+        //     webSocket: gHandler.hallWebSocket,
+        // })
+        // gHandler.hallWebSocket.connect("ws://127.0.0.1:52288");
 
         this.topbubble.active = false;
         gHandler.commonTools.setDefaultHead(this.headimg);
