@@ -53,7 +53,7 @@ cc.Class({
         var result = data.getResult();
         var resultMessage = data.getResultmessage();
         var datas = data.getData();
-        console.log(datas, "listenEvent");
+        console.log(datas, "listenEvent ROOM");
         if (result == 1) {
             if (instructionsName == "GameAreaDetail") {
                 this.manageGameAreaDetail(datas);
@@ -74,7 +74,7 @@ cc.Class({
             return
         }
         var datas = JSON.parse(data);
-        console.log("manageJoinRoom", datas);
+        //console.log("manageJoinRoom", datas);
         this._gameView.joinGameRoom(data);
     },
     //退出房间的监听
@@ -99,6 +99,7 @@ cc.Class({
         cc.gg.global.area_number = area_number;
         var data = {
             "account_id": cc.gg.global.userID,
+            "password": "123456",
             area_number: parseInt(area_number),
         }
         cc.gg.protoBuf.send("JoinRoom", 1, data)

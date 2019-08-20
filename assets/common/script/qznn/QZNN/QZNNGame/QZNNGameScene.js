@@ -26,11 +26,15 @@ cc.Class({
     resetSence: function() {
         this.area_number = null;
         this.onEvenHandle();
+        if (cc.gg.global.gameRoomData) {
+            //主动调取一下加入房间
+            this.manageJoinRoom(cc.gg.global.gameRoomData);
+        }
     },
     initData: function() {
         if (cc.gg.global.gameRoomData) {
             //主动调取一下加入房间
-            this.manageJoinRoom(cc.gg.global.gameRoomData);
+            //this.manageJoinRoom(cc.gg.global.gameRoomData);
         }
     },
     onEvenHandle: function() {
@@ -296,7 +300,7 @@ cc.Class({
         if (console.log("用户游戏状态："),
             this._lGameStatus = cmd.GAME_SCENE_PLAYING,
             this._wMeStatus < 2 && 1 == nnTool.UserisExist()) {
-            this._GameView._centerPanel.showWait()
+            this._GameView._centerPancel.showWait()
         }
         if (datas.left_time) {
             var t = datas.left_time;

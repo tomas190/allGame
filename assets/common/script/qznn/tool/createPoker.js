@@ -139,25 +139,48 @@ cc.Class({
     //                 this.color2.getComponent(cc.Sprite).spriteFrame = this.pokerAtlas.getSpriteFrame(s)
     //         } else 5 == i ? (this.num.active = !1,
     //             this.color1.active = !1,
-    //             this.color2.active = !1,
+    //             this.color2.active = !1, sequence
     //             14 == a ? this.xiaowang.active = !0 : 15 == a && (this.dawang.active = !0)) : 8 <= i && i <= 15 ? (this.num.active = !1, this.color1.active = !1, this.color2.active = !1, this.card_bg.getComponent(cc.Sprite).spriteFrame = this.pokerAtlas.getSpriteFrame("special_" + i)) : console.log("create Poker  DATA error!", e)
     //     }
     // },
     setCardAni: function(e) {
+        // var t = this;
+        // if (0 != e) {
+        //     this.createPoker(e),
+        //         this.back.active = !0,
+        //         this.card_bg.scaleX = -0.2,
+        //         this.card_bg.skewY = -40,
+        //         this.card_bg.skewY = -10,
+        //         this.back.scaleX = 1;
+
+        //     this.back.skewY = 0;
+        //     var i = cc.spawn(cc.scaleTo(.2, -.2, 1), cc.skewTo(.2, 10, 40),
+        //         cc.callFunc(function() {
+        //             t.back.active = !1;
+        //             t.card_bg.runAction(cc.spawn(cc.scaleTo(.2, -1, 1), cc.skewTo(.2, 0, 0)))
+        //         }));
+        //     this.back.runAction(i)
+        // }
+        /**
+         * scaleX  减小 逆时针旋转
+         * scaleX 增加顺时针旋转
+         */
         var t = this;
         if (0 != e) {
             this.createPoker(e),
                 this.back.active = !0,
-                this.card_bg.scaleX = 0.2,
-                this.back.scaleX = 1;
-            // this.back.skewX = 0;
-            // this.back.skewY = 0;
-            var i = cc.sequence(cc.scaleTo(.2, .2, 1),
+                this.card_bg.scaleX = 0,
+                this.card_bg.skewY = -40,
+                this.card_bg.skewY = -10,
+                this.back.scaleX = -1;
+
+            this.back.skewY = 0;
+            var i = cc.spawn(cc.scaleTo(.2, 0, 1), cc.skewTo(.2, 10, 40),
                 cc.callFunc(function() {
                     t.back.active = !1;
-                    t.card_bg.runAction(cc.scaleTo(.1, 1, 1))
+                    t.card_bg.runAction(cc.spawn(cc.scaleTo(.2, 1, 1), cc.skewTo(.2, 0, 0)))
                 }));
-            this.back.runAction(i)
+            this.back.runAction(i);
         }
     },
     getCardValue: function() { return this._cbCardData },
