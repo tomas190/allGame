@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-08-17 15:43:59
+ * @LastEditTime: 2019-08-20 17:52:11
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -11,7 +11,6 @@ let hqqLocalStorage = require("hqqLocalStorage");
 let hqqLogMgr = require("hqqLogMgr");
 let hqqAudioMgr = require("hqqAudioMgr");
 let hqqWebSocket = require("hqqWebSocket");
-
 
 cc.Class({
     extends: cc.Component,
@@ -34,8 +33,8 @@ cc.Class({
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
         console.log("CC_DEBUG", CC_DEBUG)
-        CC_JSB = !CC_DEBUG
-        if (!CC_JSB) {
+        let isdev = true
+        if (isdev) {
             gHandler.localStorage = hqqLocalStorage.init();
             gHandler.logManager = hqqLogMgr.init();
             gHandler.commonTools = hqqCommonTools;
@@ -52,7 +51,7 @@ cc.Class({
             });
         }
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
-        // gHandler.audioMgr.playBg("hallbg");
+        gHandler.audioMgr.playBg("hallbg");
 
         // gHandler.hallWebSocket = new hqqWebSocket();
         // let hallSocket = require("hallSocket")
@@ -69,7 +68,7 @@ cc.Class({
         if (cc.sys.isBrowser) {
             this.browserDeal();
         }
-        this.addSubgame();
+        this.addSubgame(isdev);
         this.checkSubModule();
     },
     /** enabled和active属性从false变为true时 */
@@ -85,7 +84,7 @@ cc.Class({
         this.huodongbtn.getChildByName("redpoint").active = false;
     },
     /** 子游戏初始化 */
-    addSubgame() {
+    addSubgame(isdev) {
         this.subgameview.content.width = Math.ceil(gHandler.gameConfig.gamelist.length / 2) * (this.itembtn.width + 5) + this.pageview.node.width + 15;
         for (let i = 0; i < gHandler.gameConfig.gamelist.length; i++) {
             let tempdata = gHandler.gameConfig.gamelist[i];
@@ -102,14 +101,14 @@ cc.Class({
             itembtn.getChildByName("wait").active = false;
             itembtn.getChildByName("experience").active = false;
             tempdata.itembtn = itembtn;
-            if (CC_JSB) {
+            if (!isdev) {
                 this.checkSubGameDownload(tempdata);
             } else {
                 let downflag = tempdata.itembtn.getChildByName("downFlag");
                 let progress = tempdata.itembtn.getChildByName("progress");
                 var clickEventHandler = new cc.Component.EventHandler();
                 clickEventHandler.target = this.node;
-                clickEventHandler.component = "hall";
+                clickEventHandler.component = "hallScene";
                 clickEventHandler.customEventData = tempdata;
                 downflag.active = false;
                 progress.active = false;

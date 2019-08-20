@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-08-17 15:42:11
+ * @LastEditTime: 2019-08-17 16:31:38
  * @Description: 游戏中央模块管理器
  */
 
@@ -180,7 +180,7 @@ let gameConfig = {
         {
             zhname: "炸金花", // 中文游戏名
             enname: "zjh", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "zjh", // 跳转场景名
+            lanchscene: "Load", // 跳转场景名
             game_id: "123456789",
             resid: 20,
         },

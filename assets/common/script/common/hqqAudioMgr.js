@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-10 10:32:38
  * @LastEditors: burt
- * @LastEditTime: 2019-08-10 13:15:00
+ * @LastEditTime: 2019-08-17 17:02:24
  * @Description: 音效管理器，子游戏音效管理器需实现getMusic(name)获取cc.AudionClip资源的函数接口
  */
 let gHandler = require("gHandler");
@@ -34,6 +34,9 @@ let audioMgr = {
         if (this.resMgr) {
             let bgchip = this.resMgr.getMusic(name);
             if (bgchip) {
+                if(this.bgId){
+                    cc.audioEngine.stopMusic();
+                }
                 this.bgId = cc.audioEngine.playMusic(bgchip, true, this.bgVolume);
             }
         } else {

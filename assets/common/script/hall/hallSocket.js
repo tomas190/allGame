@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-14 13:15:03
  * @LastEditors: burt
- * @LastEditTime: 2019-08-15 10:47:16
+ * @LastEditTime: 2019-08-20 16:14:47
  * @Description: 
  */
 
@@ -66,9 +66,16 @@ let hallSocket = {
             reader.readAsArrayBuffer(blob)
             let self = this
             reader.onload = function (e) {
+                let unit16 = new Uint16Array(e.target.result)
+                let id = unit16[0]
+                console.log("receive message id = " + id, unit16)
                 let dataUnit8Array = new Uint8Array(e.target.result)
-                let id = self.Uint8ArrayToInt(dataUnit8Array.slice(0, 2))
                 dataUnit8Array = dataUnit8Array.slice(2)
+
+                // let dataUnit8Array = new Uint8Array(e.target.result)
+                // let id = self.Uint8ArrayToInt(dataUnit8Array.slice(0, 2))
+                // console.log("receive message id = " + id)
+                // dataUnit8Array = dataUnit8Array.slice(2)
                 self.distrubuteMsg(id, dataUnit8Array)
             }
         } else if (cc.sys.isNative) {
@@ -89,6 +96,7 @@ let hallSocket = {
     },
     /** 派发消息，pb解析 */
     distrubuteMsg(id, data) {
+        console.log("receive id =", id)
         if (id == 0) { // 心跳包
             this.ws.m_receivePong();
         } else {
