@@ -57,39 +57,6 @@ cc.Class({
         for (var i = 0; i < e; i++) {
             this.player[i].active = !0;
         }
-        // for (var t = 0; t < e; t++)
-        //     this.player[t].active = !0,
-        //     this.player[t].setScale(1.1),
-        //     6 == e ? (this.player[t].setPosition(c.SIX_USER_POS[t]), 1 == t || 2 == t ? (this.player[t].status.position = a[1],
-        //         this.player[t].ready.position = o[1],
-        //         this.player[t].banker.position = n[1],
-        //         this.player[t].chipSpr.position = s[1]) : 3 != t && 4 != t && 5 != t || (this.player[t].status.position = a[0],
-        //         this.player[t].ready.position = o[0],
-        //         this.player[t].banker.position = n[0],
-        //         this.player[t].chipSpr.position = s[0])) :
-        //     9 == e || 15 == e ? (9 == e ?
-        //         this.player[t].setPosition(c.Nine_USER_POS[t]) :
-        //         this.player[t].setPosition(c.fifteen_USER_POS[t]),
-        //         1 == t || 2 == t || 3 == t || 4 == t ?
-        //         (this.player[t].status.position = a[1],
-        //             this.player[t].ready.position = o[1],
-        //             this.player[t].banker.position = n[1],
-        //             this.player[t].chipSpr.position = s[1]) : 5 != t && 6 != t && 7 != t && 8 != t || (this.player[t].status.position = a[0],
-        //             this.player[t].ready.position = o[0], this.player[t].banker.position = n[0],
-        //             this.player[t].chipSpr.position = s[0])) :
-        //     10 == e ? (this.player[t].setPosition(c.TEN_USER_POS[t]), 1 == t || 2 == t || 3 == t || 4 == t ?
-        //         (this.player[t].status.position = a[1], this.player[t].ready.position = o[1],
-        //             this.player[t].banker.position = n[1],
-        //             this.player[t].chipSpr.position = s[1]) : 5 != t && 6 != t && 7 != t && 8 != t && 9 != t || (this.player[t].status.position = a[0],
-        //             this.player[t].ready.position = o[0], this.player[t].banker.position = n[0], this.player[t].chipSpr.position = s[0])) : 12 == e ?
-        //     (this.player[t].setPosition(c.Twelve_USER_POS[t]),
-        //         1 == t || 2 == t || 3 == t || 4 == t || 5 == t ? (this.player[t].status.position = a[1],
-        //             this.player[t].ready.position = o[1], this.player[t].banker.position = n[1],
-        //             this.player[t].chipSpr.position = s[1]) : 6 != t && 7 != t && 8 != t && 9 != t && 10 != t && 11 != t || (this.player[t].status.position = a[0], this.player[t].ready.position = o[0],
-        //             this.player[t].banker.position = n[0], this.player[t].chipSpr.position = s[0])) : 13 == e ?
-        //     (this.player[t].setPosition(c.THIRTEEN_USER_POS[t]), 1 == t || 2 == t || 3 == t || 4 == t || 5 == t || 6 == t ?
-        //         (this.player[t].status.position = a[1], this.player[t].ready.position = o[1], this.player[t].banker.position = n[1],
-        //             this.player[t].chipSpr.position = s[1]) : 7 != t && 8 != t && 9 != t && 10 != t && 11 != t && 12 != t || (this.player[t].status.position = a[0], this.player[t].ready.position = o[0], this.player[t].banker.position = n[0], this.player[t].chipSpr.position = s[0])) : 17 == e && this.player[t].setScale(1)
     },
     setUserInfo: function(e, t) {
         var i = t;
@@ -98,8 +65,10 @@ cc.Class({
         console.log("用户头像信息：" + o), cc.gg.utils.changeSpriteFrameWithServerUrlForWeb(a, o);
         var n = i.nickname;
         var s = cc.gg.utils.getSubStringLengTxt(n);
+        i.account_score = parseFloat(i.account_score + "").toFixed(2);
         this.player[e].username.string = s;
-        this.player[e].score.string = i.account_score;
+        i.account_score < 0 && (i.account_score = (i.account_score + "").substr(1, t.length)),
+            this.player[e].score.string = this.ModifyStr(i.account_score);
         this.player[e].active = true;
     },
     setViewUserReady: function(e, t) {

@@ -9,6 +9,13 @@ cmd.GAME_PLAYER = 5; //正在游戏中的玩家
 cmd.PLAYER_DATAS = null; //房间玩家游戏数据
 cmd.MY_DATA = null; //自己的游戏数据
 cmd.MY_ID = null; //自己的id
+cmd.PokerNode = { //每张牌的位置
+    "0": [],
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+};
 cmd.GrabMultiple = {
     "0": 0,
     "1": 1,

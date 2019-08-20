@@ -54,12 +54,16 @@ cc.Class({
         this.roomList = cc.find("roomList", this.node._parent);
         this.node.active = false;
 
+        this.node_UI = cc.find("node_UI", this.node);
     },
     resetView: function() {
         this._topPancel.resetView();
         this._centerPancel.resetView();
         this._avatarPanel.resetView(cmd.GAME_PLAYER);
         this._cardPanel.resetView(cmd.GAME_PLAYER);
+
+        //测试播放动画
+        // this.gameStartAni.play()
     },
     addEvenListener: function() {
         //cc.gg.utils.addClickEventEND(this.backHall, this.backHallFun.bind(this));
@@ -117,7 +121,6 @@ cc.Class({
             self.roomList.getComponent("QZNNRoomScene").resetSence()
             self.QZNNGame.active = false;
             self.backMsgLock = true;
-
         }, 0.2)
     },
     //设置游戏状态标示
@@ -160,7 +163,7 @@ cc.Class({
                 i._avatarPanel.setViewBankerSign(o, !0);
                 //设置庄家倍数
                 e.grab_multiple = e.grab_multiple ? e.grab_multiple : "1";
-                i._avatarPanel.setUserGrabMultiple(o, cmd.GrabMultiple[e.grab_multiple]);
+                i._avatarPanel.setUserGrabMultiple(o, e.grab_multiple);
                 //设置下注标示
                 i._centerPancel.setViewStatus(cmd.Game_Status["StarBet"])
                 if (nnTool.UserisExist()) {
@@ -248,27 +251,28 @@ cc.Class({
             //p = this.gameCardType.getSpriteFrame("chip_s"),
             p = gold,
             f = this.node_gold;
-        if (4 != this._scene._playMode) 6 != this._scene._playMode ? Animation.SetGoldAnimation(f, p, _, t, !0, function() {
-            Animation.SetGoldAnimation(f, p, _, i, !1, function() {
+        if (4 != this._scene._playMode) 6 != this._scene._playMode ?
+            Animation.SetGoldAnimation(f, p, _, t, !0, function() {
+                Animation.SetGoldAnimation(f, p, _, i, !1, function() {
+                    a.setViewScoreAni(n, s, function() {
+                        for (var e in h) {
+                            var t = e,
+                                i = h[e];
+                            a._avatarPanel.setUserScore(t, i)
+                        }
+                        a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (a._centerPanel.btn_ready.setScale(1), a._centerPanel.btn_ready.active = !0, 0 == m && 5 == a._scene._playMode && 3 <= o.game_num && (console.log("显示下庄按钮"), a._centerPanel.setBtnReaby()), a.setViewStatus("reset")))
+                    })
+                })
+            }) : Animation.SetGoldAnimation(f, p, f, i, !1, function() {
                 a.setViewScoreAni(n, s, function() {
                     for (var e in h) {
                         var t = e,
                             i = h[e];
                         a._avatarPanel.setUserScore(t, i)
                     }
-                    a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (a._centerPanel.btn_ready.setScale(1), a._centerPanel.btn_ready.active = !0, 0 == m && 5 == a._scene._playMode && 3 <= o.game_num && (console.log("显示下庄按钮"), a._centerPanel.setBtnReaby()), a.setViewStatus("reset")))
+                    a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (console.log("我进入了结算啊啊啊"), a._centerPanel.btn_ready.active = !0, a.setViewStatus("reset")))
                 })
-            })
-        }) : Animation.SetGoldAnimation(f, p, f, i, !1, function() {
-            a.setViewScoreAni(n, s, function() {
-                for (var e in h) {
-                    var t = e,
-                        i = h[e];
-                    a._avatarPanel.setUserScore(t, i)
-                }
-                a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (console.log("我进入了结算啊啊啊"), a._centerPanel.btn_ready.active = !0, a.setViewStatus("reset")))
-            })
-        });
+            });
         else {
             var C = nnTool.getLocalIndex(o.winner_id),
                 b = this._avatarPanel.player[C];

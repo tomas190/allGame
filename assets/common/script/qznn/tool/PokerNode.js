@@ -17,10 +17,15 @@ cc.Class({
         this.pokerDianshu = this._gameView.pokerDianshu
     },
     initView: function() {
-        for (var e = 0; e < 5; e++)
+        for (var e = 0; e < 5; e++) {
             this.cardNodes[e] = cc.find("user_head" + e + "/node_card" + e, this.node),
-            this.cardNodes[e].active = !1,
-            0 == e && (this.mycardNode = this.cardNodes[e]);
+                this.cardNodes[e].active = !1,
+                0 == e && (this.mycardNode = this.cardNodes[e]);
+            for (var i = 0; i < 5; i++) {
+                y.PokerNode[e + ""].push(this.cardNodes[e].getChildByName("poker" + i).getPosition());
+            }
+        };
+        console.log(y.PokerNode)
     },
 
     initNode: function() {
@@ -34,28 +39,21 @@ cc.Class({
     },
     resetView: function(e) {
         for (var t = 0; t < e; t++) {
-            for (var i = 0; i < y.MAX_COUNT; i++)
-                this.cardNodes[t].getChildByName("poker" + i).getComponent("createPoker").createPoker(0);
-            var a = this.cardNodes[t].getChildByName("poker0"),
-                o = this.cardNodes[t].getChildByName("poker1"),
-                n = this.cardNodes[t].getChildByName("poker2"),
-                s = this.cardNodes[t].getChildByName("poker1"),
-                c = this.cardNodes[t].getChildByName("poker2");
-            a.getComponent("createPoker").createPoker(0),
-                o.getComponent("createPoker").createPoker(0),
-                n.getComponent("createPoker").createPoker(0),
-                s.getComponent("createPoker").createPoker(0),
-                c.getComponent("createPoker").createPoker(0);
-            //     0 == t && (this.btn_look.active = !1,
-            //         this.btn_look4.active = !1,
-            //         this.btn_look5.active = !1,
-            //         this.spr_look.active = !1);
-            var r = this.cardNodes[t].getChildByName("sprCard");
-            r.active = !1;
-            r.getChildByName("valueBox").getChildByName("value").getComponent(cc.Sprite).spriteFrame = null;
-            this.cardNodes[t].active = !1
+            for (var i = 0; i < y.MAX_COUNT; i++) {
+                var poker = this.cardNodes[t].getChildByName("poker" + i)
+                poker.getComponent("createPoker").createPoker(0);
+                // console.log(y.PokerNode[t + ""][i]);
+                poker.setPosition(y.PokerNode[t + ""][i].x, y.PokerNode[t + ""][i].y);
+                //     0 == t && (this.btn_look.active = !1,
+                //         this.btn_look4.active = !1,
+                //         this.btn_look5.active = !1,
+                //         this.spr_look.active = !1);
+                var r = this.cardNodes[t].getChildByName("sprCard");
+                r.active = !1;
+                r.getChildByName("valueBox").getChildByName("value").getComponent(cc.Sprite).spriteFrame = null;
+                this.cardNodes[t].active = !1
+            }
         }
-        y.beiMaiMaPos = null
     },
     setUserCount: function(e) {
         for (var t = 0; t < e; t++) {
@@ -104,6 +102,78 @@ cc.Class({
             o.getComponent("createPoker").createPoker(0),
             n.getComponent("createPoker").createPoker(0)
     },
+    // setSendCardAni: function(e, t, i) {
+    //     var a;
+    //     this.setUserCount(y.GAME_PLAYER)
+    //     if (e && 0 != e.length) {
+    //         var o = 0,
+    //             n = [];
+    //         for (var s = 0; s < y.GAME_PLAYER; s++) {
+    //             if (3 <= e[s]) {
+    //                 o++;
+    //                 n[n.length] = s
+    //             }
+    //         }
+    //         var c = this._gameView.node_center.convertToWorldSpaceAR(this._gameView.node_gold.position);
+    //         for (s = 0; s < o; s++) {
+    //             var r = n[s],
+    //                 l = this.cardNodes[r];
+    //             l.active = !0;
+    //             var d = l.convertToNodeSpaceAR(c),
+    //                 h = l.getChildByName("poker0"),
+    //                 g = l.getChildByName("poker1"),
+    //                 u = l.getChildByName("poker2"),
+    //                 m = l.getChildByName("poker3"),
+    //                 _ = l.getChildByName("poker4");
+    //             h.opacity = 255,
+    //                 g.opacity = 0,
+    //                 u.opacity = 0,
+    //                 m.opacity = 0,
+    //                 _.opacity = 0;
+    //             var p = h.getPosition(),
+    //                 f = g.getPosition(),
+    //                 C = u.getPosition(),
+    //                 b = m.getPosition(),
+    //                 ii = null,
+    //                 v = _.getPosition();
+    //             //h.setPosition(d);
+    //             // h.runAction(cc.spawn(cc.moveTo(.15, p),
+    //             //     cc.fadeIn(.15))),
+    //             // ii = [cc.v2(d.x, d.y), cc.v2(p.x, p.y), cc.v2(p.x, p.y)],
+    //             //     h.runAction(cc.bezierTo(.1, ii));
+    //             g.setPosition(d),
+    //                 // g.runAction(cc.sequence(cc.delayTime(.075),
+    //                 //     cc.spawn(cc.moveTo(.15, f),
+    //                 //         cc.fadeIn(.15)))),
+    //                 g.runAction(
+    //                     cc.bezierTo(0.1, [cc.v2(d.x, d.y), cc.v2(f.x, f.y), cc.v2(f.x, f.y)]), cc.callFunc(function() {
+    //                         console.log("第二张牌");
+    //                     }))
+    //                 // u.setPosition(d),
+    //                 //     u.runAction(cc.sequence(cc.delayTime(.15), cc.bezierTo(0.1, [cc.v2(d.x, d.y), cc.v2(u.x, u.y), cc.v2(u.x, u.y)])))
+    //                 //     // u.runAction(cc.sequence(cc.delayTime(.15),
+    //                 //     //     cc.spawn(cc.moveTo(.15, C),
+    //                 //     //         cc.fadeIn(.15)))),
+    //                 // m.setPosition(d),
+    //                 //     // m.runAction(cc.sequence(cc.delayTime(.15 * 1.5),
+    //                 //     //     cc.spawn(cc.moveTo(.15, b),
+    //                 //     //         cc.fadeIn(.15)))),
+    //                 //     m.runAction(cc.sequence(cc.delayTime(.225), cc.bezierTo(0.1, [cc.v2(d.x, d.y), cc.v2(m.x, m.y), cc.v2(m.x, m.y)]))
+    //                 //     )
+    //                 // _.setPosition(d),
+    //                 //     // _.runAction(cc.sequence(cc.delayTime(.3),
+    //                 //     //     cc.spawn(cc.moveTo(.15, v),
+    //                 //     //         cc.fadeIn(.15))))
+    //                 //     _.runAction(cc.sequence(cc.delayTime(.3), cc.bezierTo(0.1, [cc.v2(d.x, d.y), cc.v2(_.x, _.y), cc.v2(_.x, _.y)])))
+    //         }
+    //         if (t) {
+    //             console.log("延时时间CallBack->>>", .8), this.scheduleOnce(function() {
+    //                 t()
+    //             }, .8)
+    //         }
+    //         cc.gg.audioMgr.playSFX("nn/game/send_card.mp3")
+    //     } else console.log("发牌动画出错->>>>setSendCardAni")
+    // },
     setSendCardAni: function(e, t, i) {
         var a;
         this.setUserCount(y.GAME_PLAYER)
@@ -117,44 +187,72 @@ cc.Class({
                 }
             }
             var c = this._gameView.node_center.convertToWorldSpaceAR(this._gameView.node_gold.position);
+            var bsr_l = this._gameView.node_center.convertToWorldSpaceAR(cc.v2(150, 600));
+            var bsr_r = this._gameView.node_center.convertToWorldSpaceAR(cc.v2(600, 200));
+            var bsr_me = this._gameView.node_center.convertToWorldSpaceAR(cc.v2(0, 300));
             for (s = 0; s < o; s++) {
                 var r = n[s],
                     l = this.cardNodes[r];
                 l.active = !0;
                 var d = l.convertToNodeSpaceAR(c),
+                    bsr_left = cc.v2(-150, 1200),
+                    bsr_right = cc.v2(-150, 1200),
+                    bsr_meSelf = l.convertToWorldSpaceAR(bsr_me),
                     h = l.getChildByName("poker0"),
                     g = l.getChildByName("poker1"),
                     u = l.getChildByName("poker2"),
                     m = l.getChildByName("poker3"),
                     _ = l.getChildByName("poker4");
-                h.opacity = 0, g.opacity = 0, u.opacity = 0, m.opacity = 0, _.opacity = 0;
-                var p = h.getPosition(),
-                    f = g.getPosition(),
-                    C = u.getPosition(),
-                    b = m.getPosition(),
-                    v = _.getPosition();
-                //h.setPosition(d),
-                h.runAction(cc.spawn(cc.moveTo(.15, p),
-                        cc.fadeIn(.15))),
-                    g.setPosition(d),
-                    g.runAction(cc.sequence(cc.delayTime(.075),
-                        cc.spawn(cc.moveTo(.15, f),
-                            cc.fadeIn(.15)))), u.setPosition(d),
-                    u.runAction(cc.sequence(cc.delayTime(.15),
-                        cc.spawn(cc.moveTo(.15, C),
-                            cc.fadeIn(.15)))), m.setPosition(d),
-                    m.runAction(cc.sequence(cc.delayTime(.15 * 1.5),
-                        cc.spawn(cc.moveTo(.15, b),
-                            cc.fadeIn(.15)))),
-                    _.setPosition(d),
-                    _.runAction(cc.sequence(cc.delayTime(.3),
-                        cc.spawn(cc.moveTo(.15, v),
-                            cc.fadeIn(.15))))
+                h.opacity = 0;
+                g.opacity = 0;
+                u.opacity = 0;
+                m.opacity = 0;
+                _.opacity = 0;
+                var p = h.getPosition();
+                var f = g.getPosition();
+                var C = u.getPosition();
+                var b = m.getPosition();
+                var ii = null;
+                var v = _.getPosition();
+                var count = null;
+                var positionBSR = null;
+                if (s.length == 5) {
+                    if (s == 0) {
+                        count = 2
+                        positionBSR = bsr_meSelf;
+                    } else if (s == 1 || s == 2) {
+                        count = s - 1;
+                        positionBSR = bsr_left
+                    } else if (s == 3 || s == 4) {
+                        count = s
+                        positionBSR = bsr_right
+                    }
+                } else {
+                    count = s;
+                    positionBSR = bsr_left
+                }
+
+                h.setPosition(d);
+                ii = [cc.v2(d.x, d.y), cc.v2(positionBSR.x, positionBSR.y), cc.v2(p.x, p.y)],
+                    h.runAction(cc.sequence(cc.delayTime(0.4 * count), cc.spawn(cc.bezierTo(.3, ii), cc.fadeIn(.15))));
+                g.setPosition(d);
+                g.runAction(cc.sequence(cc.delayTime(.025 + (0.4 * count)), cc.spawn(
+                    cc.bezierTo(0.3, [cc.v2(d.x, d.y), cc.v2(positionBSR.x, positionBSR.y), cc.v2(f.x, f.y)]), cc.fadeIn(.15))))
+                u.setPosition(d),
+                    u.runAction(cc.sequence(cc.delayTime(.05 + (0.4 * count)), cc.spawn(
+                        cc.bezierTo(0.3, [cc.v2(d.x, d.y), cc.v2(positionBSR.x, positionBSR.y), cc.v2(C.x, C.y)]),
+                        cc.fadeIn(.15))))
+                m.setPosition(d),
+                    m.runAction(cc.sequence(cc.delayTime(.075 + (0.4 * count)), cc.spawn(
+                        cc.bezierTo(0.3, [cc.v2(d.x, d.y), cc.v2(positionBSR.x, positionBSR.y), cc.v2(b.x, b.y)]), cc.fadeIn(.15))))
+                _.setPosition(d),
+                    _.runAction(cc.sequence(cc.delayTime(.1 + (0.4 * count)), cc.spawn(
+                        cc.bezierTo(0.3, [cc.v2(d.x, d.y), cc.v2(positionBSR.x, positionBSR.y), cc.v2(v.x, v.y)]), cc.fadeIn(.15))))
             }
             if (t) {
-                console.log("延时时间CallBack->>>", .8), this.scheduleOnce(function() {
+                console.log("延时时间CallBack->>>", o.length * 0.4), this.scheduleOnce(function() {
                     t()
-                }, .8)
+                }, o.length * 4)
             }
             cc.gg.audioMgr.playSFX("nn/game/send_card.mp3")
         } else console.log("发牌动画出错->>>>setSendCardAni")

@@ -33,7 +33,9 @@ cc.Class({
         this._GameView.backRoomList()
     },
     funRule: function() {
-        console.log("规则")
+        console.log("规则");
+        //调取center层的方法
+        this._GameView._centerPancel.funRuleMask()
     },
     funMusic: function() {
         console.log("开关闭音乐");

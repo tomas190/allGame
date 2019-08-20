@@ -92,8 +92,8 @@ cc.Class({
 
         this.scheduleOnce(function() {
             self.msg.active = true;
-            self.msg.getComponent("QZNNRoomView").resetView()
-            self.msg.getComponent("QZNNRoomScene").resetSence()
+            self.msg.getComponent("QZNNGameView").resetView()
+            self.msg.getComponent("QZNNGameScene").resetSence()
             self.hall.active = false;
 
             self.backMsgLock = true;
