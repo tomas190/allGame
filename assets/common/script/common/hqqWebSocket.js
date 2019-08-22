@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-08-15 10:29:43
+ * @LastEditTime: 2019-08-21 09:50:53
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -41,7 +41,6 @@ hqqWebSocket.prototype = {
         // this.addHandler(0, this.m_receivePong.bind(this))
     },
     sendPing() {
-        console.log("发送心跳")
         this.pingTime = 0;
         let msg = this.protoDeal.createHeartBeat();
         this.ws.send(msg);
@@ -120,6 +119,7 @@ hqqWebSocket.prototype = {
         this.m_stopPingPong();
     },
     m_onclose() {
+        console.log("网络断开")
         this.m_stopPingPong();
     },
     m_stopPingPong() {
@@ -139,7 +139,6 @@ hqqWebSocket.prototype = {
         }
     },
     m_receivePong() {
-        console.log("接受心跳")
         this.pongTime = 0;
     },
 }

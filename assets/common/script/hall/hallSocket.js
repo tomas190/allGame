@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-14 13:15:03
  * @LastEditors: burt
- * @LastEditTime: 2019-08-20 16:14:47
+ * @LastEditTime: 2019-08-22 11:55:49
  * @Description: 
  */
 
@@ -34,7 +34,7 @@ let hallSocket = {
     },
     /** 接受到消息派发 */
     receiveMsg(id, msg) {
-        console.log("receiveMsg", id, msg)
+        console.log("数据包内id", id, msg)
         if (this.handlers[id]) {
             this.handlers[id](msg);
         } else {
@@ -50,7 +50,7 @@ let hallSocket = {
     },
     /** 创建消息 */
     createMsgByName(name, data) {
-        let msg = new hallmsg_pb.msg();
+        let msg = new hallmsg_pb.gamemsg();
         msg.setId(this.getIdByName(name));
         var jsondata = JSON.stringify(data);
         msg.setData(jsondata);
@@ -61,21 +61,20 @@ let hallSocket = {
     /** 解析消息 读取msg id 内容 */
     decodeMsg(obj) {
         if (cc.sys.isBrowser) {
+            // let arrayBuffer = new ArrayBuffer(obj.data);
+            // let dataUnit8Array = new Uint8Array(arrayBuffer);
+            // const id = this.Uint8ArrayToInt(dataUnit8Array.slice(0, 2));
+            // console.log("id", id)
+            // dataUnit8Array = dataUnit8Array.slice(2);
+            // this.distrubuteMsg(id, dataUnit8Array);
             let blob = obj.data
             let reader = new FileReader()
             reader.readAsArrayBuffer(blob)
             let self = this
             reader.onload = function (e) {
-                let unit16 = new Uint16Array(e.target.result)
-                let id = unit16[0]
-                console.log("receive message id = " + id, unit16)
                 let dataUnit8Array = new Uint8Array(e.target.result)
+                let id = self.Uint8ArrayToInt(dataUnit8Array.slice(0, 2))
                 dataUnit8Array = dataUnit8Array.slice(2)
-
-                // let dataUnit8Array = new Uint8Array(e.target.result)
-                // let id = self.Uint8ArrayToInt(dataUnit8Array.slice(0, 2))
-                // console.log("receive message id = " + id)
-                // dataUnit8Array = dataUnit8Array.slice(2)
                 self.distrubuteMsg(id, dataUnit8Array)
             }
         } else if (cc.sys.isNative) {
@@ -96,11 +95,12 @@ let hallSocket = {
     },
     /** 派发消息，pb解析 */
     distrubuteMsg(id, data) {
-        console.log("receive id =", id)
+        // console.log(id == 0 ? "收到心跳包" : "收到数据")
         if (id == 0) { // 心跳包
             this.ws.m_receivePong();
         } else {
-            let pbdata = hallmsg_pb.msg.deserializeBinary(data);
+            console.log("收到数据")
+            let pbdata = hallmsg_pb.gamemsg.deserializeBinary(data);
             let msg = {};
             msg.id = pbdata.getId();
             msg.data = JSON.parse(pbdata.getData());

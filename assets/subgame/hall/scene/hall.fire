@@ -4285,7 +4285,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "d9LLbIKpdP37H8vv48zaaf"
+    "_id": "17WXL8QrVG746xGgs/2/QE"
   },
   {
     "__type__": "cc.Label",
@@ -4315,7 +4315,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "0fXfWdN95Pf5Wq4qLuCg9m"
+    "_id": "34e83MZA9O7YRkWkJCogN1"
   },
   {
     "__type__": "cc.RichText",
@@ -7058,7 +7058,7 @@
       "__id__": 4
     },
     "component": "",
-    "_componentId": "38608rKz4dGSpsqTFRTu0z+",
+    "_componentId": "fb837RYI3VAVLRcnXWL6yM+",
     "handler": "onClickChongZhiBtn",
     "customEventData": ""
   },

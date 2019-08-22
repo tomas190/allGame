@@ -2,12 +2,12 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-08-17 16:31:38
+ * @LastEditTime: 2019-08-21 15:44:55
  * @Description: 游戏中央模块管理器
  */
 
 let gHandler = {
-    
+
 }
 
 let gameGlobal = {
@@ -17,7 +17,7 @@ let gameGlobal = {
     playerKey: "player",
     player: {
         gold: 1000,
-        name: "",
+        name: "name",
         pass: 123456,
         code: 123456,
         uuid: 123456,

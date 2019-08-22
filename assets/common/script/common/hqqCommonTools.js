@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:52:25
  * @LastEditors: burt
- * @LastEditTime: 2019-08-12 11:49:57
+ * @LastEditTime: 2019-08-20 18:15:20
  * @Description: 通用函数
  */
 
@@ -145,6 +145,9 @@ let commonTools = {
             rand = "0" + rand;
         }
         cc.loader.loadRes("head/im_head" + rand, cc.SpriteFrame, function (err, res) {
+            if (err) {
+                return
+            }
             head.spriteFrame = res;
         })
     },

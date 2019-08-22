@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-08-20 17:52:11
+ * @LastEditTime: 2019-08-22 14:23:57
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -32,7 +32,6 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        console.log("CC_DEBUG", CC_DEBUG)
         let isdev = true
         if (isdev) {
             gHandler.localStorage = hqqLocalStorage.init();
@@ -51,7 +50,7 @@ cc.Class({
             });
         }
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
-        gHandler.audioMgr.playBg("hallbg");
+        // gHandler.audioMgr.playBg("hallbg");
 
         // gHandler.hallWebSocket = new hqqWebSocket();
         // let hallSocket = require("hallSocket")
@@ -61,7 +60,7 @@ cc.Class({
         // hallSocket.init({
         //     webSocket: gHandler.hallWebSocket,
         // })
-        // gHandler.hallWebSocket.connect("ws://127.0.0.1:52288");
+        // gHandler.hallWebSocket.connect("ws://10.63.90.80:52288");
 
         this.topbubble.active = false;
         gHandler.commonTools.setDefaultHead(this.headimg);
@@ -211,6 +210,10 @@ cc.Class({
     /** 充值 */
     onClickChongZhiBtn() {
         console.log("chongzhi")
+        let data = {
+            id: "12345"
+        }
+        gHandler.hallWebSocket.sendMessage("login", data)
     },
     /** 全民代理  */
     onClickQMDL() {

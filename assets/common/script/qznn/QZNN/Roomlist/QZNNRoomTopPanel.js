@@ -1,4 +1,11 @@
 /*
+ * @Author: burt
+ * @Date: 2019-08-17 14:52:57
+ * @LastEditors: burt
+ * @LastEditTime: 2019-08-21 15:45:05
+ * @Description: 
+ */
+/*
  *  Dawnson 2019-8-01
  *  15302765815@163.com
  */
@@ -38,6 +45,8 @@ cc.Class({
     },
     funBack: function() {
         console.log("返回大厅")
+        let gHandler = require("gHandler");
+        cc.director.loadScene(gHandler.gameConfig.hallconfig.lanchscene)
             //cc.gg.client.send('__backtohall', {}, () => {})
     },
     funModify: function() {
