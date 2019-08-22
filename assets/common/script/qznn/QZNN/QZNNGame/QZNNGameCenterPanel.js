@@ -163,7 +163,7 @@ cc.Class({
                 a._GameView.node_UI.addChild(i), a.scheduleOnce(function() { a._GameView.node_UI.removeChild(i) }, 1)
             }
         });
-        cc.gg.audioMgr.playSFX("game_open.mp3")
+        cc.gg.audioMgr.playSFX("public/nnMusic/gameStart")
     },
 
     funGrandBanker: function(target) {

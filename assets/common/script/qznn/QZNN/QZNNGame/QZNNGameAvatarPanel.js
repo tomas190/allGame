@@ -67,8 +67,10 @@ cc.Class({
         var s = cc.gg.utils.getSubStringLengTxt(n);
         i.account_score = parseFloat(i.account_score + "").toFixed(2);
         this.player[e].username.string = s;
-        i.account_score < 0 && (i.account_score = (i.account_score + "").substr(1, t.length)),
-            this.player[e].score.string = this.ModifyStr(i.account_score);
+        if (i.account_score < 0) {
+            i.account_score = (i.account_score + "").substr(1, t.length);
+        }
+        this.player[e].score.string = this.ModifyStr(i.account_score);
         this.player[e].active = true;
     },
     setViewUserReady: function(e, t) {
@@ -98,10 +100,17 @@ cc.Class({
             a.getChildByName("noGrab").active = true;
             a.getChildByName("bet").active = false
         }
+        a.scaleX = 2;
+        a.scaleY = 2;
+        a.runAction(cc.scaleTo(.3, 1, 1))
     },
     //显示庄家标志
     setViewBankerSign: function(e, t) {
         this.player[e].banker.active = t
+        this.player[e].banker.scaleX = 2;
+        this.player[e].banker.scaleY = 2;
+        //缩放动画
+        this.player[e].banker.runAction(cc.scaleTo(.3, 1, 1))
     },
     //设置闲家配置
     setUserMultiple: function(e, t) {
@@ -110,6 +119,9 @@ cc.Class({
         i.getChildByName("noGrab").active = !1
         var a = i.getChildByName("bet").getComponent(cc.Label);
         a.node.active = !0, a.string = "/" + t
+        i.scaleX = 2;
+        i.scaleY = 2;
+        i.runAction(cc.scaleTo(.3, 1, 1))
     },
     // setUserChipScore: function(e, t) {
     //     var i = this.player[e].chipSpr;

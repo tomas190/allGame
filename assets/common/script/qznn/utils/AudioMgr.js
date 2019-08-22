@@ -20,7 +20,7 @@ cc.Class({
             })
     },
     getUrl: function(e) {
-        return cc.url.raw('resources/sounds/' + e)
+        return cc.url.raw('resources/public/music' + e)
     },
     getAudioChip: function(e) {
         var chip = cc.loader.loadRes('sounds/' + e, cc.AudioClip, function(err, clip) {
@@ -35,17 +35,28 @@ cc.Class({
 
     },
     playBGM: function(e) {
-        var t = this.getUrl(e)
-        cc.gg.utils.ccLog(t), 0 <= this.bgmAudioID && cc.audioEngine.stop(this.bgmAudioID),
-            this.bgmAudioID = cc.audioEngine.play(t, !0, this.bgmVolume)
+        var self = this;
+        e = e ? e : 'public/nnMusic/Click'
+        if (0 < this.sfxVolume && e) {
+            cc.loader.loadRes(e, cc.AudioClip, function(err, clip) {
+                if (err) {
+                    console.log(err);
+                    return
+                }
+                cc.audioEngine.play(clip, true, self.sfxVolume)
+            });
+        }
     },
     playSFX: function(e) {
         var self = this;
-        //e = e ? e : 'QZNN/QZNNMusic/Click.mp3'
-        e = 'QZNN/QZNNMusic/Click.mp3'
+        e = e ? e : 'public/nnMusic/Click'
         if (0 < this.sfxVolume && e) {
             cc.loader.loadRes(e, cc.AudioClip, function(err, clip) {
-                //cc.audioEngine.play(clip, !1, self.sfxVolume)
+                if (err) {
+                    console.log(err);
+                    return
+                }
+                cc.audioEngine.play(clip, !1, self.sfxVolume)
             });
         }
     },

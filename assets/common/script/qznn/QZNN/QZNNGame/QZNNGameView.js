@@ -364,7 +364,7 @@ cc.Class({
             if (0 != pos || 1 != nnTool.UserisExist()) {
                 var status = data.account_status;
                 console.log("其他玩家状态", pos, status);
-                if (status > 2 && status < 8) {
+                if (status > 2 && status <= 8) {
                     this._cardPanel.showUserCardBack(pos);
                     if (status == 4) {
                         this._avatarPanel.setUserGrabMultiple(pos, 0)
@@ -382,7 +382,8 @@ cc.Class({
                     } else if (status == 7) {
                         // this._avatarPanel.setUserMultiple(pos, data.multiples)
                     } else if (status == 8) {
-                        this._cardPanel.setViewOpenCard(pos, data.show_cards.cards)
+                        this._cardPanel.setViewOpenCard(pos, data.show_cards.cards);
+                        console.log(data.show_cards, "别人的牌 ??????");
                         this._cardPanel.setTypeSprite(pos, null, data.kind)
                     }
                 }

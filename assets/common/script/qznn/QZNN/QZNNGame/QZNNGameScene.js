@@ -265,6 +265,7 @@ cc.Class({
         if (!data || data == "") {
             return
         }
+        cc.gg.global.gameRoomData = data;
         var datas = JSON.parse(data);
         console.log("manageJoinRoom", datas);
         this._GameView.resetView(cmd.GAME_PLAYER);
