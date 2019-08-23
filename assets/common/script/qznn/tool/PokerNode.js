@@ -420,7 +420,9 @@ cc.Class({
             if (bet.active) {
                 bet.runAction(cc.scaleTo(.3, 1, 1))
             }
+            cc.gg.audioMgr.playSFX("public/nnMusic/kind/kind" + i)
         })))
+
     },
     setBtnLook: function(e, t) {
         this._gameView._scene;
