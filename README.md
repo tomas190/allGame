@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-08-22 17:59:29
+ * @LastEditTime: 2019-08-23 11:58:41
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -66,15 +66,12 @@ ts 项目注意事项：{
 }
 
 同步主分支master修改（common目录内容修改）：{
-	1、把自己的修改全部上传到自己派生的新仓库
-	2、拉取主分支master代码到本地，解决冲突后上传{
-		git remote -v // 查看远程仓库状态
-		git remote add upstream http://git.0717996.com/burt/allGame // 添加主分支远程仓库
-		git fetch upstream // 从主分支远程仓库拉取资源
-		git merge upstream/master // 合并到本地代码
-		git pull origin master // 更新并合并自己远程仓库代码
-		git push 
-	}
+	git remote -v // 查看远程仓库状态
+	git remote add upstream http://git.0717996.com/burt/allGame // 添加主分支远程仓库
+	git fetch upstream // 从主分支远程仓库拉取资源
+	git merge upstream/master // 合并到本地代码
+	git pull origin master // 更新并合并自己远程仓库代码
+	git push 
 	注意：有时可能需要重启游戏编辑器才能显示正常
 }
 

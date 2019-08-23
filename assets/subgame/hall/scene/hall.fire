@@ -4282,7 +4282,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "402hPYQf5EoqVgObnQqP4j"
+    "_id": "f6yrv0qZJBV4jN1T8txOf0"
   },
   {
     "__type__": "cc.Label",
@@ -4312,7 +4312,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "3c3ts2BERG66HrwOgi8yNb"
+    "_id": "47lmuXoeRL1IIB0O8w258S"
   },
   {
     "__type__": "cc.RichText",
