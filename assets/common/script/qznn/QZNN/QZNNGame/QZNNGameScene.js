@@ -170,7 +170,7 @@ cc.Class({
         var datas = JSON.parse(data)
         console.log(datas, "抢庄数据");
         var pos = nnTool.getLocalIndex(datas.account_id);
-        this._GameView._avatarPanel.setUserGrabMultiple(pos, datas.grab_multiple)
+        this._GameView._avatarPanel.setUserGrabMultiple(pos, cmd.GrabMultiple[datas.grab_multiple + ""])
     },
     //用户下注
     managePlayerMultiples: function(data) {
@@ -265,6 +265,7 @@ cc.Class({
         if (!data || data == "") {
             return
         }
+        cc.gg.global.gameRoomData = data;
         var datas = JSON.parse(data);
         console.log("manageJoinRoom", datas);
         this._GameView.resetView(cmd.GAME_PLAYER);

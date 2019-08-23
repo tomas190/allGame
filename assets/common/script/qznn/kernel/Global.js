@@ -9,7 +9,7 @@
  *  274 appStart
  * 
  * dev WS   http://im.80rxjhsf.com/upload  ws://im.80rxjhsf.com  pre  im.sempxw.com
- * test     47.75.152.229:7778   10.63.90.40:7778
+ * test     47.75.152.229:9518   10.63.90.40:7778
  */
 cc.Class({
     extends: cc.Component,
@@ -42,7 +42,7 @@ cc.Class({
             this.socket = socketHeader + socket;
             this.file = this.url + "/upload";
         } else {
-            this.socket = 'ws://47.75.152.229:7778';
+            this.socket = 'ws://47.75.152.229:9518';
             this.file = "http://im.80rxjhsf.com/upload";
         }
         this.chatObjID = null;

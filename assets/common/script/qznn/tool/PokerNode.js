@@ -250,11 +250,11 @@ cc.Class({
                         cc.bezierTo(0.3, [cc.v2(d.x, d.y), cc.v2(positionBSR.x, positionBSR.y), cc.v2(v.x, v.y)]), cc.fadeIn(.15))))
             }
             if (t) {
-                console.log("延时时间CallBack->>>", o.length * 0.4), this.scheduleOnce(function() {
+                console.log("延时时间CallBack->>>", o * 0.4), this.scheduleOnce(function() {
                     t()
-                }, o.length * 4)
+                }, o * 0.4)
             }
-            cc.gg.audioMgr.playSFX("nn/game/send_card.mp3")
+            cc.gg.audioMgr.playSFX("public/nnMusic/send_card")
         } else console.log("发牌动画出错->>>>setSendCardAni")
     },
     setViewOpenCard: function(e, t, fun) {
@@ -393,6 +393,11 @@ cc.Class({
         var valueBox = a.getChildByName("valueBox");
         var value = valueBox.getChildByName("value");
         var bet = valueBox.getChildByName("beishu");
+        value.scaleX = 2;
+        value.scaleY = 2;
+        bet.scaleX = 2;
+        bet.scaleY = 2;
+
         value.getComponent(cc.Sprite).spriteFrame = this.pokerDianshu.getSpriteFrame("poker" + i);
         a.active = !0;
         if (t) {
@@ -411,6 +416,13 @@ cc.Class({
         } else {
             bet.getComponent(cc.Label).string = "/" + 1
         }
+        value.runAction(cc.sequence(cc.scaleTo(.3, 1, 1), cc.callFunc(function() {
+            if (bet.active) {
+                bet.runAction(cc.scaleTo(.3, 1, 1))
+            }
+            cc.gg.audioMgr.playSFX("public/nnMusic/kind/kind" + i)
+        })))
+
     },
     setBtnLook: function(e, t) {
         this._gameView._scene;

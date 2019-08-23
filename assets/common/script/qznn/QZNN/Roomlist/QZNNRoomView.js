@@ -16,6 +16,8 @@ cc.Class({
     onLoad: function() {
         cc.gg ? cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE) : cc.director("appStart");
         this._scene = this.node.getComponent("QZNNRoomScene");
+        cc.gg.audioMgr.pauseAll();
+        cc.gg.audioMgr.playBGM("public/nnMusic/roomBG")
     },
     start: function() {
         this.initView();

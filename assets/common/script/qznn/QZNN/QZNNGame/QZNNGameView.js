@@ -204,7 +204,8 @@ cc.Class({
                 l = 0,
                 d = cc.sequence(cc.delayTime(s), cc.callFunc(function() {
                     for (var e = 0; e < t.length; e++) a[e].active = !1;
-                    c - 1 <= ++l ? a[o].active = !0 : a[r].active = !0, r++, r = parseInt(r % t.length)
+                    c - 1 <= ++l ? a[o].active = !0 : a[r].active = !0, r++, r = parseInt(r % t.length);
+                    cc.gg.audioMgr.playSFX("public/nnMusic/qznn_dengdeng2")
                 })),
                 h = cc.sequence(cc.repeat(d, c), cc.delayTime(.5), cc.callFunc(function() {
                     for (var e = 0; e < t.length; e++) a[e].active = !1;
@@ -364,7 +365,7 @@ cc.Class({
             if (0 != pos || 1 != nnTool.UserisExist()) {
                 var status = data.account_status;
                 console.log("其他玩家状态", pos, status);
-                if (status > 2 && status < 8) {
+                if (status > 2 && status <= 8) {
                     this._cardPanel.showUserCardBack(pos);
                     if (status == 4) {
                         this._avatarPanel.setUserGrabMultiple(pos, 0)
@@ -382,7 +383,8 @@ cc.Class({
                     } else if (status == 7) {
                         // this._avatarPanel.setUserMultiple(pos, data.multiples)
                     } else if (status == 8) {
-                        this._cardPanel.setViewOpenCard(pos, data.show_cards.cards)
+                        this._cardPanel.setViewOpenCard(pos, data.show_cards.cards);
+                        console.log(data.show_cards, "别人的牌 ??????");
                         this._cardPanel.setTypeSprite(pos, null, data.kind)
                     }
                 }
