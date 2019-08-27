@@ -2,7 +2,17 @@
   "assets-sort-type": "name",
   "collision-matrix": [
     [
+      false
+    ],
+    [
+      false,
+      false,
       true
+    ],
+    [
+      false,
+      true,
+      false
     ]
   ],
   "design-resolution-height": 640,
@@ -21,7 +31,9 @@
   "fit-height": true,
   "fit-width": false,
   "group-list": [
-    "default"
+    "default",
+    "Bullet",
+    "Fish"
   ],
   "last-module-event-record-time": 1566466357367,
   "simulator-orientation": false,

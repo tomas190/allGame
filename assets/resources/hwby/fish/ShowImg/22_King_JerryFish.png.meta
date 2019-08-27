@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.1",
+  "uuid": "a863a7d3-51ec-43ee-8e29-70ddfa1155da",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "22_King_JerryFish": {
+      "ver": "1.0.4",
+      "uuid": "2c851763-8c30-43fe-a22c-0dc7ee15353f",
+      "rawTextureUuid": "a863a7d3-51ec-43ee-8e29-70ddfa1155da",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 141,
+      "height": 206,
+      "rawWidth": 141,
+      "rawHeight": 206,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
