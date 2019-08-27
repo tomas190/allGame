@@ -1,0 +1,55 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "BodyFire",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.1,
+  "sample": 60,
+  "speed": 0.5,
+  "wrapMode": "1",
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "88810ea6-9c7a-4813-a126-87fd26b74a74"
+            }
+          },
+          {
+            "frame": 0.016666666666666666,
+            "value": {
+              "__uuid__": "20af4eb9-1bd7-4d58-b16d-4fc0303e4de2"
+            }
+          },
+          {
+            "frame": 0.03333333333333333,
+            "value": {
+              "__uuid__": "2e795197-5528-45f2-9a77-9ac2721775f8"
+            }
+          },
+          {
+            "frame": 0.05,
+            "value": {
+              "__uuid__": "d088bc1c-018c-4df0-b182-a24b3bacdf88"
+            }
+          },
+          {
+            "frame": 0.06666666666666667,
+            "value": {
+              "__uuid__": "b858c06f-5339-425a-a043-d7aedeb55ec1"
+            }
+          },
+          {
+            "frame": 0.08333333333333333,
+            "value": {
+              "__uuid__": "16937835-5cc7-4093-a46f-d8cda011564d"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
