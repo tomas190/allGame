@@ -207,7 +207,7 @@ cc.Class({
         if(bv > 0) {
             let music = this.BGM[musicID];
             if(music) {
-                cc.log("Play Muisc",bv);
+                cc.log("Play Muisc",bv,music);
                 cc.audioEngine.stopMusic();
                 let id = cc.audioEngine.playMusic(music, true);
                 cc.audioEngine.setVolume(id,bv);
@@ -226,6 +226,7 @@ cc.Class({
         {
             let sound = this.SOUND[soundID];
             if(sound) {
+                cc.log("play effect",sound);
                 let id = cc.audioEngine.playEffect(sound, false);
                 //cc.log("cc.audioEngine.getVolume(id)",cc.audioEngine.getVolume(id));
                 cc.audioEngine.setVolume(id,sv);

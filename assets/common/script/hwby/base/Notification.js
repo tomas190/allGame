@@ -50,6 +50,12 @@ var Notification = cc.Class({
         delete this.mapReciver[objname];
     },
 
+    ClearAll()
+    {
+        this.mapNoticer = [];     
+        this.mapReciver = {};   
+    },
+
     //发送消息，异步处理，先进入队例
     SendNotify(id,data)
     {

@@ -454,6 +454,8 @@ var GameStatMgr = cc.Class({
 
         this.StopBreathe();
 
+        Notification.ClearAll();
+
         connection.setConnectedCallBack(null);
         connection.setDisconnectedCallBack(null);        
         connection.Close();
