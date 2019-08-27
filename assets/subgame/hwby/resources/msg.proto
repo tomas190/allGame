@@ -1,0 +1,8 @@
+package msg;
+
+syntax = "proto3";
+
+message Test1{
+    int32 id = 1;//活动ID
+    string name = 2;//名字
+}

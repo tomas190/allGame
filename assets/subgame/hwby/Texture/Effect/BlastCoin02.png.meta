@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.1",
+  "uuid": "08f9c37d-88cd-4f7b-be44-df348e2fe238",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "BlastCoin02": {
+      "ver": "1.0.4",
+      "uuid": "5cc7f400-d835-4122-895c-2123cca05f62",
+      "rawTextureUuid": "08f9c37d-88cd-4f7b-be44-df348e2fe238",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 2,
+      "trimY": 2,
+      "width": 2016,
+      "height": 1958,
+      "rawWidth": 2020,
+      "rawHeight": 1962,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

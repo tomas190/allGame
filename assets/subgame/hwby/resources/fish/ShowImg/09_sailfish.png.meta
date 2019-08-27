@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.1",
+  "uuid": "2631e7ec-b1e0-4d9a-8a59-620e410f05f0",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "09_sailfish": {
+      "ver": "1.0.4",
+      "uuid": "4bcb108f-0179-4a62-9df1-52e7845bfd6e",
+      "rawTextureUuid": "2631e7ec-b1e0-4d9a-8a59-620e410f05f0",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 1,
+      "trimY": 0,
+      "width": 40,
+      "height": 137,
+      "rawWidth": 42,
+      "rawHeight": 137,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
