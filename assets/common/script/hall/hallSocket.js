@@ -2,8 +2,8 @@
  * @Author: burt
  * @Date: 2019-08-14 13:15:03
  * @LastEditors: burt
- * @LastEditTime: 2019-08-15 10:56:23
- * @Description: 大厅socket处理模块
+ * @LastEditTime: 2019-08-27 15:11:56
+ * @Description: 
  */
 
 let hallmsg_pb = require("hallmsg_pb");

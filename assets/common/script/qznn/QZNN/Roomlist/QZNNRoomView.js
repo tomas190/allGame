@@ -16,6 +16,8 @@ cc.Class({
     onLoad: function() {
         cc.gg ? cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE) : cc.director("appStart");
         this._scene = this.node.getComponent("QZNNRoomScene");
+        cc.gg.audioMgr.pauseAll();
+        cc.gg.audioMgr.playBGM("public/nnMusic/roomBG")
     },
     start: function() {
         this.initView();
@@ -24,6 +26,7 @@ cc.Class({
         this.addEvenListener();
         var e = cc.view.getVisibleSize();
         e.width / 750 < 1 && this.node_center.setScale(e.width / 750, e.height / 1334);
+        //播放音乐
 
     },
     initView: function() {
@@ -91,8 +94,8 @@ cc.Class({
 
         this.scheduleOnce(function() {
             self.msg.active = true;
-            self.msg.getComponent("QZNNRoomView").resetView()
-            self.msg.getComponent("QZNNRoomScene").resetSence()
+            self.msg.getComponent("QZNNGameView").resetView()
+            self.msg.getComponent("QZNNGameScene").resetSence()
             self.hall.active = false;
 
             self.backMsgLock = true;

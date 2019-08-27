@@ -2,11 +2,9 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-08-15 10:30:42
+ * @LastEditTime: 2019-08-23 15:30:09
  * @Description: 大厅场景
  */
-const gameConfig = require('gameConfig');
-let gameGlobal = require("gameGlobal");
 let gHandler = require("gHandler");
 let hqqCommonTools = require("hqqCommonTools");
 let hqqLocalStorage = require("hqqLocalStorage");
@@ -35,9 +33,8 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        console.log("CC_DEBUG", CC_DEBUG)
-        CC_JSB = !CC_DEBUG
-        if (!CC_JSB) {
+        let isdev = true
+        if (isdev) {
             gHandler.localStorage = hqqLocalStorage.init();
             gHandler.logManager = hqqLogMgr.init();
             gHandler.commonTools = hqqCommonTools;
@@ -53,26 +50,25 @@ cc.Class({
                 cc.audioEngine.resumeAllEffects();
             });
         }
-        gHandler.gameConfig = gameConfig;
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
         gHandler.audioMgr.playBg("hallbg");
 
-        gHandler.hallWebSocket = new hqqWebSocket();
-        let hallSocket = require("hallSocket")
-        gHandler.hallWebSocket.init({
-            protoDeal: hallSocket,
-        });
-        hallSocket.init({
-            webSocket: gHandler.hallWebSocket,
-        })
-        gHandler.hallWebSocket.connect("ws://127.0.0.1:52288");
+        // gHandler.hallWebSocket = new hqqWebSocket();
+        // let hallSocket = require("hallSocket")
+        // gHandler.hallWebSocket.init({
+        //     protoDeal: hallSocket,
+        // });
+        // hallSocket.init({
+        //     webSocket: gHandler.hallWebSocket,
+        // })
+        // gHandler.hallWebSocket.connect("ws://127.0.0.1:52288");
 
         this.topbubble.active = false;
         gHandler.commonTools.setDefaultHead(this.headimg);
         if (cc.sys.isBrowser) {
             this.browserDeal();
         }
-        this.addSubgame();
+        this.addSubgame(isdev);
         this.checkSubModule();
     },
     /** enabled和active属性从false变为true时 */
@@ -88,10 +84,10 @@ cc.Class({
         this.huodongbtn.getChildByName("redpoint").active = false;
     },
     /** 子游戏初始化 */
-    addSubgame() {
-        this.subgameview.content.width = Math.ceil(gameConfig.gamelist.length / 2) * (this.itembtn.width + 5) + this.pageview.node.width + 15;
-        for (let i = 0; i < gameConfig.gamelist.length; i++) {
-            let tempdata = gameConfig.gamelist[i];
+    addSubgame(isdev) {
+        this.subgameview.content.width = Math.ceil(gHandler.gameConfig.gamelist.length / 2) * (this.itembtn.width + 5) + this.pageview.node.width + 15;
+        for (let i = 0; i < gHandler.gameConfig.gamelist.length; i++) {
+            let tempdata = gHandler.gameConfig.gamelist[i];
             let itembtn = cc.instantiate(this.itembtn);
             itembtn.x = Math.floor(i / 2) * (this.itembtn.width + 5) + this.itembtn.width / 2 + 15 + this.pageview.node.width;
             itembtn.y = -i % 2 * this.itembtn.height - this.itembtn.height * 0.5 - 20;
@@ -105,14 +101,14 @@ cc.Class({
             itembtn.getChildByName("wait").active = false;
             itembtn.getChildByName("experience").active = false;
             tempdata.itembtn = itembtn;
-            if (CC_JSB) {
+            if (!isdev) {
                 this.checkSubGameDownload(tempdata);
             } else {
                 let downflag = tempdata.itembtn.getChildByName("downFlag");
                 let progress = tempdata.itembtn.getChildByName("progress");
                 var clickEventHandler = new cc.Component.EventHandler();
                 clickEventHandler.target = this.node;
-                clickEventHandler.component = "hall";
+                clickEventHandler.component = "hallScene";
                 clickEventHandler.customEventData = tempdata;
                 downflag.active = false;
                 progress.active = false;
@@ -153,7 +149,7 @@ cc.Class({
         let progress = data.itembtn.getChildByName("progress");
         var clickEventHandler = new cc.Component.EventHandler();
         clickEventHandler.target = this.node;
-        clickEventHandler.component = "hall";
+        clickEventHandler.component = "hallScene";
         clickEventHandler.customEventData = data;
         let subgamev = this.getRemoteSubgame(data.game_id).version;
         let localsubv = gHandler.localStorage.get(data.enname, "versionKey");

@@ -1,18 +1,31 @@
 var Animation = cc.Class({
     ctor: function() {},
     setGoldAnimation: function(e, t, i, a, o, n, s) {
-        if (null == a || a.length <= 0) return n && n(), void(s ? cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3") : cc.gg.audioMgr.playSFX("paijiu/status/goldDrift.mp3"));
+        /**
+         * e 是金币定位节点   
+         * t是金币图集 
+         * i是庄家头像 
+         * a是输钱头像节点数组 
+         * 或赢钱数组 
+         * o是不是庄家 
+         * n回调函数
+         */
+        if (null == a || a.length <= 0) return n && n(),
+            void(s ? cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3") : cc.gg.audioMgr.playSFX("public/nnMusic/gold"));
         for (var c = i.getPosition(), r = 0, l = 0; l < a.length; l++)
             for (var d = a[l].getPosition(), h = d, g = c, u = 0; u < 10; u++) {
                 var m = new cc.Node;
-                m.addComponent(cc.Sprite), m.getComponent(cc.Sprite).spriteFrame = t, o ? (h = d, g = c) : (h = c, g = d), m.setPosition(h), e.addChild(m);
+                m.addComponent(cc.Sprite),
+                    m.getComponent(cc.Sprite).spriteFrame = t,
+                    o ? (h = d, g = c) : (h = c, g = d),
+                    m.setPosition(h), e.addChild(m);
                 var _ = [cc.v2(0, g.x), cc.v2(g.x, g.y), cc.v2(g.x, g.y)],
                     p = cc.bezierTo(.1 * u, _),
-                    f = cc.sequence(p, cc.callFunc(function() {++r == 10 * a.length - 1 && (e.removeAllChildren(), n && n(), s ? cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3") : cc.gg.audioMgr.playSFX("paijiu/status/goldDrift.mp3")) }));
+                    f = cc.sequence(p, cc.callFunc(function() {++r == 10 * a.length - 1 && (e.removeAllChildren(), n && n(), s ? cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3") : cc.gg.audioMgr.playSFX("public/nnMusic/gold")) }));
                 m.runAction(f)
             }
         if (s) cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3");
-        else { cc.gg.audioMgr.playSFX("drop_gold.mp3") }
+        else { cc.gg.audioMgr.playSFX("public/nnMusic/gold") }
     },
     viewGrabBankerAnimation: function(e, t, i, a) {
         if (t.length <= 1) a && a();

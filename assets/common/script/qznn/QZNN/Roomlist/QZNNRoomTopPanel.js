@@ -1,11 +1,4 @@
 /*
- * @Author: burt
- * @Date: 2019-08-13 11:45:43
- * @LastEditors: burt
- * @LastEditTime: 2019-08-13 11:49:09
- * @Description: 
- */
-/*
  *  Dawnson 2019-8-01
  *  15302765815@163.com
  */
@@ -23,9 +16,9 @@ cc.Class({
         this.addEvenListener(this.node);
     },
     addEvenListener: function(e) {
-        cc.gg.utils.addClickEventEND(this.headerLeft, this.funBack.bind(this));
-        cc.gg.utils.addClickEventEND(this.modify, this.funModify.bind(this));
-        cc.gg.utils.addClickEventEND(this.addGold, this.funAddGold.bind(this));
+        cc.gg.utils.addClickEventEND(this.headerLeft, this.funBack.bind(this), { flag: true });
+        cc.gg.utils.addClickEventEND(this.modify, this.funModify.bind(this), { flag: true });
+        cc.gg.utils.addClickEventEND(this.addGold, this.funAddGold.bind(this), { flag: true });
     },
     initView: function() {
         this.headerLeft = this.node.getChildByName("btn_left");
@@ -45,8 +38,6 @@ cc.Class({
     },
     funBack: function() {
         console.log("返回大厅")
-        let gHandler = require("gHandler");
-        cc.director.loadScene(gHandler.gameConfig.hallconfig.lanchscene)
             //cc.gg.client.send('__backtohall', {}, () => {})
     },
     funModify: function() {

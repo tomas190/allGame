@@ -41,11 +41,11 @@ cc.Class({
     },
     resetView: function(e) {
         for (var t = 0; t < e; t++)
-            this.player[t].head.spriteFrame = null,
-            // this.player[t].head_bg.active = !1,
-            this.player[t].username.string = "",
-            this.player[t].score.string = "",
-            // this.player[t].leave.active = !1,
+        //this.player[t].head.spriteFrame = null,
+        // this.player[t].head_bg.active = !1,
+        //this.player[t].username.string = "",
+        //this.player[t].score.string = "",
+        // this.player[t].leave.active = !1,
             this.player[t].blink.active = !1,
             // this.player[t].ready.active = !1,
             this.player[t].banker.active = !1,
@@ -57,39 +57,6 @@ cc.Class({
         for (var i = 0; i < e; i++) {
             this.player[i].active = !0;
         }
-        // for (var t = 0; t < e; t++)
-        //     this.player[t].active = !0,
-        //     this.player[t].setScale(1.1),
-        //     6 == e ? (this.player[t].setPosition(c.SIX_USER_POS[t]), 1 == t || 2 == t ? (this.player[t].status.position = a[1],
-        //         this.player[t].ready.position = o[1],
-        //         this.player[t].banker.position = n[1],
-        //         this.player[t].chipSpr.position = s[1]) : 3 != t && 4 != t && 5 != t || (this.player[t].status.position = a[0],
-        //         this.player[t].ready.position = o[0],
-        //         this.player[t].banker.position = n[0],
-        //         this.player[t].chipSpr.position = s[0])) :
-        //     9 == e || 15 == e ? (9 == e ?
-        //         this.player[t].setPosition(c.Nine_USER_POS[t]) :
-        //         this.player[t].setPosition(c.fifteen_USER_POS[t]),
-        //         1 == t || 2 == t || 3 == t || 4 == t ?
-        //         (this.player[t].status.position = a[1],
-        //             this.player[t].ready.position = o[1],
-        //             this.player[t].banker.position = n[1],
-        //             this.player[t].chipSpr.position = s[1]) : 5 != t && 6 != t && 7 != t && 8 != t || (this.player[t].status.position = a[0],
-        //             this.player[t].ready.position = o[0], this.player[t].banker.position = n[0],
-        //             this.player[t].chipSpr.position = s[0])) :
-        //     10 == e ? (this.player[t].setPosition(c.TEN_USER_POS[t]), 1 == t || 2 == t || 3 == t || 4 == t ?
-        //         (this.player[t].status.position = a[1], this.player[t].ready.position = o[1],
-        //             this.player[t].banker.position = n[1],
-        //             this.player[t].chipSpr.position = s[1]) : 5 != t && 6 != t && 7 != t && 8 != t && 9 != t || (this.player[t].status.position = a[0],
-        //             this.player[t].ready.position = o[0], this.player[t].banker.position = n[0], this.player[t].chipSpr.position = s[0])) : 12 == e ?
-        //     (this.player[t].setPosition(c.Twelve_USER_POS[t]),
-        //         1 == t || 2 == t || 3 == t || 4 == t || 5 == t ? (this.player[t].status.position = a[1],
-        //             this.player[t].ready.position = o[1], this.player[t].banker.position = n[1],
-        //             this.player[t].chipSpr.position = s[1]) : 6 != t && 7 != t && 8 != t && 9 != t && 10 != t && 11 != t || (this.player[t].status.position = a[0], this.player[t].ready.position = o[0],
-        //             this.player[t].banker.position = n[0], this.player[t].chipSpr.position = s[0])) : 13 == e ?
-        //     (this.player[t].setPosition(c.THIRTEEN_USER_POS[t]), 1 == t || 2 == t || 3 == t || 4 == t || 5 == t || 6 == t ?
-        //         (this.player[t].status.position = a[1], this.player[t].ready.position = o[1], this.player[t].banker.position = n[1],
-        //             this.player[t].chipSpr.position = s[1]) : 7 != t && 8 != t && 9 != t && 10 != t && 11 != t && 12 != t || (this.player[t].status.position = a[0], this.player[t].ready.position = o[0], this.player[t].banker.position = n[0], this.player[t].chipSpr.position = s[0])) : 17 == e && this.player[t].setScale(1)
     },
     setUserInfo: function(e, t) {
         var i = t;
@@ -98,8 +65,12 @@ cc.Class({
         console.log("用户头像信息：" + o), cc.gg.utils.changeSpriteFrameWithServerUrlForWeb(a, o);
         var n = i.nickname;
         var s = cc.gg.utils.getSubStringLengTxt(n);
+        i.account_score = parseFloat(i.account_score + "").toFixed(2);
         this.player[e].username.string = s;
-        this.player[e].score.string = i.account_score;
+        if (i.account_score < 0) {
+            i.account_score = (i.account_score + "").substr(1, t.length);
+        }
+        this.player[e].score.string = this.ModifyStr(i.account_score);
         this.player[e].active = true;
     },
     setViewUserReady: function(e, t) {
@@ -129,10 +100,17 @@ cc.Class({
             a.getChildByName("noGrab").active = true;
             a.getChildByName("bet").active = false
         }
+        a.scaleX = 2;
+        a.scaleY = 2;
+        a.runAction(cc.scaleTo(.3, 1, 1))
     },
     //显示庄家标志
     setViewBankerSign: function(e, t) {
         this.player[e].banker.active = t
+        this.player[e].banker.scaleX = 2;
+        this.player[e].banker.scaleY = 2;
+        //缩放动画
+        this.player[e].banker.runAction(cc.scaleTo(.3, 1, 1))
     },
     //设置闲家配置
     setUserMultiple: function(e, t) {
@@ -141,6 +119,9 @@ cc.Class({
         i.getChildByName("noGrab").active = !1
         var a = i.getChildByName("bet").getComponent(cc.Label);
         a.node.active = !0, a.string = "/" + t
+        i.scaleX = 2;
+        i.scaleY = 2;
+        i.runAction(cc.scaleTo(.3, 1, 1))
     },
     // setUserChipScore: function(e, t) {
     //     var i = this.player[e].chipSpr;
@@ -193,14 +174,16 @@ cc.Class({
     actionFlutterScore: function(node, e, t, i) {
         // var a = this;
         // a.node.x = a.firstX, a.node.y = a.firstY;
-        var firstX = node.x;
-        var firstY = node.y;
+
         var scoreBox = node.getChildByName("windUp");
+        var firstX = scoreBox.x;
+        var firstY = scoreBox.y;
         var addNode = scoreBox.getChildByName("addGold");
         var minusNode = scoreBox.getChildByName("subGold");
         scoreBox.active = true;
         var o = e.x,
             n = e.y;
+        t = parseFloat(t).toFixed(2);
         if (parseFloat(t) >= 0) {
             scoreBox.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame("eff_win");
         } else {
@@ -214,7 +197,7 @@ cc.Class({
             scoreBox.opacity = 100;
         var s = cc.moveBy(.5, o, n),
             c = cc.spawn(s, cc.fadeTo(.2, 255)),
-            r = cc.callFunc(function(e) { node.x = firstX, node.y = firstY, i && i() }),
+            r = cc.callFunc(function(e) { scoreBox.x = 0, scoreBox.y = 63, i && i() }),
             l = cc.sequence(c, cc.delayTime(.5), cc.fadeTo(1, 0), r);
         scoreBox.runAction(l)
     },

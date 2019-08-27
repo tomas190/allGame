@@ -8,7 +8,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-
+        lock: true,
     },
 
     initzation: function(e, t) {
@@ -21,18 +21,21 @@ cc.Class({
     addEvenListener: function(e) {
         //抢庄按钮事件
         for (var i = 0; i < this.grabBankerBtn.childrenCount; i++) {
-            cc.gg.utils.addClickEventEND(this.grabBankerBtn.children[i], this.funGrandBanker.bind(this));
+            cc.gg.utils.addClickEventEND(this.grabBankerBtn.children[i], this.funGrandBanker.bind(this), { flag: true });
         }
 
         //闲家下注事件
         for (var i = 0; i < this.betBtn.childrenCount; i++) {
-            cc.gg.utils.addClickEventEND(this.betBtn.children[i], this.funBetBtn.bind(this));
+            cc.gg.utils.addClickEventEND(this.betBtn.children[i], this.funBetBtn.bind(this), { flag: true });
         }
 
         //测试按钮事件
         for (var i = 0; i < this.test.childrenCount; i++) {
-            cc.gg.utils.addClickEventEND(this.test.children[i], this.funTest.bind(this));
+            cc.gg.utils.addClickEventEND(this.test.children[i], this.funTest.bind(this), { flag: true });
         }
+
+        //rule mask 的事件
+        cc.gg.utils.addClickEventEND(this.ruleMask, this.funRuleMask.bind(this), { flag: true });
     },
     initView: function() {
 
@@ -60,11 +63,48 @@ cc.Class({
         //测试按钮
         this.test = this.node.getChildByName("test");
 
+        //wait等待下一局标示
+        this.wait = this.node.getChildByName("wait");
+
+        //规则的按钮 
+        this.rule = this.node.getChildByName("rule");
+
+        //规则的mask
+        this.ruleMask = this.rule.getChildByName("mask");
+        this.ruleMask.active = false
 
     },
     //重置视图
     resetView: function() {
         this.status.active = false;
+        this.wait.active = false;
+    },
+    showWait: function() {
+        this.wait.active = true;
+    },
+    //点击mask隐藏规则 动画完成后隐藏自己
+    funRuleMask: function() {
+        var self = this;
+        if (!this.lock) {
+            return
+        }
+        this.lock = false;
+        var width = this.rule.width;
+        var status = this.ruleMask.active;
+        if (status) {
+            self.ruleMask.active = false;
+            var active = cc.sequence(cc.moveBy(.3, width, 0), cc.callFunc(function() {
+                self.lock = true;
+            }))
+        } else {
+            var active = cc.sequence(cc.moveBy(.3, -width, 0), cc.callFunc(function() {
+                self.ruleMask.active = true;
+                self.lock = true;
+            }))
+        }
+        console.log(12)
+        this.rule.runAction(active);
+
     },
     funTest: function(target) {
         //测试
@@ -73,7 +113,7 @@ cc.Class({
         //按钮三  显示闲家倍数标志
         //按钮四  摊派并结算飘分
         if (target.name == "btn1") {
-            console.log("抢庄测试")
+            console.log("发牌测试")
             this.test1()
         } else if (target.name == "btn2") {
             this.test2()
@@ -96,9 +136,7 @@ cc.Class({
         // this._GameView._TimerClass.onKillTimer();
         // //播放游戏开始动画
         // this.playGameOpen();
-        this.scheduleOnce(function() {
-            self.onSubSendCard() //开始发牌
-        }, 1)
+        this._GameView._cardPanel.setSendCardAni([3, 3, 3, 3, 3])
     },
     test2: function() {
         console.log("测试抢庄动画")
@@ -118,14 +156,14 @@ cc.Class({
     //游戏开始动画
     playGameOpen: function() {
         var a = this;
-        // cc.loader.loadRes("game/public/animation/gameopen/GameOpen", function(e, t) {
-        //     if (e) console.log("加载出错:", e);
-        //     else {
-        //         var i = cc.instantiate(t);
-        //         a._GameView.node_UI.addChild(i), a.scheduleOnce(function() { a._GameView.node_UI.removeChild(i) }, 1)
-        //     }
-        // });
-        cc.gg.audioMgr.playSFX("game_open.mp3")
+        cc.loader.loadRes("public/prefab/GameStartAni", function(e, t) {
+            if (e) console.log("加载出错:", e);
+            else {
+                var i = cc.instantiate(t);
+                a._GameView.node_UI.addChild(i), a.scheduleOnce(function() { a._GameView.node_UI.removeChild(i) }, 1)
+            }
+        });
+        cc.gg.audioMgr.playSFX("public/nnMusic/kaishi2")
     },
 
     funGrandBanker: function(target) {
@@ -142,7 +180,7 @@ cc.Class({
         target.name += "";
         var num = target.name.substr(target.name.length - 1);
         //派发下注事件
-        this._GameView._scene.sendPlayerMultiples(num - 1)
+        this._GameView._scene.sendPlayerMultiples(num)
     },
 
     funModify: function() {
