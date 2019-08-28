@@ -216,7 +216,9 @@ cc.Class({
         cc.log("msg.getHeadimg():",msg.getHeadimg());
         let fullpath = gameStatMgr.getIconPath() + msg.getHeadimg()
         cc.log("fullpath",fullpath);
-        this.SetPlayerHead(fullpath);     
+
+        //原生项目先不再设置头像等，可直接从大厅处取得头像
+        //this.SetPlayerHead(fullpath);     
 
         this.bLoginState = true;
     },
