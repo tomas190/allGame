@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-08-23 11:58:41
+ * @LastEditTime: 2019-08-27 15:36:21
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -35,6 +35,7 @@ subgame子游戏资源目录：{
 	获取大厅用户信息及其他，require gHandler模块，所有信息都会放在此模块内
 	动态加载的资源请尽最大努力改为资源节点形式管理，而不是放在一级目录resource下通过cc.loader来加载（示例：大厅场景hallresmanager节点）
 	资源名冲突（包括图片，脚本等），自己子游戏目录下的资源名字前缀解决
+	场景名 ： 请务必加游戏前缀或保证不与其他场景重名
 	在common的 gHandler.gameConfig 里配置游戏数据
 	从hall场景点击游戏按钮，跳转场景进入子游戏场景，进入子游戏
 	通用的库（pb库）建议放在主包脚本中，防止文件冲突
@@ -47,7 +48,8 @@ ts 项目注意事项：{
 
 新开项目流程：{
 	1、fork（派生）新仓库，子游戏修改后提交至自己的新仓库
-	2、阶段性开发完成后，向主仓库提交Pull Requests（合并请求）请求
+	2、阶段性开发完成后，向主仓库提交Pull Requests（合并请求）请求（点击branch 前的旋转样按钮）
+	3、合并时，请选择合并到主分支的allgame分支（在pull Requesers 时的第一个选择allgame）
 	3、主仓库合并各个子游戏
 	4、发布
 }
