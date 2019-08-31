@@ -20,7 +20,7 @@ cc.Class({
         for (var e = 0; e < 5; e++) {
             this.cardNodes[e] = cc.find("user_head" + e + "/node_card" + e, this.node),
                 this.cardNodes[e].active = !1,
-                0 == e && (this.mycardNode = this.cardNodes[e]);
+                2 == e && (this.mycardNode = this.cardNodes[e]);
             for (var i = 0; i < 5; i++) {
                 y.PokerNode[e + ""].push(this.cardNodes[e].getChildByName("poker" + i).getPosition());
             }
@@ -40,7 +40,12 @@ cc.Class({
     resetView: function(e) {
         for (var t = 0; t < e; t++) {
             for (var i = 0; i < y.MAX_COUNT; i++) {
-                var poker = this.cardNodes[t].getChildByName("poker" + i)
+                var poker = this.cardNodes[t].getChildByName("poker" + i);
+                if (t == 2) {
+                    this.cardNodes[t].setPosition(40, -40);
+                    this.cardNodes[t].scaleX = 0.9;
+                    this.cardNodes[t].scaleY = 0.9
+                }
                 poker.getComponent("createPoker").createPoker(0);
                 // console.log(y.PokerNode[t + ""][i]);
                 poker.setPosition(y.PokerNode[t + ""][i].x, y.PokerNode[t + ""][i].y);
@@ -216,21 +221,9 @@ cc.Class({
                 var v = _.getPosition();
                 var count = null;
                 var positionBSR = null;
-                if (s.length == 5) {
-                    if (s == 0) {
-                        count = 2
-                        positionBSR = bsr_meSelf;
-                    } else if (s == 1 || s == 2) {
-                        count = s - 1;
-                        positionBSR = bsr_left
-                    } else if (s == 3 || s == 4) {
-                        count = s
-                        positionBSR = bsr_right
-                    }
-                } else {
-                    count = s;
-                    positionBSR = bsr_left
-                }
+
+                count = s;
+                positionBSR = bsr_left
 
                 h.setPosition(d);
                 ii = [cc.v2(d.x, d.y), cc.v2(positionBSR.x, positionBSR.y), cc.v2(p.x, p.y)],
@@ -254,7 +247,10 @@ cc.Class({
                     t()
                 }, o * 0.4)
             }
-            cc.gg.audioMgr.playSFX("public/nnMusic/send_card")
+            this.scheduleOnce(function() {
+                    cc.gg.audioMgr.playSFX("public/nnMusic/send_card")
+                }, 0.4 * count)
+                //cc.gg.audioMgr.playSFX("public/nnMusic/send_card")
         } else console.log("发牌动画出错->>>>setSendCardAni")
     },
     setViewOpenCard: function(e, t, fun) {
@@ -274,7 +270,7 @@ cc.Class({
         else {
             var i = this.cardNodes[e];
             i.active = !0;
-            if (e == 0) {
+            if (e == 2) {
                 for (var k = t.length - 1; k > t.length - 3; k--) {
                     // console.log("我进入了几次 ???????? 自己摊牌");
                     i.getChildByName("poker" + k).getComponent("createPoker").setCardAni(t[k])
@@ -285,9 +281,85 @@ cc.Class({
                 }
             }
         }
-        fun && fun()
-    },
+        this.scheduleOnce(function() {
+            fun && fun()
+        }, .8)
 
+    },
+    //砸牌动画
+    setZaPai: function(pos, indexArr, kind, callFunc, card) {
+        if (pos == 2) {
+            if (kind != 0) {
+                //执行摊牌动画
+                var sortArr = [];
+                var isBreak = false;
+                for (var i = 0; i < indexArr.length; i++) {
+
+                    var poker = this.cardNodes[pos].getChildByName("poker" + indexArr[i]);
+                    var active = cc.sequence(cc.delayTime(0.3 * i), cc.moveTo(0.3, poker.getPosition().x, 35));
+                    poker.runAction(active);
+                }
+                for (var k = 0; k < card.length; k++) {
+                    isBreak = false
+                    for (var j = 0; j < indexArr.length; j++) {
+                        if (indexArr[j] == k) {
+                            sortArr.unshift(card[k]);
+                            isBreak = true
+                            break;
+                        }
+                    }
+                    if (!isBreak) {
+                        sortArr.push(card[k]);
+                    }
+                }
+                console.log(sortArr)
+                this.scheduleOnce(function() {
+                    callFunc && callFunc(sortArr)
+                }, indexArr.length * 0.3)
+            } else {
+                //执行抖动动画
+                for (var k = 0; k < 5; k++) {
+                    var poker = this.cardNodes[pos].getChildByName("poker" + k);
+                    var t = cc.skewTo(.08, 5, -5),
+                        i = cc.skewTo(.08, 0, 0),
+                        a = cc.skewTo(.08, -5, 5),
+                        o = cc.repeat(cc.sequence(t, i, a, i), 4);
+                    poker.runAction(o);
+                }
+                this.scheduleOnce(function() {
+                    callFunc && callFunc()
+                }, .08 * 3 * 4)
+            }
+        } else {
+            this._cardPanel.setTypeSprite(pos, "", kind)
+        }
+    },
+    //自己的砸牌动作
+    mySelfZaPai: function(sortArr, callFunc) {
+        var pos = 2
+        this.setCardPosition(pos);
+        if (sortArr) {
+            for (var i = 0; i < sortArr.length; i++) {
+                this.cardNodes[pos].getChildByName("poker" + i).getComponent("createPoker").createPoker(sortArr[i])
+            }
+        }
+        var action = cc.spawn(cc.moveTo(0.2, cc.v2(180, 180)), cc.scaleTo(0.2, 0.5))
+        this.cardNodes[pos].runAction(cc.sequence(action, cc.callFunc(function() {
+            //播放声音
+            cc.gg.audioMgr.playSFX("public/nnMusic/zapai")
+                //播放动画
+            console.log("我进入吗 ?")
+            callFunc && callFunc()
+        })));
+    },
+    //定位某一个人的牌
+    setCardPosition: function(pos) {
+        for (var i = 0; i < 5; i++) {
+            var item = this.cardNodes[pos].getChildByName("poker" + i);
+            console.log(y.PokerNode[pos + ""][i])
+            item.setPosition(y.PokerNode[pos + ""][i].x, y.PokerNode[pos + ""][i].y);
+        }
+    },
     // setOpenCardAni: function(e, t, i) {
     //     if (console.log("我进入了几次？？" + e),
     //         e < 0 || e >= y.GAME_PLAYER)
@@ -400,10 +472,6 @@ cc.Class({
 
         value.getComponent(cc.Sprite).spriteFrame = this.pokerDianshu.getSpriteFrame("poker" + i);
         a.active = !0;
-        if (t) {
-            var o = "nn/game/" + t + "/" + i + ".mp3";
-            cc.gg.audioMgr.playSFX(o)
-        }
         bet.active = true;
         if (i == 7 || i == 8 || i == 9) {
             bet.getComponent(cc.Label).string = "/" + 2

@@ -30,7 +30,7 @@ cc.Class({
 
     },
     onEvenHandle: function() {
-        var listenArr = ["GameAreaDetail", "OnOpen", "JoinRoom", "LeaveRoom"];
+        var listenArr = ["GameAreaDetail", "OnOpen", "OnIsContent", "JoinRoom", "LeaveRoom", "Login"];
         for (var i = 0; i < listenArr.length; i++) {
             cc.gg.protoBuf.addHandler(listenArr[i], this.listenEvent.bind(this))
         }
@@ -42,10 +42,12 @@ cc.Class({
     },
     listenEvent: function(instructionsName, data, isCustom) {
         if (isCustom) {
+            //this._gameView.node_UI.removeAllChildren()
             //自定义指令
             if (instructionsName == "OnOpen") {
-                //拉取房间信息
-                this.sendGameAreaDetail();
+
+            } else if (instructionsName == "OnIsContent") {
+                this.alert("net_content", data.text, this._gameView.node_UI);
             }
             return;
         }
@@ -60,13 +62,47 @@ cc.Class({
             } else if (instructionsName == "JoinRoom") {
                 this.manageJoinRoom(datas);
             } else if (instructionsName == "LeaveRoom") {
-                this.manageLeaveRoom(data)
+                this.manageLeaveRoom(datas)
+            } else if (instructionsName == "Login") {
+                this.manageLogin(datas)
             }
 
         } else {
+            if (instructionsName == "JoinRoom") {
+                this.alert("game_err", resultMessage, this._gameView.node_UI);
+                return
+            } else if (instructionsName == "Login") {
+                cc.gg.protoBuf.ISclose = true;
+                cc.gg.protoBuf.close();
+                return
+            }
             console.log(resultMessage, "异常返回")
             console.log(datas, "datas 的内容")
+
+            this.alert("game_err", resultMessage, this._gameView.node_UI);
         }
+    },
+    alert: function(type, resultMessage, node) {
+        var self = this;
+        cc.loader.loadRes("public/prefab/alert", cc.Prefab, function(err, res) {
+            if (err) {
+                return
+            }
+            var data = cc.instantiate(res);
+            data.getComponent("alert").setView(type, resultMessage, self._gameView.node_UI)
+            self._gameView.node_UI.addChild(data);
+        })
+    },
+    manageLogin: function(data) {
+        this._gameView.node_UI.removeAllChildren();
+        //拉取房间信息
+        this.sendGameAreaDetail();
+        // if (!data || data == "") {
+        //     return
+        // }
+        // var datas = JSON.parse(data);
+        // console.log(datas, "Login");
+
     },
     //请求进入房间
     manageJoinRoom: function(data) {
@@ -107,8 +143,16 @@ cc.Class({
     //请求游戏详情
     sendGameAreaDetail: function() {
         var data = {
-            account_id: 1
+            account_id: cc.gg.global.userID || 1
         }
         cc.gg.protoBuf.send("GameAreaDetail", 1, data)
-    }
+    },
+    //发送登陆
+    sendLogin: function() {
+        var data = {
+            account_id: cc.gg.global.userID + "" || 1,
+            password: cc.gg.global.password + ""
+        }
+        cc.gg.protoBuf.send("Login", 1, data)
+    },
 });

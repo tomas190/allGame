@@ -68,10 +68,12 @@ cc.Class({
             "ShowCard": 108,
             "Win": 109,
             "OnOpen": 510,
+            "OnIsContent": 511,
             "LeaveRoom": 110,
             "StarBet": 111,
             "StartLimitTime": 112,
             "UpdateAccountStatus": 113,
+            "LoginOut": 114,
             "101": "Login",
             "102": "Pong",
             "103": "GameAreaDetail",
@@ -85,8 +87,9 @@ cc.Class({
             "111": "StarBet",
             "112": "StartLimitTime",
             "113": "UpdateAccountStatus",
+            "114": "LoginOut",
             "510": "OnOpen",
-
+            "511": "OnIsContent",
             "file": 200, //自定义派发指令   选取图片指令  web
             "FileUI": 201, // 自定义指令   读取图片详情指令 web
             "CreateImg": 202, //自定义指令  创建cocos图片精灵指令
