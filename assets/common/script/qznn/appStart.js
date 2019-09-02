@@ -16,6 +16,8 @@ cc.Class({
 
     },
     onLoad: function() {
+        cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE)
+            //e.width / 750 < 1 && this.node_center.setScale(e.width / 750, e.height / 1334);
         this.initMgr();
     },
 

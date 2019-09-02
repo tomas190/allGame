@@ -40,7 +40,7 @@ cc.Class({
     onEvenHandle: function() {
         var listenArr = ["JoinRoom", "GameStart", "GrabBanker", "StartBet",
             "PlayerMultiples", "ShowCard", "Win", "LeaveRoom", "StartLimitTime", "UpdateAccountStatus",
-            "StarBet", "OnOpen"
+            "StarBet", "OnOpen", "OnIsContent", "Login",
         ];
         for (var i = 0; i < listenArr.length; i++) {
             cc.gg.protoBuf.addHandler(listenArr[i], this.listenEvent.bind(this))
@@ -53,6 +53,7 @@ cc.Class({
     },
     listenEvent: function(instructionsName, data, isCustom) {
         if (isCustom) {
+            //this._GameView.node_UI.removeAllChildren()
             //自定义指令
             if (instructionsName == "OnOpen") {
                 var data = {
@@ -60,6 +61,8 @@ cc.Class({
                     area_number: parseInt(cc.gg.global.area_number),
                 }
                 cc.gg.protoBuf.send("JoinRoom", 1, data)
+            } else if (instructionsName == "OnIsContent") {
+                this.alert("net_content", data.text, this._GameView.node_UI);
             }
             return;
         }
@@ -91,11 +94,26 @@ cc.Class({
                 this.manageUpdateAccountStatus(datas)
             } else if (instructionsName == "StarBet") {
                 this.manageStartBet(datas);
+            } else if (instructionsName == "Login") {
+
             }
 
         } else {
             if (instructionsName == "JoinRoom") {
-                console.log("进入房间失败")
+                var self = this;
+                cc.loader.loadRes("public/prefab/alert", cc.Prefab, function(err, res) {
+                    if (err) {
+                        return
+                    }
+                    var data = cc.instantiate(res);
+                    data.getComponent("alert").setView("game_err", resultMessage, self._GameView.node_UI)
+                    self._GameView.node_UI.addChild(data);
+                })
+            } else if (instructionsName == "Login") {
+                cc.gg.protoBuf.close();
+                cc.gg.protoBuf.ISclose = true;
+                this.alert("game_err", resultMessage, this._GameView.node_UI);
+                return;
             }
             console.log(resultMessage, "异常返回")
             console.log(datas, "datas 的内容")
@@ -104,7 +122,17 @@ cc.Class({
 
     onTimerMessage: function(e) {},
 
-
+    alert: function(type, resultMessage, node) {
+        var self = this;
+        cc.loader.loadRes("public/prefab/alert", cc.Prefab, function(err, res) {
+            if (err) {
+                return
+            }
+            var data = cc.instantiate(res);
+            data.getComponent("alert").setView(type, resultMessage, self._GameView.node_UI)
+            self._GameView.node_UI.addChild(data);
+        })
+    },
     //游戏开始
     manageGameStart: function(data) {
         var t = this;
@@ -183,6 +211,7 @@ cc.Class({
         if (datas.multiples === 0) {
             datas.multiples = "5";
         }
+        cc.gg.audioMgr.playSFX("public/nnMusic/beishu2")
         this._GameView._avatarPanel.setUserMultiple(pos, datas.multiples)
     },
     //通知抢庄结果 到达下注阶段
@@ -201,6 +230,7 @@ cc.Class({
         this._GameView._centerPancel.grabBankerBtn.active = false;
         //播放抢庄动画
         this._GameView.onGrabBankerAni(datas, function() {
+            cc.gg.audioMgr.playSFX("public/nnMusic/zhuang32")
             self._GameView.setGameTimer(t)
         })
     },
@@ -226,6 +256,17 @@ cc.Class({
     //退出房间
     manageLeaveRoom: function(data) {
         console.log("退出游戏 manageLeaveRoom" + data);
+        if (!data || data == "") {
+            return
+        }
+        var datas = JSON.parse(data);
+        console.log(datas.account_id + "我是退出玩家的accountid")
+        var t = nnTool.getLocalIndex(datas.account_id);
+        this._GameView.clearViewUser(t);
+        for (var i = 0; i < cmd.PLAYER_DATAS.length; i++) {
+            cmd.PLAYER_DATAS[i].account_id == datas.account_id && cmd.PLAYER_DATAS.splice(i, 1)
+        }
+
     },
     //加入房间:
     //游戏开始倒计时
@@ -265,6 +306,7 @@ cc.Class({
         if (!data || data == "") {
             return
         }
+        this._GameView.resetView();
         cc.gg.global.gameRoomData = data;
         var datas = JSON.parse(data);
         console.log("manageJoinRoom", datas);
@@ -277,7 +319,7 @@ cc.Class({
         this._GameView._centerPancel.setDifen(datas.base_score);
         this._cbUserCount = parseInt(datas.player_count);
         this._GameView.setTableUserCount(this._cbUserCount);
-        cmd.GAME_PLAYER = this._cbUserCount;
+        //cmd.GAME_PLAYER = this._cbUserCount;
         cmd.MY_SEAT = parseInt(datas.serial_num)
         this.onClientAllGamer(datas.all_gamers);
         //恢复她人的场景

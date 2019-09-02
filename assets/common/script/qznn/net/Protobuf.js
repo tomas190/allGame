@@ -11,7 +11,7 @@ cc.Class({
         this.closeCount = 2; //断网次数开始重连配置 默认2次断网开始重连
         this.timer = null;
         this.handlers = {};
-        this.pongTime = 2000;
+        this.pongTime = 3000;
         this.socket = null;
         this.events = {};
         this.reconnectCount = 0; //重连次数
@@ -30,13 +30,10 @@ cc.Class({
         this.handlers[e] ? cc.gg.utils.ccLog("该事件已经监听" + e) : this.handlers[e] = t;
     },
     onmessage: function(id, data, isCustom) {
-        if (this.ISclose) {
-            return;
-        }
         if (isCustom) {
             //自定义指令派发
             var t = this.handlers[id];
-            console.log(id)
+            console.log(id, "aaaaaa")
                 //cc.gg.utils.ccLog(t);
             if (t) {
                 t(id, data, true);
@@ -53,6 +50,7 @@ cc.Class({
             console.log(name + "指令名")
             if (operationId == 102) {
                 this.cbPongCount = 0;
+                this.reconnectCount = 0;
                 return;
             } else if (operationId == 501) {
                 this.ISclose = true;
@@ -70,10 +68,25 @@ cc.Class({
             }
             return
         } else if (id == 500) {
-            //this.reConnect();
-            //开始重连
-            this.reConnect();
+            if (this.ISclose) {
+                console.log("已不允许重新连接");
+                clearInterval(this.pong);
+                this.onmessage("OnIsContent", { text: "您的网络环境太差 请重新连接!" }, true);
+                return
+            }
 
+            if (this.reconnectCount < 5) {
+                this.reconnectCount++;
+                //开始重连
+                this.reConnect();
+            } else {
+                //这里开始不进行重连  调取弹框提示
+                this.ISclose = true;
+                console.log("我开始派发了弹窗");
+                clearInterval(this.pong);
+                this.onmessage("OnIsContent", { text: "您的网络环境太差 请重新连接!" }, true);
+                //this.reconnectCount = 0
+            }
 
         }
     },
@@ -81,20 +94,17 @@ cc.Class({
         this.connect(this.ip, false);
     },
     connect: function(ip, whetherClose) {
-        if (this.ISclose) {
-            return
-        }
+        this.ISclose = false;
         this.ip = ip;
         var self = this;
         if (self.socket) {
             self.socket.close();
             this.cbPongCount = 0;
-            this.reconnectCount = 0;
         }
         self.socket = new WebSocket(self.ip);
         self.socket.onopen = function() {
             self.onmessage("OnOpen", {}, true)
-            self.reconnectCount = 0;
+
             if (self.timer) {
                 clearInterval(self.timer);
                 self.timer = false;
@@ -113,18 +123,18 @@ cc.Class({
                 // self.onmessage("500", err);
             }
 
-            var urlData = cc.gg.utils.urlParse(window.location.href);
-            cc.gg.utils.ccLog(urlData);
-            cc.gg.utils.ccLog(window.location.href);
-            if (urlData.account_name) {
+
+            if (cc.gg.global.userID) {
                 self.send('Login', 1, {
-                    account_id: urlData.account_name
+                    "account_id": cc.gg.global.userID,
+                    "password": cc.gg.global.password,
                 })
 
             } else {
-                if (cc.gg.global.userInfo) {
-
-                }
+                // self.send('Login', 1, {
+                //     account_id: "90677662",
+                //     "password": "123456",
+                // })
             }
             // var data = {
             //     account_id: 1
@@ -145,7 +155,7 @@ cc.Class({
                         self.closeCount++;
                         self.onmessage(500, {}, );
                         cc.gg.utils.ccLog("用户断线");
-                        //clearInterval(self.pong)
+
                     }
                 }, self.pongTime)
                 //这里最好发送一下登录
@@ -171,6 +181,7 @@ cc.Class({
             var buf = self.protoBufAddtag(0, ReceptionArray);
             self.socket.send(buf);
         } else {
+            //self.onmessage("OnIsContent", { text: "网络异常不支持通信" }, true);
             console.log("网络异常不支持通信")
         }
     },

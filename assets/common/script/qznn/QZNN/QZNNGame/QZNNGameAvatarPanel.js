@@ -80,6 +80,15 @@ cc.Class({
         this.player[e].leave.active = t
     },
     setUserScore: function(e, t) {
+        t = parseFloat(t + "").toFixed(2);
+        if (e == 2) {
+            if (t < 0) {
+                t = (t + "").substr(1, t.length);
+                //cc.gg.audioMgr.playSFX("public/nnMusic/qznn_lose2")
+            } else {
+                //cc.gg.audioMgr.playSFX("sg_ss/nnMusic/qznn_win2")
+            }
+        }
         this.player[e].score.string = t
     },
     refreshUserScore: function(e, t) {
@@ -144,6 +153,7 @@ cc.Class({
         }
     },
     clearUserFace: function(e) {
+        this.player[e].active = false;
         this.player[e].head.spriteFrame = null,
             // this.player[e].head_bg.active = !1,
             this.player[e].username.string = "",
@@ -195,6 +205,19 @@ cc.Class({
             addNode.getChildByName("score").getComponent(cc.Label).string = this.ModifyStr(t),
             minusNode.getChildByName("score").getComponent(cc.Label).string = this.ModifyStr(t),
             scoreBox.opacity = 100;
+        if (parseFloat(t) >= 0) {
+            var a = this;
+            cc.loader.loadRes("public/prefab/win", function(e, t) {
+                if (e) console.log("加载出错:", e);
+                else {
+                    var i = cc.instantiate(t);
+                    node.addChild(i), a.scheduleOnce(function() { node.removeChild(i) }, 1)
+                }
+            });
+            cc.gg.audioMgr.playSFX("public/nnMusic/qznn_win2")
+        } else {
+            cc.gg.audioMgr.playSFX("public/nnMusic/qznn_lose2")
+        }
         var s = cc.moveBy(.5, o, n),
             c = cc.spawn(s, cc.fadeTo(.2, 255)),
             r = cc.callFunc(function(e) { scoreBox.x = 0, scoreBox.y = 63, i && i() }),
