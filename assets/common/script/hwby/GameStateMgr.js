@@ -216,8 +216,7 @@ var GameStatMgr = cc.Class({
     {
         let cbSceneLoaded = function() {
             cc.log("load game ok!");
-
-            this.ShowWaiting(BaseDef.WaitType.WT_EnterGame);
+            
             msgSender.sendGameEnterReq(roomlevel);
         }
 
@@ -229,6 +228,7 @@ var GameStatMgr = cc.Class({
         
 
         if(this.bConnected) {
+            this.ShowWaiting(BaseDef.WaitType.WT_EnterGame);
             cc.director.loadScene('Buyu_game', cbSceneLoaded.bind(this)); 
         } else {
             this.Reconnect();
