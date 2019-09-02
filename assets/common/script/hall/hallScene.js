@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 10:48:54
+ * @LastEditTime: 2019-09-02 13:58:54
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -152,7 +152,8 @@ cc.Class({
         let subgamev = this.getRemoteSubgame(data.game_id).version;
         let localsubv = gHandler.localStorage.get(data.enname, "versionKey");
         let txt = "local version: " + localsubv + " | remote version:" + subgamev;
-        if (!localsubv || subgamev.split(".")[2] !== localsubv.split(".")[2]) { // 判断是否需要更新
+        // if (!localsubv || subgamev.split(".")[2] !== localsubv.split(".")[2]) { // 判断是否需要更新
+        if (!localsubv) { // 判断是否需要更新
             console.log(txt + " | subgame : " + data.enname + " need update");
             downflag.active = true;
             progress.active = true;
@@ -172,6 +173,7 @@ cc.Class({
         let downflag = data.itembtn.getChildByName("downFlag");
         let progressnode = data.itembtn.getChildByName("progress");
         let progressbar = progressnode.getComponent(cc.ProgressBar);
+        let localsubv = gHandler.localStorage.get(data.enname, "versionKey");
         gHandler.hotUpdateMgr.checkUpdate({
             subname: data.enname,
             version: localsubv || "0.0.1",

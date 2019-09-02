@@ -54,7 +54,7 @@
     "_is3DNode": true,
     "groupIndex": 0,
     "autoReleaseAssets": false,
-    "_id": "0afc32f4-4669-49ed-b120-fa8894b0058f"
+    "_id": "45733fa3-9fce-4fe2-93c2-53003a08e17b"
   },
   {
     "__type__": "cc.Node",
@@ -508,7 +508,7 @@
     "_id": "f5ze8L8wFLU5gdSopmd8on"
   },
   {
-    "__type__": "d8e16s+/ilIEI4gWB3+lXm9",
+    "__type__": "9b858ykcC1Cka+WDH5zDPZH",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -521,6 +521,6 @@
     "progresslabel": {
       "__id__": 9
     },
-    "_id": "30wlEmu8hAf7KjJyWNgUVl"
+    "_id": "65eLAT+xtPO4UHiBCJ1UhP"
   }
 ]
