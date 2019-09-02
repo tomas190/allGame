@@ -9,6 +9,7 @@ var Notification = require('Notification');
 var playerManager = require('PlayerManager');
 var debugManager = require('DebugManager');
 var msg_pb = require('msg_pb_by');
+let gHandler = require("gHandler");
 
 //游戏状态~
 var Em_Game_State = {
@@ -182,9 +183,12 @@ var GameStatMgr = cc.Class({
             cc.log("load Parenthall ok!");
         }
 
+        cc.log("gHandler",gHandler)
+        cc.log("gHandler.gameConfig.hallconfig.lanchscene",gHandler.gameConfig.hallconfig.lanchscene);        
         cc.log("ready switch to Hall~~!!");
         let bLoad = cc.director.loadScene("hall", cbSceneLoaded);
         cc.log("loadscene",bLoad);
+        //cc.log("gHandler.player.name",gHandler.player.name);
     },
 
     SwitchHall()
@@ -544,9 +548,13 @@ var GameStatMgr = cc.Class({
         this.bConnected = true;
         cc.log("连上服务器，从这里开始~！");
         //msgSender.sendLogin(0,String(this.userid));  
-        if( this.eState = Em_Game_State.Hall) {
-            this.SendLogin();
-        }
+        // if( this.eState = Em_Game_State.Hall) {
+        //     // let callback = function() {
+        //     //     this.SendLogin();
+        //     // }
+        //     // setTimeout(callback.bind(this),5000);
+        //     this.SendLogin();
+        // }
         
 
         if(cc.sys.isBrowser) {

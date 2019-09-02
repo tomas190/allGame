@@ -226,7 +226,7 @@ cc.Class({
         {
             let sound = this.SOUND[soundID];
             if(sound) {
-                cc.log("play effect",sound);
+                //cc.log("play effect",sound);
                 let id = cc.audioEngine.playEffect(sound, false);
                 //cc.log("cc.audioEngine.getVolume(id)",cc.audioEngine.getVolume(id));
                 cc.audioEngine.setVolume(id,sv);

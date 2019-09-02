@@ -76,7 +76,7 @@ cc.Class({
         Notification.Regsiter(NoticeDef.ServerVersion,this,this.SetServerversion); 
         
 
-        this.ShowAllCtrl(false);
+        //this.ShowAllCtrl(false);
 
         cc.log("11111111111111111111111"); 
 
@@ -87,14 +87,14 @@ cc.Class({
 
         this.progressBarView.progress = 0;
         
-        let onProgress = function(completedCount,totalCount,item ) {
-            this.labelLoadProgress.string = "Loading:" + completedCount + "/" + totalCount;
-            this.progressBarView.progress = completedCount/totalCount;
+        // let onProgress = function(completedCount,totalCount,item ) {
+        //     this.labelLoadProgress.string = "Loading:" + completedCount + "/" + totalCount;
+        //     this.progressBarView.progress = completedCount/totalCount;
 
-            //cc.log("completedCount",completedCount);
-            //cc.log("totalCount",totalCount);
-            //cc.log("item",item);
-        }
+        //     //cc.log("completedCount",completedCount);
+        //     //cc.log("totalCount",totalCount);
+        //     //cc.log("item",item);
+        // }
 
 
         if(this.LoadImg) {
@@ -102,25 +102,45 @@ cc.Class({
         }
         
 
-        let onLoaded = function() {
-            this.ShowAllCtrl(true);
-            this.ctrLoadProgress.active = false;
-            this.node.getChildByName("jd_bg").active = false;
-            let logospr = this.node.getChildByName("LOGO");
-            if (logospr) {
-                logospr.active = false;
-            }
+        // let onLoaded = function() {
+        //     this.ShowAllCtrl(true);
+        //     this.ctrLoadProgress.active = false;
+        //     this.node.getChildByName("jd_bg").active = false;
+        //     let logospr = this.node.getChildByName("LOGO");
+        //     if (logospr) {
+        //         logospr.active = false;
+        //     }
 
-            if(this.HallImg) {
-                this.BGSprite.spriteFrame = this.HallImg;
-            }
+        //     if(this.HallImg) {
+        //         this.BGSprite.spriteFrame = this.HallImg;
+        //     }
     
             
-            gameStatMgr.LoginCheck();
-            cc.log("game onLoaded~!!");
+        //     gameStatMgr.LoginCheck();
+        //     cc.log("game onLoaded~!!");
+        // }
+
+
+        this.ShowAllCtrl(true);
+        this.ctrLoadProgress.active = false;
+        this.node.getChildByName("jd_bg").active = false;
+        let logospr = this.node.getChildByName("LOGO");
+        if (logospr) {
+            logospr.active = false;
         }
+
+        if(this.HallImg) {
+            this.BGSprite.spriteFrame = this.HallImg;
+        }
+
         
-        cc.director.preloadScene('Buyu_game',onProgress.bind(this),onLoaded.bind(this));
+        gameStatMgr.LoginCheck();
+        cc.log("game onLoaded~!!");           
+        
+        //cc.director.preloadScene('Buyu_game',onProgress.bind(this),onLoaded.bind(this));
+        cc.director.preloadScene('Buyu_game');
+
+        this.ShowAllCtrl(true);
 
         
         this.bLoginState = false;
