@@ -34,11 +34,10 @@ cc.Class({
             cc.gg.utils.addClickEventEND(this.test.children[i], this.funTest.bind(this), { flag: true });
         }
 
-        //rule mask 的事件
-        cc.gg.utils.addClickEventEND(this.ruleMask, this.funRuleMask.bind(this), { flag: true });
+
     },
     initView: function() {
-
+        var self = this;
         //抢庄按钮
         this.grabBankerBtn = this.node.getChildByName("grabBanker");
         //闲家按钮
@@ -63,24 +62,51 @@ cc.Class({
         //测试按钮
         this.test = this.node.getChildByName("test");
 
-        //wait等待下一局标示
+        //wait等待下一局标示 和小数点的动画
         this.wait = this.node.getChildByName("wait");
-
-        //规则的按钮 
-        this.rule = this.node.getChildByName("rule");
-
+        this.dice1 = this.wait.getChildByName("dice1");
+        this.dice2 = this.wait.getChildByName("dice2");
+        this.dice3 = this.wait.getChildByName("dice3");
         //规则的mask
-        this.ruleMask = this.rule.getChildByName("mask");
-        this.ruleMask.active = false
+        // this.ruleMask = this.rule.getChildByName("mask");
+        // this.ruleMask.active = false
 
+        cc.loader.loadRes("public/prefab/rule", cc.Prefab, function(err, res) {
+            if (err) {
+                console.log("加载失败")
+                return
+            }
+            self.rule = cc.instantiate(res);
+            self.ruleMask = self.rule.getChildByName("mask");
+            //rule mask 的事件
+            cc.gg.utils.addClickEventEND(self.ruleMask, self.funRuleMask.bind(self), { flag: true });
+
+            var width = cc.winSize.width / 2 + (self.rule.width / 2);
+            console.log(width + "rule的位置")
+            self.rule.setPosition(width, 0);
+            self.rule.active = true;
+            self._GameView.node_UI.addChild(self.rule);
+        })
     },
     //重置视图
     resetView: function() {
         this.status.active = false;
         this.wait.active = false;
+        //this.showWait()
     },
     showWait: function() {
         this.wait.active = true;
+        this.dice1.opacity = 0;
+        this.dice2.opacity = 0;
+        this.dice3.opacity = 0;
+        var action1 = cc.sequence(cc.fadeIn(0.5), cc.delayTime(1), cc.fadeOut(0.5));
+        var action2 = cc.sequence(cc.delayTime(0.5), cc.fadeIn(0.5), cc.delayTime(0.5), cc.fadeOut(0.5));
+        var action3 = cc.sequence(cc.delayTime(1), cc.fadeIn(0.5), cc.fadeOut(0.5));
+
+        this.dice1.runAction(action1.repeatForever());
+        this.dice2.runAction(action2.repeatForever());
+        this.dice3.runAction(action3.repeatForever());
+
     },
     //点击mask隐藏规则 动画完成后隐藏自己
     funRuleMask: function() {
@@ -102,7 +128,6 @@ cc.Class({
                 self.lock = true;
             }))
         }
-        console.log(12)
         this.rule.runAction(active);
 
     },
@@ -137,6 +162,11 @@ cc.Class({
         // //播放游戏开始动画
         // this.playGameOpen();
         this._GameView._cardPanel.setSendCardAni([3, 3, 3, 3, 3])
+        this.scheduleOnce(function() {
+            this._GameView._cardPanel.setZaPai(2, [1, 3, 4], 5, function(data) {
+                self._GameView._cardPanel.mySelfZaPai(data)
+            }, [50, 30, 40, 20, 10])
+        }, 2)
     },
     test2: function() {
         console.log("测试抢庄动画")

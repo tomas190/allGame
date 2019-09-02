@@ -18,15 +18,16 @@ cc.Class({
         this.addEvenListener(this.node)
     },
     initView: function() {
-        //房间列表节点
+        this.content = cc.find("scrollview/view/content", this.node)
+            //房间列表节点
         for (var i = 1; i < 5; i++) {
-            this.roomListArr.push(this.node.getChildByName("item" + i))
-            this.roomListGold.push(this.node.getChildByName("item" + i).getChildByName("gold"))
-            this.roomListBottomScore.push(this.node.getChildByName("item" + i).getChildByName("difen"))
+            this.roomListArr.push(this.content.getChildByName("item" + i))
+            this.roomListGold.push(this.content.getChildByName("item" + i).getChildByName("gold"))
+            this.roomListBottomScore.push(this.content.getChildByName("item" + i).getChildByName("difen"))
         }
 
         //test
-        this.youkeBox = this.node.getChildByName("youke_box")
+        this.youkeBox = this.content.getChildByName("youke_box")
         this.editBox = this.youkeBox.getChildByName("editbox");
         this.youkeBottom = this.youkeBox.getChildByName("btn_youke")
     },
@@ -41,11 +42,15 @@ cc.Class({
     },
     login: function() {
         cc.gg.global.userID = this.editBox.getComponent(cc.EditBox).string
+        cc.gg.global.password = "123456"
+        this._gameView._scene.sendLogin()
     },
     createRoom: function(traget) {
         console.log(traget.name + "进入房间信息");
         traget.name += ""
         this._gameView._scene.sendsendJoinRoom(traget.name.substr(traget.name.length - 1));
+        //调取加载动画
+        this._gameView.playLoading();
     },
     //初始化游戏列表参数
     initRoomListView: function(data) {
@@ -56,5 +61,6 @@ cc.Class({
     },
     ModifyStr: function(str) {
         return (str + "").replace(".", "/")
-    }
+    },
+
 });

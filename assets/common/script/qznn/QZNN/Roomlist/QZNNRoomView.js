@@ -46,11 +46,13 @@ cc.Class({
         this.QZNNGame = cc.find("nnGame", this.node._parent);
         this.roomList = cc.find("roomList", this.node._parent);
 
-
+        //Ui节点
+        this.node_UI = cc.find("node_UI", this.node);
     },
     resetView: function() {
         this._topPancel.resetView();
-        this._centerPancel.resetView()
+        this._centerPancel.resetView();
+        this.node_UI.removeAllChildren();
     },
     addEvenListener: function() {
         //cc.gg.utils.addClickEventEND(this.backHall, this.backHallFun.bind(this));
@@ -83,6 +85,20 @@ cc.Class({
 
         }, 0.2)
     },
+    //调取加载中
+    playLoading: function() {
+        var a = this;
+        cc.loader.loadRes("public/prefab/loading", function(e, t) {
+            if (e) console.log("加载出错:", e);
+            else {
+                var i = cc.instantiate(t);
+                a.node_UI.addChild(i), a.scheduleOnce(function() {
+                    //a._GameView.node_UI.removeChild(i)
+                }, 1)
+            }
+        });
+        //cc.gg.audioMgr.playSFX("public/nnMusic/kaishi2")
+    },
     backMsgFun: function() {
         //销毁此场景监听的所有事件
         cc.gg.protoBuf.removeAllHandler();
@@ -100,26 +116,6 @@ cc.Class({
 
             self.backMsgLock = true;
 
-        }, 0.2)
+        }, 0)
     },
-    backHallFun: function(e) {
-        //console.log("我是返回房间")
-        // cc.gg.utils.ccLog("我监听了几次 ？")
-        // var self = this;
-        // cc.gg.protoBuf.removeAllHandler();
-        // cc.gg.global.isGoDirectlyMsg = false;
-        // if (!this.backHallLock) {
-        //     return
-        // }
-
-        // self.backHallLock = false;
-        // self.resetView()
-        // self._scene.resetSence();
-        // this.scheduleOnce(function() {
-
-        //     self.hall.active = true;
-        //     self.msg.active = false;
-        //     self.backHallLock = true
-        // }, 0.4)
-    }
 });
