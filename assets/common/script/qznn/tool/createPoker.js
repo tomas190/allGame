@@ -21,7 +21,12 @@ cc.Class({
 
     start: function() {},
     onDestroy: function() { this.node.off(cc.Node.EventType.TOUCH_END, function(e) {}) },
-    movePoker: function(e) { 0 != this._cbCardData && (this._bShoot ? (this._bShoot = !1, e.runAction(cc.moveTo(0, e.getPositionX(), 0))) : (this._bShoot = !0, e.runAction(cc.moveTo(0, e.getPositionX(), 35)))) },
+    movePoker: function(e) {
+        0 != this._cbCardData && (this._bShoot ?
+            (this._bShoot = !1,
+                e.runAction(cc.moveTo(0, e.getPositionX(), 0))) : (this._bShoot = !0,
+                e.runAction(cc.moveTo(0, e.getPositionX(), 35))))
+    },
     setShoot: function(e) { 1 == e ? (this._bShoot = !0, console.log("挑起手牌的牌值：：" + this._cbCardData), this.node.setPosition(cc.v2(this.node.getPositionX(), 35))) : (this._bShoot = !1, this.node.setPosition(cc.v2(this.node.getPositionX(), 0))) },
     setCanClick: function() {
         var e = !(0 < arguments.length && void 0 !== arguments[0]) || arguments[0];
@@ -169,16 +174,18 @@ cc.Class({
         if (0 != e) {
             this.createPoker(e),
                 this.back.active = !0,
-                this.card_bg.scaleX = 0,
-                this.card_bg.skewY = -40,
+                this.card_bg.scaleX = -0.2,
+                this.card_bg.scaleY = 1.2,
+                this.card_bg.skewY = -20,
                 this.card_bg.skewY = -10,
-                this.back.scaleX = -1;
 
+                this.back.scaleX = -1.2;
+            this.back.scaleY = 1;
             this.back.skewY = 0;
-            var i = cc.spawn(cc.scaleTo(.2, 0, 1), cc.skewTo(.2, 10, 40),
+            var i = cc.spawn(cc.scaleTo(.3, 0, 1.2), cc.skewTo(.3, 10, 20),
                 cc.callFunc(function() {
                     t.back.active = !1;
-                    t.card_bg.runAction(cc.spawn(cc.scaleTo(.2, 1, 1), cc.skewTo(.2, 0, 0)))
+                    t.card_bg.runAction(cc.spawn(cc.scaleTo(.3, 1, 1), cc.skewTo(.3, 0, 0)))
                 }));
             this.back.runAction(i);
         }

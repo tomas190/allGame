@@ -39,7 +39,6 @@ cc.Class({
     },
     funMusic: function() {
         console.log("开关闭音乐");
+        cc.gg.audioMgr.changeAudio()
     },
-
-
 });

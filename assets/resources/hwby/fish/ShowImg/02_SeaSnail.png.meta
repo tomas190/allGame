@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.1",
+  "uuid": "7d943db3-a9f1-4f3b-817b-2ee5215bb88e",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "02_SeaSnail": {
+      "ver": "1.0.4",
+      "uuid": "6e14fb9a-b122-453e-be98-c2b5e0f35967",
+      "rawTextureUuid": "7d943db3-a9f1-4f3b-817b-2ee5215bb88e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": 0.5,
+      "trimX": 1,
+      "trimY": 0,
+      "width": 68,
+      "height": 65,
+      "rawWidth": 71,
+      "rawHeight": 66,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

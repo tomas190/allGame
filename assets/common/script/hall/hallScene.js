@@ -39,13 +39,13 @@ cc.Class({
             gHandler.logManager = hqqLogMgr.init();
             gHandler.commonTools = hqqCommonTools;
 
-            cc.game.on(cc.game.EVENT_HIDE, function () {
+            cc.game.on(cc.game.EVENT_HIDE, function() {
                 cc.audioEngine.pauseMusic();
                 cc.audioEngine.pauseAllEffects();
                 gHandler.logManager.saveLog();
                 gHandler.localStorage.savaLocal();
             });
-            cc.game.on(cc.game.EVENT_SHOW, function () {
+            cc.game.on(cc.game.EVENT_SHOW, function() {
                 cc.audioEngine.resumeMusic();
                 cc.audioEngine.resumeAllEffects();
             });
@@ -74,8 +74,7 @@ cc.Class({
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
     /** 通常用于初始化中间状态操作 */
-    start() {
-    },
+    start() {},
     /** 子模块更新检查 im，充提 */
     checkSubModule() {
         // todo 检查子模块

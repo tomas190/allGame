@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-08-27 15:10:55
+ * @LastEditTime: 2019-09-02 10:08:23
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -48,7 +48,8 @@ ts 项目注意事项：{
 
 新开项目流程：{
 	1、fork（派生）新仓库，子游戏修改后提交至自己的新仓库
-	2、阶段性开发完成后，向主仓库提交Pull Requests（合并请求）请求
+	2、阶段性开发完成后，向主仓库提交Pull Requests（合并请求）请求（点击branch 前的旋转样按钮）
+	3、合并时，请选择合并到主分支的allgame分支（在pull Requesers 时的第一个选择allgame）
 	3、主仓库合并各个子游戏
 	4、发布
 }

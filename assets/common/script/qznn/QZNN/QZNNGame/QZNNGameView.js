@@ -121,7 +121,7 @@ cc.Class({
             self.roomList.getComponent("QZNNRoomScene").resetSence()
             self.QZNNGame.active = false;
             self.backMsgLock = true;
-        }, 0.2)
+        }, 0)
     },
     //设置游戏状态标示
     setViewStatus: function(type) {
@@ -169,7 +169,7 @@ cc.Class({
                 if (nnTool.UserisExist()) {
                     //自己是庄家
                     console.log(o + "我是庄家对座位号");
-                    if (0 === o) {
+                    if (2 === o) {
 
                     } else {
                         console.log(i._scene._wMeStatus + "我是当前玩家对状态");
@@ -252,8 +252,7 @@ cc.Class({
             //p = this.gameCardType.getSpriteFrame("chip_s"),
             p = gold,
             f = this.node_gold;
-        if (4 != this._scene._playMode) 6 != this._scene._playMode ?
-            Animation.SetGoldAnimation(f, p, _, t, !0, function() {
+        Animation.SetGoldAnimation(f, p, _, t, !0, function() {
                 Animation.SetGoldAnimation(f, p, _, i, !1, function() {
                     a.setViewScoreAni(n, s, function() {
                         for (var e in h) {
@@ -261,33 +260,46 @@ cc.Class({
                                 i = h[e];
                             a._avatarPanel.setUserScore(t, i)
                         }
-                        a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (a._centerPanel.btn_ready.setScale(1), a._centerPanel.btn_ready.active = !0, 0 == m && 5 == a._scene._playMode && 3 <= o.game_num && (console.log("显示下庄按钮"), a._centerPanel.setBtnReaby()), a.setViewStatus("reset")))
+
                     })
                 })
-            }) : Animation.SetGoldAnimation(f, p, f, i, !1, function() {
-                a.setViewScoreAni(n, s, function() {
-                    for (var e in h) {
-                        var t = e,
-                            i = h[e];
-                        a._avatarPanel.setUserScore(t, i)
-                    }
-                    a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (console.log("我进入了结算啊啊啊"), a._centerPanel.btn_ready.active = !0, a.setViewStatus("reset")))
-                })
-            });
-        else {
-            var C = nnTool.getLocalIndex(o.winner_id),
-                b = this._avatarPanel.player[C];
-            Animation.SetGoldAnimation(f, p, b, t, !0, function() {
-                a.setViewScoreAni(n, s, function() {
-                    for (var e in h) {
-                        var t = e,
-                            i = h[e];
-                        a._avatarPanel.setUserScore(t, i)
-                    }
-                    a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (console.log("我进入了结算啊啊啊"), a._centerPanel.btn_ready.active = !0, a.setViewStatus("reset")))
-                })
             })
-        }
+            // if (4 != this._scene._playMode) 6 != this._scene._playMode ?
+            //     Animation.SetGoldAnimation(f, p, _, t, !0, function() {
+            //         Animation.SetGoldAnimation(f, p, _, i, !1, function() {
+            //             a.setViewScoreAni(n, s, function() {
+            //                 for (var e in h) {
+            //                     var t = e,
+            //                         i = h[e];
+            //                     a._avatarPanel.setUserScore(t, i)
+            //                 }
+            //                 a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (a._centerPanel.btn_ready.setScale(1), a._centerPanel.btn_ready.active = !0, 0 == m && 5 == a._scene._playMode && 3 <= o.game_num && (console.log("显示下庄按钮"), a._centerPanel.setBtnReaby()), a.setViewStatus("reset")))
+            //             })
+            //         })
+            //     }) : Animation.SetGoldAnimation(f, p, f, i, !1, function() {
+            //         a.setViewScoreAni(n, s, function() {
+            //             for (var e in h) {
+            //                 var t = e,
+            //                     i = h[e];
+            //                 a._avatarPanel.setUserScore(t, i)
+            //             }
+            //             a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (console.log("我进入了结算啊啊啊"), a._centerPanel.btn_ready.active = !0, a.setViewStatus("reset")))
+            //         })
+            //     });
+            // else {
+            //     var C = nnTool.getLocalIndex(o.winner_id),
+            //         b = this._avatarPanel.player[C];
+            //     Animation.SetGoldAnimation(f, p, b, t, !0, function() {
+            //         a.setViewScoreAni(n, s, function() {
+            //             for (var e in h) {
+            //                 var t = e,
+            //                     i = h[e];
+            //                 a._avatarPanel.setUserScore(t, i)
+            //             }
+            //             a._scene._gameNewNum == a._scene._gameTotalNum ? a._scene.gameTotalData && a.setGameEndLayer(a._scene.gameTotalData) : 1 == a.getAutoReady() ? a._scene.onSendUserReady() : (0 != a._scene._wMeStatus && (a._scene._wMeStatus = 1), 1 == y.UserisExist() && (console.log("我进入了结算啊啊啊"), a._centerPanel.btn_ready.active = !0, a.setViewStatus("reset")))
+            //         })
+            //     })
+            // }
     },
     // setViewScoreAni: function(e, t, i) {
     //     console.log("setViewScoreAni-----\x3e>>>飘分动画"), 0 == e.length && i && i();
@@ -354,17 +366,27 @@ cc.Class({
         //     self._cardPanel.setTypeSprite(t, i, a.kind)
         // })
         this._cardPanel.setOpenCardAni(t, a.cards, function() {
-            self._cardPanel.setTypeSprite(t, i, a.kind)
-        })
+            if (t == 2) {
+                self._cardPanel.setZaPai(t, a.cow_index, a.kind, function(data) {
+                    self._cardPanel.mySelfZaPai(data, function() {
+                        self._cardPanel.setTypeSprite(t, i, a.kind)
+                    })
+                }, a.cards)
+            } else {
+                self._cardPanel.setTypeSprite(t, i, a.kind)
+
+            }
+
+        }, )
     },
     //我在恢复别人的场景
     onScenePlayerView: function(datas) {
         for (var t = 0; t < datas.all_gamers.length; t++) {
             var data = datas.all_gamers[t],
                 pos = nnTool.getLocalIndex(data.account_id);
-            if (0 != pos || 1 != nnTool.UserisExist()) {
+            if (2 != pos) {
                 var status = data.account_status;
-                console.log("其他玩家状态", pos, status);
+                console.log("其他玩家状态", pos + "z座位号", status + "状态");
                 if (status > 2 && status <= 8) {
                     this._cardPanel.showUserCardBack(pos);
                     if (status == 4) {
@@ -396,7 +418,7 @@ cc.Class({
         for (var t = 0; t < datas.all_gamers.length; t++) {
             var data = datas.all_gamers[t];
             var pos = nnTool.getLocalIndex(data.account_id);
-            if (pos == 0) {
+            if (pos == 2) {
                 console.log("我进入了几次?")
                 if (data.account_status <= 2) {
                     this._centerPancel.showWait()
@@ -431,15 +453,15 @@ cc.Class({
                         // t = "dengdaitanpai";
                         // this._centerPancel.setSprScene(t), this._cardPanel.btn_look.active = !1, this._centerPancel.btn_open.active = !0
                     } else if (8 == status) {
-                        this._avatarPanel.setUserMultiple(0, data.multiples);
+                        this._avatarPanel.setUserMultiple(pos, data.multiples);
                         // t = "dengdaitanpai";
                         // this._centerPancel.setSprScene(t)
                     }
                 }
                 console.log("->>>>>>>>>>>重连牌值->>>>>>", data.show_cards.cards),
-                    data.show_cards.cards && this._cardPanel.setViewOpenCard(0, data.show_cards.cards);
+                    data.show_cards.cards && this._cardPanel.setViewOpenCard(pos, data.show_cards.cards);
                 if (status == 8) {
-                    data.show_cards.kind && this._cardPanel.setTypeSprite(0, null, data.show_cards.kind)
+                    data.show_cards.kind && this._cardPanel.setTypeSprite(pos, null, data.show_cards.kind)
                 }
 
             }
