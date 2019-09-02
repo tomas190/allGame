@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 13:58:54
+ * @LastEditTime: 2019-09-02 15:29:49
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -11,7 +11,6 @@ let hqqLocalStorage = require("hqqLocalStorage");
 let hqqLogMgr = require("hqqLogMgr");
 let hqqAudioMgr = require("hqqAudioMgr");
 let hqqWebSocket = require("hqqWebSocket");
-
 
 cc.Class({
     extends: cc.Component,
@@ -35,8 +34,8 @@ cc.Class({
     onLoad() {
         if (gHandler.gameGlobal.isdev) {
             gHandler.commonTools = hqqCommonTools;
-            gHandler.localStorage = hqqLocalStorage.init();
             gHandler.logManager = hqqLogMgr.init();
+            gHandler.localStorage = hqqLocalStorage.init();
 
             cc.game.on(cc.game.EVENT_HIDE, function () {
                 cc.audioEngine.pauseMusic();
@@ -173,7 +172,7 @@ cc.Class({
         let downflag = data.itembtn.getChildByName("downFlag");
         let progressnode = data.itembtn.getChildByName("progress");
         let progressbar = progressnode.getComponent(cc.ProgressBar);
-        let localsubv = gHandler.localStorage.get(data.enname, "versionKey");
+        let localsubv = gHandler.localStorage.get(data.enname, "versionKey") || null;
         gHandler.hotUpdateMgr.checkUpdate({
             subname: data.enname,
             version: localsubv || "0.0.1",
@@ -206,6 +205,7 @@ cc.Class({
     /** 点击子游戏按钮统一回调 */
     onClickSubgame(event, subgameconfig) {
         console.log("jump to subgame", subgameconfig.enname)
+        gHandler.audioMgr.stopBg();
         cc.director.loadScene(subgameconfig.lanchscene);
     },
     /** 复制名字 */

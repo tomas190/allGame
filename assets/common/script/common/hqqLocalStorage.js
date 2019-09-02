@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 10:44:15
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 10:50:16
+ * @LastEditTime: 2019-09-02 15:27:03
  * @Description: 本地化保存
  */
 let gHandler = require("gHandler");
@@ -36,17 +36,24 @@ let localStorage = {
         this.savaLocal();
     },
     has(subgame, key) {
-        if (this.subdata[subgame][key]) {
+        if (this.subdata[subgame] && this.subdata[subgame][key]) {
             return true;
         } else {
+            gHandler.logManager.log("localstorage don`t has ", subgame, key)
             return false;
         }
     },
     get(subgame, key) {
-        return this.subdata[subgame][key]
+        if (this.has(subgame, key)) {
+            return this.subdata[subgame][key]
+        } else {
+            return null;
+        }
     },
     remove(subgame, key) {
-        this.subdata[subgame][key] = null;
+        if (this.has(subgame, key)) {
+            this.subdata[subgame][key] = null;
+        }
     },
     clear() {
         cc.sys.localStorage.clear();
