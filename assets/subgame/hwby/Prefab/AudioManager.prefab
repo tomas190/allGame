@@ -1,0 +1,151 @@
+[
+  {
+    "__type__": "cc.Prefab",
+    "_name": "",
+    "_objFlags": 0,
+    "_native": "",
+    "data": {
+      "__id__": 1
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "AudioManager",
+    "_objFlags": 0,
+    "_parent": null,
+    "_children": [],
+    "_active": true,
+    "_level": 2,
+    "_components": [
+      {
+        "__id__": 2
+      }
+    ],
+    "_prefab": {
+      "__id__": 3
+    },
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_skewX": 0,
+    "_skewY": 0,
+    "_zIndex": 0,
+    "groupIndex": 0,
+    "_id": "",
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  {
+    "__type__": "36a603qvwNGtaf53Jm/g5YS",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "EmitCoin": {
+      "__uuid__": "e8f92422-a00f-4b71-a247-c21c9a022d5e"
+    },
+    "CoinJump1": {
+      "__uuid__": "d6623eab-0853-4116-8012-30b97ed430ea"
+    },
+    "CoinJump2": {
+      "__uuid__": "c37cd59d-333b-43f3-bf4c-1e969ab4bd19"
+    },
+    "CoinJump3": {
+      "__uuid__": "d8145153-f721-440c-851e-7a57b4648ea4"
+    },
+    "CoinBack1": {
+      "__uuid__": "c709daaa-87cf-4bd1-adc3-0d0993b0d96c"
+    },
+    "CoinBack2": {
+      "__uuid__": "7118062b-68f6-45f4-9540-a3abd9fdf59a"
+    },
+    "SwitchShootLevel": {
+      "__uuid__": "8aff03bd-8160-436a-9f96-a68762f34394"
+    },
+    "Shoot": {
+      "__uuid__": "21eece2b-d3de-4cb7-b7e9-717bb68892c5"
+    },
+    "Boom": {
+      "__uuid__": "429964ea-7e04-40af-9880-625c3aa24556"
+    },
+    "LaserAttack": {
+      "__uuid__": "bd764fe4-9b44-4cbb-9c0a-2f6b14d8d9bf"
+    },
+    "CacthBoss": {
+      "__uuid__": "9f8aee41-2897-4e52-8db9-6f3900decbd5"
+    },
+    "Wave": {
+      "__uuid__": "39946279-34eb-4363-8eef-b7a4a38b5d71"
+    },
+    "HitButton": {
+      "__uuid__": "45feec0c-abfd-4d3c-8040-ec2afb1768a2"
+    },
+    "BGM_Tension": {
+      "__uuid__": "aa6ce7af-baff-44e2-a9e6-b1eef6f869d1"
+    },
+    "BGM_Fierce": {
+      "__uuid__": "bbdbca0f-d570-4e11-baf1-ca02f8c80aeb"
+    },
+    "BGM_Normal": {
+      "__uuid__": "b2cc96c6-e49c-4730-9c82-3495826fe39f"
+    },
+    "FishCathed1": {
+      "__uuid__": "ee70dc0e-562b-475b-a62f-733857ee817e"
+    },
+    "FishCathed2": {
+      "__uuid__": "bb0fea9c-6b5e-4f3f-aa49-2568c78c1696"
+    },
+    "FishCathed3": {
+      "__uuid__": "702a4dd3-7f34-4c33-9754-abfc4d1636eb"
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "aa694db6-8bf2-4c3a-9387-89dabc5995ca"
+    },
+    "fileId": "7cgFHhLu1Ku6OHLSFGhkzs",
+    "sync": false
+  }
+]

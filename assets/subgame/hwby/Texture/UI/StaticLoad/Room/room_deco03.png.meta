@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.1",
+  "uuid": "063dd28a-f9b7-4521-9e08-84b880b2a7f7",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "room_deco03": {
+      "ver": "1.0.4",
+      "uuid": "9b67c46c-9952-47d4-afcd-261e6014fe40",
+      "rawTextureUuid": "063dd28a-f9b7-4521-9e08-84b880b2a7f7",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 5.5,
+      "offsetY": -3,
+      "trimX": 11,
+      "trimY": 6,
+      "width": 375,
+      "height": 134,
+      "rawWidth": 386,
+      "rawHeight": 140,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-08-23 11:56:09
+ * @LastEditTime: 2019-08-23 15:30:09
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -33,7 +33,6 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        console.log("CC_DEBUG", CC_DEBUG)
         let isdev = true
         if (isdev) {
             gHandler.localStorage = hqqLocalStorage.init();

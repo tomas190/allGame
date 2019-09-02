@@ -73,8 +73,8 @@ let gameConfig = {
         },
         {
             zhname: "捕鱼", // 中文游戏名
-            enname: "by", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "by", // 跳转场景名
+            enname: "hwby", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "hwby", // 跳转场景名
             game_id: "123456789",
             resid: 5,
         },
