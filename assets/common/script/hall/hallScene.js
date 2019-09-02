@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-08-23 15:30:09
+ * @LastEditTime: 2019-09-02 13:58:54
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -33,19 +33,18 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        let isdev = true
-        if (isdev) {
+        if (gHandler.gameGlobal.isdev) {
+            gHandler.commonTools = hqqCommonTools;
             gHandler.localStorage = hqqLocalStorage.init();
             gHandler.logManager = hqqLogMgr.init();
-            gHandler.commonTools = hqqCommonTools;
 
-            cc.game.on(cc.game.EVENT_HIDE, function() {
+            cc.game.on(cc.game.EVENT_HIDE, function () {
                 cc.audioEngine.pauseMusic();
                 cc.audioEngine.pauseAllEffects();
                 gHandler.logManager.saveLog();
                 gHandler.localStorage.savaLocal();
             });
-            cc.game.on(cc.game.EVENT_SHOW, function() {
+            cc.game.on(cc.game.EVENT_SHOW, function () {
                 cc.audioEngine.resumeMusic();
                 cc.audioEngine.resumeAllEffects();
             });
@@ -68,13 +67,13 @@ cc.Class({
         if (cc.sys.isBrowser) {
             this.browserDeal();
         }
-        this.addSubgame(isdev);
+        this.addSubgame();
         this.checkSubModule();
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
     /** 通常用于初始化中间状态操作 */
-    start() {},
+    start() { },
     /** 子模块更新检查 im，充提 */
     checkSubModule() {
         // todo 检查子模块
@@ -83,10 +82,10 @@ cc.Class({
         this.huodongbtn.getChildByName("redpoint").active = false;
     },
     /** 子游戏初始化 */
-    addSubgame(isdev) {
+    addSubgame() {
         this.subgameview.content.width = Math.ceil(gHandler.gameConfig.gamelist.length / 2) * (this.itembtn.width + 5) + this.pageview.node.width + 15;
         for (let i = 0; i < gHandler.gameConfig.gamelist.length; i++) {
-            let tempdata = gHandler.gameConfig.gamelist[i];
+            let tempdata = gHandler.commonTools.jsonCopy(gHandler.gameConfig.gamelist[i]);
             let itembtn = cc.instantiate(this.itembtn);
             itembtn.x = Math.floor(i / 2) * (this.itembtn.width + 5) + this.itembtn.width / 2 + 15 + this.pageview.node.width;
             itembtn.y = -i % 2 * this.itembtn.height - this.itembtn.height * 0.5 - 20;
@@ -100,7 +99,7 @@ cc.Class({
             itembtn.getChildByName("wait").active = false;
             itembtn.getChildByName("experience").active = false;
             tempdata.itembtn = itembtn;
-            if (!isdev) {
+            if (!gHandler.gameGlobal.isdev) {
                 this.checkSubGameDownload(tempdata);
             } else {
                 let downflag = tempdata.itembtn.getChildByName("downFlag");
@@ -153,7 +152,8 @@ cc.Class({
         let subgamev = this.getRemoteSubgame(data.game_id).version;
         let localsubv = gHandler.localStorage.get(data.enname, "versionKey");
         let txt = "local version: " + localsubv + " | remote version:" + subgamev;
-        if (!localsubv || subgamev.split(".")[2] !== localsubv.split(".")[2]) { // 判断是否需要更新
+        // if (!localsubv || subgamev.split(".")[2] !== localsubv.split(".")[2]) { // 判断是否需要更新
+        if (!localsubv) { // 判断是否需要更新
             console.log(txt + " | subgame : " + data.enname + " need update");
             downflag.active = true;
             progress.active = true;
@@ -173,28 +173,35 @@ cc.Class({
         let downflag = data.itembtn.getChildByName("downFlag");
         let progressnode = data.itembtn.getChildByName("progress");
         let progressbar = progressnode.getComponent(cc.ProgressBar);
-        gHandler.SubgameManager.downloadSubgame(
-            data,
-            (progress) => {
+        let localsubv = gHandler.localStorage.get(data.enname, "versionKey");
+        gHandler.hotUpdateMgr.checkUpdate({
+            subname: data.enname,
+            version: localsubv || "0.0.1",
+            isupdataCallback: (bool) => {
+                console.log("isupdataCallback", bool)
+                if (bool) { // 需要更新
+                    // 自动更新，无需处理
+                } else {
+                }
+            },
+            failCallback: () => {
+                console.log("failCallback")
+                gHandler.logManager.log("subgame " + data.enname + " download fail");
+            },
+            progressCallback: (progress) => {
+                console.log("下载进度：", progress)
                 if (isNaN(progress)) {
                     progress = 0;
                 }
-                console.log(data.enname + " is download...", progress)
                 progressbar.progress = progress;
             },
-            (success) => {
-                if (success) {
-                    console.log("change btn callback");
-                    let version = this.getRemoteSubgame(data.game_id).version;
-                    gHandler.localStorage.set(data.enname, "versionKey", version)
-                    progressnode.active = false;
-                    downflag.active = false;
-                    event.target.getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
-                } else {
-                    gHandler.logManager.log("subgame " + data.enname + " download fail");
-                }
-            }
-        );
+            finishCallback: () => {
+                console.log("finishCallback & change btn callback")
+                progressnode.active = false;
+                downflag.active = false;
+                event.target.getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
+            },
+        })
     },
     /** 点击子游戏按钮统一回调 */
     onClickSubgame(event, subgameconfig) {

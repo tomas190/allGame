@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 10:44:15
  * @LastEditors: burt
- * @LastEditTime: 2019-08-23 11:52:40
+ * @LastEditTime: 2019-09-02 10:50:16
  * @Description: 本地化保存
  */
 let gHandler = require("gHandler");
@@ -17,7 +17,7 @@ let localStorage = {
             this.subdata = JSON.parse(cc.sys.localStorage.getItem(this.subgameKey));
         } else {
             for (let i = 0; i < gHandler.gameConfig.gamelist.length; i++) {
-                this.subdata[gHandler.gameConfig.gamelist[i].enname] = gHandler.gameConfig.gamelist[i];
+                this.subdata[gHandler.gameConfig.gamelist[i].enname] = gHandler.commonTools.jsonCopy(gHandler.gameConfig.gamelist[i]);
             }
             cc.sys.localStorage.setItem(this.subgameKey, JSON.stringify(this.subdata));
         }
@@ -29,6 +29,9 @@ let localStorage = {
         return this;
     },
     set(subgame, key, data) {
+        if (!this.subdata[subgame]) {
+            this.subdata[subgame] = {};
+        }
         this.subdata[subgame][key] = data;
         this.savaLocal();
     },
@@ -49,7 +52,7 @@ let localStorage = {
         cc.sys.localStorage.clear();
     },
     savaLocal() {
-        cc.sys.localStorage.setItem(this.subgameKey,JSON.stringify(this.subdata));
+        cc.sys.localStorage.setItem(this.subgameKey, JSON.stringify(this.subdata));
         cc.sys.localStorage.setItem(this.globalKey, JSON.stringify(this.global));
     },
     globalSet(key, value) {
@@ -59,7 +62,7 @@ let localStorage = {
     globalGet(key) {
         return this.global[key];
     },
-    getGlobal(){
+    getGlobal() {
         return this.global;
     },
 }
