@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:52:25
  * @LastEditors: burt
- * @LastEditTime: 2019-08-12 11:49:57
+ * @LastEditTime: 2019-09-02 10:49:49
  * @Description: 通用函数
  */
 
@@ -136,6 +136,14 @@ let commonTools = {
         }
     },
     /**
+     * 简单的复制对象
+     * 正确处理的对象只有Number、String、Array等能够被json表示的数据结构，因此函数这种不能被json表示的类型将不能被正确处理
+     * @param {mobject}  复制的对象原型
+     */
+    jsonCopy(mobject){
+        return JSON.parse(JSON.stringify(mobject))
+    },
+    /**
      * 设置默认头像
      * @param {head}  头像精灵
      */
@@ -144,7 +152,7 @@ let commonTools = {
         if (rand < 10) {
             rand = "0" + rand;
         }
-        cc.loader.loadRes("head/im_head" + rand, cc.SpriteFrame, function(err, res) {
+        cc.loader.loadRes("head/im_head" + rand, cc.SpriteFrame, function (err, res) {
             if (err) {
                 return
             }
@@ -152,11 +160,11 @@ let commonTools = {
         })
     },
     /**
-     *  字符串超长作固定长度加省略号（...）处理
-     * @param str 需要进行处理的字符串，可含汉字
-     * @param len 需要显示多少个汉字，两个英文字母相当于一个汉字
-     * @returns {string}
-     */
+    *  字符串超长作固定长度加省略号（...）处理
+    * @param str 需要进行处理的字符串，可含汉字
+    * @param len 需要显示多少个汉字，两个英文字母相当于一个汉字
+    * @returns {string}
+    */
     formatStringLength(str, len = 12) {
         let strlen = 0;
         let needstr = str;
@@ -174,12 +182,12 @@ let commonTools = {
         return needstr;
     },
     /**
-     * 计算浮点型数值相减的结果
-     * 精度最高为小数点后6位
-     * @param value1
-     * @param value2
-     * @param precision 要求的小数点后精度,默认为小数点后4位
-     */
+	 * 计算浮点型数值相减的结果
+	 * 精度最高为小数点后6位
+	 * @param value1
+	 * @param value2
+	 * @param precision 要求的小数点后精度,默认为小数点后4位
+	 */
     floatSub(value1, value2, precision = 4) {
         //精度值不能小于1
         precision = precision < 1 ? 4 : precision;
@@ -196,10 +204,10 @@ let commonTools = {
         return +`${strHead}.${strEnd}`;
     },
     /**
-     * 获取对应的本地日期
-     * @param timestamp 本地时间戳
-     * @returns 日期格式 2018年12月31日
-     */
+	 * 获取对应的本地日期
+	 * @param timestamp 本地时间戳
+	 * @returns 日期格式 2018年12月31日
+	 */
     toLocalDate(timestamp) {
         const date = new Date(1e3 * timestamp);
         const month = date.getMonth();
@@ -209,10 +217,10 @@ let commonTools = {
         return `${date.getFullYear()}年${strMonth}月${strDay}日`;
     },
     /**
-     * 时间戳转化为时分秒的格式
-     * @param timestamp 时间戳
-     * @returns  日期格式 09:59:01
-     */
+	 * 时间戳转化为时分秒的格式
+	 * @param timestamp 时间戳
+	 * @returns  日期格式 09:59:01
+	 */
     timestampHMS(timestamp) {
         const h = Math.floor(timestamp / 3600);
         const m = Math.floor(timestamp / 60 % 60);
@@ -224,26 +232,26 @@ let commonTools = {
         };
     },
     /**
-     * 年月日格式化为字符串
-     * @returns `${y}年${i}月${o}日`
-     */
+	 * 年月日格式化为字符串
+	 * @returns `${y}年${i}月${o}日`
+	 */
     formatDateToString(y, m, d) {
         const strMonth = padMonth(m);
         const strDay = padDay(d);
         return `${y}年${strMonth}月${strDay}日`;
     },
-    /**
-     * 年月日格式化为数字
-     */
+	/**
+	 * 年月日格式化为数字
+	 */
     formatDateToNumber(y, m, d) {
         const i = padMonth(m);
         const o = padDay(d);
         return parseInt(`${y}${i}${o}`, 10);
     },
     /**
-     * 字符串数组转化为数字数组
-     * @param strArray 需要转化的字符串数组
-     */
+	 * 字符串数组转化为数字数组
+	 * @param strArray 需要转化的字符串数组
+	 */
     toNumberArray(strArray) {
         const intValues = [];
         const length = strArray.length;
@@ -265,9 +273,9 @@ let commonTools = {
         Yi: 1e8,
     },
     /**
-     * 格式化金额为对应的字符串
-     * @param money 需要格式化的金额
-     */
+	 * 格式化金额为对应的字符串
+	 * @param money 需要格式化的金额
+	 */
     formatMoney(money) {
         if (money >= moneyLevel.Yi) {
             return Math.floor(money / moneyLevel.Yi) + "亿";
@@ -278,18 +286,18 @@ let commonTools = {
         return fixedFloat(money, 2);
     },
     /**
-     * 保留小数点后的指定位数，采用的方法是截断指定位数后的数字
-     * @param num 需要操作的数字
-     * @param len 需要保留的小数点后位数
-     */
+	 * 保留小数点后的指定位数，采用的方法是截断指定位数后的数字
+	 * @param num 需要操作的数字
+	 * @param len 需要保留的小数点后位数
+	 */
     fixedFloat(num, len = 2) {
         return num.toFixed(len);
     },
     /**
-     * 填充数字，对于长度不足的，自动补零
-     * @param num 需要填充的数字
-     * @param len 指定的长度
-     */
+	 * 填充数字，对于长度不足的，自动补零
+	 * @param num 需要填充的数字
+	 * @param len 指定的长度
+	 */
     padNumber(num, len) {
         const n = ("" + num).length;
         return Array(len > n ? len - n + 1 || 0 : 0).join("0") + num;

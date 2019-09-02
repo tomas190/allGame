@@ -2,18 +2,17 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-08-23 11:51:43
+ * @LastEditTime: 2019-09-02 10:53:12
  * @Description: 游戏中央模块管理器
  */
 
 let gHandler = {
-    
+
 }
 let gameGlobal = {
-
-    gameNowName: "", // 当前游戏的名字
-
-    playerKey: "player",
+    isdev: true,
+    gameNow: "hall", // 当前游戏的名字
+    playerKey: "playerKey",
     player: {
         gold: 1000,
         name: "",
@@ -25,11 +24,6 @@ let gameGlobal = {
 gHandler.gameGlobal = gameGlobal
 
 let gameConfig = {
-    mainconfig: {
-        zhname: "主包", // 中文游戏名
-        enname: "main", // 英文游戏名
-        lanchscene: "main", // 跳转场景名
-    },
     hallconfig: {
         zhname: "大厅", // 中文游戏名
         enname: "hall", // 英文游戏名 （子游戏文件路径，更新子路径）
