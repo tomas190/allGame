@@ -23,6 +23,7 @@ var GameStatMgr = cc.Class({
     {
         cc.log("this instance of GameStatMgr");
         this.bConnected = false;
+        this.bLoging = false;
         this.bLogined = false;
         this.eState = Em_Game_State.None;
         this.score = 0;
@@ -57,8 +58,8 @@ var GameStatMgr = cc.Class({
         //this.userid = 458508906; //灰度服
         //this.userid = 980021298;  //正式服
         //服务器地址
-        this.server_url = "ws://127.0.0.1:3653";
-        //this.server_url = "ws://47.75.183.211:3653";  //开发服
+        //this.server_url = "ws://127.0.0.1:3653";
+        this.server_url = "ws://47.75.183.211:3653";  //开发服
         //this.server_url = "ws://buyu.0351sxzc.com:80"; //开发服
         //this.server_url = "ws://playallgames.sempxw.com/buyu"; //灰度服
         //this.server_url = "ws://amusement.cnhgye9.com/buyu";  //正式服
@@ -489,7 +490,8 @@ var GameStatMgr = cc.Class({
         commTools.showMessageBoxWithTwoOption(this.curRootNode,"未登录成功，是否返回游戏大厅",fnCallbackOK.bind(this),fnCallbackNo.bind(this));          
     },
 
-    SendLogin() {
+    SendLogin() {    
+        this.bLoging = true;        
         this.ShowWaiting(BaseDef.WaitType.WT_Login);
         msgSender.sendLogin(0,String(this.userid),this.userpassword); 
         let callback = function() {
@@ -503,7 +505,7 @@ var GameStatMgr = cc.Class({
     },
 
     LoginCheck() {
-        if (!this.bLogined && this.bConnected ) {
+        if (!this.bLogined && !this.bLoging && this.bConnected ) {
             this.SendLogin()
         }
     },
@@ -513,6 +515,7 @@ var GameStatMgr = cc.Class({
         this.CloseWaiting(BaseDef.WaitType.WT_Login);
         cc.log("onLogin 222222222222222222");
         this.bLogined = true;
+        this.bLoging = false;
         //clientMessage.sendPostMessage(BaseDef.ClientWindowEvent.CLIENT_DONE,{});
         //cc.log("this gamestatemgr setscore is ",msg.getScore());       
         cc.log("msg",msg); 
@@ -548,13 +551,13 @@ var GameStatMgr = cc.Class({
         this.bConnected = true;
         cc.log("连上服务器，从这里开始~！");
         //msgSender.sendLogin(0,String(this.userid));  
-        // if( this.eState = Em_Game_State.Hall) {
-        //     // let callback = function() {
-        //     //     this.SendLogin();
-        //     // }
-        //     // setTimeout(callback.bind(this),5000);
-        //     this.SendLogin();
-        // }
+        if( this.eState = Em_Game_State.Hall) {
+            // let callback = function() {
+            //     this.SendLogin();
+            // }
+            // setTimeout(callback.bind(this),5000)            
+            this.SendLogin();
+        }
         
 
         if(cc.sys.isBrowser) {
