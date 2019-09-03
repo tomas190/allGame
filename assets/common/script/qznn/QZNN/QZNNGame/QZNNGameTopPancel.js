@@ -12,6 +12,7 @@ cc.Class({
     initzation: function(e, t) {
         this.node = e;
         this._GameView = t;
+        this.gameCardType = t.gameCardType;
         this.initView();
         this.addEvenListener(this.node);
     },
@@ -39,6 +40,14 @@ cc.Class({
     },
     funMusic: function() {
         console.log("开关闭音乐");
-        cc.gg.audioMgr.changeAudio()
+        if (cc.gg.audioMgr.sfxVolume > 0) {
+            //换成关闭
+            this.music.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame("icon_mute");
+        } else {
+            //换成开启
+            this.music.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame("icon_sound");
+        }
+        cc.gg.audioMgr.changeAudio();
+
     },
 });

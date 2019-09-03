@@ -120,8 +120,15 @@ cc.Class({
     setUserGrabBG: function(e) {
         var a = this.player[e].bg;
         a.opacity = 0;
-        var i = cc.sequence(cc.spawn(cc.fadeTo(1.0, 255), cc.scaleTo(0.3, 1.6, 1.2)), cc.callFunc(function() {
-            a.opacity = 0;
+        // var i = cc.sequence(cc.spawn(cc.fadeTo(0.3, 255), cc.scaleTo(0.3, 1.6, 1.2)), cc.callFunc(function() {
+        //     console.log("我在隐藏背景呢")
+        //         //a.opacity = 0;
+        //     a.runAction(cc.fadeOut(0.3, 0))
+        // }))
+        var i = cc.sequence(cc.fadeTo(0.2, 255), cc.scaleTo(0.2, 1.6, 1.2), cc.fadeOut(0.2, 0), cc.callFunc(function() {
+            //console.log("我在隐藏背景呢")
+            //a.opacity = 0;
+            //a.runAction(cc.fadeOut(0.3, 0))
         }))
         a.runAction(i);
     },
