@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-03 13:35:15
+ * @LastEditTime: 2019-09-03 16:12:06
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -208,7 +208,7 @@ cc.Class({
     },
     /** 点击子游戏按钮统一回调 */
     onClickSubgame(event, subgameconfig) {
-        console.log("jump to subgame", subgameconfig.enname)
+        console.log("jump to subgame", subgameconfig.lanchscene)
         gHandler.audioMgr.stopBg();
         cc.director.loadScene(subgameconfig.lanchscene);
     },
