@@ -101,7 +101,7 @@ cc.Class({
         } else {
             if (instructionsName == "JoinRoom") {
                 var self = this;
-                cc.loader.loadRes("public/prefab/alert", cc.Prefab, function(err, res) {
+                cc.loader.loadRes("qznnPublic/prefab/alert", cc.Prefab, function(err, res) {
                     if (err) {
                         return
                     }
@@ -124,7 +124,7 @@ cc.Class({
 
     alert: function(type, resultMessage, node) {
         var self = this;
-        cc.loader.loadRes("public/prefab/alert", cc.Prefab, function(err, res) {
+        cc.loader.loadRes("qznnPublic/prefab/alert", cc.Prefab, function(err, res) {
             if (err) {
                 return
             }
@@ -211,7 +211,7 @@ cc.Class({
         if (datas.multiples === 0) {
             datas.multiples = "5";
         }
-        cc.gg.audioMgr.playSFX("public/nnMusic/beishu2")
+        cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/beishu2")
         this._GameView._avatarPanel.setUserMultiple(pos, datas.multiples)
     },
     //通知抢庄结果 到达下注阶段
@@ -230,7 +230,7 @@ cc.Class({
         this._GameView._centerPancel.grabBankerBtn.active = false;
         //播放抢庄动画
         this._GameView.onGrabBankerAni(datas, function() {
-            cc.gg.audioMgr.playSFX("public/nnMusic/zhuang32")
+            cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/zhuang32")
             self._GameView.setGameTimer(t)
         })
     },
@@ -266,7 +266,9 @@ cc.Class({
         for (var i = 0; i < cmd.PLAYER_DATAS.length; i++) {
             cmd.PLAYER_DATAS[i].account_id == datas.account_id && cmd.PLAYER_DATAS.splice(i, 1)
         }
-
+        if (cmd.PLAYER_DATAS.length == 1) {
+            this._GameView._centerPancel.isWaitOther(true)
+        }
     },
     //加入房间:
     //游戏开始倒计时
@@ -299,7 +301,9 @@ cc.Class({
             o.account_id == t.account_id && (o = t, i = !0)
         }
         0 == i && cmd.PLAYER_DATAS.push(t), this._GameView.onUpdateUser(t)
-
+        if (cmd.PLAYER_DATAS.length > 1) {
+            this._GameView._centerPancel.isWaitOther(false)
+        }
     },
     //请求进入房间 
     manageJoinRoom: function(data) {
@@ -333,7 +337,12 @@ cc.Class({
         for (var i = 0; i < t.length; i++) t[i].serial_num == cmd.MY_SEAT && (cmd.MY_DATA = cmd.PLAYER_DATAS[i], cmd.MY_ID = t[i].account_id);
         for (i = 0; i < cmd.GAME_PLAYER; i++) this._GameView.clearViewUser(i);
         var a = t;
-        for (i = 0; i < a.length; i++) this._GameView.onUpdateUser(a[i])
+        for (i = 0; i < a.length; i++) this._GameView.onUpdateUser(a[i]);
+        if (data.length <= 1 && data.length > 0) {
+            this._GameView._centerPancel.isWaitOther(true)
+        } else {
+            this._GameView._centerPancel.isWaitOther(false)
+        }
     },
 
     onSceneFree: function(data) {

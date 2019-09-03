@@ -11,7 +11,7 @@ var Animation = cc.Class({
          * n回调函数
          */
         if (null == a || a.length <= 0) return n && n(),
-            void(s ? cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3") : cc.gg.audioMgr.playSFX("public/nnMusic/gold"));
+            void(s ? cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3") : cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/gold"));
         for (var c = i.getPosition(), r = 0, l = 0; l < a.length; l++)
             for (var d = a[l].getPosition(), h = d, g = c, u = 0; u < 15; u++) {
                 var m = new cc.Node;
@@ -24,12 +24,12 @@ var Animation = cc.Class({
                     f = cc.sequence(p, cc.callFunc(function() {
                         ++r == 15 * a.length - 1 && (e.removeAllChildren(),
                             n && n(),
-                            s ? cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3") : cc.gg.audioMgr.playSFX("public/nnMusic/gold"))
+                            s ? cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3") : cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/gold"))
                     }));
                 m.runAction(f)
             }
         if (s) cc.gg.audioMgr.playSFX("sg_ss/game/drop_gold.mp3");
-        else { cc.gg.audioMgr.playSFX("public/nnMusic/gold") }
+        else { cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/gold") }
     },
     viewGrabBankerAnimation: function(e, t, i, a) {
         if (t.length <= 1) a && a();
