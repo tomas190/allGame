@@ -84,7 +84,7 @@ cc.Class({
     },
     alert: function(type, resultMessage, node) {
         var self = this;
-        cc.loader.loadRes("public/prefab/alert", cc.Prefab, function(err, res) {
+        cc.loader.loadRes("qznnPublic/prefab/alert", cc.Prefab, function(err, res) {
             if (err) {
                 return
             }

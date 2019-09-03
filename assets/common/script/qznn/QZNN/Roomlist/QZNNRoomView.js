@@ -17,7 +17,7 @@ cc.Class({
         cc.gg ? cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE) : cc.director("appStart");
         this._scene = this.node.getComponent("QZNNRoomScene");
         cc.gg.audioMgr.pauseAll();
-        cc.gg.audioMgr.playBGM("public/nnMusic/roomBG")
+        cc.gg.audioMgr.playBGM("qznnPublic/nnMusic/roomBG")
     },
     start: function() {
         this.initView();
@@ -88,7 +88,7 @@ cc.Class({
     //调取加载中
     playLoading: function() {
         var a = this;
-        cc.loader.loadRes("public/prefab/loading", function(e, t) {
+        cc.loader.loadRes("qznnPublic/prefab/loading", function(e, t) {
             if (e) console.log("加载出错:", e);
             else {
                 var i = cc.instantiate(t);
@@ -97,7 +97,7 @@ cc.Class({
                 }, 1)
             }
         });
-        //cc.gg.audioMgr.playSFX("public/nnMusic/kaishi2")
+        //cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/kaishi2")
     },
     backMsgFun: function() {
         //销毁此场景监听的所有事件

@@ -37,7 +37,7 @@ cc.Class({
     },
     playBGM: function(e) {
         var self = this;
-        e = e ? e : 'public/nnMusic/Click'
+        e = e ? e : 'qznnPublic/nnMusic/Click'
         if (0 < this.sfxVolume && e) {
             cc.loader.loadRes(e, cc.AudioClip, function(err, clip) {
                 if (err) {
@@ -50,7 +50,7 @@ cc.Class({
     },
     playSFX: function(e) {
         var self = this;
-        e = e ? e : 'public/nnMusic/Click'
+        e = e ? e : 'qznnPublic/nnMusic/Click'
         if (0 < this.sfxVolume && e) {
             cc.loader.loadRes(e, cc.AudioClip, function(err, clip) {
                 if (err) {

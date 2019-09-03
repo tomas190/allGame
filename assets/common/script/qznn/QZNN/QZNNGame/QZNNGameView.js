@@ -205,7 +205,7 @@ cc.Class({
                 d = cc.sequence(cc.delayTime(s), cc.callFunc(function() {
                     for (var e = 0; e < t.length; e++) a[e].active = !1;
                     c - 1 <= ++l ? a[o].active = !0 : a[r].active = !0, r++, r = parseInt(r % t.length);
-                    cc.gg.audioMgr.playSFX("public/nnMusic/qznn_dengdeng2")
+                    cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/qznn_dengdeng2")
                 })),
                 h = cc.sequence(cc.repeat(d, c), cc.delayTime(.5), cc.callFunc(function() {
                     for (var e = 0; e < t.length; e++) a[e].active = !1;
@@ -368,6 +368,7 @@ cc.Class({
         this._cardPanel.setOpenCardAni(t, a.cards, function() {
             if (t == 2) {
                 self._cardPanel.setZaPai(t, a.cow_index, a.kind, function(data) {
+                    self._centerPancel.setZaPaiBG()
                     self._cardPanel.mySelfZaPai(data, function() {
                         self._cardPanel.setTypeSprite(t, i, a.kind)
                     })
@@ -379,6 +380,7 @@ cc.Class({
 
         }, )
     },
+
     //我在恢复别人的场景
     onScenePlayerView: function(datas) {
         for (var t = 0; t < datas.all_gamers.length; t++) {
