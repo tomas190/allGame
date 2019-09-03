@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 15:29:49
+ * @LastEditTime: 2019-09-03 13:35:15
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -34,13 +34,13 @@ cc.Class({
     onLoad() {
         if (gHandler.gameGlobal.isdev) {
             gHandler.commonTools = hqqCommonTools;
-            gHandler.logManager = hqqLogMgr.init();
+            gHandler.logMgr = hqqLogMgr.init();
             gHandler.localStorage = hqqLocalStorage.init();
 
             cc.game.on(cc.game.EVENT_HIDE, function () {
                 cc.audioEngine.pauseMusic();
                 cc.audioEngine.pauseAllEffects();
-                gHandler.logManager.saveLog();
+                gHandler.logMgr.saveLog();
                 gHandler.localStorage.savaLocal();
             });
             cc.game.on(cc.game.EVENT_SHOW, function () {
@@ -62,7 +62,6 @@ cc.Class({
         // gHandler.hallWebSocket.connect("ws://127.0.0.1:52288");
 
         this.topbubble.active = false;
-        gHandler.commonTools.setDefaultHead(this.headimg);
         if (cc.sys.isBrowser) {
             this.browserDeal();
         }
@@ -72,7 +71,12 @@ cc.Class({
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
     /** 通常用于初始化中间状态操作 */
-    start() { },
+    start() {
+        // this.namelabel.string = gHandler.gameGlobal.player.nick;
+        this.namelabel.string = gHandler.gameGlobal.player.account_name;
+        this.coinlabel.string = gHandler.gameGlobal.player.gold;
+        gHandler.commonTools.setDefaultHead(this.headimg);
+    },
     /** 子模块更新检查 im，充提 */
     checkSubModule() {
         // todo 检查子模块
@@ -168,7 +172,7 @@ cc.Class({
     },
     /** 下载子游戏 */
     downloadSubGame(event, data) {
-        gHandler.logManager.log("download subgame " + data.enname);
+        gHandler.logMgr.log("download or updata subgame", data.enname);
         let downflag = data.itembtn.getChildByName("downFlag");
         let progressnode = data.itembtn.getChildByName("progress");
         let progressbar = progressnode.getComponent(cc.ProgressBar);
@@ -177,7 +181,7 @@ cc.Class({
             subname: data.enname,
             version: localsubv || "0.0.1",
             isupdataCallback: (bool) => {
-                console.log("isupdataCallback", bool)
+                // console.log("isupdataCallback", bool)
                 if (bool) { // 需要更新
                     // 自动更新，无需处理
                 } else {
@@ -185,7 +189,7 @@ cc.Class({
             },
             failCallback: () => {
                 console.log("failCallback")
-                gHandler.logManager.log("subgame " + data.enname + " download fail");
+                gHandler.logMgr.log("subgame", data.enname, "download fail");
             },
             progressCallback: (progress) => {
                 console.log("下载进度：", progress)

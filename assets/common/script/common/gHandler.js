@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 15:24:13
+ * @LastEditTime: 2019-09-03 14:29:00
  * @Description: 游戏中央模块管理器
  */
 
@@ -10,15 +10,18 @@ let gHandler = {
 
 }
 let gameGlobal = {
-    isdev: true,
+    isdev: true, // 是否开发状态
     gameNow: "hall", // 当前游戏的名字
     playerKey: "playerKey",
     player: {
-        gold: 1000,
-        name: "",
-        pass: 123456,
-        code: 123456,
-        uuid: 123456,
+        gold: 0, // 金币
+        nick: "", // 昵称
+        sex: 0,// 男 0  女 1 
+        headurl: "", // 头像
+        account_name: "", // 账号
+        account_base_pass: 0, // 密码
+        proxy_pid: 0, // 代理id
+        uuid: 0,
     },
 }
 gHandler.gameGlobal = gameGlobal

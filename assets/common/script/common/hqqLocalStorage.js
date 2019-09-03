@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 10:44:15
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 15:27:03
+ * @LastEditTime: 2019-09-03 13:28:06
  * @Description: 本地化保存
  */
 let gHandler = require("gHandler");
@@ -39,7 +39,7 @@ let localStorage = {
         if (this.subdata[subgame] && this.subdata[subgame][key]) {
             return true;
         } else {
-            gHandler.logManager.log("localstorage don`t has ", subgame, key)
+            gHandler.logMgr.log("localstorage don`t has:", subgame, key)
             return false;
         }
     },

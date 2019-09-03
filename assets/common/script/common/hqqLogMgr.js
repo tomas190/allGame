@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 11:28:43
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 15:27:20
+ * @LastEditTime: 2019-09-03 13:25:10
  * @Description: log日志 管理器
  */
 
@@ -35,10 +35,13 @@ let logManager = {
     },
     /**
      * 正常打印，注意：只会打印字符串
-     * @param {string} data
      * @return: 
      */
-    log: function (data) {
+    log: function () {
+        let data = ""
+        for (let i = 0; i < arguments.length; i++) {
+            data += " " + arguments[i]
+        }
         this.isRealTimeLog && console.log(data);
         this.output += this.getNowTime() + ":log:" + data + "\n";
         this.logCheck();

@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-08-15 10:54:31
+ * @LastEditTime: 2019-09-03 13:28:04
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -118,7 +118,7 @@ hqqWebSocket.prototype = {
         }
     },
     m_onerror(e) {
-        gHandler.logManager.logerror(e);
+        gHandler.logMgr.logerror(e);
         this.m_stopPingPong();
     },
     m_onclose() {
