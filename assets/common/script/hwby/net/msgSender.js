@@ -25,6 +25,7 @@ var msgSender ={
 
     sendLogin(token,userId,userPassword){
         cc.log("sendLogin~!!!!");
+        console.trace('SendLogin~~~~!!!!');
         let msgtag = msgdef.namemap.Login;
         let fnsetvalue = function(msgobj){
             msgobj.setToken(token);
