@@ -267,7 +267,8 @@ cc.Class({
             cmd.PLAYER_DATAS[i].account_id == datas.account_id && cmd.PLAYER_DATAS.splice(i, 1)
         }
         if (cmd.PLAYER_DATAS.length == 1) {
-            this._GameView._centerPancel.isWaitOther(true)
+            this._GameView.resetView();
+            this._GameView._centerPancel.isWaitOther(true);
         }
     },
     //加入房间:
