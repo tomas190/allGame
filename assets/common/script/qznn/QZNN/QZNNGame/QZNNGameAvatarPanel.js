@@ -84,7 +84,7 @@ cc.Class({
         if (e == 2) {
             if (t < 0) {
                 t = (t + "").substr(1, t.length);
-                //cc.gg.audioMgr.playSFX("public/nnMusic/qznn_lose2")
+                //cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/qznn_lose2")
             } else {
                 //cc.gg.audioMgr.playSFX("sg_ss/nnMusic/qznn_win2")
             }
@@ -199,25 +199,27 @@ cc.Class({
         } else {
             scoreBox.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame("eff_lose");
         }
-        addNode.active = 0 <= parseFloat(t),
-            minusNode.active = parseFloat(t) < 0,
-            t < 0 && (t = (t + "").substr(1, t.length)),
-            addNode.getChildByName("score").getComponent(cc.Label).string = this.ModifyStr(t),
-            minusNode.getChildByName("score").getComponent(cc.Label).string = this.ModifyStr(t),
-            scoreBox.opacity = 100;
-        if (parseFloat(t) >= 0) {
+        if (t > 0) {
+            addNode.active = true;
+            minusNode.active = false;
             var a = this;
-            cc.loader.loadRes("public/prefab/win", function(e, t) {
+            cc.loader.loadRes("qznnPublic/prefab/win", function(e, t) {
                 if (e) console.log("加载出错:", e);
                 else {
                     var i = cc.instantiate(t);
                     node.addChild(i), a.scheduleOnce(function() { node.removeChild(i) }, 1)
                 }
             });
-            cc.gg.audioMgr.playSFX("public/nnMusic/qznn_win2")
+            cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/qznn_win2")
         } else {
-            cc.gg.audioMgr.playSFX("public/nnMusic/qznn_lose2")
+            addNode.active = false;
+            minusNode.active = true;
+            cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/qznn_lose2")
         }
+        scoreBox.opacity = 100;
+        t < 0 && (t = (t + "").substr(1, t.length));
+        addNode.getChildByName("score").getComponent(cc.Label).string = this.ModifyStr(t);
+        minusNode.getChildByName("score").getComponent(cc.Label).string = this.ModifyStr(t);
         var s = cc.moveBy(.5, o, n),
             c = cc.spawn(s, cc.fadeTo(.2, 255)),
             r = cc.callFunc(function(e) { scoreBox.x = 0, scoreBox.y = 63, i && i() }),

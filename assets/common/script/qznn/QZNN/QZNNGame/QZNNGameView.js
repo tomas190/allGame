@@ -205,7 +205,7 @@ cc.Class({
                 d = cc.sequence(cc.delayTime(s), cc.callFunc(function() {
                     for (var e = 0; e < t.length; e++) a[e].active = !1;
                     c - 1 <= ++l ? a[o].active = !0 : a[r].active = !0, r++, r = parseInt(r % t.length);
-                    cc.gg.audioMgr.playSFX("public/nnMusic/qznn_dengdeng2")
+                    cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/qznn_dengdeng2")
                 })),
                 h = cc.sequence(cc.repeat(d, c), cc.delayTime(.5), cc.callFunc(function() {
                     for (var e = 0; e < t.length; e++) a[e].active = !1;

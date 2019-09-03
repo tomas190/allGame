@@ -5,16 +5,14 @@ cc.Class({
             default: null,
             type: cc.SpriteAtlas
         },
-
-
         _bShoot: !1,
         _cbCardData: 0
     },
     onLoad: function() {
         this.card_bg = this.node.getChildByName("card_bg");
-        this.num = this.node.getChildByName("num");
-        this.color1 = this.node.getChildByName("color1");
-        this.color2 = this.node.getChildByName("color2");
+        this.num = this.card_bg.getChildByName("num");
+        this.color1 = this.card_bg.getChildByName("color1");
+        this.color2 = this.card_bg.getChildByName("color2");
         this.back = this.node.getChildByName("back");
     },
 
@@ -149,46 +147,59 @@ cc.Class({
     //     }
     // },
     setCardAni: function(e) {
-        // var t = this;
-        // if (0 != e) {
-        //     this.createPoker(e),
-        //         this.back.active = !0,
-        //         this.card_bg.scaleX = -0.2,
-        //         this.card_bg.skewY = -40,
-        //         this.card_bg.skewY = -10,
-        //         this.back.scaleX = 1;
+        var t = this;
+        if (0 != e) {
+            this.createPoker(e);
+            this.back.active = !0;
+            this.card_bg.scaleX = 0;
 
-        //     this.back.skewY = 0;
-        //     var i = cc.spawn(cc.scaleTo(.2, -.2, 1), cc.skewTo(.2, 10, 40),
-        //         cc.callFunc(function() {
-        //             t.back.active = !1;
-        //             t.card_bg.runAction(cc.spawn(cc.scaleTo(.2, -1, 1), cc.skewTo(.2, 0, 0)))
-        //         }));
-        //     this.back.runAction(i)
-        // }
+            // this.card_bg.skewX = 4;
+            this.card_bg.skewY = 4;
+
+
+            //this.back.skewY = 0;
+            var i = cc.sequence(cc.spawn(cc.scaleTo(0.5, 0, 1), cc.skewTo(0.5, 0, 4)), cc.callFunc(function() {
+                t.back.active = !1;
+                t.card_bg.runAction(cc.spawn(cc.scaleTo(0.5, 1, 1), cc.skewTo(0.5, 0, 0)))
+            }));
+            this.back.runAction(i)
+        }
         /**
          * scaleX  减小 逆时针旋转
          * scaleX 增加顺时针旋转
          */
-        var t = this;
-        if (0 != e) {
-            this.createPoker(e),
-                this.back.active = !0,
-                this.card_bg.scaleX = -0.2,
-                this.card_bg.scaleY = 1.2,
-                this.card_bg.skewY = -20,
-                this.card_bg.skewY = -10,
+        // var t = this;
+        // if (0 != e) {
+        //     this.createPoker(e);
+        //     this.back.active = !0;
+        //     // this.card_bg.scaleX = -0.2;
+        //     // this.card_bg.scaleY = 1.2;
+        //     // this.card_bg.skewY = -20;
+        //     // this.card_bg.skewY = -10;
 
-                this.back.scaleX = -1.2;
-            this.back.scaleY = 1;
-            this.back.skewY = 0;
-            var i = cc.spawn(cc.scaleTo(.3, 0, 1.2), cc.skewTo(.3, 10, 20),
-                cc.callFunc(function() {
-                    t.back.active = !1;
-                    t.card_bg.runAction(cc.spawn(cc.scaleTo(.3, 1, 1), cc.skewTo(.3, 0, 0)))
-                }));
-            this.back.runAction(i);
-        }
+        //     // this.back.scaleX = -1.2;
+        //     // this.back.scaleY = 1;
+        //     // this.back.skewY = 0;
+
+        //     this.back.scaleX = 1;
+        //     this.back.scaleY = 1;
+        //     // this.back.skewX = 0;
+        //     // this.back.skewY = 0;
+
+        //     this.card_bg.scaleX = 1;
+        //     this.card_bg.scaleY = 1;
+        //     // this.card_bg.skewY = 0;
+        //     // this.card_bg.skewY = 0;
+        //     var i = cc.sequence(cc.spawn(cc.scaleTo(.3, 0, 1.2), cc.skewTo(.3, 10, 20)), cc.callFunc(function() {
+        //         t.back.active = !1;
+        //         // t.card_bg.scaleX = -0.2;
+        //         // t.card_bg.scaleY = 1.2;
+        //         // t.card_bg.skewY = -20;
+        //         // t.card_bg.skewY = -10;
+        //         t.card_bg.runAction(cc.spawn(cc.scaleTo(.3, 1, 1), cc.skewTo(.3, 0, 0)))
+        //     }));
+        this.back.runAction(i);
+
     },
     getCardValue: function() { return this._cbCardData },
 })

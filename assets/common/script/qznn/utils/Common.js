@@ -259,19 +259,19 @@ cc.Class({
                 if (this.ccLog(e), cc.gg.global.isShortDomainNames) {
                     var t = e.share_url,
                         i = cc.gg.utils.getCopyStr(cc.gg.global.game_type, cc.gg.hallNetMgr._roomNumber, t)
-                    c.Show('game/public/prefabs/', 'copyUI', function(e) {
+                    c.Show('game/qznnPublic/prefabs/', 'copyUI', function(e) {
                         e.str = i
                     })
                 } else {
                     t = e.share_url + '/?' + (window.location.href + '').split('?')[1] + '&platform=' + cc.gg.global.httpPlatform, i = cc.gg.utils.getCopyStr(cc.gg.global.game_type, cc.gg.hallNetMgr._roomNumber, t)
-                    c.Show('game/public/prefabs/', 'copyUI', function(e) {
+                    c.Show('game/qznnPublic/prefabs/', 'copyUI', function(e) {
                         e.str = i
                     })
                 }
         })
         else {
             var t = cc.gg.utils.getCopyStr(cc.gg.global.game_type, cc.gg.hallNetMgr._roomNumber, window.location.href)
-            c.Show('game/public/prefabs/', 'copyUI', function(e) {
+            c.Show('game/qznnPublic/prefabs/', 'copyUI', function(e) {
                 e.str = t
             })
         }

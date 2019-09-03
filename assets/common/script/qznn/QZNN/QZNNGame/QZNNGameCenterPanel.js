@@ -71,7 +71,7 @@ cc.Class({
         // this.ruleMask = this.rule.getChildByName("mask");
         // this.ruleMask.active = false
 
-        cc.loader.loadRes("public/prefab/rule", cc.Prefab, function(err, res) {
+        cc.loader.loadRes("qznnPublic/prefab/rule", cc.Prefab, function(err, res) {
             if (err) {
                 console.log("加载失败")
                 return
@@ -163,9 +163,15 @@ cc.Class({
         // this.playGameOpen();
         this._GameView._cardPanel.setSendCardAni([3, 3, 3, 3, 3])
         this.scheduleOnce(function() {
-            this._GameView._cardPanel.setZaPai(2, [1, 3, 4], 5, function(data) {
-                self._GameView._cardPanel.mySelfZaPai(data)
-            }, [50, 30, 40, 20, 10])
+            // this._GameView._cardPanel.setZaPai(2, [1, 3, 4], 5, function(data) {
+            //     self._GameView._cardPanel.mySelfZaPai(data)
+            // }, [50, 30, 40, 20, 10])
+            var e = [41, 31, 41, 21, 11];
+            var t = this.node.getChildByName("user_head2").getChildByName("node_card2")
+            for (var i = 0; i < e.length; i++) {
+                console.log(e[i] + "我是复职的牌")
+                t.getChildByName("poker" + i).getComponent("createPoker").setCardAni(e[i]);
+            }
         }, 2)
     },
     test2: function() {
@@ -186,14 +192,14 @@ cc.Class({
     //游戏开始动画
     playGameOpen: function() {
         var a = this;
-        cc.loader.loadRes("public/prefab/GameStartAni", function(e, t) {
+        cc.loader.loadRes("qznnPublic/prefab/GameStartAni", function(e, t) {
             if (e) console.log("加载出错:", e);
             else {
                 var i = cc.instantiate(t);
                 a._GameView.node_UI.addChild(i), a.scheduleOnce(function() { a._GameView.node_UI.removeChild(i) }, 1)
             }
         });
-        cc.gg.audioMgr.playSFX("public/nnMusic/kaishi2")
+        cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/kaishi2")
     },
 
     funGrandBanker: function(target) {

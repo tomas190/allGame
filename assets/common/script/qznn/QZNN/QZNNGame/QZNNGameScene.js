@@ -101,7 +101,7 @@ cc.Class({
         } else {
             if (instructionsName == "JoinRoom") {
                 var self = this;
-                cc.loader.loadRes("public/prefab/alert", cc.Prefab, function(err, res) {
+                cc.loader.loadRes("qznnPublic/prefab/alert", cc.Prefab, function(err, res) {
                     if (err) {
                         return
                     }
@@ -124,7 +124,7 @@ cc.Class({
 
     alert: function(type, resultMessage, node) {
         var self = this;
-        cc.loader.loadRes("public/prefab/alert", cc.Prefab, function(err, res) {
+        cc.loader.loadRes("qznnPublic/prefab/alert", cc.Prefab, function(err, res) {
             if (err) {
                 return
             }
@@ -211,7 +211,7 @@ cc.Class({
         if (datas.multiples === 0) {
             datas.multiples = "5";
         }
-        cc.gg.audioMgr.playSFX("public/nnMusic/beishu2")
+        cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/beishu2")
         this._GameView._avatarPanel.setUserMultiple(pos, datas.multiples)
     },
     //通知抢庄结果 到达下注阶段
@@ -230,7 +230,7 @@ cc.Class({
         this._GameView._centerPancel.grabBankerBtn.active = false;
         //播放抢庄动画
         this._GameView.onGrabBankerAni(datas, function() {
-            cc.gg.audioMgr.playSFX("public/nnMusic/zhuang32")
+            cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/zhuang32")
             self._GameView.setGameTimer(t)
         })
     },
