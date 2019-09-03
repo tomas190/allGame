@@ -33,7 +33,9 @@ cc.Class({
             this.player[e].status = this.player[e].getChildByName("status"),
             this.player[e].status.active = !1,
             this.player[e].windUp = this.player[e].getChildByName("windUp"),
-            this.player[e].windUp.active = !1
+            this.player[e].windUp.active = !1,
+            this.player[e].bg = this.player[e].getChildByName("bg"),
+            this.player[e].bg.opacity = 0;
     },
 
     initNode: function() {
@@ -111,7 +113,17 @@ cc.Class({
         }
         a.scaleX = 2;
         a.scaleY = 2;
-        a.runAction(cc.scaleTo(.3, 1, 1))
+        a.runAction(cc.scaleTo(.3, 1, 1));
+        this.setUserGrabBG(e);
+    },
+    //显示抢不抢的一些状态
+    setUserGrabBG: function(e) {
+        var a = this.player[e].bg;
+        a.opacity = 0;
+        var i = cc.sequence(cc.spawn(cc.fadeTo(1.0, 255), cc.scaleTo(0.3, 1.6, 1.2)), cc.callFunc(function() {
+            a.opacity = 0;
+        }))
+        a.runAction(i);
     },
     //显示庄家标志
     setViewBankerSign: function(e, t) {
@@ -130,7 +142,8 @@ cc.Class({
         a.node.active = !0, a.string = "/" + t
         i.scaleX = 2;
         i.scaleY = 2;
-        i.runAction(cc.scaleTo(.3, 1, 1))
+        i.runAction(cc.scaleTo(.3, 1, 1));
+
     },
     // setUserChipScore: function(e, t) {
     //     var i = this.player[e].chipSpr;

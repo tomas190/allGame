@@ -241,16 +241,17 @@ cc.Class({
                 _.setPosition(d),
                     _.runAction(cc.sequence(cc.delayTime(.1 + (0.4 * count)), cc.spawn(
                         cc.bezierTo(0.3, [cc.v2(d.x, d.y), cc.v2(positionBSR.x, positionBSR.y), cc.v2(v.x, v.y)]), cc.fadeIn(.15))))
+                this.scheduleOnce(function() {
+                    cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/send_card")
+                }, 0.4 * count)
             }
             if (t) {
                 console.log("延时时间CallBack->>>", o * 0.4), this.scheduleOnce(function() {
                     t()
                 }, o * 0.4 + 0.8)
             }
-            this.scheduleOnce(function() {
-                    cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/send_card")
-                }, 0.4 * count)
-                //cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/send_card")
+
+            //cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/send_card")
         } else console.log("发牌动画出错->>>>setSendCardAni")
     },
     setViewOpenCard: function(e, t, fun) {
@@ -315,7 +316,7 @@ cc.Class({
                 console.log(sortArr)
                 this.scheduleOnce(function() {
                     callFunc && callFunc(sortArr)
-                }, indexArr.length * 0.3)
+                }, indexArr.length * 0.4)
             } else {
                 //执行抖动动画
                 for (var k = 0; k < 5; k++) {

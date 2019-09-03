@@ -266,7 +266,9 @@ cc.Class({
         for (var i = 0; i < cmd.PLAYER_DATAS.length; i++) {
             cmd.PLAYER_DATAS[i].account_id == datas.account_id && cmd.PLAYER_DATAS.splice(i, 1)
         }
-
+        if (cmd.PLAYER_DATAS.length == 1) {
+            this._GameView._centerPancel.isWaitOther(true)
+        }
     },
     //加入房间:
     //游戏开始倒计时
@@ -299,7 +301,9 @@ cc.Class({
             o.account_id == t.account_id && (o = t, i = !0)
         }
         0 == i && cmd.PLAYER_DATAS.push(t), this._GameView.onUpdateUser(t)
-
+        if (cmd.PLAYER_DATAS.length > 1) {
+            this._GameView._centerPancel.isWaitOther(false)
+        }
     },
     //请求进入房间 
     manageJoinRoom: function(data) {
@@ -333,7 +337,12 @@ cc.Class({
         for (var i = 0; i < t.length; i++) t[i].serial_num == cmd.MY_SEAT && (cmd.MY_DATA = cmd.PLAYER_DATAS[i], cmd.MY_ID = t[i].account_id);
         for (i = 0; i < cmd.GAME_PLAYER; i++) this._GameView.clearViewUser(i);
         var a = t;
-        for (i = 0; i < a.length; i++) this._GameView.onUpdateUser(a[i])
+        for (i = 0; i < a.length; i++) this._GameView.onUpdateUser(a[i]);
+        if (data.length <= 1 && data.length > 0) {
+            this._GameView._centerPancel.isWaitOther(true)
+        } else {
+            this._GameView._centerPancel.isWaitOther(false)
+        }
     },
 
     onSceneFree: function(data) {

@@ -156,11 +156,11 @@ cc.Class({
             // this.card_bg.skewX = 4;
             this.card_bg.skewY = 4;
 
-
-            //this.back.skewY = 0;
-            var i = cc.sequence(cc.spawn(cc.scaleTo(0.5, 0, 1), cc.skewTo(0.5, 0, 4)), cc.callFunc(function() {
+            this.back.skewY = 0;
+            var i = cc.sequence(cc.spawn(cc.scaleTo(0.3, 0, 1), cc.skewTo(0.3, 0, 4)), cc.callFunc(function() {
+                t.back.skewY = 0;
                 t.back.active = !1;
-                t.card_bg.runAction(cc.spawn(cc.scaleTo(0.5, 1, 1), cc.skewTo(0.5, 0, 0)))
+                t.card_bg.runAction(cc.spawn(cc.scaleTo(0.3, 1, 1), cc.skewTo(0.3, 0, 0)))
             }));
             this.back.runAction(i)
         }

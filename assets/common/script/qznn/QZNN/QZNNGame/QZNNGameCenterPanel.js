@@ -86,12 +86,14 @@ cc.Class({
             self.rule.setPosition(width, 0);
             self.rule.active = true;
             self._GameView.node_UI.addChild(self.rule);
-        })
+        });
+        this.waitOther = this.node.getChildByName("waitPerson");
     },
     //重置视图
     resetView: function() {
         this.status.active = false;
         this.wait.active = false;
+        this.waitOther.active = false;
         //this.showWait()
     },
     showWait: function() {
@@ -107,6 +109,9 @@ cc.Class({
         this.dice2.runAction(action2.repeatForever());
         this.dice3.runAction(action3.repeatForever());
 
+    },
+    isWaitOther: function(isShow) {
+        this.waitOther.active = isShow;
     },
     //点击mask隐藏规则 动画完成后隐藏自己
     funRuleMask: function() {
@@ -163,15 +168,17 @@ cc.Class({
         // this.playGameOpen();
         this._GameView._cardPanel.setSendCardAni([3, 3, 3, 3, 3])
         this.scheduleOnce(function() {
-            // this._GameView._cardPanel.setZaPai(2, [1, 3, 4], 5, function(data) {
-            //     self._GameView._cardPanel.mySelfZaPai(data)
-            // }, [50, 30, 40, 20, 10])
-            var e = [41, 31, 41, 21, 11];
-            var t = this.node.getChildByName("user_head2").getChildByName("node_card2")
-            for (var i = 0; i < e.length; i++) {
-                console.log(e[i] + "我是复职的牌")
-                t.getChildByName("poker" + i).getComponent("createPoker").setCardAni(e[i]);
-            }
+            this._GameView._cardPanel.setZaPai(2, [1, 3, 4], 5, function(data) {
+                    self.setZaPaiBG();
+                    self._GameView._avatarPanel.setUserGrabBG(2);
+                    self._GameView._cardPanel.mySelfZaPai(data);
+                }, [50, 30, 40, 20, 10])
+                // var e = [41, 31, 41, 21, 11];
+                // var t = this.node.getChildByName("user_head2").getChildByName("node_card2")
+                // for (var i = 0; i < e.length; i++) {
+                //     console.log(e[i] + "我是复职的牌")
+                //     t.getChildByName("poker" + i).getComponent("createPoker").setCardAni(e[i]);
+                // }
         }, 2)
     },
     test2: function() {
@@ -243,5 +250,37 @@ cc.Class({
         }
         this.status.active = true;
         this.status.getComponent(cc.Sprite).spriteFrame = this.gameCardType.getSpriteFrame(name)
-    }
+    },
+    //砸牌的背景展示
+    setZaPaiBG: function(index) {
+        var node_bg1 = this.node.getChildByName("user_head2").getChildByName("node_card2").getChildByName("zapai_1")
+        var node_bg2 = this.node.getChildByName("user_head2").getChildByName("node_card2").getChildByName("zapai_2")
+        var node_bg3 = this.node.getChildByName("user_head2").getChildByName("node_card2").getChildByName("zapai_3");
+        node_bg1.active = true;
+        this.scheduleOnce(function() {
+            node_bg1.active = false
+            node_bg2.active = true;
+            node_bg3.active = false;
+            cc.gg.audioMgr.playSFX("qznnPublic/nnMusic/zapai")
+        }, 0.2);
+        this.scheduleOnce(function() {
+            node_bg2.active = false;
+            node_bg3.active = true;
+        }, 0.4);
+        this.scheduleOnce(function() {
+                node_bg3.active = false;
+            }, 0.6)
+            // node_bg1.active = false;
+            // node_bg2.active = false;
+            // node_bg3.active = false;
+            // for (var i = 0; i < 3; i++) {
+            //     if (index == 1) {
+            //         node_bg1.active = true
+            //     } else if (index == 2) {
+            //         node_bg2.active = true
+            //     } else {
+            //         node_bg3.active = true
+            //     }
+            // }
+    },
 });

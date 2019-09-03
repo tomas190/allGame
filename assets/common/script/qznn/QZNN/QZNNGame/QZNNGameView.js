@@ -368,6 +368,7 @@ cc.Class({
         this._cardPanel.setOpenCardAni(t, a.cards, function() {
             if (t == 2) {
                 self._cardPanel.setZaPai(t, a.cow_index, a.kind, function(data) {
+                    self._centerPancel.setZaPaiBG()
                     self._cardPanel.mySelfZaPai(data, function() {
                         self._cardPanel.setTypeSprite(t, i, a.kind)
                     })
@@ -379,6 +380,7 @@ cc.Class({
 
         }, )
     },
+
     //我在恢复别人的场景
     onScenePlayerView: function(datas) {
         for (var t = 0; t < datas.all_gamers.length; t++) {
