@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-03 16:12:06
+ * @LastEditTime: 2019-09-04 09:16:09
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -86,9 +86,10 @@ cc.Class({
     },
     /** 子游戏初始化 */
     addSubgame() {
-        this.subgameview.content.width = Math.ceil(gHandler.gameConfig.gamelist.length / 2) * (this.itembtn.width + 5) + this.pageview.node.width + 15;
-        for (let i = 0; i < gHandler.gameConfig.gamelist.length; i++) {
-            let tempdata = gHandler.commonTools.jsonCopy(gHandler.gameConfig.gamelist[i]);
+        this.subgameview.content.width = Math.ceil(Object.getOwnPropertyNames(gHandler.gameConfig.gamelist).length / 2) * (this.itembtn.width + 5) + this.pageview.node.width + 15;
+        for (let key in gHandler.gameConfig.gamelist) {
+            let i = gHandler.gameConfig.gamelist[key].resid;
+            let tempdata = gHandler.commonTools.jsonCopy(gHandler.gameConfig.gamelist[key]);
             let itembtn = cc.instantiate(this.itembtn);
             itembtn.x = Math.floor(i / 2) * (this.itembtn.width + 5) + this.itembtn.width / 2 + 15 + this.pageview.node.width;
             itembtn.y = -i % 2 * this.itembtn.height - this.itembtn.height * 0.5 - 20;

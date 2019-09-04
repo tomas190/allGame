@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:52:25
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 10:49:49
+ * @LastEditTime: 2019-09-04 09:15:52
  * @Description: 通用函数
  */
 
@@ -140,8 +140,10 @@ let commonTools = {
      * 正确处理的对象只有Number、String、Array等能够被json表示的数据结构，因此函数这种不能被json表示的类型将不能被正确处理
      * @param {mobject}  复制的对象原型
      */
-    jsonCopy(mobject){
-        return JSON.parse(JSON.stringify(mobject))
+    jsonCopy(mobject) {
+        if (mobject) {
+            return JSON.parse(JSON.stringify(mobject))
+        }
     },
     /**
      * 设置默认头像
