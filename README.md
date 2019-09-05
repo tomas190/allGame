@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-05 09:00:29
+ * @LastEditTime: 2019-09-05 09:04:50
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -51,7 +51,10 @@ subgame子游戏资源目录：{
 	2、查看本地仓库远程分支情况 （git branch -a）
 	3、如果没有子游戏分支，在master分支下新建分支 （git checkout -b 分支名）,
 		并推送（git push --set-upstream origin 分支名）
-		如果已有分支，直接拉取远程分支到本地（git checkout -b 分支名）
+		如果已有分支，直接拉取远程分支到本地（
+			git fetch origin 分支名 // 拉取远程分支到本地
+			git checkout -b 分支名  // 切换分支
+		）
 	4、开发提交修改至分支... （add pull push）
 	5、游戏开发阶段完成，allgame分支合并子游戏分支
 	6、出包
