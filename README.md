@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-04 15:45:59
+ * @LastEditTime: 2019-09-05 09:00:29
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -47,10 +47,12 @@ subgame子游戏资源目录：{
 
 新开项目流程：{
 	1、克隆仓库（git clone http://git.0717996.com/burt/allGame ）
-	2、查看仓库远程分支情况 （git branch -a）
+		或者克隆仓库已有分支（git clone -b 分支名 http://git.0717996.com/burt/allGame）
+	2、查看本地仓库远程分支情况 （git branch -a）
 	3、如果没有子游戏分支，在master分支下新建分支 （git checkout -b 分支名）,
 		并推送（git push --set-upstream origin 分支名）
-	4、开发提交修改至分支... 
+		如果已有分支，直接拉取远程分支到本地（git checkout -b 分支名）
+	4、开发提交修改至分支... （add pull push）
 	5、游戏开发阶段完成，allgame分支合并子游戏分支
 	6、出包
 }
@@ -69,6 +71,7 @@ subgame子游戏资源目录：{
 
 同步主分支master修改（common目录内容修改）：{
 	大厅的修改都在master分支下，子游戏同步大厅修改需合并master分支
+	1、切换到
 }
 
 常用接口示例：{
