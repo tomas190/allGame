@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-09-04 09:19:20
+ * @LastEditTime: 2019-09-06 16:25:49
  * @Description: 游戏中央模块管理器
  */
 
@@ -34,12 +34,67 @@ let gameConfig = {
         lanchscene: "hall", // 跳转场景名
     },
     gamelist: {
+        "qznn": {
+            zhname: "抢庄牛牛", // 中文游戏名
+            enname: "qznn", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "NNGame", // 跳转场景名
+            game_id: "123456789",
+            serverUrl: "", // 游戏服务器地址
+            hallid: 0,
+            resid: 12,
+        },
+        "zjh": {
+            zhname: "炸金花", // 中文游戏名
+            enname: "zjh", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "ZJHLoad", // 跳转场景名
+            game_id: "123456789",
+            serverUrl: "", // 游戏服务器地址
+            hallid: 1,
+            resid: 20,
+        },
+        "zrsx": {
+            zhname: "视讯百家乐", // 中文游戏名
+            enname: "zrsx", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "LiveGame", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f25173",
+            serverUrl: "ws://liveagin.0351sxzc.com:80", // 游戏服务器地址
+            hallid: 2,
+            resid: 15,
+        },
+        "sgj": {
+            zhname: "水果机", // 中文游戏名
+            enname: "sgj", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "sgj", // 跳转场景名
+            game_id: "123456789",
+            serverUrl: "", // 游戏服务器地址
+            hallid: 3,
+            resid: 17,
+        },
+        "bcbm": {
+            zhname: "奔驰宝马", // 中文游戏名
+            enname: "bcbm", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "bcbmloading", // 跳转场景名
+            game_id: "123456789",
+            serverUrl: "", // 游戏服务器地址
+            hallid: 4,
+            resid: 3,
+        },
+        "lp": {
+            zhname: "轮盘", // 中文游戏名
+            enname: "lp", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "lp", // 跳转场景名
+            game_id: "123456789",
+            serverUrl: "", // 游戏服务器地址
+            hallid: 5,
+            resid: 10,
+        },
         "21d": {
             zhname: "21点", // 中文游戏名
             enname: "21d", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "21d", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 6,
             resid: 0,
         },
         "2rmj": {
@@ -48,6 +103,7 @@ let gameConfig = {
             lanchscene: "2rmj", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 7,
             resid: 1,
         },
         "bjl": {
@@ -56,15 +112,8 @@ let gameConfig = {
             lanchscene: "bjl", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 8,
             resid: 2,
-        },
-        "bcbm": {
-            zhname: "奔驰宝马", // 中文游戏名
-            enname: "bcbm", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "bcbm", // 跳转场景名
-            game_id: "123456789",
-            serverUrl: "", // 游戏服务器地址
-            resid: 3,
         },
         "brnn": {
             zhname: "百人牛牛", // 中文游戏名
@@ -72,6 +121,7 @@ let gameConfig = {
             lanchscene: "brnn", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 9,
             resid: 4,
         },
         "hwby": {
@@ -80,6 +130,7 @@ let gameConfig = {
             lanchscene: "hwby", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 10,
             resid: 5,
         },
         "dz": {
@@ -88,6 +139,7 @@ let gameConfig = {
             lanchscene: "dz", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 11,
             resid: 6,
         },
         "ddz": {
@@ -96,6 +148,7 @@ let gameConfig = {
             lanchscene: "ddz", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 12,
             resid: 7,
         },
         "hh": {
@@ -104,6 +157,7 @@ let gameConfig = {
             lanchscene: "hh", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 13,
             resid: 8,
         },
         "lhd": {
@@ -112,15 +166,8 @@ let gameConfig = {
             lanchscene: "lhd", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 14,
             resid: 9,
-        },
-        "lp": {
-            zhname: "轮盘", // 中文游戏名
-            enname: "lp", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "lp", // 跳转场景名
-            game_id: "123456789",
-            serverUrl: "", // 游戏服务器地址
-            resid: 10,
         },
         "pdk": {
             zhname: "跑得快", // 中文游戏名
@@ -128,22 +175,17 @@ let gameConfig = {
             lanchscene: "pdk", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 15,
             resid: 11,
         },
-        "qznn": {
-            zhname: "抢庄牛牛", // 中文游戏名
-            enname: "qznn", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "NNGame", // 跳转场景名
-            game_id: "123456789",
-            serverUrl: "", // 游戏服务器地址
-            resid: 12,
-        },
+
         "tb": {
             zhname: "骰宝", // 中文游戏名
             enname: "tb", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "tb", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 16,
             resid: 13,
         },
         "sss": {
@@ -152,15 +194,8 @@ let gameConfig = {
             lanchscene: "sss", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 17,
             resid: 14,
-        },
-        "sxbjl": {
-            zhname: "视讯百家乐", // 中文游戏名
-            enname: "sxbjl", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "sxbjl", // 跳转场景名
-            game_id: "123456789",
-            serverUrl: "", // 游戏服务器地址
-            resid: 15,
         },
         "szwg": {
             zhname: "狮子王国", // 中文游戏名
@@ -168,15 +203,8 @@ let gameConfig = {
             lanchscene: "szwg", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 18,
             resid: 16,
-        },
-        "sgj": {
-            zhname: "水果机", // 中文游戏名
-            enname: "sgj", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "sgj", // 跳转场景名
-            game_id: "123456789",
-            serverUrl: "", // 游戏服务器地址
-            resid: 17,
         },
         "sh": {
             zhname: "梭哈", // 中文游戏名
@@ -184,6 +212,7 @@ let gameConfig = {
             lanchscene: "sh", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 19,
             resid: 18,
         },
         "xlch": {
@@ -192,15 +221,8 @@ let gameConfig = {
             lanchscene: "xlch", // 跳转场景名
             game_id: "123456789",
             serverUrl: "", // 游戏服务器地址
+            hallid: 20,
             resid: 19,
-        },
-        "zjh": {
-            zhname: "炸金花", // 中文游戏名
-            enname: "zjh", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "ZJHLoad", // 跳转场景名
-            game_id: "123456789",
-            serverUrl: "", // 游戏服务器地址
-            resid: 20,
         },
     },
 }
