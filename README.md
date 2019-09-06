@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-05 09:04:50
+ * @LastEditTime: 2019-09-06 09:46:05
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -22,6 +22,8 @@
 ts 项目注意事项：{
 	载入模块格式：import 模块名 = require("模块路径")
 	暴露模块格式：export = 模块
+
+	
 }
 
 common目录：{
@@ -74,7 +76,11 @@ subgame子游戏资源目录：{
 
 同步主分支master修改（common目录内容修改）：{
 	大厅的修改都在master分支下，子游戏同步大厅修改需合并master分支
-	1、切换到
+	1、切换到子游戏分支
+	2、合并大厅分支master (git merge master)
+	3、解决冲突（modified的在本地编辑器即可修改）
+	4、继续开发
+	5、开发阶段完成，请求合并
 }
 
 常用接口示例：{
