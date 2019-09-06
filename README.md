@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-06 09:46:05
+ * @LastEditTime: 2019-09-06 09:50:16
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -22,8 +22,8 @@
 ts 项目注意事项：{
 	载入模块格式：import 模块名 = require("模块路径")
 	暴露模块格式：export = 模块
-
-	
+	ts的命名空间（namesapace）命名请不要冲突，一定加上自己的项目前缀
+	文件名也请加上前缀，ts的文件冲突比较苛刻
 }
 
 common目录：{
