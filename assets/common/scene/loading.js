@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 16:57:02
  * @LastEditors: burt
- * @LastEditTime: 2019-09-02 10:45:56
+ * @LastEditTime: 2019-09-09 16:33:05
  * @Description: 通用加载场景
  */
 let gHandler = require("gHandler");
@@ -12,6 +12,10 @@ cc.Class({
     properties: {
         label: cc.Label,
         progresslabel: cc.Label,
+        hallmanifest: {
+            type: cc.Asset,
+            default: null
+        }
     },
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
@@ -29,7 +33,8 @@ cc.Class({
                         callback: (str, state) => {
                             this.info = str || this.info;
                             this.state = state || this.state
-                        }
+                        },
+                        hallmanifest: this.hallmanifest,
                     })
                 }
                 break;
