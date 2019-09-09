@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-06 09:50:16
+ * @LastEditTime: 2019-09-09 15:18:58
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -91,6 +91,10 @@ subgame子游戏资源目录：{
 	获取玩家数据：
 	let gHandler = require("gHandler");
 	gHanler.gameGlobal.player.name
+
+	横竖屏切换：
+	gHandler.Reflect.setOrientation("portrait", 640, 1136)  // 竖屏 宽 高
+	gHandler.Reflect.setOrientation("landscape", 1334, 750) // 横屏 宽 高
 }
 
 

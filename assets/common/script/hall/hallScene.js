@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-06 16:25:59
+ * @LastEditTime: 2019-09-09 15:19:11
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -211,7 +211,11 @@ cc.Class({
     onClickSubgame(event, subgameconfig) {
         console.log("jump to subgame", subgameconfig.lanchscene)
         gHandler.audioMgr.stopBg();
-        cc.director.loadScene(subgameconfig.lanchscene);
+        cc.director.loadScene(subgameconfig.lanchscene, () => {
+            if (subgameconfig.enname == 'zrsx') { //  真人视讯 竖屏
+                gHandler.Reflect.setOrientation("portrait", 640, 1136)
+            }
+        });
     },
     /** 复制名字 */
     onClickCopyNameBtn() {
