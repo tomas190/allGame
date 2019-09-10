@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-09 15:18:58
+ * @LastEditTime: 2019-09-10 09:48:32
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -93,6 +93,9 @@ subgame子游戏资源目录：{
 	gHanler.gameGlobal.player.name
 
 	横竖屏切换：
+	竖屏项目注意：需要在loadscene之前调用一次 gHandler.Reflect.setOrientation() 
+	不带任何参数，设为大厅场景格式
+	完整的调用格式如下：
 	gHandler.Reflect.setOrientation("portrait", 640, 1136)  // 竖屏 宽 高
 	gHandler.Reflect.setOrientation("landscape", 1334, 750) // 横屏 宽 高
 }
