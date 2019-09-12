@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 10:57:34
+ * @LastEditTime: 2019-09-12 11:18:27
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -134,13 +134,16 @@ cc.Class({
                 button.clickEvents.push(clickEventHandler);
             }
         }
-        this.subGameBtnEffect()
+        this.scheduleOnce(() => {
+            this.subGameBtnEffect()
+        }, 0.5)
     },
     /** 初始化后的按钮特效 */
     subGameBtnEffect() {
+        console.log("初始化后的按钮特效")
         for (let i = 0; i < this.subGameBtnArr.length; i += 2) {
-            this.subGameBtnArr[i] && this.subGameBtnArr[i].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.12, 1.025), cc.scaleTo(0.12, 1)))
-            this.subGameBtnArr[i + 1] && this.subGameBtnArr[i + 1].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.12, 1.025), cc.scaleTo(0.12, 1)))
+            this.subGameBtnArr[i] && this.subGameBtnArr[i].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.1, 1.03), cc.scaleTo(0.1, 1)))
+            this.subGameBtnArr[i + 1] && this.subGameBtnArr[i + 1].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.1, 1.03), cc.scaleTo(0.1, 1)))
         }
     },
     /** web端需要做的处理 */

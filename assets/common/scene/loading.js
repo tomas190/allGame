@@ -2,11 +2,11 @@
  * @Author: burt
  * @Date: 2019-07-27 16:57:02
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 10:17:35
+ * @LastEditTime: 2019-09-12 11:07:36
  * @Description: 通用加载场景
  */
 let gHandler = require("gHandler");
-let appLogin = require("appLogin")
+
 cc.Class({
     extends: cc.Component,
 
@@ -29,6 +29,7 @@ cc.Class({
                 if (gHandler.gameGlobal.isdev) {
                     cc.director.loadScene('hall')
                 } else {
+                    let appLogin = require("appLogin")
                     gHandler.loginMgr = appLogin;
                     gHandler.loginMgr.init({
                         callback: (str, state) => {
