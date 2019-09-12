@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 10:13:41
+ * @LastEditTime: 2019-09-12 10:57:34
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -317,8 +317,10 @@ cc.Class({
     /** 调用了 destroy() 时回调，当帧结束统一回收组件 */
     onDestroy() {
         console.log("onDestroy")
-        gHandler.hallWebSocket.unregister("/Game/login/login", "hallScene")
-        gHandler.hallWebSocket.close()
+        if (gHandler.hallWebSocket) {
+            gHandler.hallWebSocket.unregister("/Game/login/login", "hallScene")
+            gHandler.hallWebSocket.close()
+        }
         gHandler.eventMgr.unregister("isupdataCallback", "hallScene")
         gHandler.eventMgr.unregister("failCallback", "hallScene")
         gHandler.eventMgr.unregister("progressCallback", "hallScene")
