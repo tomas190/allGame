@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 10:14:25
+ * @LastEditTime: 2019-09-12 16:50:38
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -94,8 +94,8 @@ hqqWebSocket.prototype = {
             let msg = {
                 "event": "/Game/login/login",
                 "data": {
-                    id: gHandler.gameGlobal.player.account_name,
-                    pass: gHandler.gameGlobal.player.account_pass
+                    id: gHandler.appGlobal.player.account_name,
+                    pass: gHandler.appGlobal.player.account_pass
                 }
             }
             this.ws.send(JSON.stringify(msg))
@@ -124,7 +124,6 @@ hqqWebSocket.prototype = {
             setTimeout(() => {
                 this.reConnectTime++;
                 if (this.reConnectTime > 5) {
-                    console.log("放弃重连")
                     this.reConnectTime = 0;
                     return;
                 }

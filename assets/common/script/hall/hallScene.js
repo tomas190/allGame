@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 11:18:27
+ * @LastEditTime: 2019-09-12 16:49:54
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -72,14 +72,14 @@ cc.Class({
         this.coinlabel.string = gHandler.gameGlobal.player.gold;
         gHandler.commonTools.setDefaultHead(this.headimg);
 
-        // gHandler.hallWebSocket = new hallWebSocket();
-        // gHandler.hallWebSocket.init();
-        // gHandler.hallWebSocket.register("/Game/login/login", "hallScene", this.onReceiveLogin.bind(this))
-        // let url = gHandler.appGlobal.server + "/Game/login/login";
-        // if (cc.sys.isBrowser) {
-        //     url = "ws://" + url;
-        // }
-        // gHandler.hallWebSocket.connect(url);
+        gHandler.hallWebSocket = new hallWebSocket();
+        gHandler.hallWebSocket.init();
+        gHandler.hallWebSocket.register("/Game/login/login", "hallScene", this.onReceiveLogin.bind(this))
+        let url = gHandler.appGlobal.server + "/Game/login/login";
+        if (cc.sys.isBrowser) {
+            url = "ws://" + url;
+        }
+        gHandler.hallWebSocket.connect(url);
 
         gHandler.eventMgr.register("isupdataCallback", "hallScene", this.isupdataCallback.bind(this))
         gHandler.eventMgr.register("failCallback", "hallScene", this.failCallback.bind(this))
@@ -88,7 +88,9 @@ cc.Class({
     },
     /** 登陆 */
     onReceiveLogin(msg) {
-        gHandler.gameGlobal.token = msg.token
+        console.log("大厅登陆收到回调")
+        // gHandler.gameGlobal.token = msg.token
+        gHandler.appGlobal.token = msg.token
     },
     /** 子模块更新检查 im，充提 */
     checkSubModule() {
@@ -140,7 +142,7 @@ cc.Class({
     },
     /** 初始化后的按钮特效 */
     subGameBtnEffect() {
-        console.log("初始化后的按钮特效")
+        // console.log("初始化后的按钮特效")
         for (let i = 0; i < this.subGameBtnArr.length; i += 2) {
             this.subGameBtnArr[i] && this.subGameBtnArr[i].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.1, 1.03), cc.scaleTo(0.1, 1)))
             this.subGameBtnArr[i + 1] && this.subGameBtnArr[i + 1].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.1, 1.03), cc.scaleTo(0.1, 1)))
@@ -215,8 +217,8 @@ cc.Class({
         button.clickEvents.push(clickEventHandler);
     },
     /** 创建子游戏账号 */
-    createSubAccount() {
-        gHandler.loginMgr && gHandler.loginMgr.createSubAccount()
+    createSubAccount(subgameconfig, callback) {
+        gHandler.loginMgr && gHandler.loginMgr.createSubAccount(subgameconfig, callback)
     },
     /** 下载子游戏 */
     downloadSubGame(event, data) {
@@ -231,6 +233,9 @@ cc.Class({
             // zanting.active = !jiantou.active
         } else {
             this.isupdating = true
+        }
+        if (!data.hasAccount && !gHandler.gameGlobal.isdev) {
+            this.createSubAccount(data)
         }
         let localsubv = gHandler.localStorage.get(data.enname, "versionKey") || null;
         gHandler.hotUpdateMgr.checkUpdate({
@@ -268,11 +273,20 @@ cc.Class({
     /** 点击子游戏按钮统一回调 */
     onClickSubgame(event, subgameconfig) {
         console.log("jump to subgame", subgameconfig.lanchscene)
-        gHandler.audioMgr.stopBg();
-        if (subgameconfig.enname == 'zrsx') { //  真人视讯 竖屏
-            gHandler.Reflect.setOrientation("portrait", 640, 1136)
+        let callback = function () {
+            gHandler.audioMgr.stopBg();
+            if (subgameconfig.enname == 'zrsx') { //  真人视讯 竖屏
+                gHandler.Reflect && gHandler.Reflect.setOrientation("portrait", 640, 1136)
+            }
+            cc.director.loadScene(subgameconfig.lanchscene);
         }
-        cc.director.loadScene(subgameconfig.lanchscene);
+        if (gHandler.gameGlobal.isdev) {
+            callback()
+        } else if (subgameconfig.hasAccount) {
+            callback()
+        } else {
+            this.createSubAccount(subgameconfig, callback)
+        }
     },
     /** 复制名字 */
     onClickCopyNameBtn() {
