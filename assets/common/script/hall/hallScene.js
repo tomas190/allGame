@@ -2,15 +2,12 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-11 08:31:57
+ * @LastEditTime: 2019-09-12 10:13:41
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
-let hqqCommonTools = require("hqqCommonTools");
-let hqqLocalStorage = require("hqqLocalStorage");
-let hqqLogMgr = require("hqqLogMgr");
 let hqqAudioMgr = require("hqqAudioMgr");
-let hqqWebSocket = require("hqqWebSocket");
+let hallWebSocket = require("hallWebSocket");
 
 cc.Class({
     extends: cc.Component,
@@ -33,9 +30,14 @@ cc.Class({
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
         if (gHandler.gameGlobal.isdev) {
+            let hqqCommonTools = require("hqqCommonTools");
             gHandler.commonTools = hqqCommonTools;
+            let hqqLogMgr = require("hqqLogMgr");
             gHandler.logMgr = hqqLogMgr.init();
+            let hqqLocalStorage = require("hqqLocalStorage");
             gHandler.localStorage = hqqLocalStorage.init();
+            let hqqEvent = require("hqqEvent")
+            gHandler.eventMgr = hqqEvent.init();
 
             cc.game.on(cc.game.EVENT_HIDE, function () {
                 cc.audioEngine.pauseMusic();
@@ -49,24 +51,17 @@ cc.Class({
             });
         }
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
-        gHandler.audioMgr.playBg("hallbg");
-
-        // gHandler.hallWebSocket = new hqqWebSocket();
-        // let hallSocket = require("hallSocket")
-        // gHandler.hallWebSocket.init({
-        //     protoDeal: hallSocket,
-        // });
-        // hallSocket.init({
-        //     webSocket: gHandler.hallWebSocket,
-        // })
-        // gHandler.hallWebSocket.connect("ws://127.0.0.1:52288");
+        // gHandler.audioMgr.playBg("hallbg");
 
         this.topbubble.active = false;
         if (cc.sys.isBrowser) {
             this.browserDeal();
         }
+        this.subGameBtnMap = {};
+        this.subGameBtnArr = [];
         this.addSubgame();
         this.checkSubModule();
+        this.isupdating = false;
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
@@ -76,6 +71,24 @@ cc.Class({
         this.namelabel.string = gHandler.gameGlobal.player.account_name;
         this.coinlabel.string = gHandler.gameGlobal.player.gold;
         gHandler.commonTools.setDefaultHead(this.headimg);
+
+        // gHandler.hallWebSocket = new hallWebSocket();
+        // gHandler.hallWebSocket.init();
+        // gHandler.hallWebSocket.register("/Game/login/login", "hallScene", this.onReceiveLogin.bind(this))
+        // let url = gHandler.appGlobal.server + "/Game/login/login";
+        // if (cc.sys.isBrowser) {
+        //     url = "ws://" + url;
+        // }
+        // gHandler.hallWebSocket.connect(url);
+
+        gHandler.eventMgr.register("isupdataCallback", "hallScene", this.isupdataCallback.bind(this))
+        gHandler.eventMgr.register("failCallback", "hallScene", this.failCallback.bind(this))
+        gHandler.eventMgr.register("progressCallback", "hallScene", this.progressCallback.bind(this))
+        gHandler.eventMgr.register("finishCallback", "hallScene", this.finishCallback.bind(this))
+    },
+    /** 登陆 */
+    onReceiveLogin(msg) {
+        gHandler.gameGlobal.token = msg.token
     },
     /** 子模块更新检查 im，充提 */
     checkSubModule() {
@@ -102,6 +115,8 @@ cc.Class({
             ani.animation = "animation";
             itembtn.getChildByName("wait").active = false;
             itembtn.getChildByName("experience").active = false;
+            this.subGameBtnMap[tempdata.enname] = itembtn;
+            this.subGameBtnArr.push(itembtn);
             tempdata.itembtn = itembtn;
             if (!gHandler.gameGlobal.isdev) {
                 this.checkSubGameDownload(tempdata);
@@ -118,6 +133,14 @@ cc.Class({
                 let button = tempdata.itembtn.getComponent(cc.Button);
                 button.clickEvents.push(clickEventHandler);
             }
+        }
+        this.subGameBtnEffect()
+    },
+    /** 初始化后的按钮特效 */
+    subGameBtnEffect() {
+        for (let i = 0; i < this.subGameBtnArr.length; i += 2) {
+            this.subGameBtnArr[i] && this.subGameBtnArr[i].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.12, 1.025), cc.scaleTo(0.12, 1)))
+            this.subGameBtnArr[i + 1] && this.subGameBtnArr[i + 1].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.12, 1.025), cc.scaleTo(0.12, 1)))
         }
     },
     /** web端需要做的处理 */
@@ -149,15 +172,32 @@ cc.Class({
     checkSubGameDownload(data) {
         let downflag = data.itembtn.getChildByName("downFlag");
         let progress = data.itembtn.getChildByName("progress");
-        var clickEventHandler = new cc.Component.EventHandler();
+        let clickEventHandler = new cc.Component.EventHandler();
         clickEventHandler.target = this.node;
         clickEventHandler.component = "hallScene";
         clickEventHandler.customEventData = data;
         let subgamev = this.getRemoteSubgame(data.game_id).version;
         let localsubv = gHandler.localStorage.get(data.enname, "versionKey");
+        let needup = false
+        if (!localsubv) {
+            needup = true;
+        } else {
+            // let vA = subgamev.split('.');
+            // let vB = localsubv.split('.');
+            // for (let i = 0; i < vA.length; ++i) {
+            //     let a = parseInt(vA[i]);
+            //     let b = parseInt(vB[i] || 0);
+            //     if (a != b) {
+            //         needup = true;
+            //         break;
+            //     }
+            // }
+            // if (vB.length != vA.length) {
+            //     needup = true;
+            // }
+        }
         let txt = "local version: " + localsubv + " | remote version:" + subgamev;
-        // if (!localsubv || subgamev.split(".")[2] !== localsubv.split(".")[2]) { // 判断是否需要更新
-        if (!localsubv) { // 判断是否需要更新
+        if (needup) {
             console.log(txt + " | subgame : " + data.enname + " need update");
             downflag.active = true;
             progress.active = true;
@@ -171,41 +211,56 @@ cc.Class({
         let button = data.itembtn.getComponent(cc.Button);
         button.clickEvents.push(clickEventHandler);
     },
+    /** 创建子游戏账号 */
+    createSubAccount() {
+        gHandler.loginMgr && gHandler.loginMgr.createSubAccount()
+    },
     /** 下载子游戏 */
     downloadSubGame(event, data) {
         gHandler.logMgr.log("download or updata subgame", data.enname);
-        let downflag = data.itembtn.getChildByName("downFlag");
-        let progressnode = data.itembtn.getChildByName("progress");
-        let progressbar = progressnode.getComponent(cc.ProgressBar);
+        if (this.isupdating) {
+            console.log("正在更新中")
+            // todo 图片修改
+            // let progress = data.itembtn.getChildByName("progress") 
+            // let jiantou = progress.getChildByName("jiantou")
+            // let zanting = progress.getChildByName("zanting")
+            // jiantou.active = !jiantou.active
+            // zanting.active = !jiantou.active
+        } else {
+            this.isupdating = true
+        }
         let localsubv = gHandler.localStorage.get(data.enname, "versionKey") || null;
         gHandler.hotUpdateMgr.checkUpdate({
             subname: data.enname,
             version: localsubv || "0.0.1",
-            isupdataCallback: (bool) => {
-                // console.log("isupdataCallback", bool)
-                if (bool) { // 需要更新
-                    // 自动更新，无需处理
-                } else {
-                }
-            },
-            failCallback: () => {
-                console.log("failCallback")
-                gHandler.logMgr.log("subgame", data.enname, "download fail");
-            },
-            progressCallback: (progress) => {
-                console.log("下载进度：", progress)
-                if (isNaN(progress)) {
-                    progress = 0;
-                }
-                progressbar.progress = progress;
-            },
-            finishCallback: () => {
-                console.log("finishCallback & change btn callback")
-                progressnode.active = false;
-                downflag.active = false;
-                event.target.getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
-            },
         })
+    },
+    isupdataCallback(bool) {
+        // console.log("isupdataCallback", bool)
+        if (bool) { // 需要更新
+            // 自动更新，无需处理
+        } else {
+        }
+    },
+    failCallback(enname) {
+        console.log("failCallback")
+        gHandler.logMgr.log("subgame", enname, "download fail");
+    },
+    progressCallback(progress, enname) {
+        // console.log("下载进度：", enname, progress)
+        if (isNaN(progress)) {
+            progress = 0;
+        }
+        let progressnode = this.subGameBtnMap[enname].getChildByName("progress");
+        let progressbar = progressnode.getComponent(cc.ProgressBar);
+        progressbar.progress = progress;
+    },
+    finishCallback(enname) {
+        console.log("finishCallback & change btn callback")
+        this.isupdating = false;
+        this.subGameBtnMap[enname].getChildByName("progress").active = false;
+        this.subGameBtnMap[enname].getChildByName("downFlag").active = false;;
+        this.subGameBtnMap[enname].getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
     },
     /** 点击子游戏按钮统一回调 */
     onClickSubgame(event, subgameconfig) {
@@ -260,5 +315,13 @@ cc.Class({
     /** 所有组件update执行完之后调用 */
     // lateUpdate() { },
     /** 调用了 destroy() 时回调，当帧结束统一回收组件 */
-    // onDestroy() { },
+    onDestroy() {
+        console.log("onDestroy")
+        gHandler.hallWebSocket.unregister("/Game/login/login", "hallScene")
+        gHandler.hallWebSocket.close()
+        gHandler.eventMgr.unregister("isupdataCallback", "hallScene")
+        gHandler.eventMgr.unregister("failCallback", "hallScene")
+        gHandler.eventMgr.unregister("progressCallback", "hallScene")
+        gHandler.eventMgr.unregister("finishCallback", "hallScene")
+    },
 });

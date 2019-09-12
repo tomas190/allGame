@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-09-06 16:25:49
+ * @LastEditTime: 2019-09-12 10:19:58
  * @Description: 游戏中央模块管理器
  */
 
@@ -14,13 +14,14 @@ let gameGlobal = {
     gameNow: "hall", // 当前游戏的名字
     iconPath: "", // 头像地址前缀
     playerKey: "playerKey",
+    token: "", // 通信token
     player: {
         gold: 0, // 金币
         nick: "", // 昵称
         sex: 0,// 男 0  女 1
         headurl: "", // 头像
         account_name: "", // 账号
-        account_base_pass: 0, // 密码
+        account_pass: 0, // 密码
         proxy_pid: 0, // 代理id
         uuid: 0,
     },
@@ -178,7 +179,6 @@ let gameConfig = {
             hallid: 15,
             resid: 11,
         },
-
         "tb": {
             zhname: "骰宝", // 中文游戏名
             enname: "tb", // 英文游戏名 （子游戏文件路径，更新子路径）
