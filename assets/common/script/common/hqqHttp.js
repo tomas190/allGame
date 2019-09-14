@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 16:40:03
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 16:48:35
+ * @LastEditTime: 2019-09-14 12:30:36
  * @Description: http 
  */
 
@@ -38,7 +38,6 @@ let hqqHttp = {
 
         let timer = setTimeout(() => {
             if (callBack && !alreadyCallBack) {
-                console.log("post timeout");
                 xhr.abort(); // 如果请求已经被发送，则立刻终止请求
                 callBack(null);
                 alreadyCallBack = true;
@@ -46,6 +45,32 @@ let hqqHttp = {
             clearTimeout(timer);
         }, 3000)
 
+        xhr.send(str); // 发送请求，默认是异步请求，请求发送后立刻返回
+    },
+
+    sendRequestLogPost(urlto, param, filepath, callBack) {
+        let str = JSON.stringify(param);
+        let xhr = new XMLHttpRequest();
+        let m_url = urlto;
+        // 异步请求
+        xhr.open("POST", m_url, true); // 初始化一个请求
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            cc.log(xhr.readyState, xhr.status)
+            if (xhr.readyState == 4) {
+                console.log(xhr.responseText)
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    callBack && callBack(true, filepath)
+                } else {
+                    callBack && callBack(false)
+                }
+            }
+        }
+        let timer = setTimeout(() => {
+            xhr.abort(); // 如果请求已经被发送，则立刻终止请求
+            callBack && callBack(false)
+            clearTimeout(timer);
+        }, 3000)
         xhr.send(str); // 发送请求，默认是异步请求，请求发送后立刻返回
     },
 
@@ -117,7 +142,7 @@ let hqqHttp = {
         xhr.open("GET", m_url, true);
         let timer = setTimeout(() => {
             if (callback && !alreadyCallBack) {
-                console.log("sendSecretRequestGet RequestGet timeout");
+                // console.log("sendSecretRequestGet RequestGet timeout");
                 xhr.abort(); // 如果请求已经被发送，则立刻终止请求
                 // callback(null);
                 // alreadyCallBack = true;

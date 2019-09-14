@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 16:49:54
+ * @LastEditTime: 2019-09-14 12:31:01
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -25,31 +25,11 @@ cc.Class({
         pageview: cc.PageView, // 活动页面
         itembtn: cc.Node, // 子游戏按钮
         subgameview: cc.ScrollView, // 子游戏按钮缓动面板
+        web: cc.WebView, // 网页
     },
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        if (gHandler.gameGlobal.isdev) {
-            let hqqCommonTools = require("hqqCommonTools");
-            gHandler.commonTools = hqqCommonTools;
-            let hqqLogMgr = require("hqqLogMgr");
-            gHandler.logMgr = hqqLogMgr.init();
-            let hqqLocalStorage = require("hqqLocalStorage");
-            gHandler.localStorage = hqqLocalStorage.init();
-            let hqqEvent = require("hqqEvent")
-            gHandler.eventMgr = hqqEvent.init();
-
-            cc.game.on(cc.game.EVENT_HIDE, function () {
-                cc.audioEngine.pauseMusic();
-                cc.audioEngine.pauseAllEffects();
-                gHandler.logMgr.saveLog();
-                gHandler.localStorage.savaLocal();
-            });
-            cc.game.on(cc.game.EVENT_SHOW, function () {
-                cc.audioEngine.resumeMusic();
-                cc.audioEngine.resumeAllEffects();
-            });
-        }
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
         // gHandler.audioMgr.playBg("hallbg");
 
@@ -89,8 +69,7 @@ cc.Class({
     /** 登陆 */
     onReceiveLogin(msg) {
         console.log("大厅登陆收到回调")
-        // gHandler.gameGlobal.token = msg.token
-        gHandler.appGlobal.token = msg.token
+        gHandler.gameGlobal.token = msg.token
     },
     /** 子模块更新检查 im，充提 */
     checkSubModule() {
@@ -120,7 +99,7 @@ cc.Class({
             this.subGameBtnMap[tempdata.enname] = itembtn;
             this.subGameBtnArr.push(itembtn);
             tempdata.itembtn = itembtn;
-            if (!gHandler.gameGlobal.isdev) {
+            if (cc.sys.isNative) {
                 this.checkSubGameDownload(tempdata);
             } else {
                 let downflag = tempdata.itembtn.getChildByName("downFlag");
@@ -164,6 +143,9 @@ cc.Class({
     },
     /** 根据id获取服务器子游戏信息 */
     getRemoteSubgame(game_id) {
+        if (!gHandler.appGlobal || !gHandler.appGlobal.remoteGamelist) {
+            return
+        }
         let remotedata = gHandler.appGlobal.remoteGamelist[0];
         for (let i = 0; i < gHandler.appGlobal.remoteGamelist.length; i++) {
             if (game_id === gHandler.appGlobal.remoteGamelist[i].game_id) {
@@ -217,8 +199,37 @@ cc.Class({
         button.clickEvents.push(clickEventHandler);
     },
     /** 创建子游戏账号 */
-    createSubAccount(subgameconfig, callback) {
-        gHandler.loginMgr && gHandler.loginMgr.createSubAccount(subgameconfig, callback)
+    createSubAccount(subgameconfig, mcallback) {
+        if (subgameconfig.hasAccount) {
+            console.log("已经有账号了")
+            mcallback && mcallback();
+            return
+        }
+        let subdata = gHandler.appGlobal.remoteGamelist[0]
+        for (let i = 0; i < gHandler.appGlobal.remoteGamelist.length; i++) {
+            if (subgameconfig.game_id == gHandler.appGlobal.remoteGamelist[i].game_id) {
+                subdata = gHandler.appGlobal.remoteGamelist[i]
+                break;
+            }
+        }
+        let callback = (data) => {
+            console.log("创建子游戏账号 callback", JSON.parse(data))
+            for (let k in gHandler.gameConfig.gamelist) {
+                gHandler.gameConfig.gamelist[k].hasAccount = true;
+                gHandler.localStorage.set(k, "hasAccount", true);
+            }
+            mcallback && mcallback();
+        }
+        let outcallback = () => {
+            console.log("创建子游戏账号 超时")
+        }
+        let endurl = "/Game/User/createGameAccount?";
+        endurl += "game_id=" + subdata.game_id;
+        endurl += "&package_id=" + subdata.package_id;
+        endurl += "&balance=" + gHandler.gameGlobal.player.gold;
+        endurl += "&id=" + gHandler.gameGlobal.player.id;
+        endurl += "&token=" + gHandler.gameGlobal.token;
+        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server, endurl, callback, outcallback);
     },
     /** 下载子游戏 */
     downloadSubGame(event, data) {
@@ -325,6 +336,31 @@ cc.Class({
     /** 活动页面 */
     onClickADPage(event, custom) {
         console.log("点击活动页面", custom)
+        this.web.active = true;
+        this.web.url = "www.baidu.com"
+
+        // let getIconPath = () => {
+        //     let packageName = gHandler.appGlobal.packgeName;
+        //     let pathName = packageName + "/icon";
+        //     return ${ this.hostManager.sourceHost } +"/" + pathName + "/";
+        // }
+
+        // let info = JSON.stringify({
+        //     id: gHandler.gameGlobal.player.id, // 用户ID
+        //     game_id: this.game.game_id, // 游戏ID
+        //     server_url: this.serverURL, // game_host
+        //     password: gHandler.gameGlobal.player.account_pass // 用户密码
+        // });
+
+        // let info = gHandler.base64.encode(info);
+
+        // this.web.url = "file://" + gHandler.appGlobal.remoteSeverinfo.temp_host[0] + "test" +
+        //     "?info=$" + info +
+        //     "&os=$" + gHandler.appGlobal.os +
+        //     "&iconPath=$" + getIconPath() + // 头像资源地址(图片地址)
+        //     "&version=${this.game.version}" + // 游戏版本号
+        //     "&env=$" + "dev" + // 环境 online dev pre
+        //     "&time=$" + new Date();// 时间戳
     },
 
     /** 每帧调用一次 // called every frame */

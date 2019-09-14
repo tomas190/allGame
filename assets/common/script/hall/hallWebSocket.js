@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 16:50:38
+ * @LastEditTime: 2019-09-14 12:31:13
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -38,7 +38,7 @@ hqqWebSocket.prototype = {
         }, 1000)
     },
     sendPing() {
-        console.log("发送心跳")
+        // console.log("发送心跳")
         this.pingTime = 0;
         this.ws && this.ws.send('');
     },
@@ -94,8 +94,8 @@ hqqWebSocket.prototype = {
             let msg = {
                 "event": "/Game/login/login",
                 "data": {
-                    id: gHandler.appGlobal.player.account_name,
-                    pass: gHandler.appGlobal.player.account_pass
+                    id: gHandler.gameGlobal.player.account_name,
+                    pass: gHandler.gameGlobal.player.account_pass
                 }
             }
             this.ws.send(JSON.stringify(msg))

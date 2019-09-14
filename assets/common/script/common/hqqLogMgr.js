@@ -2,11 +2,12 @@
  * @Author: burt
  * @Date: 2019-08-01 11:28:43
  * @LastEditors: burt
- * @LastEditTime: 2019-09-03 13:25:10
+ * @LastEditTime: 2019-09-14 12:30:47
  * @Description: log日志 管理器
  */
 
 let hqqHttp = require("hqqHttp");
+let gHandler = require("gHandler");
 let logManager = {
     isRealTimeLog: true, // 是否在控制台实时打印
     logMaxLine: 1000, // 最大的打印行数
@@ -14,15 +15,22 @@ let logManager = {
     parentSizes: [0],
     currentResult: '',
     output: '', // 全部日志
+    eoutput: '', // 错误日志
     serverUrl: null,
+    tag: "\r\n",
+    logpath: "",
     /**
      * 初始化
      */
-    init: function (logserver) {
-        this.serverUrl = logserver;
-        this.key = "Logtxt.js";
-        window.localStorage.setItem(this.key, "");
-        this.output = window.localStorage.getItem(this.key);
+    init: function () {
+        if (cc.sys.isNative) {
+            this.logpath = jsb.fileUtils.getWritablePath() + "log";
+            if (!jsb.fileUtils.isDirectoryExist(this.logpath)) {
+                jsb.fileUtils.createDirectory(jsb.fileUtils.getWritablePath() + "log");
+            }
+            this.output = jsb.fileUtils.getStringFromFile(this.logpath + "/logtemp.txt")
+            this.eoutput = jsb.fileUtils.getStringFromFile(this.logpath + "/elogtemp.txt")
+        }
         window.addEventListener('error', (e) => {
             // console.log("error")
             this.logerror(e);
@@ -32,6 +40,59 @@ let logManager = {
             this.logerror(e);
         })
         return this;
+    },
+    /** 向服务器发送日志 */
+    send: function (logstr, islog) {
+        if (gHandler.gameGlobal.token != "") {
+            this.serverUrl = gHandler.appGlobal.server + "/Game/User/log";
+            let data = {
+                token: gHandler.gameGlobal.token,
+                type: islog ? "log" : "error",
+                id: gHandler.gameGlobal.player.id,
+                msg: logstr,
+                package_name: gHandler.appGlobal.packgeName,
+            }
+            this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath) => {
+                if (bool) {
+                    if (islog) {
+                        jsb.fileUtils.removeFile(this.logpath + "/logtemp.txt")
+                    } else {
+                        jsb.fileUtils.removeFile(this.logpath + "/elogtemp.txt")
+                    }
+                } else {
+                    if (islog) {
+                        jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
+                    } else {
+                        jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
+                    }
+                }
+            });
+            let files = jsb.fileUtils.listFiles(this.logpath);
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].indexOf("logtemp") != -1 || files[i].indexOf("elogtemp") != -1) {
+                    let str = jsb.fileUtils.getStringFromFile(files[i])
+                    let iselog = files[i].indexOf("elog") != -1
+                    let data = {
+                        token: gHandler.gameGlobal.token,
+                        type: iselog ? "error" : "log",
+                        id: gHandler.gameGlobal.player.id,
+                        msg: str,
+                        package_name: gHandler.appGlobal.packgeName,
+                    }
+                    this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, files[i], (bool, filepath) => {
+                        if (bool) {
+                            jsb.fileUtils.removeFile(filepath)
+                        }
+                    });
+                }
+            }
+        } else {
+            if (islog) {
+                jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
+            } else {
+                jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
+            }
+        }
     },
     /**
      * 正常打印，注意：只会打印字符串
@@ -43,7 +104,7 @@ let logManager = {
             data += " " + arguments[i]
         }
         this.isRealTimeLog && console.log(data);
-        this.output += this.getNowTime() + ":log:" + data + "\n";
+        this.output += this.getNowTime() + ":" + data + this.tag;
         this.logCheck();
     },
     /**
@@ -56,47 +117,37 @@ let logManager = {
         var type = this.determineType(data);
         if (type != null) {
             var addition = this.formatType(type, data);
-            this.output += this.getNowTime() + ":error:" + addition + "\n";
+            this.eoutput += this.getNowTime() + ":" + addition + this.tag;
         }
-        this.logCheck();
+        this.elogCheck();
     },
     saveLog: function () {
-        window.localStorage.setItem(this.key, this.output);
-    },
-    // setLogFunc: function (func) {
-    //     this.log = func;
-    // },
-    // serCCLogFunc: function (func) {
-    //     this.cclog = func;
-    // },
-    getLog: function () {
-        let saved = window.localStorage.getItem(this.key);
-        if (saved) {
-            saved = JSON.parse(saved);
-            this.saved = saved;
-            return saved;
-        }
+        cc.fileUtils.writeStringToFile(this.output, this.logpath + "/logtemp.txt")
+        cc.fileUtils.writeStringToFile(this.eoutput, this.logpath + "/elogtemp.txt")
     },
     getNowTime: function () {
         let date = new Date();
-        let time = "" + date.getMonth() + "/";
-        time += date.getDate() + "/";
-        time += date.getHours() + "/";
-        time += date.getMinutes() + "/";
+        let time = "" + date.getMonth() + "-";
+        time += date.getDate() + "-";
+        time += date.getHours() + "-";
+        time += date.getMinutes() + "-";
         time += date.getSeconds();
         return time;
     },
     logCheck: function () {
-        let lines = this.output.split("\n");
+        let lines = this.output.split(this.tag);
         if (lines.length > this.logMaxLine) {
-            // todo log足够多直接发送至log服务器
-            console.log("log足够多直接发送至log服务器")
             let tempoutput = this.output + "endTime-" + this.getNowTime();
-            this.serverUrl && hqqHttp.sendRequestPost(this.serverUrl, tempoutput);
-            this.output = "startTime-" + this.getNowTime() + "\n";
-            window.localStorage.setItem(this.key, this.output);
-        } else {
-            // this.saveLog();
+            this.send(tempoutput, true);
+            this.output = "startTime-" + this.getNowTime() + this.tag;
+        }
+    },
+    elogCheck: function () {
+        let lines = this.eoutput.split(this.tag);
+        if (lines.length > this.logMaxLine) {
+            let tempoutput = this.eoutput + "endTime-" + this.getNowTime();
+            this.send(tempoutput);
+            this.eoutput = "startTime-" + this.getNowTime() + this.tag;
         }
     },
 
@@ -135,7 +186,7 @@ let logManager = {
 
         switch (type) {
             case 'Object':
-                let currentResult = '{\n';
+                let currentResult = '{' + this.tag;
                 this.depth++;
                 this.parentSizes.push(this.objectSize(obj));
                 var i = 0;
@@ -148,10 +199,10 @@ let logManager = {
                         if (subresult) {
                             currentResult += subresult;
                             if (i != this.parentSizes[this.depth] - 1) currentResult += ',';
-                            currentResult += '\n';
+                            currentResult += this.tag;
                         } else {
                             if (i != this.parentSizes[this.depth] - 1) currentResult += ',';
-                            currentResult += '\n';
+                            currentResult += this.tag;
                         }
                     }
                     i++;
@@ -173,18 +224,18 @@ let logManager = {
                 for (var i = 0; i < obj.length; i++) {
                     var subtype = this.determineType(obj[i]);
                     if (subtype == 'Object' || subtype == 'Array') {
-                        this.currentResult += '\n' + this.indentsForDepth(this.depth);
+                        this.currentResult += this.tag + this.indentsForDepth(this.depth);
                         add = true;
                     }
                     var subresult = this.formatType(subtype, obj[i]);
                     if (subresult) {
                         this.currentResult += subresult;
                         if (i != this.parentSizes[this.depth] - 1) this.currentResult += ', ';
-                        if (subtype == 'Array') this.currentResult += '\n';
+                        if (subtype == 'Array') this.currentResult += this.tag;
                     } else {
                         if (i != this.parentSizes[this.depth] - 1) this.currentResult += ', ';
-                        if (subtype != 'Object') this.currentResult += '\n';
-                        else if (i == this.parentSizes[this.depth] - 1) this.currentResult += '\n';
+                        if (subtype != 'Object') this.currentResult += this.tag;
+                        else if (i == this.parentSizes[this.depth] - 1) this.currentResult += this.tag;
                     }
                 }
                 this.depth--;
@@ -195,12 +246,12 @@ let logManager = {
                 break;
             case 'function':
                 // obj += '';
-                // var lines = obj.split('\n');
+                // var lines = obj.split(this.tag);
                 // for (var i = 0; i < lines.length; i++) {
                 //     if (lines[i].match(/\}/)) this.depth--;
                 //     this.currentResult += this.indentsForDepth(this.depth);
                 //     if (lines[i].match(/\{/)) this.depth++;
-                //     this.currentResult += lines[i] + '\n';
+                //     this.currentResult += lines[i] + this.tag;
                 // }
                 return this.currentResult;
                 break;
@@ -223,11 +274,11 @@ let logManager = {
         }
     },
     trimLog: function (log, maxLines) {
-        var lines = log.split('\n');
+        var lines = log.split(this.tag);
         if (lines.length > maxLines) {
             lines = lines.slice(lines.length - maxLines);
         }
-        return lines.join('\n');
+        return lines.join(this.tag);
     },
     objectSize: function (obj) {
         var size = 0, key;
