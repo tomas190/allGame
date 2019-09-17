@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-09-14 12:30:28
+ * @LastEditTime: 2019-09-17 15:10:45
  * @Description: 游戏中央模块管理器
  */
 
@@ -10,7 +10,7 @@ let gHandler = {
 
 }
 let gameGlobal = {
-    isdev: false, // 是否开发状态
+    isdev: true, // 是否开发状态
     gameNow: "hall", // 当前游戏的名字
     iconPath: "", // 头像地址前缀
     playerKey: "playerKey",

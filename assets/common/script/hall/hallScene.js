@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-14 12:31:01
+ * @LastEditTime: 2019-09-17 15:13:17
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -30,13 +30,26 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
-        // gHandler.audioMgr.playBg("hallbg");
-
         this.topbubble.active = false;
         if (cc.sys.isBrowser) {
             this.browserDeal();
+            if (gHandler.gameGlobal.isdev) {
+                let hqqBase64 = require("hqqBase64");
+                gHandler.base64 = hqqBase64;
+                let hqqEvent = require("hqqEvent");
+                gHandler.eventMgr = hqqEvent.init();
+                let hqqCommonTools = require("hqqCommonTools");
+                gHandler.commonTools = hqqCommonTools;
+                let hqqLogMgr = require("hqqLogMgr");
+                gHandler.logMgr = hqqLogMgr.init();
+                let hqqLocalStorage = require("hqqLocalStorage");
+                gHandler.localStorage = hqqLocalStorage.init();
+                let hqqHttp = require("hqqHttp");
+                gHandler.http = hqqHttp;
+            }
         }
+        gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
+        // gHandler.audioMgr.playBg("hallbg");
         this.subGameBtnMap = {};
         this.subGameBtnArr = [];
         this.addSubgame();
@@ -52,14 +65,16 @@ cc.Class({
         this.coinlabel.string = gHandler.gameGlobal.player.gold;
         gHandler.commonTools.setDefaultHead(this.headimg);
 
-        gHandler.hallWebSocket = new hallWebSocket();
-        gHandler.hallWebSocket.init();
-        gHandler.hallWebSocket.register("/Game/login/login", "hallScene", this.onReceiveLogin.bind(this))
-        let url = gHandler.appGlobal.server + "/Game/login/login";
-        if (cc.sys.isBrowser) {
-            url = "ws://" + url;
+        if (!gHandler.gameGlobal.isdev) {
+            gHandler.hallWebSocket = new hallWebSocket();
+            gHandler.hallWebSocket.init();
+            gHandler.hallWebSocket.register("/Game/login/login", "hallScene", this.onReceiveLogin.bind(this))
+            let url = gHandler.appGlobal.server + "/Game/login/login";
+            if (cc.sys.isBrowser) {
+                url = "ws://" + url;
+            }
+            gHandler.hallWebSocket.connect(url);
         }
-        gHandler.hallWebSocket.connect(url);
 
         gHandler.eventMgr.register("isupdataCallback", "hallScene", this.isupdataCallback.bind(this))
         gHandler.eventMgr.register("failCallback", "hallScene", this.failCallback.bind(this))
