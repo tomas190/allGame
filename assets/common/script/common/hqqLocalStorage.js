@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 10:44:15
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 10:15:28
+ * @LastEditTime: 2019-09-18 14:01:55
  * @Description: 本地化保存
  */
 let gHandler = require("gHandler");
@@ -13,6 +13,7 @@ let localStorage = {
     global: {},
     /** 初始化每个游戏名一个保存键值对 */
     init() {
+        // cc.sys.localStorage.clear();
         if (cc.sys.localStorage.getItem(this.subgameKey)) {
             this.subdata = JSON.parse(cc.sys.localStorage.getItem(this.subgameKey));
         } else {

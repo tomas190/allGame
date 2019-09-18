@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 16:40:03
  * @LastEditors: burt
- * @LastEditTime: 2019-09-14 12:30:36
+ * @LastEditTime: 2019-09-18 14:01:47
  * @Description: http 
  */
 
@@ -16,7 +16,7 @@ let hqqHttp = {
         let m_url = urlto || this.m_remoteUrl;
         // 异步请求
         xhr.open("POST", m_url, true); // 初始化一个请求
-        xhr.setRequestHeader("Content-Type", "application/json");
+        // xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
             cc.log(xhr.readyState, xhr.status)
             if (xhr.readyState == 4) {
@@ -49,12 +49,13 @@ let hqqHttp = {
     },
 
     sendRequestLogPost(urlto, param, filepath, callBack) {
+        console.log("sendRequestLogPost", urlto)
         let str = JSON.stringify(param);
         let xhr = new XMLHttpRequest();
-        let m_url = urlto;
+        let m_url = "http://" + urlto;
         // 异步请求
         xhr.open("POST", m_url, true); // 初始化一个请求
-        xhr.setRequestHeader("Content-Type", "application/json");
+        // xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
             cc.log(xhr.readyState, xhr.status)
             if (xhr.readyState == 4) {
@@ -230,15 +231,16 @@ let hqqHttp = {
         xhr.send();
     },
 
-    sendRequestIpPost(urlto, endurl, callback, outcallback) {
-        // let str = JSON.stringify(param);
+    sendRequestIpPost(urlto, data, callback, outcallback) {
+        let str = JSON.stringify(data);
         let xhr = new XMLHttpRequest();
         let alreadyCallBack = false;
-        let m_url = "http://" + urlto + endurl || this.m_remoteUrl;
+        let m_url = "http://" + urlto;
         // 异步请求
         xhr.open("POST", m_url, true); // 初始化一个请求
-        xhr.setRequestHeader("Content-Type", "application/json");
+        // xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
+            // console.log(xhr.readyState, xhr.status)
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     let response = xhr.responseText
@@ -249,7 +251,7 @@ let hqqHttp = {
                     }
                 } else {
                     if (callback && !alreadyCallBack) {
-                        callback(null)
+                        // callback(null)
                         alreadyCallBack = true
                     }
                 }
@@ -266,7 +268,7 @@ let hqqHttp = {
             clearTimeout(timer);
         }, 3000)
 
-        xhr.send(); // 发送请求，默认是异步请求，请求发送后立刻返回
+        xhr.send(str); // 发送请求，默认是异步请求，请求发送后立刻返回
     },
 }
 

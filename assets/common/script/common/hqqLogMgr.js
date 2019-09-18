@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 11:28:43
  * @LastEditors: burt
- * @LastEditTime: 2019-09-14 12:30:47
+ * @LastEditTime: 2019-09-18 14:02:06
  * @Description: log日志 管理器
  */
 
@@ -23,13 +23,17 @@ let logManager = {
      * 初始化
      */
     init: function () {
-        if (cc.sys.isNative) {
+        if (cc.sys.isBrowser) {
+            this.output = JSON.parse(cc.sys.localStorage.getItem('log'))
+            this.eoutput = JSON.parse(cc.sys.localStorage.getItem('elog'))
+        } else {
             this.logpath = jsb.fileUtils.getWritablePath() + "log";
-            if (!jsb.fileUtils.isDirectoryExist(this.logpath)) {
+            if (jsb.fileUtils.isDirectoryExist(this.logpath)) {
+                this.output = jsb.fileUtils.getStringFromFile(this.logpath + "/logtemp.txt")
+                this.eoutput = jsb.fileUtils.getStringFromFile(this.logpath + "/elogtemp.txt")
+            } else {
                 jsb.fileUtils.createDirectory(jsb.fileUtils.getWritablePath() + "log");
             }
-            this.output = jsb.fileUtils.getStringFromFile(this.logpath + "/logtemp.txt")
-            this.eoutput = jsb.fileUtils.getStringFromFile(this.logpath + "/elogtemp.txt")
         }
         window.addEventListener('error', (e) => {
             // console.log("error")
@@ -54,43 +58,61 @@ let logManager = {
             }
             this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath) => {
                 if (bool) {
-                    if (islog) {
-                        jsb.fileUtils.removeFile(this.logpath + "/logtemp.txt")
+                    if (cc.sys.isBrowser) {
+                        console.log("日志发送成功")
                     } else {
-                        jsb.fileUtils.removeFile(this.logpath + "/elogtemp.txt")
+                        if (islog) {
+                            jsb.fileUtils.removeFile(this.logpath + "/logtemp.txt")
+                        } else {
+                            jsb.fileUtils.removeFile(this.logpath + "/elogtemp.txt")
+                        }
                     }
                 } else {
-                    if (islog) {
-                        jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
+                    if (cc.sys.isBrowser) {
+                        console.log("日志发送失败")
                     } else {
-                        jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
+                        if (islog) {
+                            jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
+                        } else {
+                            jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
+                        }
                     }
                 }
             });
-            let files = jsb.fileUtils.listFiles(this.logpath);
-            for (let i = 0; i < files.length; i++) {
-                if (files[i].indexOf("logtemp") != -1 || files[i].indexOf("elogtemp") != -1) {
-                    let str = jsb.fileUtils.getStringFromFile(files[i])
-                    let iselog = files[i].indexOf("elog") != -1
-                    let data = {
-                        token: gHandler.gameGlobal.token,
-                        type: iselog ? "error" : "log",
-                        id: gHandler.gameGlobal.player.id,
-                        msg: str,
-                        package_name: gHandler.appGlobal.packgeName,
-                    }
-                    this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, files[i], (bool, filepath) => {
-                        if (bool) {
-                            jsb.fileUtils.removeFile(filepath)
+            if (cc.sys.isNative) {
+                let files = jsb.fileUtils.listFiles(this.logpath);
+                for (let i = 0; i < files.length; i++) {
+                    if (files[i].indexOf("logtemp") != -1 || files[i].indexOf("elogtemp") != -1) {
+                        let str = jsb.fileUtils.getStringFromFile(files[i])
+                        let iselog = files[i].indexOf("elog") != -1
+                        let data = {
+                            token: gHandler.gameGlobal.token,
+                            type: iselog ? "error" : "log",
+                            id: gHandler.gameGlobal.player.id,
+                            msg: str,
+                            package_name: gHandler.appGlobal.packgeName,
                         }
-                    });
+                        this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, files[i], (bool, filepath) => {
+                            if (bool) {
+                                if (cc.sys.isBrowser) {
+                                    console.log("日志发送成功")
+                                } else {
+                                    jsb.fileUtils.removeFile(filepath)
+                                }
+                            }
+                        });
+                    }
                 }
             }
         } else {
-            if (islog) {
-                jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
+            if (cc.sys.isBrowser) {
+                console.log("未请求到token")
             } else {
-                jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
+                if (islog) {
+                    jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
+                } else {
+                    jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
+                }
             }
         }
     },
@@ -118,12 +140,17 @@ let logManager = {
         if (type != null) {
             var addition = this.formatType(type, data);
             this.eoutput += this.getNowTime() + ":" + addition + this.tag;
+            this.elogCheck();
         }
-        this.elogCheck();
     },
     saveLog: function () {
-        cc.fileUtils.writeStringToFile(this.output, this.logpath + "/logtemp.txt")
-        cc.fileUtils.writeStringToFile(this.eoutput, this.logpath + "/elogtemp.txt")
+        if (cc.sys.isBrowser) {
+            cc.sys.localStorage.setItem("log", JSON.stringify(this.output))
+            cc.sys.localStorage.setItem("elog", JSON.stringify(this.eoutput))
+        } else {
+            cc.fileUtils.writeStringToFile(this.output, this.logpath + "/logtemp.txt")
+            cc.fileUtils.writeStringToFile(this.eoutput, this.logpath + "/elogtemp.txt")
+        }
     },
     getNowTime: function () {
         let date = new Date();

@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-09-14 12:31:13
+ * @LastEditTime: 2019-09-18 14:02:30
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -103,15 +103,15 @@ hqqWebSocket.prototype = {
     },
     m_onmessage(msg) {
         let data = JSON.parse(msg.data)
-        this.m_EmitMsg(data.event, data.data.msg)
+        this.m_EmitMsg(data.event, data.data.msg, data)
     },
-    m_EmitMsg(event, data) {
+    m_EmitMsg(event, data, msg) {
         if (this.handlers[event]) {
             for (let className in this.handlers[event]) {
                 this.handlers[event][className] && this.handlers[event][className](data);
             }
         } else {
-            console.log('没有注册回调函数')
+            console.log("没有注册回调函数", msg)
         }
     },
     m_onerror(e) {
