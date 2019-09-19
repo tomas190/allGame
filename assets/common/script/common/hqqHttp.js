@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 16:40:03
  * @LastEditors: burt
- * @LastEditTime: 2019-09-18 14:01:47
+ * @LastEditTime: 2019-09-19 13:52:11
  * @Description: http 
  */
 
@@ -153,11 +153,16 @@ let hqqHttp = {
         xhr.send();
     },
 
-    ping(urlto, endurl, callback) {
+    ping(urlto, head, endurl, callback) {
+        head = head || ""
+        endurl = endurl || null
         let xhr = new XMLHttpRequest();
         let m_url = urlto || this.m_remoteUrl;
+        if (head) {
+            m_url = head + m_url;
+        }
         if (endurl) {
-            m_url = "http://" + urlto + endurl || this.m_remoteUrl;
+            m_url += endurl;
         }
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
@@ -269,6 +274,27 @@ let hqqHttp = {
         }, 3000)
 
         xhr.send(str); // 发送请求，默认是异步请求，请求发送后立刻返回
+    },
+
+    /** 线路选择
+     * @param {array} urllist url列表
+     * @param {string} head url前缀
+     * @param {string} endurl url尾缀
+     * @param {function} mcallback 回调函数
+     */
+    requestFastestUrl(urllist, head, endurl, mcallback) {
+        head = head || ""
+        endurl = endurl || null
+        let hasreceive = false;
+        let callback = (url) => {
+            if (!hasreceive && url) {
+                hasreceive = true;
+                mcallback && mcallback(url)
+            }
+        }
+        for (let i = 0; i < urllist.length; i++) {
+            this.ping(urllist[i], head, endurl, callback)
+        }
     },
 }
 

@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-10 09:48:32
+ * @LastEditTime: 2019-09-18 14:23:58
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -41,8 +41,6 @@ common目录：{
 }
 
 subgame子游戏资源目录：{
-	hall目录：
-		大厅目录，大厅的项目资源
 	qznn目录：
 		子游戏抢庄牛牛目录，抢庄牛牛的工程资源及代码都在此目录内，开发基本全部在自己的子游戏目录内完成
 }

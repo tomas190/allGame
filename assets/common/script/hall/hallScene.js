@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-18 14:02:20
+ * @LastEditTime: 2019-09-19 13:55:56
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -33,34 +33,35 @@ cc.Class({
         this.topbubble.active = false;
         if (cc.sys.isBrowser) {
             this.browserDeal();
-            if (gHandler.gameGlobal.isdev) {
-                let hqqBase64 = require("hqqBase64");
-                gHandler.base64 = hqqBase64;
-                let hqqEvent = require("hqqEvent");
-                gHandler.eventMgr = hqqEvent.init();
-                let hqqCommonTools = require("hqqCommonTools");
-                gHandler.commonTools = hqqCommonTools;
-                let hqqLogMgr = require("hqqLogMgr");
-                gHandler.logMgr = hqqLogMgr.init();
-                let hqqLocalStorage = require("hqqLocalStorage");
-                gHandler.localStorage = hqqLocalStorage.init();
-                let hqqHttp = require("hqqHttp");
-                gHandler.http = hqqHttp;
-            }
+        }
+        if (gHandler.gameGlobal.isdev) {
+            let hqqBase64 = require("hqqBase64");
+            gHandler.base64 = hqqBase64;
+            let hqqEvent = require("hqqEvent");
+            gHandler.eventMgr = hqqEvent.init();
+            let hqqCommonTools = require("hqqCommonTools");
+            gHandler.commonTools = hqqCommonTools;
+            let hqqLogMgr = require("hqqLogMgr");
+            gHandler.logMgr = hqqLogMgr.init();
+            let hqqLocalStorage = require("hqqLocalStorage");
+            gHandler.localStorage = hqqLocalStorage.init();
+            let hqqHttp = require("hqqHttp");
+            gHandler.http = hqqHttp;
         }
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
         gHandler.audioMgr.playBg("hallbg");
         this.subGameBtnMap = {};
         this.subGameBtnArr = [];
         this.addSubgame();
-        this.checkSubModule();
+        this.scheduleOnce(() => {
+            this.checkSubModule();
+        }, 0)
         this.isupdating = false;
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
     /** 通常用于初始化中间状态操作 */
     start() {
-        // this.namelabel.string = gHandler.gameGlobal.player.nick;
         this.namelabel.string = gHandler.gameGlobal.player.account_name;
         this.coinlabel.string = gHandler.gameGlobal.player.gold;
         gHandler.commonTools.setDefaultHead(this.headimg);
@@ -93,6 +94,15 @@ cc.Class({
         this.chatbtn.getChildByName("redpoint").active = false;
         this.duihuanbtn.getChildByName("redpoint").active = false;
         this.huodongbtn.getChildByName("redpoint").active = false;
+        if (!gHandler.gameGlobal.isdev) {
+            if (gHandler.gameGlobal.im_host == "") {
+                let callback = (url) => {
+                    console.log("最快的im地址", url)
+                    gHandler.gameGlobal.im_host = url;
+                }
+                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.im_host, null, "/checked", callback)
+            }
+        }
     },
     /** 子游戏初始化 */
     addSubgame() {
@@ -115,7 +125,7 @@ cc.Class({
             this.subGameBtnMap[tempdata.enname] = itembtn;
             this.subGameBtnArr.push(itembtn);
             tempdata.itembtn = itembtn;
-            if (cc.sys.isNative) {
+            if (cc.sys.isNative && !gHandler.gameGlobal.isdev) {
                 this.checkSubGameDownload(tempdata);
             } else {
                 let downflag = tempdata.itembtn.getChildByName("downFlag");
@@ -246,12 +256,13 @@ cc.Class({
             console.log("创建子游戏账号 超时")
         }
         let endurl = "/Game/User/createGameAccount";
-        let data = {}
-        data.game_id = subdata.game_id;
-        data.package_id = subdata.package_id;
-        data.balance = gHandler.gameGlobal.player.gold;
-        data.id = gHandler.gameGlobal.player.id;
-        data.token = gHandler.gameGlobal.token;
+        let data = {
+            game_id: subdata.game_id,
+            package_id: subdata.package_id,
+            balance: gHandler.gameGlobal.player.gold,
+            id: gHandler.gameGlobal.player.id,
+            token: gHandler.gameGlobal.token,
+        }
         gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
     },
     /** 下载子游戏 */
@@ -337,8 +348,25 @@ cc.Class({
     /** 充值 */
     onClickChongZhiBtn() {
         console.log("chongzhi")
-        // gHandler.logMgr.log("test")
-        // this.createSubAccountBat()
+        if (!gHandler.gameGlobal.isdev) {
+            if (gHandler.gameGlobal.pay.pay_host == "") {
+                let callback = (url) => {
+                    gHandler.gameGlobal.pay.pay_host = url;
+                    if (gHandler.subModel.pay.lanchscene != "") {
+                        cc.director.loadScene(gHandler.subModel.pay.lanchscene)
+                    } else {
+                        console.log("请配置充值场景")
+                    }
+                }
+                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
+            } else {
+                if (gHandler.subModel.pay.lanchscene != "") {
+                    cc.director.loadScene(gHandler.subModel.pay.lanchscene)
+                } else {
+                    console.log("请配置充值场景")
+                }
+            }
+        }
     },
     /** 全民代理  */
     onClickQMDL() {
@@ -356,9 +384,28 @@ cc.Class({
     onClickChatBtn() {
         console.log("聊天")
     },
-    /** 兑换 */
+    /** 兑换 提现 */
     onClickDuiHuanBtn() {
         console.log("兑换")
+        if (!gHandler.gameGlobal.isdev) {
+            if (gHandler.gameGlobal.pay.pay_host == "") {
+                let callback = (url) => {
+                    gHandler.gameGlobal.pay.pay_host = url;
+                    if (gHandler.subModel.cash.lanchscene != "") {
+                        cc.director.loadScene(gHandler.subModel.cash.lanchscene)
+                    } else {
+                        console.log("请配置提现场景")
+                    }
+                }
+                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
+            } else {
+                if (gHandler.subModel.cash.lanchscene != "") {
+                    cc.director.loadScene(gHandler.subModel.cash.lanchscene)
+                } else {
+                    console.log("请配置提现场景")
+                }
+            }
+        }
     },
     /** 活动 */
     onClickHuoDongBtn() {
@@ -385,7 +432,6 @@ cc.Class({
         } else if (custom == 2) {
             gHandler.audioMgr.stopBg();
             cc.director.loadScene('web')
-
         }
         // let getIconPath = () => {
         //     let packageName = gHandler.appGlobal.packgeName;

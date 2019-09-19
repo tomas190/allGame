@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 11:28:43
  * @LastEditors: burt
- * @LastEditTime: 2019-09-18 14:02:06
+ * @LastEditTime: 2019-09-19 13:52:30
  * @Description: log日志 管理器
  */
 
@@ -123,9 +123,9 @@ let logManager = {
     log: function () {
         let data = ""
         for (let i = 0; i < arguments.length; i++) {
-            data += " " + arguments[i]
+            data += arguments[i] + " "
         }
-        this.isRealTimeLog && console.log(data);
+        this.isRealTimeLog && console.log("__logMgr__", data);
         this.output += this.getNowTime() + ":" + data + this.tag;
         this.logCheck();
     },

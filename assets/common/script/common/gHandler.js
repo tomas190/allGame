@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-09-18 14:04:53
+ * @LastEditTime: 2019-09-19 13:51:57
  * @Description: 游戏中央模块管理器
  */
 
@@ -15,7 +15,7 @@ let gameGlobal = {
     iconPath: "", // 头像地址前缀
     playerKey: "playerKey",
     token: "", // 通信token
-    player: {
+    player: { // 玩家信息
         gold: 0, // 金币
         nick: "", // 昵称
         sex: 0,// 男 0  女 1
@@ -26,6 +26,16 @@ let gameGlobal = {
         uuid: 0,
         id: 0,
     },
+    im_host: "",
+    pay: { // 充提数据结构
+        client: "",
+        pay_host: "",
+        user_id: "",
+        user_name: "",
+        proxy_user_id: "",
+        proxy_name: "",
+        package_id: "",
+    }
 }
 gHandler.gameGlobal = gameGlobal
 
@@ -34,6 +44,23 @@ let gameConfig = {
         zhname: "大厅", // 中文游戏名
         enname: "hall", // 英文游戏名 （子游戏文件路径，更新子路径）
         lanchscene: "hall", // 跳转场景名
+    },
+    subModel: {
+        "pay": {
+            zhname: "充值", // 中文名
+            enname: "pay", // 英文名 （子游戏文件路径，更新子路径）
+            lanchscene: "", // 跳转场景名
+        },
+        "cash": {
+            zhname: "提现", // 中文名
+            enname: "cash", // 英文名 （子游戏文件路径，更新子路径）
+            lanchscene: "", // 跳转场景名
+        },
+        "im": {
+            zhname: "聊天", // 中文名
+            enname: "im", // 英文名 （子游戏文件路径，更新子路径）
+            lanchscene: "", // 跳转场景名
+        }
     },
     gamelist: {
         "qznn": {
@@ -102,7 +129,7 @@ let gameConfig = {
             hallid: 5,
             resid: 8,
         },
-        
+
         "21d": {
             zhname: "二十一点", // 中文游戏名
             enname: "21d", // 英文游戏名 （子游戏文件路径，更新子路径）
