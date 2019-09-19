@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-09-19 13:55:56
+ * @LastEditTime: 2019-09-19 15:02:18
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -348,23 +348,21 @@ cc.Class({
     /** 充值 */
     onClickChongZhiBtn() {
         console.log("chongzhi")
-        if (!gHandler.gameGlobal.isdev) {
-            if (gHandler.gameGlobal.pay.pay_host == "") {
-                let callback = (url) => {
-                    gHandler.gameGlobal.pay.pay_host = url;
-                    if (gHandler.subModel.pay.lanchscene != "") {
-                        cc.director.loadScene(gHandler.subModel.pay.lanchscene)
-                    } else {
-                        console.log("请配置充值场景")
-                    }
-                }
-                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
-            } else {
-                if (gHandler.subModel.pay.lanchscene != "") {
-                    cc.director.loadScene(gHandler.subModel.pay.lanchscene)
+        if (gHandler.gameGlobal.pay.pay_host == "") {
+            let callback = (url) => {
+                gHandler.gameGlobal.pay.pay_host = url;
+                if (gHandler.gameConfig.subModel.pay.lanchscene != "") {
+                    cc.director.loadScene(gHandler.gameConfig.subModel.pay.lanchscene)
                 } else {
                     console.log("请配置充值场景")
                 }
+            }
+            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
+        } else {
+            if (gHandler.gameConfig.subModel.pay.lanchscene != "") {
+                cc.director.loadScene(gHandler.gameConfig.subModel.pay.lanchscene)
+            } else {
+                console.log("请配置充值场景")
             }
         }
     },
@@ -387,23 +385,21 @@ cc.Class({
     /** 兑换 提现 */
     onClickDuiHuanBtn() {
         console.log("兑换")
-        if (!gHandler.gameGlobal.isdev) {
-            if (gHandler.gameGlobal.pay.pay_host == "") {
-                let callback = (url) => {
-                    gHandler.gameGlobal.pay.pay_host = url;
-                    if (gHandler.subModel.cash.lanchscene != "") {
-                        cc.director.loadScene(gHandler.subModel.cash.lanchscene)
-                    } else {
-                        console.log("请配置提现场景")
-                    }
-                }
-                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
-            } else {
-                if (gHandler.subModel.cash.lanchscene != "") {
-                    cc.director.loadScene(gHandler.subModel.cash.lanchscene)
+        if (gHandler.gameGlobal.pay.pay_host == "") {
+            let callback = (url) => {
+                gHandler.gameGlobal.pay.pay_host = url;
+                if (gHandler.gameConfig.subModel.cash.lanchscene != "") {
+                    cc.director.loadScene(gHandler.gameConfig.subModel.cash.lanchscene)
                 } else {
                     console.log("请配置提现场景")
                 }
+            }
+            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
+        } else {
+            if (gHandler.gameConfig.subModel.cash.lanchscene != "") {
+                cc.director.loadScene(gHandler.gameConfig.subModel.cash.lanchscene)
+            } else {
+                console.log("请配置提现场景")
             }
         }
     },
