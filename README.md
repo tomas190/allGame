@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-18 14:23:58
+ * @LastEditTime: 2019-09-19 14:26:09
  * @Description: 
  -->
 # all hqq native combined-game project
@@ -79,6 +79,8 @@ subgame子游戏资源目录：{
 	3、解决冲突（modified的在本地编辑器即可修改）
 	4、继续开发
 	5、开发阶段完成，请求合并
+
+	(注意：大厅分支subgame文件夹已删除，合并分支时请一定注意)
 }
 
 常用接口示例：{
