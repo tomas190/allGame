@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-09-19 13:51:57
+ * @LastEditTime: 2019-09-24 09:29:07
  * @Description: 游戏中央模块管理器
  */
 
@@ -20,8 +20,8 @@ let gameGlobal = {
         nick: "", // 昵称
         sex: 0,// 男 0  女 1
         headurl: "", // 头像
-        account_name: "", // 账号
-        account_pass: "", // 密码
+        account_name: 0, // number类型 账号
+        account_pass: "", // string类型 密码
         proxy_pid: 0, // 代理id
         uuid: 0,
         id: 0,
@@ -49,17 +49,17 @@ let gameConfig = {
         "pay": {
             zhname: "充值", // 中文名
             enname: "pay", // 英文名 （子游戏文件路径，更新子路径）
-            lanchscene: "", // 跳转场景名
+            lanchscene: "payRecharge", // 跳转场景名
         },
         "cash": {
             zhname: "提现", // 中文名
             enname: "cash", // 英文名 （子游戏文件路径，更新子路径）
-            lanchscene: "", // 跳转场景名
+            lanchscene: "payCash", // 跳转场景名
         },
         "im": {
             zhname: "聊天", // 中文名
             enname: "im", // 英文名 （子游戏文件路径，更新子路径）
-            lanchscene: "", // 跳转场景名
+            lanchscene: "IMappStart", // 跳转场景名
         }
     },
     gamelist: {
@@ -90,7 +90,7 @@ let gameConfig = {
             enname: "zrsx", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "LiveGame", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f25173",
-            serverUrl: "ws://liveagin.0351sxzc.com:80", // 游戏服务器地址
+            serverUrl: "ws://game.539316.com/zhenrensx", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 2,
@@ -101,7 +101,7 @@ let gameConfig = {
             enname: "sgj", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "FruitGame", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251712",
-            serverUrl: "ws://fruit.0351sxzc.com:80", // 游戏服务器地址
+            serverUrl: "ws://game.539316.com/shuigj", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 3,
@@ -110,7 +110,7 @@ let gameConfig = {
         "bcbm": {
             zhname: "奔驰宝马", // 中文游戏名
             enname: "bcbm", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "bcbmloading", // 跳转场景名
+            lanchscene: "bcbmroom", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251716",
             serverUrl: "", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
@@ -129,28 +129,27 @@ let gameConfig = {
             hallid: 5,
             resid: 8,
         },
-
-        "21d": {
-            zhname: "二十一点", // 中文游戏名
-            enname: "21d", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "21d", // 跳转场景名
-            game_id: "5b1f3a3cb76a591e7f25172",
+        "hwby": {
+            zhname: "海王捕鱼", // 中文游戏名
+            enname: "hwby", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "hwby", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f2517a6",
             serverUrl: "", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 6,
-            resid: 0,
+            resid: 5,
         },
-        "2rmj": {
-            zhname: "二人麻将", // 中文游戏名
-            enname: "2rmj", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "2rmj", // 跳转场景名
-            game_id: "5b1f3a3cb76a591e7f25170",
+        "brnn": {
+            zhname: "百人牛牛", // 中文游戏名
+            enname: "brnn", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "brnn", // 跳转场景名
+            game_id: "5bd00260e847f16fb65a13c1",
             serverUrl: "", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 7,
-            resid: 1,
+            resid: 4,
         },
         "bjl": {
             zhname: "百家乐", // 中文游戏名
@@ -163,27 +162,27 @@ let gameConfig = {
             hallid: 8,
             resid: 2,
         },
-        "brnn": {
-            zhname: "百人牛牛", // 中文游戏名
-            enname: "brnn", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "brnn", // 跳转场景名
-            game_id: "5bd00260e847f16fb65a13c1",
+        "2rmj": {
+            zhname: "二人麻将", // 中文游戏名
+            enname: "2rmj", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "2rmj", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f25170",
             serverUrl: "", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 9,
-            resid: 4,
+            resid: 1,
         },
-        "hwby": {
-            zhname: "海王捕鱼", // 中文游戏名
-            enname: "hwby", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "hwby", // 跳转场景名
-            game_id: "5b1f3a3cb76a591e7f2517a6",
+        "21d": {
+            zhname: "二十一点", // 中文游戏名
+            enname: "21d", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "21d", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f25172",
             serverUrl: "", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 10,
-            resid: 5,
+            resid: 0,
         },
         "dz": {
             zhname: "德州扑克", // 中文游戏名
@@ -251,11 +250,11 @@ let gameConfig = {
             hallid: 16,
             resid: 11,
         },
-        "tb": {
-            zhname: "骰宝", // 中文游戏名
-            enname: "tb", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "tb", // 跳转场景名
-            game_id: "123456789",
+        "ebg": {
+            zhname: "二八杠", // 中文游戏名
+            enname: "ebg", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "ebg", // 跳转场景名
+            game_id: "5bd0022be847f16fb65a137d",
             serverUrl: "", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
