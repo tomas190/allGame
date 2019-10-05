@@ -2,13 +2,14 @@
  * @Author: burt
  * @Date: 2019-07-29 18:38:29
  * @LastEditors: burt
- * @LastEditTime: 2019-08-10 13:28:24
+ * @LastEditTime: 2019-10-01 11:58:30
  * @Description: 大厅动态资源管理器
  */
 let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
     properties: {
+        hallHeadFrame: [cc.SpriteFrame],
         hallMusic: {
             default: [],
             type: [cc.AudioClip]
@@ -34,6 +35,20 @@ cc.Class({
     /** 通常用于初始化中间状态操作 */
     start() {
 
+    },
+    getHallHeadFrameLength() {
+        return this.hallHeadFrame.length
+    },
+    getHallHeadFrame(id) {
+        if (this.hallHeadFrame[id]) {
+            return this.hallHeadFrame[id]
+        } else {
+            if (this.hallHeadFrame[id - 20]) {
+                return this.hallHeadFrame[id - 20]
+            } else {
+                console.log("没有找到头像")
+            }
+        }
     },
     getHallBtnAni(id) {
         if (this.spineAnimation[id]) {

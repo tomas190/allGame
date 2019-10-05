@@ -2,10 +2,29 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-09-19 14:26:09
+ * @LastEditTime: 2019-10-05 15:59:05
  * @Description: 
  -->
 # all hqq native combined-game project
+
+
+登陆接口改变：{
+	原有的账号密码登陆方式，只在本地开发上使用
+	发布使用id + token的方式登陆子游戏
+
+	账号密码方式
+	账号：gHandler.gameGlobal.player.account_name // number类型
+	密码：gHandler.gameGlobal.player.account_pass // string类型
+
+	id+token方式
+	id:gHandler.gameGlobal.player.id // number类型
+	token:gHandler.gameGlobal.token // string类型
+}
+
+滚动公告：{
+	common/hall/scene/hall 场景的 Main Camera/toppanel/noticepanel/sp_trumppet_bg节点
+	可直接复制此滚动公告节点到需要的场景上，即可实现滚动公告功能
+}
 
 注意：{
 	一个子游戏有两个文件夹路径，一个是resources下新建的子游戏的动态资源目录，

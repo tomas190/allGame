@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.1",
+  "uuid": "218012e5-7893-4ee8-8c76-14f45d5133eb",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "银行卡绑定": {
+      "ver": "1.0.4",
+      "uuid": "353ca3d3-013d-4598-baf2-95bead5f2d90",
+      "rawTextureUuid": "218012e5-7893-4ee8-8c76-14f45d5133eb",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1334,
+      "height": 750,
+      "rawWidth": 1334,
+      "rawHeight": 750,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

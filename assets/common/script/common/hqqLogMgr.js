@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 11:28:43
  * @LastEditors: burt
- * @LastEditTime: 2019-09-19 13:52:30
+ * @LastEditTime: 2019-10-04 10:06:03
  * @Description: log日志 管理器
  */
 
@@ -16,6 +16,7 @@ let logManager = {
     currentResult: '',
     output: '', // 全部日志
     eoutput: '', // 错误日志
+    poutput: [], // 前面5条错误日志
     serverUrl: null,
     tag: "\r\n",
     logpath: "",
@@ -23,10 +24,7 @@ let logManager = {
      * 初始化
      */
     init: function () {
-        if (cc.sys.isBrowser) {
-            this.output = JSON.parse(cc.sys.localStorage.getItem('log'))
-            this.eoutput = JSON.parse(cc.sys.localStorage.getItem('elog'))
-        } else {
+        if (CC_JSB) {
             this.logpath = jsb.fileUtils.getWritablePath() + "log";
             if (jsb.fileUtils.isDirectoryExist(this.logpath)) {
                 this.output = jsb.fileUtils.getStringFromFile(this.logpath + "/logtemp.txt")
@@ -34,7 +32,11 @@ let logManager = {
             } else {
                 jsb.fileUtils.createDirectory(jsb.fileUtils.getWritablePath() + "log");
             }
+        } else {
+            this.output = JSON.parse(cc.sys.localStorage.getItem('log'))
+            this.eoutput = JSON.parse(cc.sys.localStorage.getItem('elog'))
         }
+
         window.addEventListener('error', (e) => {
             // console.log("error")
             this.logerror(e);
@@ -58,28 +60,28 @@ let logManager = {
             }
             this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath) => {
                 if (bool) {
-                    if (cc.sys.isBrowser) {
-                        console.log("日志发送成功")
-                    } else {
+                    if (CC_JSB) {
                         if (islog) {
                             jsb.fileUtils.removeFile(this.logpath + "/logtemp.txt")
                         } else {
                             jsb.fileUtils.removeFile(this.logpath + "/elogtemp.txt")
                         }
+                    } else {
+                        console.log("日志发送成功")
                     }
                 } else {
-                    if (cc.sys.isBrowser) {
-                        console.log("日志发送失败")
-                    } else {
+                    if (CC_JSB) {
                         if (islog) {
                             jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
                         } else {
                             jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
                         }
+                    } else {
+                        console.log("日志发送失败")
                     }
                 }
             });
-            if (cc.sys.isNative) {
+            if (CC_JSB) {
                 let files = jsb.fileUtils.listFiles(this.logpath);
                 for (let i = 0; i < files.length; i++) {
                     if (files[i].indexOf("logtemp") != -1 || files[i].indexOf("elogtemp") != -1) {
@@ -94,10 +96,10 @@ let logManager = {
                         }
                         this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, files[i], (bool, filepath) => {
                             if (bool) {
-                                if (cc.sys.isBrowser) {
-                                    console.log("日志发送成功")
-                                } else {
+                                if (CC_JSB) {
                                     jsb.fileUtils.removeFile(filepath)
+                                } else {
+                                    console.log("日志发送成功")
                                 }
                             }
                         });
@@ -105,14 +107,14 @@ let logManager = {
                 }
             }
         } else {
-            if (cc.sys.isBrowser) {
-                console.log("未请求到token")
-            } else {
+            if (CC_JSB) {
                 if (islog) {
                     jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
                 } else {
                     jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
                 }
+            } else {
+                console.log("未请求到token")
             }
         }
     },
@@ -136,20 +138,34 @@ let logManager = {
      */
     logerror: function (data) {
         this.isRealTimeLog && console.log(data);
-        var type = this.determineType(data);
-        if (type != null) {
-            var addition = this.formatType(type, data);
-            this.eoutput += this.getNowTime() + ":" + addition + this.tag;
+        if (data.error && data.error.stack) {
+            var err = data.error.stack + this.tag;
+            for (let i = 0; i < this.poutput.length; i++) {
+                let out = this.poutput[i]
+                let pre = out.substring(out.indexOf(":") + 1)
+                if (err == pre) {
+                    console.log("重复的错误日志")
+                    return
+                }
+            }
+            err = this.getNowTime() + ":" + err;
+            this.eoutput += err;
+            if (this.poutput.length == 5) {
+                this.poutput.shift();
+                this.poutput.push(err);
+            } else {
+                this.poutput.push(err);
+            }
             this.elogCheck();
         }
     },
     saveLog: function () {
-        if (cc.sys.isBrowser) {
-            cc.sys.localStorage.setItem("log", JSON.stringify(this.output))
-            cc.sys.localStorage.setItem("elog", JSON.stringify(this.eoutput))
-        } else {
+        if (CC_JSB) {
             cc.fileUtils.writeStringToFile(this.output, this.logpath + "/logtemp.txt")
             cc.fileUtils.writeStringToFile(this.eoutput, this.logpath + "/elogtemp.txt")
+        } else {
+            cc.sys.localStorage.setItem("log", JSON.stringify(this.output))
+            cc.sys.localStorage.setItem("elog", JSON.stringify(this.eoutput))
         }
     },
     getNowTime: function () {

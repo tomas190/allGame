@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 16:40:03
  * @LastEditors: burt
- * @LastEditTime: 2019-09-19 13:52:11
+ * @LastEditTime: 2019-10-04 09:21:06
  * @Description: http 
  */
 
@@ -48,6 +48,7 @@ let hqqHttp = {
         xhr.send(str); // 发送请求，默认是异步请求，请求发送后立刻返回
     },
 
+    // 发送日志
     sendRequestLogPost(urlto, param, filepath, callBack) {
         console.log("sendRequestLogPost", urlto)
         let str = JSON.stringify(param);
@@ -251,7 +252,7 @@ let hqqHttp = {
                     let response = xhr.responseText
                     // console.log("RemoteData", response)
                     if (callback && !alreadyCallBack) {
-                        callback(response)
+                        callback(JSON.parse(response))
                         alreadyCallBack = true
                     }
                 } else {

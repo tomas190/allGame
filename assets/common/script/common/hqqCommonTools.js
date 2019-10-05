@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:52:25
  * @LastEditors: burt
- * @LastEditTime: 2019-09-04 09:15:52
+ * @LastEditTime: 2019-10-03 16:25:32
  * @Description: 通用函数
  */
 
@@ -249,6 +249,22 @@ let commonTools = {
         const i = padMonth(m);
         const o = padDay(d);
         return parseInt(`${y}${i}${o}`, 10);
+    },
+    formatDateToStr(timestamp) {
+        let date = new Date(timestamp)
+        let strYear = date.getFullYear();
+        let month = date.getMonth();
+        let strMonth = (9 > month ? "0" + (month + 1) : month + 1).toString();
+        let day = date.getDate();
+        let strDay = (10 > day ? "0" + day : day).toString();
+        let hour = date.getHours();
+        let strHour = (hour < 10 ? "0" + hour : hour).toString();
+        let minute = date.getMinutes();
+        let strMinute = (minute < 10 ? "0" + minute : minute).toString();
+        let second = date.getMinutes();
+        let strSecond = (second < 10 ? "0" + second : second).toString();
+        let str = strYear + "-" + strMonth + "-" + strDay + " " + strHour + ":" + strMinute + ":" + strSecond
+        return str
     },
     /**
 	 * 字符串数组转化为数字数组

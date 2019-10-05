@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.1",
+  "uuid": "52fd0c12-bbcf-4963-8382-b2610d9c3d8a",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "支付宝绑定4": {
+      "ver": "1.0.4",
+      "uuid": "5a586282-c55c-4864-9dbd-ca1ba62c1ef7",
+      "rawTextureUuid": "52fd0c12-bbcf-4963-8382-b2610d9c3d8a",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1334,
+      "height": 750,
+      "rawWidth": 1334,
+      "rawHeight": 750,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

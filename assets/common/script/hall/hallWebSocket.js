@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-09-18 14:02:30
+ * @LastEditTime: 2019-10-04 17:29:55
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -20,8 +20,10 @@ hqqWebSocket.prototype = {
     events: {},
     handlers: {},
     needRecon: true,
+    isConected: false,
 
     init(param) {
+        this.isConected = false;
         this.needRecon = true;
         this.ip = param && param.ip || this.ip;
         this.reConnectTime = param && param.reConnectTime || this.reConnectTime;
@@ -30,6 +32,9 @@ hqqWebSocket.prototype = {
         this.closeTime = 3 * this.heartbeatTime;
         this.removeAllHandler();
         this.removeAllEvent();
+    },
+    getIsConnected() {
+        return this.isConected
     },
     startPingPong() {
         let self = this
@@ -55,6 +60,7 @@ hqqWebSocket.prototype = {
         (this.ws || console.log("websocket未初始化")) && this.ws.send(data);
     },
     close() {
+        console.log("大厅websocket主动断开")
         this.ws && this.ws.close();
         this.needRecon = false;
     },
@@ -86,26 +92,56 @@ hqqWebSocket.prototype = {
     removeAllEvent() {
         this.events = {};
     },
+    // onReceiveNotice(msg) {
+    //     // data.msg.sort((a, b) => a.sort - b.sort).forEach((e, i) => {
+    //     //     let notice = {
+    //     //         key: i,
+    //     //         isShow: 0,
+    //     //         type: e.type,
+    //     //         title: e.title,
+    //     //         words: e.words,
+    //     //         create_time: e.create_time,
+    //     //         end_time: e.end_time,
+    //     //     };
+    //     //     gHandler.gameGlobal.noticeList.push(notice)
+    //     //     if (e.is_slider === 1) {
+    //     //         gHandler.gameGlobal.slideNoticeList.push({
+    //     //             type: 1,
+    //     //             notice: e.words.replace(/\s+/g, "")
+    //     //         })
+    //     //     }
+    //     // })
+    // },
+    onReceiveLoginout(msg) {
+        console.log("hallWebSocket onReceiveLoginout", msg)
+        gHandler.setGameUserInfo(msg.game_user)
+    },
     m_onopen() {
-        console.log("连接成功")
+        console.log("大厅socket连接成功，并开始登陆")
+        this.isConected = true;
         this.reConnectTime = 0;
         this.startPingPong();
         if (!gHandler.gameGlobal.isdev) {
+            // this.register("/GameServer/Notice/notice", "hallWebSocket", this.onReceiveNotice.bind(this)) // 公告
+            this.register("/GameServer/GameUser/loginout", "hallWebSocket", this.onReceiveLoginout.bind(this)) // 玩家离开子游戏
             let msg = {
                 "event": "/Game/login/login",
                 "data": {
                     id: gHandler.gameGlobal.player.account_name,
-                    pass: gHandler.gameGlobal.player.account_pass
+                    token: gHandler.gameGlobal.token
                 }
             }
+            // console.log("发送登陆", msg)
             this.ws.send(JSON.stringify(msg))
         }
     },
     m_onmessage(msg) {
         let data = JSON.parse(msg.data)
+        // console.log("data --- ", data)
         this.m_EmitMsg(data.event, data.data.msg, data)
     },
     m_EmitMsg(event, data, msg) {
+        console.log("------大厅收到消息--------", event)
         if (this.handlers[event]) {
             for (let className in this.handlers[event]) {
                 this.handlers[event][className] && this.handlers[event][className](data);
@@ -115,10 +151,12 @@ hqqWebSocket.prototype = {
         }
     },
     m_onerror(e) {
+        this.isConected = false;
         gHandler.logMgr.logerror(e);
         this.m_stopPingPong();
     },
     m_onclose() {
+        this.isConected = false;
         this.m_stopPingPong();
         if (this.needRecon) {
             setTimeout(() => {

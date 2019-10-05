@@ -1,0 +1,76 @@
+
+dating_loading.png
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 0, 8
+  size: 404, 212
+  orig: 404, 212
+  offset: 0, 0
+  index: -1
+faguang1
+  rotate: false
+  xy: 888, 213
+  size: 365, 26
+  orig: 365, 26
+  offset: 0, 0
+  index: -1
+heitao
+  rotate: true
+  xy: 1255, 0
+  size: 239, 247
+  orig: 239, 247
+  offset: 0, 0
+  index: -1
+pai1
+  rotate: false
+  xy: 1504, 111
+  size: 143, 128
+  orig: 143, 128
+  offset: 0, 0
+  index: -1
+pai2
+  rotate: false
+  xy: 406, 25
+  size: 170, 149
+  orig: 170, 149
+  offset: 0, 0
+  index: -1
+pai3
+  rotate: false
+  xy: 578, 55
+  size: 114, 119
+  orig: 114, 119
+  offset: 0, 0
+  index: -1
+pingtai
+  rotate: false
+  xy: 1649, 213
+  size: 232, 26
+  orig: 232, 26
+  offset: 0, 0
+  index: -1
+shanguang
+  rotate: false
+  xy: 1504, 7
+  size: 100, 102
+  orig: 100, 102
+  offset: 0, 0
+  index: -1
+yule
+  rotate: false
+  xy: 406, 176
+  size: 354, 44
+  orig: 354, 44
+  offset: 0, 0
+  index: -1
+zi
+  rotate: false
+  xy: 0, 222
+  size: 886, 17
+  orig: 886, 17
+  offset: 0, 0
+  index: -1

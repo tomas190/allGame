@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 16:57:02
  * @LastEditors: burt
- * @LastEditTime: 2019-09-12 11:07:36
+ * @LastEditTime: 2019-10-03 15:42:56
  * @Description: 通用加载场景
  */
 let gHandler = require("gHandler");
@@ -11,6 +11,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        progressnode: cc.ProgressBar,
         label: cc.Label,
         progresslabel: cc.Label,
         hallmanifest: {
@@ -24,6 +25,8 @@ cc.Class({
         this.tempTime = 0;
         this.state = 0;
         this.info = "资源加载中";
+        this.progress = 0
+        // this.progressnode.node.active = false
         switch (gHandler.gameGlobal.gameNow) {
             case gHandler.gameConfig.hallconfig.enname:
                 if (gHandler.gameGlobal.isdev) {
@@ -32,9 +35,12 @@ cc.Class({
                     let appLogin = require("appLogin")
                     gHandler.loginMgr = appLogin;
                     gHandler.loginMgr.init({
-                        callback: (str, state) => {
+                        callback: (str, state, progress) => {
                             this.info = str || this.info;
                             this.state = state || this.state
+                            if (progress) {
+                                this.progress = progress
+                            }
                         },
                         hallmanifest: this.hallmanifest,
                     })
@@ -64,6 +70,7 @@ cc.Class({
                     this.label.string = this.label.string + ".";
                 }
             } else if (this.state == 1) {
+                this.progressnode.progress = this.progress
                 this.progresslabel.string = this.progresslabel.string + ">";
                 if (this.label.string.length >= 8) {
                     this.label.string = this.info;
