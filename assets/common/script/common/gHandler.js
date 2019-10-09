@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-10-05 15:43:21
+ * @LastEditTime: 2019-10-09 12:00:00
  * @Description: 游戏中央模块管理器
  */
 
@@ -31,6 +31,10 @@ let gameGlobal = {
         yinhangka: "", //  银行卡
     },
     im_host: "",
+    proxy: { // 全民代理数据结构
+        package_id: null, // number类型
+        balance: null, // number类型
+    },
     pay: { // 充提数据结构
         client: "",
         pay_host: "",
