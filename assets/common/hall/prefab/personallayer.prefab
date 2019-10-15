@@ -1051,7 +1051,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -50,
+      "x": -55,
       "y": 190.884,
       "z": 0
     },
@@ -1154,7 +1154,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -50,
+      "x": -55,
       "y": 98.884,
       "z": 0
     },
@@ -1257,7 +1257,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -50,
+      "x": -55,
       "y": 3.8840000000000003,
       "z": 0
     },
@@ -1360,7 +1360,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -50,
+      "x": -55,
       "y": -91.116,
       "z": 0
     },
@@ -1463,7 +1463,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -50,
+      "x": -55,
       "y": -188.11599999999999,
       "z": 0
     },
@@ -1663,7 +1663,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 145.64,
+      "width": 160,
       "height": 36.36
     },
     "_anchorPoint": {
@@ -1711,8 +1711,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": ".0123456789",
-    "_N$string": ".0123456789",
+    "_string": "/0123456789",
+    "_N$string": "/0123456789",
     "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": true,
@@ -4204,6 +4204,15 @@
       "__id__": 1
     },
     "_enabled": true,
+    "phonebindbtn": {
+      "__id__": 64
+    },
+    "alipaybindbtn": {
+      "__id__": 69
+    },
+    "yinhangkabindbtn": {
+      "__id__": 74
+    },
     "musictoggle": {
       "__id__": 99
     },

@@ -1,0 +1,83 @@
+
+hbsl.png
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 0, 0
+  size: 288, 222
+  orig: 288, 222
+  offset: 0, 0
+  index: -1
+bomb
+  rotate: false
+  xy: 971, 83
+  size: 146, 139
+  orig: 146, 139
+  offset: 0, 0
+  index: -1
+dia1
+  rotate: false
+  xy: 1119, 146
+  size: 66, 76
+  orig: 66, 76
+  offset: 0, 0
+  index: -1
+dia2
+  rotate: false
+  xy: 1119, 84
+  size: 58, 60
+  orig: 58, 60
+  offset: 0, 0
+  index: -1
+dia3
+  rotate: false
+  xy: 1187, 177
+  size: 40, 45
+  orig: 40, 45
+  offset: 0, 0
+  index: -1
+guang
+  rotate: false
+  xy: 817, 68
+  size: 152, 154
+  orig: 152, 154
+  offset: 0, 0
+  index: -1
+hb1
+  rotate: false
+  xy: 290, 23
+  size: 168, 199
+  orig: 168, 199
+  offset: 0, 0
+  index: -1
+hb2
+  rotate: false
+  xy: 642, 33
+  size: 173, 189
+  orig: 173, 189
+  offset: 0, 0
+  index: -1
+hb3
+  rotate: false
+  xy: 460, 31
+  size: 180, 191
+  orig: 180, 191
+  offset: 0, 0
+  index: -1
+hb4
+  rotate: false
+  xy: 460, 31
+  size: 180, 191
+  orig: 180, 191
+  offset: 0, 0
+  index: -1
+hb5
+  rotate: false
+  xy: 460, 31
+  size: 180, 191
+  orig: 180, 191
+  offset: 0, 0
+  index: -1

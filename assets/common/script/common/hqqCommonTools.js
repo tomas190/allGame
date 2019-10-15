@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:52:25
  * @LastEditors: burt
- * @LastEditTime: 2019-10-03 16:25:32
+ * @LastEditTime: 2019-10-14 09:03:50
  * @Description: 通用函数
  */
 
@@ -251,7 +251,7 @@ let commonTools = {
         return parseInt(`${y}${i}${o}`, 10);
     },
     formatDateToStr(timestamp) {
-        let date = new Date(timestamp)
+        let date = new Date(1e3 * timestamp)  // *1e3 转换时间
         let strYear = date.getFullYear();
         let month = date.getMonth();
         let strMonth = (9 > month ? "0" + (month + 1) : month + 1).toString();

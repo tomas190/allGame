@@ -3,7 +3,7 @@
  * @Author: burt
  * @Date: 2019-09-30 10:18:57
  * @LastEditors: burt
- * @LastEditTime: 2019-10-03 16:27:32
+ * @LastEditTime: 2019-10-10 09:27:29
  * @Description: 
  */
 
@@ -12,9 +12,13 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        title: cc.Sprite,
         time: cc.Label,
         txt: cc.Label,
         scroll: cc.ScrollView,
+        email: cc.SpriteFrame,
+        notice: cc.SpriteFrame,
+
     },
 
     onLoad() {
@@ -33,6 +37,9 @@ cc.Class({
         this.time.node.active = isemail
         if (isemail) {
             this.time.string = custom.strtime
+            this.title.spriteFrame = this.email
+        } else {
+            this.title.spriteFrame = this.notice
         }
         this.txt.string = custom.words
         this.txt._updateRenderData(true)

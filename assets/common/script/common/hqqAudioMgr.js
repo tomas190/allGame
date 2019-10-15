@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-10 10:32:38
  * @LastEditors: burt
- * @LastEditTime: 2019-10-02 10:11:20
+ * @LastEditTime: 2019-10-12 18:07:07
  * @Description: 音效管理器，子游戏音效管理器需实现getMusic(name)获取cc.AudionClip资源的函数接口
  */
 let gHandler = require("gHandler");
@@ -13,6 +13,7 @@ let audioMgr = {
     effectIsOpen: true,
     effectVolume: 1,
     resMgr: null, // 子游戏资源管理器节点
+    bgchip: null,// 背景音乐资源
     init(resmgr) {
         this.resMgr = resmgr;
         this.bgVolume = gHandler.localStorage.globalGet("bgVolumeKey") || 1;
@@ -26,6 +27,8 @@ let audioMgr = {
         gHandler.localStorage.globalSet("bgIsOpenKey", this.bgIsOpen)
         if (!this.bgIsOpen) {
             this.stopBg()
+        } else {
+            this.bgId = cc.audioEngine.playMusic(this.bgchip, true, this.bgVolume);
         }
     },
     setEffectState(efof) {
@@ -33,6 +36,8 @@ let audioMgr = {
         gHandler.localStorage.globalSet("effectIsOpenKey", this.effectIsOpen)
         if (!this.effectIsOpen) {
             cc.audioEngine.stopAllEffects()
+        } else {
+            cc.audioEngine.resumeAllEffects()
         }
     },
     setBgVolume(num) {
@@ -49,13 +54,13 @@ let audioMgr = {
         }
     },
     playBg(name) {
+        this.bgchip = this.resMgr.getMusic(name);
         if (this.bgIsOpen && this.resMgr) {
-            let bgchip = this.resMgr.getMusic(name);
-            if (bgchip) {
-                this.bgId = cc.audioEngine.playMusic(bgchip, true, this.bgVolume);
+            if (this.bgchip) {
+                this.bgId = cc.audioEngine.playMusic(this.bgchip, true, this.bgVolume);
             }
         } else {
-            console.log(this.bgIsOpen ? "未定义音效资源管理器" : "音乐已禁止")
+            // console.log(this.bgIsOpen ? "未定义音效资源管理器" : "音乐已禁止")
         }
         return this;
     },

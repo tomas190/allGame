@@ -3,7 +3,7 @@
  * @Author: burt
  * @Date: 2019-09-28 17:12:14
  * @LastEditors: burt
- * @LastEditTime: 2019-10-03 16:43:22
+ * @LastEditTime: 2019-10-14 13:56:17
  * @Description: 大厅公告页
  */
 
@@ -32,53 +32,15 @@ cc.Class({
     },
 
     onLoad() {
-        // this.tempdata = [
-        //     {
-        //         title: "公平游戏公告",
-        //         time: "2019-07-25 16:32:15",
-        //         content: "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-        //         readstate: true,
-        //     },
-        //     {
-        //         title: "支付宝充值注意事项",
-        //         time: "2019-07-25 16:32:16",
-        //         content: "不不不不不不不不不不不不不不不",
-        //         readstate: false,
-        //     },
-        //     {
-        //         title: "银行卡收益公告",
-        //         time: "2019-07-25 16:32:17",
-        //         content: "啛啛喳喳错错错错错错错错错错错错错错",
-        //         readstate: false,
-        //     },
-        //     {
-        //         title: "银行卡收益公告",
-        //         time: "2019-07-25 16:32:17",
-        //         content: "啛啛喳喳错错错错错错错错错错错错错错",
-        //         readstate: false,
-        //     },
-        //     {
-        //         title: "银行卡收益公告",
-        //         time: "2019-07-25 16:32:17",
-        //         content: "啛啛喳喳错错错错错错错错错错错错错错",
-        //         readstate: false,
-        //     },
-        //     {
-        //         title: "银行卡收益公告",
-        //         time: "2019-07-25 16:32:17",
-        //         content: "啛啛喳喳错错错错错错错错错错错错错错",
-        //         readstate: false,
-        //     },
-        // ]
-
         this.noticedata = gHandler.commonTools.jsonCopy(gHandler.gameGlobal.noticeList)
-
         this.emaildata = []
 
         this.noticeItemList = []
         this.emailItemList = []
+
         // this.initEmailScroll()
         this.initNoticeScroll()
+        
         this.onClickGongGao()
     },
 
@@ -154,7 +116,7 @@ cc.Class({
     },
 
     onClickGongGao() {
-        console.log("公告")
+        // console.log("公告")
         this.gonggaobtn.interactable = false
         this.emailbtn.interactable = true
         this.noticescroll.node.active = true
@@ -164,7 +126,7 @@ cc.Class({
 
     onClickYouJian(event, custom) {
         return
-        console.log("邮件")
+        // console.log("邮件")
         this.emaildata[custom.key].isShow = 1
         this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.emaildata[custom.key].isShow ? this.hasreadframe : this.noreadframe;
         this.emailItemList[custom.key].getChildByName("email").getChildByName("btn").getComponent(cc.Sprite).spriteFrame = this.emaildata[custom.key].isShow ? this.ehasreadframe : this.enoreadframe;
@@ -176,7 +138,7 @@ cc.Class({
     },
 
     onClickReadItem(event, custom) {
-        console.log("点击", custom)
+        // console.log("点击", custom)
         this.noticedata[custom.key].isShow = 1
         this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.noticedata[custom.key].isShow ? this.hasreadframe : this.noreadframe;
         this.sublayer.active = true
@@ -190,7 +152,7 @@ cc.Class({
                 return
             }
         }
-        gHandler.eventMgr.dispatch("noticeallread", false)
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshHallTips, { hidenoticetip: true })
     },
 
     onClieckDeleteHasRead() {

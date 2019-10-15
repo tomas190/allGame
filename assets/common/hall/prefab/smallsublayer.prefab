@@ -4457,8 +4457,8 @@
       }
     ],
     "_useOriginalSize": true,
-    "_string": "请输入账号",
-    "_N$string": "请输入账号",
+    "_string": "请输入账号或id",
+    "_N$string": "请输入账号或id",
     "_fontSize": 38,
     "_lineHeight": 38,
     "_enableWrapText": false,

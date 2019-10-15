@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 11:28:43
  * @LastEditors: burt
- * @LastEditTime: 2019-10-04 10:06:03
+ * @LastEditTime: 2019-10-07 13:46:52
  * @Description: log日志 管理器
  */
 
@@ -47,6 +47,18 @@ let logManager = {
         })
         return this;
     },
+    // 立即发送日志
+    sendLog() {
+        let tempoutput = this.output + "endTime-" + this.getNowTime();
+        this.send(tempoutput, true);
+        this.output = "startTime-" + this.getNowTime() + this.tag;
+    },
+    // 立即发送错误日志
+    sendError() {
+        let tempoutput = this.eoutput + "endTime-" + this.getNowTime();
+        this.send(tempoutput);
+        this.eoutput = "startTime-" + this.getNowTime() + this.tag;
+    },
     /** 向服务器发送日志 */
     send: function (logstr, islog) {
         if (gHandler.gameGlobal.token != "") {
@@ -68,6 +80,11 @@ let logManager = {
                         }
                     } else {
                         console.log("日志发送成功")
+                        if (islog) {
+                            cc.sys.localStorage.setItem("log", JSON.stringify(this.output))
+                        } else {
+                            cc.sys.localStorage.setItem("elog", JSON.stringify(this.eoutput))
+                        }
                     }
                 } else {
                     if (CC_JSB) {
@@ -96,11 +113,7 @@ let logManager = {
                         }
                         this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, files[i], (bool, filepath) => {
                             if (bool) {
-                                if (CC_JSB) {
-                                    jsb.fileUtils.removeFile(filepath)
-                                } else {
-                                    console.log("日志发送成功")
-                                }
+                                jsb.fileUtils.removeFile(filepath)
                             }
                         });
                     }
@@ -170,12 +183,19 @@ let logManager = {
     },
     getNowTime: function () {
         let date = new Date();
-        let time = "" + date.getMonth() + "-";
-        time += date.getDate() + "-";
-        time += date.getHours() + "-";
-        time += date.getMinutes() + "-";
-        time += date.getSeconds();
-        return time;
+        let strYear = date.getFullYear();
+        let month = date.getMonth();
+        let strMonth = (9 > month ? "0" + (month + 1) : month + 1);
+        let day = date.getDate();
+        let strDay = (10 > day ? "0" + day : day);
+        let hour = date.getHours();
+        let strHour = (hour < 10 ? "0" + hour : hour);
+        let minute = date.getMinutes();
+        let strMinute = (minute < 10 ? "0" + minute : minute);
+        let second = date.getMinutes();
+        let strSecond = (second < 10 ? "0" + second : second);
+        let str = strYear + "-" + strMonth + "-" + strDay + " " + strHour + ":" + strMinute + ":" + strSecond
+        return str;
     },
     logCheck: function () {
         let lines = this.output.split(this.tag);

@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 09:11:37
  * @LastEditors: burt
- * @LastEditTime: 2019-10-04 09:05:49
+ * @LastEditTime: 2019-10-10 18:24:55
  * @Description: 公告板
  */
 let gHandler = require("gHandler");
@@ -17,9 +17,9 @@ cc.Class({
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
         this.isRoll = false
-        gHandler.eventMgr.register("slidernotice", "hallNoticeBoard", this.onReceiveNoticeList.bind(this))
+        gHandler.eventMgr.register(gHandler.eventMgr.addSliderNotice, "hallNoticeBoard", this.addSliderNotice.bind(this))
         if (gHandler.gameGlobal.slideNoticeList.length > 0) {
-            this.onReceiveNoticeList(gHandler.gameGlobal.slideNoticeList)
+            this.addSliderNotice(gHandler.gameGlobal.slideNoticeList)
         }
     },
     /** enabled和active属性从false变为true时 */
@@ -41,8 +41,8 @@ cc.Class({
         // }
         // this.noticeStartRoll();
     },
-    onReceiveNoticeList(msg) {
-        console.log("onReceiveNoticeList", msg)
+    addSliderNotice(msg) {
+        // console.log("addSliderNotice", msg)
         for (let i = 0; i < msg.length; i++) {
             this.addNotice(msg[i], 1)
         }
@@ -65,8 +65,8 @@ cc.Class({
         }
         let noticeItem = {
             text: notice.notice,
-            time: time,
-            type: notice.type,
+            time: notice.time,
+            rollforver: notice.rollforver,
         }
         this.noticeList.push(noticeItem);
     },
@@ -74,7 +74,7 @@ cc.Class({
     noticeStartRoll() {
         let item = this.noticeList.shift();
         if (item) {
-            if (item.type != 1) { // tyep = 1 永久滚动 2 滚动一次
+            if (!item.rollforver) { // tyep = 1 永久滚动 2 滚动一次
                 item.time--;
             }
             let text = item.text;
@@ -103,6 +103,6 @@ cc.Class({
     // lateUpdate() { },
     /** 调用了 destroy() 时回调，当帧结束统一回收组件 */
     onDestroy() {
-        gHandler.eventMgr.unregister("slidernotice", "hallNoticeBoard")
+        gHandler.eventMgr.unregister(gHandler.eventMgr.addSliderNotice, "hallNoticeBoard")
     },
 });

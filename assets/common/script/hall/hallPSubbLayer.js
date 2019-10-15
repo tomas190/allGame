@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
  * @LastEditors: burt
- * @LastEditTime: 2019-10-04 15:16:12
+ * @LastEditTime: 2019-10-14 18:39:39
  * @Description: 
  */
 
@@ -20,7 +20,8 @@ cc.Class({
     },
 
     onLoad() {
-        console.log("subblayer onload")
+        // console.log("subblayer onload")
+        this.subtype = 0
         this.ensurefunc = () => {
             this.onClickExit()
         }
@@ -31,6 +32,7 @@ cc.Class({
     },
 
     init(subtype) {
+        this.subtype = subtype;
         switch (subtype) {
             case 1: // 重置密码
                 this.resetpass.active = true
@@ -39,6 +41,7 @@ cc.Class({
                 break;
             case 2: // 绑定银行卡
                 this.bindyinhangka.active = true
+                this.ensurefunc = this.bindyinhangkaEnsure
                 break;
             case 3: // 注册正式账号
                 this.officelogin.active = true
@@ -48,8 +51,72 @@ cc.Class({
         }
     },
 
+    bindyinhangkaEnsure() {
+        let url = gHandler.gameGlobal.pay.pay_host + "/api/payment_account/saveAccount"
+        let card_num = this.bindyinhangka.getChildByName("kahaoeditbox").getComponent(cc.EditBox).string
+        if (card_num.length == 0) {
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入银行卡卡号")
+        }
+        if (card_num.length < 15) {
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入正确的银行卡卡号")
+        }
+        let card_name = this.bindyinhangka.getChildByName("nameediftox").getComponent(cc.EditBox).string
+        if (card_name.length == 0) {
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入银行卡收款人姓名")
+        }
+        let bank_name = this.bindyinhangka.getChildByName("yinhangname").getComponent(cc.EditBox).string
+        if (bank_name.length == 0) {
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入开户银行")
+        }
+        let branch_name = this.bindyinhangka.getChildByName("zhihang").getComponent(cc.EditBox).string
+        if (branch_name.length == 0) {
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入开户行支行")
+        }
+        let obj = {};
+        obj = {
+            card_num: card_num,
+            card_name: card_name,
+            bank_name: bank_name,
+            branch_name: branch_name,
+        };
+        let info = JSON.stringify(obj);
+        let dataStr = "user_id=" + gHandler.gameGlobal.pay.user_id
+        dataStr += "&user_name=" + gHandler.gameGlobal.pay.user_name
+        dataStr += "&action=add&type=3&info=" + info
+        dataStr += "&client=" + gHandler.gameGlobal.pay.client
+        dataStr += "&proxy_user_id=" + gHandler.gameGlobal.pay.proxy_user_id
+        dataStr += "&proxy_name=" + gHandler.gameGlobal.pay.proxy_name
+        dataStr += "&package_id=" + gHandler.gameGlobal.pay.package_id
+        dataStr += "&token=e40f01afbb1b9ae3dd6747ced5bca532"
+        dataStr += "&version=1"
+        let callback = (response) => {
+            if (response.status == 0) {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.getPayInfo)
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "操作成功")
+                this.onClickExit()
+            } else {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, response.msg)
+            }
+        }
+        let outcallback = (status) => {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时:" + status)
+        }
+        gHandler.http.ajax('POST', url, dataStr, callback, outcallback)
+    },
+
+    onClickCaptcha() {
+        console.log('onClickCaptcha', this.subtype)
+        this.panelInit(this.subtype)
+    },
+
     // 注册正式账号初始化
     panelInit(mtype) {
+        if (CC_JSB) {
+            let fullPath = jsb.fileUtils.getWritablePath() + "yanzhenma.png";
+            jsb.fileUtils.isFileExist(fullPath) && jsb.fileUtils.removeFile(fullPath);
+            cc.loader.release(fullPath);
+        }
+
         let imgurl = "http://" + gHandler.appGlobal.server + "/Game/Verify/createCaptcha?"
         imgurl += "id=" + gHandler.appGlobal.gameuser.id;
         imgurl += "&token=" + gHandler.gameGlobal.token;
@@ -118,9 +185,9 @@ cc.Class({
                             var newframe = new cc.SpriteFrame();
                             newframe.setTexture(texture);
                             if (mtype == 1) {
-                                self.captchaimg1.spriteFrame = mspriteFrame;
+                                self.captchaimg1.spriteFrame = newframe;
                             } else {
-                                self.captchaimg2.spriteFrame = mspriteFrame;
+                                self.captchaimg2.spriteFrame = newframe;
                             }
                         }
                     };
@@ -130,9 +197,9 @@ cc.Class({
         }
         xhr.send();
     },
-    // 获取手机验证码
+    // 获取手机短信验证码
     onClickGetCaptcha(event, custom) {
-        console.log("获取手机验证码")
+        console.log("获取手机短信验证码")
         let phonenum
         let yanzhenmanum
         if (custom == 1) {
@@ -143,11 +210,11 @@ cc.Class({
             yanzhenmanum = this.officelogin.getChildByName("yanzheneditbox").getComponent(cc.EditBox).string
         }
         if (phonenum == "") {
-            console.log("请输入手机号")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入手机号")
             return
         }
         if (yanzhenmanum == "") {
-            console.log("请输入图形验证码")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入图形验证码")
             return
         }
         let self = this
@@ -164,9 +231,9 @@ cc.Class({
                 let btnlabel = btn.node.getChildByName('btnlabel')
                 let la = btnlabel.getComponent(cc.Label)
                 la.string = "重发（60）"
-                btnlabel.color = new cc.Color(67, 67, 67, 225)
+                btnlabel.color = new cc.Color(67, 67, 67)
                 let lao = btnlabel.getComponent(cc.LabelOutline)
-                lao.color = new cc.Color(67, 67, 67, 225)
+                lao.color = new cc.Color(67, 67, 67)
                 let time2 = 0
                 let timer = setInterval(() => {
                     time2++
@@ -176,16 +243,24 @@ cc.Class({
                         clearInterval(timer);
                         btn.interactable = true
                         la.string = '获取验证码'
-                        btnlabel.color = new cc.Color(67, 0, 0, 225)
-                        lao.color = new cc.Color(67, 0, 0, 225)
+                        btnlabel.color = new cc.Color(67, 0, 0)
+                        lao.color = new cc.Color(67, 0, 0)
                     }
                 }, 1000)
+            } else {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取手机验证码失败")
             }
         }
         let outcallback = () => { // 账号密码登录超时，uuid登录
         }
-        let endurl = gHandler.appGlobal.getIpGetEndurl(5);
-        gHandler.http.sendRequestIpGet(gHandler.appGlobal.server, endurl, callback, outcallback);
+        let endurl = gHandler.appGlobal.getIpPostEndUrl(7);
+        let data = {
+            id: gHandler.gameGlobal.player.id,
+            token: gHandler.gameGlobal.token,
+            phone_number: phonenum,
+            captcha: yanzhenmanum,
+        }
+        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
     },
     // 注册正式账号 确定
     officeloginEnsure() {
@@ -194,21 +269,26 @@ cc.Class({
         let capchanum = this.officelogin.getChildByName("capchaeditbox").getComponent(cc.EditBox).string
         let passnum = this.officelogin.getChildByName("passeditbox").getComponent(cc.EditBox).string
         if (capchanum == "") {
-            console.log("请输入短信验证码")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入短信验证码")
             return
         }
         if (passnum == "" || passnum.length < 6) {
-            console.log("请输入有效密码")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入有效密码")
             return
         }
 
         let callback = (data) => {
             console.log("成功注册正式账号", data)
-            this.onClickExit()
+            if (data.code == 200) {
+                gHandler.setPlayerinfo({ phone_number: data.msg })
+                this.getGold(data.msg)
+            } else {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册正式账号失败")
+            }
         }
 
         let outcallback = () => {
-
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
         }
 
         let endurl = gHandler.appGlobal.getIpPostEndUrl(5)
@@ -222,6 +302,25 @@ cc.Class({
         }
         gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
     },
+    // 注册正式账号获取免费金币
+    getGold(bindPhone) {
+        let payUrl = gHandler.gameGlobal.pay.pay_host + bindPhone;
+        let formData2 = new FormData();
+        formData2.append('user_id', gHandler.gameGlobal.player.id);
+        formData2.append('user_name', gHandler.gameGlobal.player.nick);
+        formData2.append('phone_number', bindPhone);
+        formData2.append('token', 'e40f01afbb1b9ae3dd6747ced5bca532');
+        formData2.append('package_id', gHandler.gameGlobal.pay.package_id);
+        fetch(payUrl, {
+            method: 'POST',
+            body: formData2
+        }).then((response) => {
+            let data2 = response.json()
+            if (data2.status != 0) return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败");
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币")
+            this.onClickExit()
+        });
+    },
     // 重置账号密码 确定
     resetpassEnsure() {
         let phonenum = this.resetpass.getChildByName("phoneeditbox").getComponent(cc.EditBox).string
@@ -229,25 +328,29 @@ cc.Class({
         let capchanum = this.resetpass.getChildByName("capchaeditbox").getComponent(cc.EditBox).string
         let passnum = this.resetpass.getChildByName("passeditbox").getComponent(cc.EditBox).string
         if (phonenum == "") {
-            console.log("请输入手机号")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入手机号")
             return
         }
         if (yanzhenmanum == "") {
-            console.log("请输入图形验证码")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入图形验证码")
             return
         }
         if (capchanum == "") {
-            console.log("请输入短信验证码")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入短信验证码")
             return
         }
         if (passnum == "" || passnum.length < 6) {
-            console.log("请输入有效密码")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入有效密码")
             return
         }
 
         let callback = (data) => {
-            console.log("成功注册正式账号", data)
-            this.onClickExit()
+            console.log("重置账号密码", data)
+            if (data.code == 200) {
+                this.onClickExit()
+            } else {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "重置账号密码失败")
+            }
         }
 
         let outcallback = () => {
@@ -263,7 +366,6 @@ cc.Class({
     },
 
     onClickExit() {
-        console.log("退出")
         if (CC_JSB) {
             let fullPath = jsb.fileUtils.getWritablePath() + "yanzhenma.png";
             jsb.fileUtils.isFileExist(fullPath) && jsb.fileUtils.removeFile(fullPath);
@@ -276,7 +378,7 @@ cc.Class({
     },
 
     onClickSure() {
-        console.log("确定")
+        this.ensurefunc()
     },
 
     // update (dt) {},
