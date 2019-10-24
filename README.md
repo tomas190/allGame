@@ -2,11 +2,18 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-10-05 15:59:05
+ * @LastEditTime: 2019-10-24 16:11:37
  * @Description: 
  -->
 # all hqq native combined-game project
 
+10.24更新{
+	增加事件派发添加大厅页面及跳转充提模块
+	 	gHandler.eventMgr.dispatch(gHandler.eventMgr.showNotice, null) // 显示公告界面
+		gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null) // 显示免费金币界面
+		gHandler.eventMgr.dispatch(gHandler.eventMgr.showPerson, null) // 显示个人设置界面
+		gHandler.eventMgr.dispatch(gHandler.eventMgr.showPayScene, "当前场景的名字（用于充提返回当前场景）") // 跳转充提场景
+}
 
 登陆接口改变：{
 	原有的账号密码登陆方式，只在本地开发上使用
