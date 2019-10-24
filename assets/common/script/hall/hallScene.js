@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 16:07:45
+ * @LastEditTime: 2019-10-24 17:16:56
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -29,6 +29,7 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
+        console.log("进入大厅")
         if (cc.sys.isBrowser) {
             this.browserDeal();
         }
