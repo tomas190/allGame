@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:52:25
  * @LastEditors: burt
- * @LastEditTime: 2019-10-14 09:03:50
+ * @LastEditTime: 2019-10-21 17:11:59
  * @Description: 通用函数
  */
 
@@ -62,7 +62,8 @@ let commonTools = {
                 }
                 jsb.saveImageData(picData, width, height, fullPath);
                 let texture = new cc.Texture2D();
-                texture.initWithData(picData, 32, width, height);
+                console.log(width, height)
+                texture.initWithData(picData, texture._format, width, height);
                 let spriteFrame = new cc.SpriteFrame();
                 spriteFrame.setTexture(texture);
                 let sprite = node.addComponent(cc.Sprite);
@@ -319,7 +320,13 @@ let commonTools = {
     padNumber(num, len) {
         const n = ("" + num).length;
         return Array(len > n ? len - n + 1 || 0 : 0).join("0") + num;
-    }
+    },
+    getSM() {
+        let date = new Date()
+        let miao = date.getSeconds()
+        let mill = date.getMilliseconds()
+        return { miao, mill }
+    },
 }
 
 module.exports = commonTools;

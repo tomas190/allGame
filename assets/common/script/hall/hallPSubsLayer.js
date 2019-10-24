@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
  * @LastEditors: burt
- * @LastEditTime: 2019-10-14 16:42:16
+ * @LastEditTime: 2019-10-24 09:31:52
  * @Description: 
  */
 
@@ -21,10 +21,7 @@ cc.Class({
     },
 
     onLoad() {
-        this.headpanelinit = false
-        this.ensurefunc = () => {
-            this.onClickExit()
-        }
+        
     },
 
     start() {
@@ -32,6 +29,11 @@ cc.Class({
     },
 
     init(subtype) {
+        this.headpanelinit = false
+        this.ensurefunc = () => {
+            this.onClickExit()
+        }
+        
         switch (subtype) {
             case 1: // 修改头像
                 this.changehead.active = true
@@ -57,11 +59,28 @@ cc.Class({
     },
 
     changeheadCallback() {
-        console.log("changeheadCallback", this.headindex)
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshPlayerinfo, {
-            game_img: this.headindex,
-        })
-        this.onClickExit()
+        // console.log("changeheadCallback", this.headindex)
+        let callback = (data, url) => {
+            if (data.code == 200) {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshPlayerinfo, {
+                    game_img: data.msg,
+                })
+                this.onClickExit()
+            } else {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "修改头像失败")
+            }
+        }
+        let outcallback = () => {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
+        }
+
+        let endurl = gHandler.appGlobal.getIpPostEndUrl(8)
+        let data = {
+            id: gHandler.gameGlobal.player.id,
+            token: gHandler.gameGlobal.token,
+            image: this.headindex + ".png",
+        }
+        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
     },
 
     bindalipayCallback() {
@@ -153,7 +172,11 @@ cc.Class({
         let headlen = gHandler.hallResManager.getHallHeadFrameLength()
         this.headscroll.content.height = Math.floor(headlen / 5) * 155
         let player = gHandler.gameGlobal.player
+        console.log("player.headurl", player.headurl)
         let headid = parseInt(player.headurl.substring(0, player.headurl.indexOf(".")))
+        if (headid > 20) {
+            headid -= 20
+        }
         for (let i = 0; i < headlen; i++) {
             let headitem = cc.instantiate(this.headitem)
             let head = headitem.getChildByName("masknode").getChildByName("head").getComponent(cc.Sprite)
@@ -198,11 +221,7 @@ cc.Class({
     },
 
     onClickExit() {
-        this.changehead.active = false
-        this.bindalipay.active = false
-        this.nickchange.active = false
-        this.login.active = false
-        this.node.active = false
+        this.node.removeFromParent(true)
     },
 
     onClickSure() {

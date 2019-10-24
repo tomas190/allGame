@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 18:38:29
  * @LastEditors: burt
- * @LastEditTime: 2019-10-14 16:41:14
+ * @LastEditTime: 2019-10-23 11:11:21
  * @Description: 大厅动态资源管理器
  */
 let gHandler = require("gHandler");
@@ -43,7 +43,7 @@ cc.Class({
         if (typeof id == "string" && id.indexOf(".") != -1) {
             id = id.substring(0, id.indexOf("."))
         }
-        id = parseInt(id)
+        id = parseInt(id) - 1
         if (this.hallHeadFrame[id]) {
             return this.hallHeadFrame[id]
         } else {

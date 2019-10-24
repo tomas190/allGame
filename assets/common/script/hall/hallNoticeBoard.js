@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 09:11:37
  * @LastEditors: burt
- * @LastEditTime: 2019-10-10 18:24:55
+ * @LastEditTime: 2019-10-16 10:02:31
  * @Description: 公告板
  */
 let gHandler = require("gHandler");
@@ -72,6 +72,7 @@ cc.Class({
     },
     /** 开始滚动 */
     noticeStartRoll() {
+        // console.log(this.noticeList)
         let item = this.noticeList.shift();
         if (item) {
             if (!item.rollforver) { // tyep = 1 永久滚动 2 滚动一次

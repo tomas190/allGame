@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "registerlayer",
+    "_name": "congratulation",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -361,7 +361,7 @@
     },
     "_enabled": true,
     "duration": 0.1,
-    "zoomScale": 1.2,
+    "zoomScale": 0.9,
     "clickEvents": [
       {
         "__id__": 9

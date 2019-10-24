@@ -3,7 +3,7 @@
  * @Author: burt
  * @Date: 2019-09-28 17:12:14
  * @LastEditors: burt
- * @LastEditTime: 2019-10-14 13:56:17
+ * @LastEditTime: 2019-10-24 08:32:55
  * @Description: 大厅公告页
  */
 
@@ -12,6 +12,13 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        subtitle: cc.Sprite,
+        subtime: cc.Label,
+        subtxt: cc.Label,
+        subscroll: cc.ScrollView,
+        email: cc.SpriteFrame,
+        notice: cc.SpriteFrame,
+
         gonggaobtn: cc.Button,
         emailbtn: cc.Button,
         deletbtn: cc.Node,
@@ -32,6 +39,8 @@ cc.Class({
     },
 
     onLoad() {
+        this.subData = null
+
         this.noticedata = gHandler.commonTools.jsonCopy(gHandler.gameGlobal.noticeList)
         this.emaildata = []
 
@@ -40,7 +49,7 @@ cc.Class({
 
         // this.initEmailScroll()
         this.initNoticeScroll()
-        
+
         this.onClickGongGao()
     },
 
@@ -48,7 +57,12 @@ cc.Class({
 
     },
 
+    init() {
+
+    },
+
     initNoticeScroll() {
+        this.noticeItemList = []
         this.noticescroll.content.removeAllChildren()
         this.noticescroll.content.height = (this.item.height + 16) * this.noticedata.length + 44
         for (let i = 0; i < this.noticedata.length; i++) {
@@ -79,6 +93,7 @@ cc.Class({
     },
 
     initEmailScroll() {
+        this.emailItemList = []
         this.eamilscroll.content.removeAllChildren()
         this.eamilscroll.content.height = (this.item.height + 16) * this.emaildata.length + 44
         for (let i = 0; i < this.emaildata.length; i++) {
@@ -112,7 +127,7 @@ cc.Class({
     },
 
     onClickExit() {
-        this.node.active = false;
+        this.node.removeFromParent(true)
     },
 
     onClickGongGao() {
@@ -142,8 +157,17 @@ cc.Class({
         this.noticedata[custom.key].isShow = 1
         this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.noticedata[custom.key].isShow ? this.hasreadframe : this.noreadframe;
         this.sublayer.active = true
-        this.sublayer.getComponent("hallNoticeSubLayer").init(custom)
+        this.initSubLayer(custom)
         this.checkIsAllRead()
+        let noticehistory = gHandler.localStorage.getGlobal().noticeKey
+        if (!noticehistory) {
+            noticehistory = []
+        }
+        noticehistory.push(custom.create_time)
+        if (noticehistory.length > 200) {
+            noticehistory.splice(0, 150)
+        }
+        gHandler.localStorage.globalSet('noticeKey', noticehistory)
     },
 
     checkIsAllRead() {
@@ -159,6 +183,41 @@ cc.Class({
         this.emaildata.shift()
         this.initEmailScroll()
     },
+
+
+    onClickSubClose() {
+        this.sublayer.active = false
+    },
+
+    onClickDelete() {
+        if (this.subData.type == 2) {
+            for (let i = 0; i < this.noticedata.length; i++) {
+                if (this.noticedata[i].key == this.subData.key) {
+                    this.noticedata.splice(i, 1)
+                    for (let j = 0; j < this.noticedata.length; j++) {
+                        this.noticedata[j].key = j
+                    }
+                    this.initNoticeScroll()
+                    this.onClickSubClose()
+                    return
+                }
+            }
+        }
+    },
+
+    initSubLayer(custom, isemail) {
+        this.subData = custom
+        this.subtime.node.active = isemail
+        if (isemail) {
+            this.subtime.string = custom.strtime
+            this.subtitle.spriteFrame = this.email
+        } else {
+            this.subtitle.spriteFrame = this.notice
+        }
+        this.subtxt.string = custom.words
+        this.subtxt._updateRenderData(true)
+        this.subscroll.content.height = this.subtime.node.height + this.subtxt.node.height
+    }
 
     // update (dt) {},
 });

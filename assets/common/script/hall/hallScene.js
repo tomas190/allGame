@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-10-15 15:20:23
+ * @LastEditTime: 2019-10-24 16:07:45
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -13,18 +13,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        noticelayerPrefab: cc.Prefab,
-        personlayerPrefab: cc.Prefab,
-        bigsublayerPrefab: cc.Prefab,
-        smallsublayerPrefab: cc.Prefab,
-        registerlayerPrefab: cc.Prefab,
-        tippanelPrefab: cc.Prefab,
-
         headimg: cc.Sprite, // 玩家头像
         namelabel: cc.Label, // 玩家昵称
         coinlabel: cc.Label, // 玩家金币
-        topbubble: cc.Node, // 你有新消息
 
+        gonggaobtn: cc.Node, // 公告按钮
         chatbtn: cc.Node, // 聊天按钮
         duihuanbtn: cc.Node, // 兑换按钮
 
@@ -32,43 +25,26 @@ cc.Class({
         itembtn: cc.Node, // 子游戏按钮
         subgameview: cc.ScrollView, // 子游戏按钮缓动面板
         web: cc.WebView, // 网页
-
-        versionLabel: cc.Label,
     },
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        this.noticelayer = null
-        this.personlayer = null
-        this.bigsublayer = null
-        this.smallsublayer = null
-        this.registerlayer = null
-        this.tipPanel = null
-
-        this.registerlayerIndex = 1000
-        this.noticelayerIndex = 1001
-        this.personlayerIndex = 1002
-        this.bigsublayerIndex = 1003
-        this.smallsublayerIndex = 1004
-        this.tipPanelIndex = 1005
-
-        this.topbubble.active = false;
         if (cc.sys.isBrowser) {
             this.browserDeal();
         }
         if (gHandler.gameGlobal.isdev) {
             let hqqBase64 = require("hqqBase64");
             gHandler.base64 = hqqBase64;
-            let hqqEvent = require("hqqEvent");
-            gHandler.eventMgr = hqqEvent.init();
-            let hqqCommonTools = require("hqqCommonTools");
-            gHandler.commonTools = hqqCommonTools;
+            // let hqqEvent = require("hqqEvent");
+            // gHandler.eventMgr = hqqEvent.init();
+            // let hqqCommonTools = require("hqqCommonTools");
+            // gHandler.commonTools = hqqCommonTools;
             let hqqLogMgr = require("hqqLogMgr");
             gHandler.logMgr = hqqLogMgr.init();
-            let hqqLocalStorage = require("hqqLocalStorage");
-            gHandler.localStorage = hqqLocalStorage.init();
-            let hqqHttp = require("hqqHttp");
-            gHandler.http = hqqHttp;
+            // let hqqLocalStorage = require("hqqLocalStorage");
+            // gHandler.localStorage = hqqLocalStorage.init();
+            // let hqqHttp = require("hqqHttp");
+            // gHandler.http = hqqHttp;
         }
         gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
         gHandler.audioMgr.playBg("hallbg");
@@ -76,14 +52,7 @@ cc.Class({
         this.subGameBtnArr = [];
         this.sgjsubload = false
         this.addSubgame();
-        this.isupdating = false;
         !gHandler.gameGlobal.isdev && this.getNotice();
-
-        let str = "     版本：" + (gHandler.localStorage.getGlobal().versionKey || "1.0.0")
-        if (cc.sys.isNative && cc.sys.os != "Windows") {
-            str += "剪切板：" + gHandler.Reflect.getClipboard()
-        }
-        this.versionLabel.string = str
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
@@ -110,7 +79,7 @@ cc.Class({
             // itembtn.getChildByName("wait").active = false;
             // itembtn.getChildByName("experience").active = false;
             this.subGameBtnMap[tempdata.enname] = itembtn;
-            this.subGameBtnArr.push(itembtn);
+            this.subGameBtnArr[tempdata.hallid] = itembtn;
             if (!gHandler.gameGlobal.isdev) {
                 this.checkSubGameDownload(tempdata.enname);
             } else {
@@ -140,13 +109,20 @@ cc.Class({
     },
     /** 子模块更新检查 im，充提 */
     checkSubModule() {
-        // todo 检查子模块
-        this.chatbtn.getChildByName("redpoint").active = false;
-        this.duihuanbtn.getChildByName("redpoint").active = false;
+        if (1 == gHandler.gameGlobal.imReceive) {
+            this.chatbtn.getChildByName("redpoint").active = true;
+        }
+        if (1 == gHandler.gameGlobal.payReceive) {
+            this.duihuanbtn.getChildByName("redpoint").active = true;
+        }
+        // this.duihuanbtn.getChildByName("redpoint").active = false;
+        // this.gonggaobtn.getChildByName("redpoint").active = false;
         if (!gHandler.gameGlobal.isdev) {
             if (gHandler.gameGlobal.im_host == "") {
+                let starttime = gHandler.commonTools.getSM();
                 let callback = (url) => {
-                    gHandler.logMgr.log("最快的im地址", url)
+                    let endtime = gHandler.commonTools.getSM();
+                    gHandler.logMgr.log("最快的im地址", url, "时间间隔：", endtime.miao - starttime.miao, 's', endtime.mill - starttime.mill, 'ms')
                     gHandler.gameGlobal.im_host = url;
                 }
                 gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.im_host, null, "/checked", callback)
@@ -169,14 +145,15 @@ cc.Class({
             gHandler.eventMgr.register(gHandler.eventMgr.hotProgress, "hallScene", this.progressCallback.bind(this))
             gHandler.eventMgr.register(gHandler.eventMgr.hotFinish, "hallScene", this.finishCallback.bind(this))
             gHandler.eventMgr.register(gHandler.eventMgr.refreshPlayerinfo, "hallScene", this.setPlayerInfo.bind(this))
-            gHandler.eventMgr.register(gHandler.eventMgr.showBiglayer, "hallScene", this.showbigsublayer.bind(this))
-            gHandler.eventMgr.register(gHandler.eventMgr.showSamlllayer, "hallScene", this.showsmallsublayer.bind(this))
-            gHandler.eventMgr.register(gHandler.eventMgr.showTip, "hallScene", this.showTip.bind(this))
+            gHandler.eventMgr.register(gHandler.eventMgr.onReceiveBroadcast, "hallScene", this.onReceiveBroadcast.bind(this))
         }, 0)
     },
 
     sgjConnect() {
+        // console.log("水果机 奖金池")
         console.log("水果机 奖金池")
+        let url = gHandler.gameConfig.gamelist["sgj"].serverUrl.replace("ws", "http") + "/jackpot"
+        console.log("getSgjPool", url)
         let subgamev = this.getRemoteSubgame(gHandler.gameConfig.gamelist["sgj"].game_id).version;
         let localsubv = gHandler.localStorage.get("sgj", "versionKey");
         let needup = false
@@ -198,75 +175,72 @@ cc.Class({
             }
         }
         if (!needup) {
-            let url = "http://game.539316.com/jackpot"
-            gHandler.http.sendRequestGet(url, null, this.showsgjPoolNum.bind(this))
-        } else if (cc.sys.isBrowser) {
-            let url = "http://game.539316.com/jackpot"
-            gHandler.http.sendRequestGet(url, null, this.showsgjPoolNum.bind(this))
+            this.getSgjPool()
+            this.schedule(this.getSgjPool, 3)
         }
+        // else if (cc.sys.isBrowser) {
+        //     let url = "http://game.539316.com/jackpot"
+        //     gHandler.http.sendRequestGet(url, null, this.showsgjPoolNum.bind(this))
+        // }
+    },
+    getSgjPool() {
+        let url = gHandler.gameConfig.gamelist["sgj"].serverUrl.replace("ws", "http") + "/jackpot"
+        // console.log("getSgjPool", url)
+        gHandler.http.sendRequestGet(url, null, this.showsgjPoolNum.bind(this))
     },
     showsgjPoolNum(data) {
-        let node = new cc.Node();
-        node.color = new cc.Color(253, 239, 158)
-        let label = node.addComponent(cc.Label);
         let gold = 0
         if (data < 0.01) {
             gold = 0;
         } else {
             gold = gHandler.commonTools.fixedFloat(data);
         }
-        label.fontSize = 35
-        label.string = gold
-        node.name = "goldlabel"
-        node.setPosition(0, 62)
-        this.subGameBtnMap["sgj"].addChild(node)
-    },
-    showTip(data) {
-        if (this.tipPanel) {
-            this.tipPanel.active = true
+        if (this.subGameBtnMap["sgj"].getChildByName("goldlabel")) {
+            this.subGameBtnMap["sgj"].getChildByName("goldlabel").getComponent(cc.Label).string = gold
         } else {
-            this.tipPanel = cc.instantiate(this.tippanelPrefab)
-            this.node.addChild(this.tipPanel, this.tipPanelIndex)
+            let node = new cc.Node();
+            node.color = new cc.Color(253, 239, 158)
+            let label = node.addComponent(cc.Label);
+            label.fontSize = 35
+            label.string = gold
+            node.name = "goldlabel"
+            node.setPosition(0, 62)
+            this.subGameBtnMap["sgj"].addChild(node)
         }
-        this.tipPanel.getComponent("hallTipPanel").init(data)
-    },
-    showbigsublayer(data) {
-        if (this.bigsublayer) {
-            this.bigsublayer.active = true
-        } else {
-            this.bigsublayer = cc.instantiate(this.bigsublayerPrefab)
-            this.node.addChild(this.bigsublayer, this.bigsublayerIndex)
-        }
-        this.bigsublayer.getComponent("hallPSubbLayer").init(data)
-    },
-    showsmallsublayer(data) {
-        if (this.smallsublayer) {
-            this.smallsublayer.active = true
-        } else {
-            this.smallsublayer = cc.instantiate(this.smallsublayerPrefab)
-            this.node.addChild(this.smallsublayer, this.smallsublayerIndex)
-        }
-        this.smallsublayer.getComponent("hallPSubsLayer").init(data)
     },
     getNotice() {
+        if (gHandler.gameGlobal.noticeList.length > 0) return
         let callback = (data, url) => {
             console.log("公告 callback", data)
             if (data.code == 200) {
                 if (data.msg.length == 0) {
                     console.log("没有公告需要显示")
                 } else {
+                    let noticehistory = gHandler.localStorage.getGlobal().noticeKey
                     data.msg.sort((a, b) => a.sort - b.sort).forEach((e, i) => {
                         if (e.type === 2) { // type == 2 是公告 == 1 是活动  is_slider
-                            let notice = {
-                                key: gHandler.gameGlobal.noticeList.length,
-                                isShow: 0,
-                                title: e.title,
-                                words: e.words,
-                                create_time: e.create_time,
-                                end_time: e.end_time,
-                                start_time: e.start_time,
-                            };
-                            gHandler.gameGlobal.noticeList.push(notice)
+                            let isread = false
+                            if (noticehistory) {
+                                for (let j = 0; j < noticehistory.length; j++) {
+                                    if (noticehistory[j] == e.create_time) {
+                                        isread = true
+                                        break
+                                    }
+                                }
+                            }
+                            if (!isread) {
+                                let notice = {
+                                    key: gHandler.gameGlobal.noticeList.length,
+                                    isShow: 0,
+                                    type: e.type,
+                                    title: e.title,
+                                    words: e.words,
+                                    create_time: e.create_time,
+                                    end_time: e.end_time,
+                                    start_time: e.start_time,
+                                };
+                                gHandler.gameGlobal.noticeList.push(notice)
+                            }
                         }
                         if (e.is_slider === 1) { // 是否跑马灯
                             gHandler.gameGlobal.slideNoticeList.push({
@@ -276,9 +250,14 @@ cc.Class({
                             })
                         }
                     })
-                    gHandler.gameGlobal.noticeList.length > 0 && (this.topbubble.active = true);
-                    gHandler.eventMgr.dispatch(gHandler.eventMgr.addSliderNotice, gHandler.gameGlobal.slideNoticeList)
-                    gHandler.eventMgr.register(gHandler.eventMgr.refreshHallTips, "hallScene", this.setNoticeReadState.bind(this))
+                    if (gHandler.gameGlobal.noticeList.length > 0) {
+                        this.gonggaobtn.getChildByName("redpoint").active = true;
+                        this.gonggaobtn.getChildByName("topbubble").active = true;
+                        gHandler.eventMgr.register(gHandler.eventMgr.refreshHallTips, "hallScene", this.setNoticeReadState.bind(this))
+                    }
+                    if (gHandler.gameGlobal.slideNoticeList.length > 0) {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.addSliderNotice, gHandler.gameGlobal.slideNoticeList)
+                    }
                 }
             } else {
             }
@@ -289,7 +268,8 @@ cc.Class({
         gHandler.http.sendRequestIpGet(gHandler.appGlobal.server, endurl, callback, outcallback);
     },
     setNoticeReadState(msg) {
-        this.topbubble.active = !msg.hidenoticetip;
+        this.gonggaobtn.getChildByName("redpoint").active = !msg.hidenoticetip;
+        this.gonggaobtn.getChildByName("topbubble").active = !msg.hidenoticetip;
     },
     setPlayerInfo(msg) {
         // console.log("大厅 setPlayerInfo")
@@ -314,9 +294,10 @@ cc.Class({
     /** 初始化后的按钮特效 */
     subGameBtnEffect() {
         // console.log("初始化后的按钮特效")
+        this.pageview.node.runAction(cc.sequence(cc.scaleTo(0.1, 1.1), cc.scaleTo(0.1, 1)))
         for (let i = 0; i < this.subGameBtnArr.length; i += 2) {
-            this.subGameBtnArr[i] && this.subGameBtnArr[i].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.1, 1.03), cc.scaleTo(0.1, 1)))
-            this.subGameBtnArr[i + 1] && this.subGameBtnArr[i + 1].runAction(cc.sequence(cc.delayTime(i * 0.02), cc.scaleTo(0.1, 1.03), cc.scaleTo(0.1, 1)))
+            this.subGameBtnArr[i] && this.subGameBtnArr[i].runAction(cc.sequence(cc.delayTime((i + 1) * 0.02), cc.scaleTo(0.1, 1.1), cc.scaleTo(0.1, 1)))
+            this.subGameBtnArr[i + 1] && this.subGameBtnArr[i + 1].runAction(cc.sequence(cc.delayTime((i + 1) * 0.02), cc.scaleTo(0.1, 1.1), cc.scaleTo(0.1, 1)))
         }
     },
     /** web端需要做的处理 */
@@ -355,7 +336,6 @@ cc.Class({
         clickEventHandler.component = "hallScene";
         clickEventHandler.customEventData = enname;
         let subdata = this.getRemoteSubgame(gHandler.gameConfig.gamelist[enname].game_id)
-
         if (subdata.open == 0) {
             this.subGameBtnMap[enname].getChildByName("wait").active = true;
             downflag.active = true;
@@ -371,7 +351,11 @@ cc.Class({
                 return
             }
             let subgamev = subdata.version;
+
             let localsubv = gHandler.localStorage.get(enname, "versionKey");
+            if (enname == 'zrsx1' || enname == 'zrsx2') {
+                localsubv = gHandler.localStorage.get('zrsx', "versionKey");
+            }
             let txt = "local version: " + localsubv + " | remote version:" + subgamev;
             let needup = false
             if (!localsubv) {
@@ -406,13 +390,16 @@ cc.Class({
                 this.subGameBtnMap[enname].getChildByName("jiantou").active = false;
                 clickEventHandler.handler = "onClickSubgame";
 
-                !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(enname, function (err) {
+                let subgamern = enname
+                if (enname == "zrsx1" || enname == "zrsx2") {
+                    subgamern = "zrsx"
+                }
+                !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
                     if (err) {
                         return console.error(err);
                     }
-                    console.log('load subpackage script successfully.', enname);
+                    console.log('load subpackage script successfully.', subgamern);
                 });
-
             }
             let button = this.subGameBtnMap[enname].getComponent(cc.Button);
             button.clickEvents.push(clickEventHandler);
@@ -440,7 +427,7 @@ cc.Class({
             console.log("创建子游戏账号 callback", data)
             if (data.code == 200 || data.code == 203) {
                 for (let gname in gHandler.gameConfig.gamelist) {
-                    if (gHandler.gameConfig.gamelist[gname].game_id == gHandler.gameConfig.gamelist[enname].game_id) {
+                    if (gHandler.gameConfig.gamelist[gname].game_id == subdata.game_id) {
                         gHandler.gameConfig.gamelist[gname].hasAccount = true;
                         gHandler.localStorage.set(gname, "hasAccount", true);
                     }
@@ -458,7 +445,6 @@ cc.Class({
             console.log("创建子游戏账号 超时")
         }
         let endurl = "/Game/User/createGameAccount";
-        console.log("gHandler.gameGlobal.player.id", gHandler.gameGlobal.player.id, gHandler.gameGlobal.token)
         let data = {
             game_id: subdata.game_id,
             package_id: subdata.package_id,
@@ -470,28 +456,41 @@ cc.Class({
     },
     /** 下载子游戏 */
     downloadSubGame(event, enname) {
+        event.target.getComponent(cc.Button).interactable = false
+        this.scheduleOnce(function () {
+            event.target.getComponent(cc.Button).interactable = true
+        }, 0.5)
         gHandler.logMgr.log("download or updata subgame", enname);
-        if (this.isupdating) {
-            console.log("正在更新中")
-            // todo 图片修改
-            // let progress = itembtn.getChildByName("progress") 
-            // let jiantou = progress.getChildByName("jiantou")
-            // let zanting = progress.getChildByName("zanting")
-            // jiantou.active = !jiantou.active
-            // zanting.active = !jiantou.active
-        } else {
-            this.isupdating = true
-        }
 
-        let localsubv = gHandler.localStorage.get(enname, "versionKey") || null;
+        let subgamern = enname
+        if (enname == "zrsx1" || enname == "zrsx2") {
+            subgamern = "zrsx"
+        }
+        let localsubv = gHandler.localStorage.get(subgamern, "versionKey") || null;
         let upstate = gHandler.hotUpdateMgr.checkUpdate({
-            subname: enname,
+            subname: subgamern,
             version: localsubv || "0.0.1",
         })
         if (upstate) {
-            this.subGameBtnMap[enname].getChildByName("jiantou").angle = 180
+            if (subgamern == "zrsx") {
+                this.subGameBtnMap["zrsx1"].getChildByName("progresslabel").getComponent(cc.Label).string = "等待";
+                this.subGameBtnMap["zrsx2"].getChildByName("progresslabel").getComponent(cc.Label).string = "等待";
+                this.subGameBtnMap["zrsx1"].getChildByName("jiantou").active = false
+                this.subGameBtnMap["zrsx2"].getChildByName("jiantou").active = false
+            } else {
+                this.subGameBtnMap[subgamern].getChildByName("progresslabel").getComponent(cc.Label).string = "等待";
+                this.subGameBtnMap[subgamern].getChildByName("jiantou").active = false
+            }
         } else {
-            this.subGameBtnMap[enname].getChildByName("jiantou").angle = 0
+            if (subgamern == "zrsx") {
+                this.subGameBtnMap["zrsx1"].getChildByName("progresslabel").getComponent(cc.Label).string = "";
+                this.subGameBtnMap["zrsx2"].getChildByName("progresslabel").getComponent(cc.Label).string = "";
+                this.subGameBtnMap["zrsx1"].getChildByName("jiantou").active = true
+                this.subGameBtnMap["zrsx2"].getChildByName("jiantou").active = true
+            } else {
+                this.subGameBtnMap[subgamern].getChildByName("progresslabel").getComponent(cc.Label).string = "";
+                this.subGameBtnMap[subgamern].getChildByName("jiantou").active = true
+            }
         }
     },
     isupdataCallback(bool) {
@@ -499,12 +498,10 @@ cc.Class({
         if (bool) { // 需要更新
             // 自动更新，无需处理
         } else {
-            this.isupdating = false
         }
     },
     failCallback(enname) {
         console.log("failCallback")
-        this.isupdating = false
         gHandler.logMgr.log("subgame", enname, "download fail");
     },
     // 下载进度
@@ -512,33 +509,70 @@ cc.Class({
         if (isNaN(progress)) {
             progress = 0;
         }
-        this.subGameBtnMap[enname].getChildByName("jiantou").active = false;
-        let progressnode = this.subGameBtnMap[enname].getChildByName("progress");
-        let progressbar = progressnode.getComponent(cc.ProgressBar);
-        progressbar.progress = progress;
-        let progresslabel = this.subGameBtnMap[enname].getChildByName("progresslabel");
-        progress = progress * 100
-        progress += ""
-        if (progress.indexOf(".") != -1) {
-            progress = progress.substring(0, progress.indexOf("."))
+        let mprogress = progress * 100
+        mprogress += ""
+        if (mprogress.indexOf(".") != -1) {
+            mprogress = mprogress.substring(0, mprogress.indexOf("."))
         }
-        progress += "%"
-        // console.log("下载进度", progress)
-        progresslabel.getComponent(cc.Label).string = progress
+        mprogress += "%"
+
+        if (enname == "zrsx") {
+            this.subGameBtnMap["zrsx1"].getChildByName("jiantou").active = false;
+            let progressnode1 = this.subGameBtnMap["zrsx1"].getChildByName("progress");
+            let progressbar1 = progressnode1.getComponent(cc.ProgressBar);
+            progressbar1.progress = progress;
+            let progresslabel1 = this.subGameBtnMap["zrsx1"].getChildByName("progresslabel");
+            progresslabel1.getComponent(cc.Label).string = mprogress
+
+            this.subGameBtnMap["zrsx2"].getChildByName("jiantou").active = false;
+            let progressnode2 = this.subGameBtnMap["zrsx2"].getChildByName("progress");
+            let progressbar2 = progressnode2.getComponent(cc.ProgressBar);
+            progressbar2.progress = progress;
+            let progresslabel2 = this.subGameBtnMap["zrsx2"].getChildByName("progresslabel");
+            progresslabel2.getComponent(cc.Label).string = mprogress
+        } else {
+            this.subGameBtnMap[enname].getChildByName("jiantou").active = false;
+            let progressnode = this.subGameBtnMap[enname].getChildByName("progress");
+            let progressbar = progressnode.getComponent(cc.ProgressBar);
+            progressbar.progress = progress;
+            let progresslabel = this.subGameBtnMap[enname].getChildByName("progresslabel");
+            progresslabel.getComponent(cc.Label).string = mprogress
+        }
     },
     finishCallback(enname) {
         console.log("finishCallback & change btn callback")
-        this.isupdating = false;
-        this.subGameBtnMap[enname].getChildByName("progress").active = false;
-        this.subGameBtnMap[enname].getChildByName("downFlag").active = false;
+        if (enname == "zrsx") {
+            this.subGameBtnMap["zrsx1"].getChildByName("progress").active = false;
+            this.subGameBtnMap["zrsx1"].getChildByName("downFlag").active = false;
+            let progresslabel1 = this.subGameBtnMap["zrsx1"].getChildByName("progresslabel");
+            progresslabel1.getComponent(cc.Label).string = ""
+            progresslabel1.active = false;
+            this.subGameBtnMap["zrsx1"].getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
 
-        let progresslabel = this.subGameBtnMap[enname].getChildByName("progresslabel");
-        progresslabel.getComponent(cc.Label).string = ""
-        progresslabel.active = false;
-        this.subGameBtnMap[enname].getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
+            this.subGameBtnMap["zrsx2"].getChildByName("progress").active = false;
+            this.subGameBtnMap["zrsx2"].getChildByName("downFlag").active = false;
+            let progresslabel2 = this.subGameBtnMap["zrsx2"].getChildByName("progresslabel");
+            progresslabel2.getComponent(cc.Label).string = ""
+            progresslabel2.active = false;
+            this.subGameBtnMap["zrsx2"].getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
 
-        if (!gHandler.gameConfig.gamelist[enname].hasAccount && !gHandler.gameGlobal.isdev) {
-            this.createSubAccount(enname)
+            if (!gHandler.gameConfig.gamelist['zrsx1'].hasAccount && !gHandler.gameGlobal.isdev) {
+                this.createSubAccount(enname)
+            }
+        } else {
+            this.subGameBtnMap[enname].getChildByName("progress").active = false;
+            this.subGameBtnMap[enname].getChildByName("downFlag").active = false;
+            let progresslabel = this.subGameBtnMap[enname].getChildByName("progresslabel");
+            progresslabel.getComponent(cc.Label).string = ""
+            progresslabel.active = false;
+            this.subGameBtnMap[enname].getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
+            if (!gHandler.gameConfig.gamelist[enname].hasAccount && !gHandler.gameGlobal.isdev) {
+                this.createSubAccount(enname)
+            }
+        }
+
+        if (enname == 'sgj') {
+            this.sgjConnect()
         }
 
         !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(enname, (err) => {
@@ -546,14 +580,11 @@ cc.Class({
                 return console.error(err);
             }
             console.log('load subpackage script successfully.', enname);
-            if (enname == 'sgj') {
-                this.sgjConnect()
-            }
         });
     },
     jumpToSubGame(enname) {
         gHandler.audioMgr.stopBg();
-        if (enname == 'zrsx' || enname == "hbsl" || enname == 'zrsx1' || enname == 'zrsx2') { //  真人视讯 红包扫雷 竖屏
+        if (enname == "hbsl" || enname == 'zrsx1' || enname == 'zrsx2') { //  真人视讯 红包扫雷 竖屏
             gHandler.Reflect && gHandler.Reflect.setOrientation("portrait", 640, 1136)
             if (enname == 'zrsx1') {
                 gHandler.gameGlobal.subGameType = 22
@@ -565,6 +596,10 @@ cc.Class({
     },
     /** 点击子游戏按钮统一回调 */
     onClickSubgame(event, enname) {
+        event.target.getComponent(cc.Button).interactable = false
+        this.scheduleOnce(function () {
+            event.target.getComponent(cc.Button).interactable = true
+        }, 0.5)
         console.log("jump to subgame", enname, gHandler.gameConfig.gamelist[enname].hasAccount)
         if (gHandler.gameGlobal.isdev) {
             this.jumpToSubGame(enname)
@@ -575,40 +610,24 @@ cc.Class({
         }
     },
     /** 玩家设置 */
-    onClickPlayerBtn() {
+    onClickPlayerBtn(event) {
         // console.log("玩家设置")
-        if (gHandler.gameGlobal.isdev) return
-        if (this.personlayer) {
-            this.personlayer.active = true
-            this.personlayer.getComponent("hallPersonLayer").init()
-        } else {
-            this.personlayer = cc.instantiate(this.personlayerPrefab)
-            this.node.addChild(this.personlayer, this.personlayerIndex)
-            this.personlayer.getComponent("hallPersonLayer").init()
-        }
+        event.target.getComponent(cc.Button).interactable = false
+        this.scheduleOnce(function () {
+            event.target.getComponent(cc.Button).interactable = true
+        }, 0.5)
+        // if (gHandler.gameGlobal.isdev) return
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showPerson, null)
     },
     /** 充值 */
-    onClickChongZhiBtn() {
-        console.log("chongzhi")
+    onClickChongZhiBtn(event) {
+        // console.log("充值")
+        event.target.getComponent(cc.Button).interactable = false
+        this.scheduleOnce(function () {
+            event.target.getComponent(cc.Button).interactable = true
+        }, 0.5)
         if (gHandler.gameGlobal.isdev) return
-        if (gHandler.gameGlobal.pay.pay_host == "") {
-            let callback = (url) => {
-                gHandler.logMgr.log("最快的pay地址", url)
-                gHandler.gameGlobal.pay.pay_host = url;
-                if (gHandler.gameConfig.subModel.pay.lanchscene != "") {
-                    cc.director.loadScene(gHandler.gameConfig.subModel.pay.lanchscene)
-                } else {
-                    console.log("请配置充值场景")
-                }
-            }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
-        } else {
-            if (gHandler.gameConfig.subModel.pay.lanchscene != "") {
-                cc.director.loadScene(gHandler.gameConfig.subModel.pay.lanchscene)
-            } else {
-                console.log("请配置充值场景")
-            }
-        }
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showPayScene, "hall")
     },
     // 批量创建子游戏账号
     _creatSubAccount() {
@@ -635,7 +654,6 @@ cc.Class({
                 console.log("创建子游戏账号 超时")
             }
             let endurl = "/Game/User/createGameAccount";
-            console.log("gHandler.gameGlobal.player.id", gHandler.gameGlobal.player.id, gHandler.gameGlobal.token)
             let data = {
                 game_id: mgameid,
                 package_id: 1,
@@ -660,43 +678,67 @@ cc.Class({
         gHandler.loginMgr.accountChange(account, pass, mcallback)
     },
     /** 全民代理  */
-    onClickQMDL() {
+    onClickQMDL(event) {
         console.log("全民代理")
+        event.target.getComponent(cc.Button).interactable = false
+        this.scheduleOnce(function () {
+            event.target.getComponent(cc.Button).interactable = true
+        }, 0.5)
         if (gHandler.gameGlobal.isdev) return
-        cc.director.loadScene(gHandler.gameConfig.subModel.proxy.lanchscene)
+        if (gHandler.gameGlobal.proxy.temp_host == "") {
+            let starttime = gHandler.commonTools.getSM();
+            let callback = (url) => {
+                let endtime = gHandler.commonTools.getSM();
+                gHandler.logMgr.log("最快的temp_host地址", url, "时间间隔：", endtime.miao - starttime.miao, 's', endtime.mill - starttime.mill, 'ms')
+                gHandler.gameGlobal.proxy.temp_host = url;
+                if (gHandler.gameConfig.subModel.proxy.lanchscene != "") {
+                    cc.director.loadScene(gHandler.gameConfig.subModel.proxy.lanchscene)
+                } else {
+                    console.log("请配置全民代理场景")
+                }
+            }
+            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback)
+        } else {
+            if (gHandler.gameConfig.subModel.proxy.lanchscene != "") {
+                cc.director.loadScene(gHandler.gameConfig.subModel.proxy.lanchscene)
+            } else {
+                console.log("请配置全民代理场景")
+            }
+        }
     },
     /** 公告 */
     onClickGongGaoBtn() {
         // console.log("公告")
-        if (gHandler.gameGlobal.isdev) return
-        if (this.noticelayer) {
-            this.noticelayer.active = true
-        } else {
-            this.noticelayer = cc.instantiate(this.noticelayerPrefab)
-            this.node.addChild(this.noticelayer, this.noticelayerIndex)
-        }
-    },
-    /** 设置 */
-    onClickSettingBtn() {
-        console.log("设置")
-        if (gHandler.gameGlobal.isdev) return
+        // if (gHandler.gameGlobal.isdev) return
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showNotice, null)
     },
     /** 聊天 */
-    onClickChatBtn() {
+    onClickChatBtn(event) {
         console.log("聊天")
+        event.target.getComponent(cc.Button).interactable = false
+        this.scheduleOnce(function () {
+            event.target.getComponent(cc.Button).interactable = true
+        }, 0.5)
         if (gHandler.gameGlobal.isdev) return
         if (gHandler.gameGlobal.im_host != "") {
+            gHandler.gameGlobal.imReceive = 0;
             gHandler.Reflect && gHandler.Reflect.setOrientation("portrait", 750, 1334)
             cc.director.loadScene(gHandler.gameConfig.subModel.im.lanchscene)
         }
     },
     /** 兑换 提现 */
-    onClickDuiHuanBtn() {
+    onClickDuiHuanBtn(event) {
         console.log("兑换")
+        event.target.getComponent(cc.Button).interactable = false
+        this.scheduleOnce(function () {
+            event.target.getComponent(cc.Button).interactable = true
+        }, 0.5)
         if (gHandler.gameGlobal.isdev) return
         if (gHandler.gameGlobal.pay.pay_host == "") {
+            let starttime = gHandler.commonTools.getSM();
             let callback = (url) => {
-                gHandler.logMgr.log("最快的pay地址", url)
+                let endtime = gHandler.commonTools.getSM();
+                gHandler.logMgr.log("最快的pay地址", url, "时间间隔：", endtime.miao - starttime.miao, 's', endtime.mill - starttime.mill, 'ms')
                 gHandler.gameGlobal.pay.pay_host = url;
                 if (gHandler.gameConfig.subModel.cash.lanchscene != "") {
                     cc.director.loadScene(gHandler.gameConfig.subModel.cash.lanchscene)
@@ -713,9 +755,9 @@ cc.Class({
             }
         }
     },
-    /** 活动 */
+    /** 精彩活动 */
     onClickHuoDongBtn() {
-        console.log("活动")
+        console.log("精彩活动")
         if (gHandler.gameGlobal.isdev) return
     },
     /** 活动页面 */
@@ -728,15 +770,14 @@ cc.Class({
             this.enterSubWeb(custom)
         }
     },
-    onClickFreeGold() {
+    onClickFreeGold(event) {
         console.log("免费金币")
-        if (gHandler.gameGlobal.isdev) return
-        if (this.registerlayer) {
-            this.registerlayer.active = true
-        } else {
-            this.registerlayer = cc.instantiate(this.registerlayerPrefab)
-            this.node.addChild(this.registerlayer, this.registerlayerIndex)
-        }
+        event.target.getComponent(cc.Button).interactable = false
+        this.scheduleOnce(function () {
+            event.target.getComponent(cc.Button).interactable = true
+        }, 0.5)
+        // if (gHandler.gameGlobal.isdev) return
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null)
     },
     enterSubWeb(custom) {
         if (custom == 1) {
@@ -773,6 +814,11 @@ cc.Class({
         // this.web.active = true;
         // this.web.onEnable();
     },
+    onReceiveBroadcast(mtype) {
+        if (mtype == 1) {
+            this.chatbtn.getChildByName("redpoint").active = true;
+        }
+    },
 
     /** 每帧调用一次 // called every frame */
     // update(dt) { },
@@ -781,24 +827,20 @@ cc.Class({
     /** 调用了 destroy() 时回调，当帧结束统一回收组件 */
     onDestroy() {
         // console.log("hall onDestroy")
-        // if (gHandler.hallWebSocket) {
-        //     gHandler.hallWebSocket.closeSGJ();
-        // }
-
+        this.unschedule(this.getSgjPool, this)
         gHandler.eventMgr.unregister(gHandler.eventMgr.hotCheckup, "hallScene")
         gHandler.eventMgr.unregister(gHandler.eventMgr.hotFail, "hallScene")
         gHandler.eventMgr.unregister(gHandler.eventMgr.hotProgress, "hallScene")
         gHandler.eventMgr.unregister(gHandler.eventMgr.hotFinish, "hallScene")
         gHandler.eventMgr.unregister(gHandler.eventMgr.refreshPlayerinfo, "hallScene")
-        gHandler.eventMgr.unregister(gHandler.eventMgr.showBiglayer, "hallScene")
-        gHandler.eventMgr.unregister(gHandler.eventMgr.showSamlllayer, "hallScene")
         gHandler.eventMgr.unregister(gHandler.eventMgr.refreshHallTips, "hallScene")
-        gHandler.eventMgr.unregister(gHandler.eventMgr.showTip, "hallScene")
     },
 
     versionbtn() {
         // gHandler.hallWebSocket.onReceiveChangeBanlance("123")
         if (gHandler.gameGlobal.isdev) return
-        this._creatSubAccount()
+        // this._creatSubAccount()
+        // gHandler.commonTools.screenShot(this);
+        // gHandler.logMgr.sendLog()
     }
 });

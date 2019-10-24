@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 10:44:15
  * @LastEditors: burt
- * @LastEditTime: 2019-10-14 17:55:26
+ * @LastEditTime: 2019-10-24 14:47:38
  * @Description: 本地化保存
  */
 let gHandler = require("gHandler");
@@ -11,9 +11,19 @@ let localStorage = {
     subdata: {},
     globalKey: "globalKey",
     global: {},
+    huanjinKey: 'huanjinKey',
     /** 初始化每个游戏名一个保存键值对 */
     init() {
         // cc.sys.localStorage.clear();
+        // if (cc.sys.localStorage.getItem(this.huanjinKey)) {
+        //     let local = JSON.parse(cc.sys.localStorage.getItem(this.huanjinKey))
+        //     if (local != gHandler.appGlobal.huanjin) {
+        //         cc.sys.localStorage.clear();
+        //         cc.sys.localStorage.setItem(this.huanjinKey, JSON.stringify(gHandler.appGlobal.huanjin))
+        //     }
+        // } else {
+        //     cc.sys.localStorage.setItem(this.huanjinKey, JSON.stringify(gHandler.appGlobal.huanjin))
+        // }
         if (cc.sys.localStorage.getItem(this.subgameKey)) {
             this.subdata = JSON.parse(cc.sys.localStorage.getItem(this.subgameKey));
         } else {
@@ -34,11 +44,11 @@ let localStorage = {
         }
         // console.log("log", JSON.parse(cc.sys.localStorage.getItem('log')))
         // console.log("elog", JSON.parse(cc.sys.localStorage.getItem('elog')))
-        // console.log("global", JSON.parse(cc.sys.localStorage.getItem('globalKey')))
         if (typeof JSON.parse(cc.sys.localStorage.getItem('globalKey')).hotServerKey == "object") {
             let hotserver = this.globalGet("hotServerKey")[0]
             this.globalSet("hotServerKey", hotserver)
         }
+        console.log("global", JSON.parse(cc.sys.localStorage.getItem('globalKey')))
         // console.log("subgame", JSON.parse(cc.sys.localStorage.getItem('subgameKey')))
         return this;
     },

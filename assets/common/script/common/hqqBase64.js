@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-02 11:27:29
  * @LastEditors: burt
- * @LastEditTime: 2019-10-02 18:59:13
+ * @LastEditTime: 2019-10-22 15:19:24
  * @Description: base64
  */
 
@@ -115,7 +115,55 @@ let hqqBase64 = {
             }
         }
         return string;
-    }
+    },
+
+    // base64abc: function () {
+    //     let abc = [],
+    //         A = "A".charCodeAt(0),
+    //         a = "a".charCodeAt(0),
+    //         n = "0".charCodeAt(0);
+    //     for (let i = 0; i < 26; ++i) {
+    //         abc.push(String.fromCharCode(A + i));
+    //     }
+    //     for (let i = 0; i < 26; ++i) {
+    //         abc.push(String.fromCharCode(a + i));
+    //     }
+    //     for (let i = 0; i < 10; ++i) {
+    //         abc.push(String.fromCharCode(n + i));
+    //     }
+    //     abc.push("+");
+    //     abc.push("/");
+    //     return abc;
+    // },
+
+    // bytesToBase64: function (bytes) {
+    //     let result = '', i, l = bytes.length;
+    //     for (i = 2; i < l; i += 3) {
+    //         result += this.base64abc[bytes[i - 2] >> 2];
+    //         result += this.base64abc[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
+    //         result += this.base64abc[((bytes[i - 1] & 0x0F) << 2) | (bytes[i] >> 6)];
+    //         result += this.base64abc[bytes[i] & 0x3F];
+    //     }
+    //     if (i === l + 1) { // 1 octet missing
+    //         result += this.base64abc[bytes[i - 2] >> 2];
+    //         result += this.base64abc[(bytes[i - 2] & 0x03) << 4];
+    //         result += "==";
+    //     }
+    //     if (i === l) { // 2 octets missing
+    //         result += this.base64abc[bytes[i - 2] >> 2];
+    //         result += this.base64abc[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
+    //         result += this.base64abc[(bytes[i - 1] & 0x0F) << 2];
+    //         result += "=";
+    //     }
+    //     return result;
+    // },
+
+    // // All solutions at MDN only provide a way to encode a native JS string to UTF-16 base64 string.
+    // // Here, you can apply any encoding supported by TextEncoder.
+    // base64utf8encode: function (str) {
+    //     return bytesToBase64(this.utf8encoder.encode(str));
+    // }
 }
+// hqqBase64.utf8encoder = new TextEncoder();
 
 module.exports = hqqBase64;

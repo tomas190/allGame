@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors: burt
- * @LastEditTime: 2019-10-15 14:25:33
+ * @LastEditTime: 2019-10-23 11:45:11
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -99,7 +99,7 @@ hqqWebSocket.prototype = {
         this.register("nologin", "hallWebSocket", this.onReceiveNologin.bind(this)) // 玩家登陆
         this.register("Broadcast", "hallWebSocket", this.onReceiveBroadcast.bind(this)) // 广播
         this.register("/Game/login/login", "hallWebSocket", this.onReceiveLogin.bind(this)) // 登陆回调
-        this.register("/GameServer/Notice/notice", "hallWebSocket", this.onReceiveNotice.bind(this)) // 公告
+        // this.register("/GameServer/Notice/notice", "hallWebSocket", this.onReceiveNotice.bind(this)) // 公告  已废弃
         this.register("/Proxy/User/moveBalanceToGame", "hallWebSocket", this.moveBalanceToGame.bind(this)) // 代理押金转移
         this.register("/GameServer/GameUser/loginout", "hallWebSocket", this.onReceiveLoginout.bind(this)) // 玩家离开子游戏
         this.register("/GameServer/GameUser/login", "hallWebSocket", this.onReceiveLoginSubGame.bind(this)) // 玩家加入子游戏
@@ -110,7 +110,16 @@ hqqWebSocket.prototype = {
         // gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveNologin,data )
     },
     onReceiveBroadcast(data) {
-        // console.log(" onReceiveBroadcast", data)
+        console.log(" onReceiveBroadcast", data)
+        let message = data.message;
+        let title = data.send_user.game_nick;
+        let mtype = data.type;
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "onReceiveBroadcast " + data.type)
+        if (mtype == 1) { // im 消息
+            gHandler.gameGlobal.imReceive = 1
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveBroadcast, mtype)
+        }
+
         // gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveBroadcast, data)
     },
     /** 登陆成功回调 */
@@ -118,14 +127,14 @@ hqqWebSocket.prototype = {
         // console.log(" onReceiveLogin", data)
         // gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveLogin, data)
     },
-    onReceiveNotice(data) {
-        console.log(" onReceiveNotice", data, data.msg)
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.addSliderNotice, [{
-            time: 1,
-            rollforver: false,
-            notice: data.msg.notice.replace(/\s+/g, "")
-        }])
-    },
+    // onReceiveNotice(data) {
+    //     console.log(" onReceiveNotice", data, data.msg)
+    //     gHandler.eventMgr.dispatch(gHandler.eventMgr.addSliderNotice, [{
+    //         time: 1,
+    //         rollforver: false,
+    //         notice: data.msg.notice.replace(/\s+/g, "")
+    //     }])
+    // },
     moveBalanceToGame(data) {
         console.log(" moveBalanceToGame", data)
         // balance game_gold 
@@ -149,16 +158,7 @@ hqqWebSocket.prototype = {
         let changegold = data.game_user.game_gold - gHandler.gameGlobal.player.gold
         gHandler.setGameInfo(data.game_user)
         if (changegold > 0) {
-            cc.loader.loadRes("hall/prefab/congratulation", cc.Prefab, function (err, prefab) {
-                if (err) {
-                    console.log(err)
-                    gHandler.logMgr.logerror(err)
-                    return
-                }
-                let node = cc.instantiate(prefab)
-                node.getComponent("Congratulation").init(changegold.toFixed(2))
-                cc.director.getScene().addChild(node, gHandler.congratulationIndex)
-            })
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showCongratulation, changegold)
         }
         // gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveChangeBanlance, data)
     },

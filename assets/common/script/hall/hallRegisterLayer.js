@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-10-02 09:09:29
  * @LastEditors: burt
- * @LastEditTime: 2019-10-12 15:40:38
+ * @LastEditTime: 2019-10-24 08:32:06
  * @Description: 
  */
 let gHandler = require("gHandler");
@@ -19,8 +19,12 @@ cc.Class({
 
     },
 
+    init() {
+
+    },
+
     onClickExit() {
-        this.node.active = false
+        this.node.removeFromParent(true)
     },
 
     onClickRegister() {

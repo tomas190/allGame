@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 14:03:59
  * @LastEditors: burt
- * @LastEditTime: 2019-10-14 16:40:00
+ * @LastEditTime: 2019-10-24 16:08:28
  * @Description: 
  */
 
@@ -11,6 +11,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        versionlabel: cc.Label,
         phonebindbtn: cc.Node,
         alipaybindbtn: cc.Node,
         yinhangkabindbtn: cc.Node,
@@ -28,13 +29,17 @@ cc.Class({
     },
 
     onLoad() {
-
+        let str = "版本：" + (gHandler.localStorage.getGlobal().versionKey || "1.0.0")
+        if (cc.sys.isNative && cc.sys.os != "Windows") {
+            str += "剪切板：" + gHandler.Reflect.getClipboard()
+        }
+        this.versionlabel.string = str
     },
 
     start() {
     },
 
-    init() {
+    init(data) {
         let player = gHandler.gameGlobal.player
         this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFrame(player.headurl)
         this.goldlabel.string = gHandler.commonTools.fixedFloat(player.gold).replace(".", "/")
@@ -122,16 +127,16 @@ cc.Class({
         }
         let outcallback = () => { // 账号密码登录超时，uuid登录
         }
-        if (gHandler.gameGlobal.pay.pay_host == "") {
-            let qcallback = (url) => {
-                gHandler.logMgr.log("最快的pay地址", url)
-                gHandler.gameGlobal.pay.pay_host = url;
-                this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
-            }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", qcallback)
-        } else {
-            this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
-        }
+        // if (gHandler.gameGlobal.pay.pay_host == "") {
+        //     let qcallback = (url) => {
+        //         gHandler.logMgr.log("最快的pay地址", url)
+        //         gHandler.gameGlobal.pay.pay_host = url;
+        //         this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
+        //     }
+        //     gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", qcallback)
+        // } else {
+        //     this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
+        // }
     },
     sendRequestIpGet(urlto, endurl, callback, outcallback) {
         let alreadyCallBack = false;
@@ -200,7 +205,7 @@ cc.Class({
 
     onClickExit() {
         // console.log("关闭")
-        this.node.active = false
+        this.node.removeFromParent(true)
     },
 
     onClickChangeHeadImg() {
@@ -255,8 +260,18 @@ cc.Class({
     },
     // update (dt) {},
 
+    onEnable() {
+        gHandler.eventMgr.register(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer", this.setPlayerInfo.bind(this))
+        gHandler.eventMgr.register(gHandler.eventMgr.getPayInfo, "hallPersonLayer", this.getPayInfo.bind(this))
+    },
+
+    onDisable() {
+        gHandler.eventMgr.unregister(gHandler.eventMgr.getPayInfo, "hallPersonLayer")
+        gHandler.eventMgr.unregister(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer")
+    },
+
     onDestroy() {
-        console.log("hallPersonLayer onDestroy")
+        gHandler.eventMgr.unregister(gHandler.eventMgr.getPayInfo, "hallPersonLayer")
         gHandler.eventMgr.unregister(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer")
     },
 });

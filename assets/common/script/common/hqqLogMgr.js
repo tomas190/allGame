@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 11:28:43
  * @LastEditors: burt
- * @LastEditTime: 2019-10-07 13:46:52
+ * @LastEditTime: 2019-10-24 14:49:16
  * @Description: log日志 管理器
  */
 
@@ -10,7 +10,7 @@ let hqqHttp = require("hqqHttp");
 let gHandler = require("gHandler");
 let logManager = {
     isRealTimeLog: true, // 是否在控制台实时打印
-    logMaxLine: 1000, // 最大的打印行数
+    logMaxLine: 50, // 最大的打印行数
     depth: 0,
     parentSizes: [0],
     currentResult: '',
@@ -49,15 +49,13 @@ let logManager = {
     },
     // 立即发送日志
     sendLog() {
-        let tempoutput = this.output + "endTime-" + this.getNowTime();
-        this.send(tempoutput, true);
-        this.output = "startTime-" + this.getNowTime() + this.tag;
+        this.send(this.output, true);
+        this.output = ""
     },
     // 立即发送错误日志
     sendError() {
-        let tempoutput = this.eoutput + "endTime-" + this.getNowTime();
-        this.send(tempoutput);
-        this.eoutput = "startTime-" + this.getNowTime() + this.tag;
+        this.send(this.eoutput);
+        this.eoutput = ""
     },
     /** 向服务器发送日志 */
     send: function (logstr, islog) {
@@ -69,10 +67,13 @@ let logManager = {
                 id: gHandler.gameGlobal.player.id,
                 msg: logstr,
                 package_name: gHandler.appGlobal.packgeName,
+                device_id: gHandler.appGlobal.deviceID,
             }
+            console.log("向服务器发送日志", data)
             this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath) => {
                 if (bool) {
                     if (CC_JSB) {
+                        console.log("原生日志发送成功")
                         if (islog) {
                             jsb.fileUtils.removeFile(this.logpath + "/logtemp.txt")
                         } else {
@@ -141,6 +142,7 @@ let logManager = {
             data += arguments[i] + " "
         }
         this.isRealTimeLog && console.log("__logMgr__", data);
+        if (gHandler.gameGlobal.isdev) { return }
         this.output += this.getNowTime() + ":" + data + this.tag;
         this.logCheck();
     },
@@ -151,6 +153,7 @@ let logManager = {
      */
     logerror: function (data) {
         this.isRealTimeLog && console.log(data);
+        if (gHandler.gameGlobal.isdev) { return }
         if (data.error && data.error.stack) {
             var err = data.error.stack + this.tag;
             for (let i = 0; i < this.poutput.length; i++) {
@@ -200,17 +203,15 @@ let logManager = {
     logCheck: function () {
         let lines = this.output.split(this.tag);
         if (lines.length > this.logMaxLine) {
-            let tempoutput = this.output + "endTime-" + this.getNowTime();
-            this.send(tempoutput, true);
-            this.output = "startTime-" + this.getNowTime() + this.tag;
+            this.send(this.output, true);
+            this.output = ""
         }
     },
     elogCheck: function () {
         let lines = this.eoutput.split(this.tag);
         if (lines.length > this.logMaxLine) {
-            let tempoutput = this.eoutput + "endTime-" + this.getNowTime();
-            this.send(tempoutput);
-            this.eoutput = "startTime-" + this.getNowTime() + this.tag;
+            this.send(this.eoutput);
+            this.eoutput = ""
         }
     },
 

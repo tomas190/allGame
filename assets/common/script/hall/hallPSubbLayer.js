@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
  * @LastEditors: burt
- * @LastEditTime: 2019-10-14 18:39:39
+ * @LastEditTime: 2019-10-24 09:32:01
  * @Description: 
  */
 
@@ -17,14 +17,11 @@ cc.Class({
 
         captchaimg1: cc.Sprite,
         captchaimg2: cc.Sprite,
+        BankSelectItem: cc.Prefab,
+        selectContent: cc.Node,
     },
 
     onLoad() {
-        // console.log("subblayer onload")
-        this.subtype = 0
-        this.ensurefunc = () => {
-            this.onClickExit()
-        }
     },
 
     start() {
@@ -32,6 +29,14 @@ cc.Class({
     },
 
     init(subtype) {
+        this.subtype = 0
+        this.showSelect = null
+        this.showSelect = false
+        this.selectIndex = 0
+        this.ensurefunc = () => {
+            this.onClickExit()
+        }
+        
         this.subtype = subtype;
         switch (subtype) {
             case 1: // 重置密码
@@ -49,6 +54,32 @@ cc.Class({
                 this.ensurefunc = this.officeloginEnsure
                 break;
         }
+    },
+
+    onClickXiala() {
+        var results = ['中国农业银行', '交通银行', '中国建设银行', '兴业银行', '民生银行', '中信银行', '华夏银行', '中国工商银行', '浦发银行', '招商银行', '中国银行']
+        if (!this.showSelect) {
+            for (var i = 0; i < results.length; i++) {
+                var node = cc.instantiate(this.BankSelectItem);
+                this.selectContent.addChild(node);
+                node.getChildByName('label').getComponent(cc.Label).string = results[i];
+                var clickEventHandler = new cc.Component.EventHandler();
+                clickEventHandler.target = this.node;
+                clickEventHandler.component = "hallPSubbLayer";
+                clickEventHandler.customEventData = results[i];
+                clickEventHandler.handler = "onClickItem";
+                let button = node.getComponent(cc.Button);
+                button.clickEvents.push(clickEventHandler);
+            }
+            this.showSelect = true;
+        } else {
+            this.selectContent.removeAllChildren();
+            this.showSelect = false;
+        }
+    },
+
+    onClickItem(event, custom) {
+        this.bindyinhangka.getChildByName("yinhangname").getComponent(cc.EditBox).string = custom
     },
 
     bindyinhangkaEnsure() {
@@ -218,8 +249,8 @@ cc.Class({
             return
         }
         let self = this
-        let callback = (data, url) => {
-            console.log("getCaptcha callback", data, url)
+        let callback = (data) => {
+            console.log("sendPhoneMessage callback", data)
             if (data.code == 200) {
                 let btn
                 if (custom == 1) {
@@ -303,23 +334,23 @@ cc.Class({
         gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
     },
     // 注册正式账号获取免费金币
-    getGold(bindPhone) {
-        let payUrl = gHandler.gameGlobal.pay.pay_host + bindPhone;
-        let formData2 = new FormData();
-        formData2.append('user_id', gHandler.gameGlobal.player.id);
-        formData2.append('user_name', gHandler.gameGlobal.player.nick);
-        formData2.append('phone_number', bindPhone);
-        formData2.append('token', 'e40f01afbb1b9ae3dd6747ced5bca532');
-        formData2.append('package_id', gHandler.gameGlobal.pay.package_id);
-        fetch(payUrl, {
-            method: 'POST',
-            body: formData2
-        }).then((response) => {
-            let data2 = response.json()
-            if (data2.status != 0) return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败");
+    getGold(bindPhoneNum) {
+        let payUrl = gHandler.gameGlobal.pay.pay_host + "/api/activity/bindPhone";
+        let callBack = (response) => {
+            if (response.status != 0) return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败");
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币")
             this.onClickExit()
-        });
+        }
+        let data = {
+            user_id: gHandler.gameGlobal.player.id,
+            user_name: gHandler.gameGlobal.player.nick,
+            phone_number: bindPhoneNum,
+            token: 'e40f01afbb1b9ae3dd6747ced5bca532',
+            package_id: gHandler.gameGlobal.pay.package_id,
+        }
+        console.log("注册正式账号获取免费金币", payUrl, data)
+        gHandler.http.ajax('POST', payUrl, data, callBack)
+        // this.sendRequestPost(payUrl, data, callBack)
     },
     // 重置账号密码 确定
     resetpassEnsure() {
@@ -371,10 +402,7 @@ cc.Class({
             jsb.fileUtils.isFileExist(fullPath) && jsb.fileUtils.removeFile(fullPath);
             cc.loader.release(fullPath);
         }
-        this.resetpass.active = false
-        this.bindyinhangka.active = false
-        this.officelogin.active = false
-        this.node.active = false
+        this.node.removeFromParent(true)
     },
 
     onClickSure() {

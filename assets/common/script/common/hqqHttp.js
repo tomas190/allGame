@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 16:40:03
  * @LastEditors: burt
- * @LastEditTime: 2019-10-15 10:18:00
+ * @LastEditTime: 2019-10-21 15:14:04
  * @Description: http 
  */
 
@@ -50,7 +50,6 @@ let hqqHttp = {
 
     // 发送日志
     sendRequestLogPost(urlto, param, filepath, callBack) {
-        console.log("sendRequestLogPost", urlto)
         let str = JSON.stringify(param);
         let xhr = new XMLHttpRequest();
         let m_url = "http://" + urlto;
@@ -58,9 +57,8 @@ let hqqHttp = {
         xhr.open("POST", m_url, true); // 初始化一个请求
         // xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
-            cc.log(xhr.readyState, xhr.status)
+            // cc.log(xhr.readyState, xhr.status)
             if (xhr.readyState == 4) {
-                console.log(xhr.responseText)
                 if (xhr.status >= 200 && xhr.status < 400) {
                     callBack && callBack(true, filepath)
                 } else {
@@ -106,6 +104,7 @@ let hqqHttp = {
     },
 
     sendSecretRequestGet(urlto, param, callback) {
+        console.log("sendSecretRequestGet", urlto)
         let alreadyCallBack = false;
         let xhr = new XMLHttpRequest();
         let m_url = urlto || this.m_remoteUrl;
@@ -113,6 +112,7 @@ let hqqHttp = {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     if (callback && !alreadyCallBack) {
+                        console.log("callback")
                         callback(xhr.responseText);
                         alreadyCallBack = true;
                     }
@@ -212,7 +212,7 @@ let hqqHttp = {
                         callback(JSON.parse(response))
                         alreadyCallBack = true
                     }
-                } 
+                }
             }
         }
 
