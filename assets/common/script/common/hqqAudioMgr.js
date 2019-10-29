@@ -60,7 +60,7 @@ let audioMgr = {
                 this.bgId = cc.audioEngine.playMusic(this.bgchip, true, this.bgVolume);
             }
         } else {
-            // console.log(this.bgIsOpen ? "未定义音效资源管理器" : "音乐已禁止")
+            // cc.log(this.bgIsOpen ? "未定义音效资源管理器" : "音乐已禁止")
         }
         return this;
     },
@@ -86,7 +86,7 @@ let audioMgr = {
                 cc.audioEngine.playEffect(effectchip, false, this.effectVolume);
             }
         } else {
-            // console.log("未定义音效资源管理器")
+            // cc.log("未定义音效资源管理器")
         }
     },
 }

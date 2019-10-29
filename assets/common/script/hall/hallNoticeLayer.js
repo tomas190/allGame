@@ -131,7 +131,7 @@ cc.Class({
     },
 
     onClickGongGao() {
-        // console.log("公告")
+        // cc.log("公告")
         this.gonggaobtn.interactable = false
         this.emailbtn.interactable = true
         this.noticescroll.node.active = true
@@ -141,7 +141,7 @@ cc.Class({
 
     onClickYouJian(event, custom) {
         return
-        // console.log("邮件")
+        // cc.log("邮件")
         this.emaildata[custom.key].isShow = 1
         this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.emaildata[custom.key].isShow ? this.hasreadframe : this.noreadframe;
         this.emailItemList[custom.key].getChildByName("email").getChildByName("btn").getComponent(cc.Sprite).spriteFrame = this.emaildata[custom.key].isShow ? this.ehasreadframe : this.enoreadframe;
@@ -153,7 +153,7 @@ cc.Class({
     },
 
     onClickReadItem(event, custom) {
-        // console.log("点击", custom)
+        // cc.log("点击", custom)
         this.noticedata[custom.key].isShow = 1
         this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.noticedata[custom.key].isShow ? this.hasreadframe : this.noreadframe;
         this.sublayer.active = true

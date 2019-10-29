@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 09:31:52
+ * @LastEditTime: 2019-10-28 13:27:57
  * @Description: 
  */
 
@@ -21,7 +21,7 @@ cc.Class({
     },
 
     onLoad() {
-        
+
     },
 
     start() {
@@ -33,7 +33,7 @@ cc.Class({
         this.ensurefunc = () => {
             this.onClickExit()
         }
-        
+
         switch (subtype) {
             case 1: // 修改头像
                 this.changehead.active = true
@@ -59,7 +59,7 @@ cc.Class({
     },
 
     changeheadCallback() {
-        // console.log("changeheadCallback", this.headindex)
+        // cc.log("changeheadCallback", this.headindex)
         let callback = (data, url) => {
             if (data.code == 200) {
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshPlayerinfo, {
@@ -84,7 +84,7 @@ cc.Class({
     },
 
     bindalipayCallback() {
-        console.log("bindalipayCallback")
+        cc.log("bindalipayCallback")
         let url = gHandler.gameGlobal.pay.pay_host + "/api/payment_account/saveAccount"
         let alipayaccount = this.bindalipay.getChildByName("alipayeditbox").getComponent(cc.EditBox).string
         if (alipayaccount.length == 0) {
@@ -126,7 +126,7 @@ cc.Class({
     },
 
     nickchangeCallback() {
-        console.log("nickchangeCallback")
+        cc.log("nickchangeCallback")
         let callback = (data, url) => {
             if (data.code == 200) {
                 gHandler.gHandler.eventMgr.refreshPlayerinfo({ game_nick: data.msg })
@@ -154,7 +154,7 @@ cc.Class({
     },
 
     loginCallback() {
-        // console.log("loginCallback")
+        // cc.log("loginCallback")
         let account = this.login.getChildByName("phoneeditbox").getComponent(cc.EditBox).string
         let pass = this.login.getChildByName("passeditbox").getComponent(cc.EditBox).string
         gHandler.loginMgr.accountChange(account, pass, (issucess) => {
@@ -169,10 +169,11 @@ cc.Class({
     changeheadInit() {
         this.itemlist = []
         this.headindex = "0"
-        let headlen = gHandler.hallResManager.getHallHeadFrameLength()
+        // let headlen = gHandler.hallResManager.getHallHeadFrameLength()
+        let headlen = gHandler.hallResManager.getHallHeadFramePlistLength()
         this.headscroll.content.height = Math.floor(headlen / 5) * 155
         let player = gHandler.gameGlobal.player
-        console.log("player.headurl", player.headurl)
+        // cc.log("player.headurl", player.headurl)
         let headid = parseInt(player.headurl.substring(0, player.headurl.indexOf(".")))
         if (headid > 20) {
             headid -= 20
@@ -180,13 +181,13 @@ cc.Class({
         for (let i = 0; i < headlen; i++) {
             let headitem = cc.instantiate(this.headitem)
             let head = headitem.getChildByName("masknode").getChildByName("head").getComponent(cc.Sprite)
-            head.spriteFrame = gHandler.hallResManager.getHallHeadFrame(i)
+            // head.spriteFrame = gHandler.hallResManager.getHallHeadFrame(i + 1)
+            head.spriteFrame = gHandler.hallResManager.getHallHeadFramePlist(i + 1)
             let x = i % 5
             let y = Math.floor(i / 5)
             headitem.setPosition(156 * (x - 2), 155 * (-0.5 - y))
             headitem.active = true
             this.itemlist.push(headitem)
-
             var clickEventHandler = new cc.Component.EventHandler();
             clickEventHandler.target = this.node;
             clickEventHandler.component = "hallPSubsLayer";
@@ -196,18 +197,18 @@ cc.Class({
             button.clickEvents.push(clickEventHandler);
 
             this.headscroll.content.addChild(headitem)
-            if (headid == i) {
+            if (headid - 1 == i) {
                 this.onClickHeadItem({ target: headitem }, headid)
             }
         }
     },
 
     onClickHeadItem(event, custom) {
-        // console.log("event")
+        // cc.log("event")
         this.headindex = custom + ""
         event.target.getChildByName("selectsp").active = true
         for (let i = 0; i < this.itemlist.length; i++) {
-            if (custom == i) {
+            if (custom - 1 == i) {
             } else {
                 this.itemlist[i].getChildByName("selectsp").active = false
             }
@@ -215,7 +216,7 @@ cc.Class({
     },
 
     onClickForgetPass() {
-        // console.log("onClickForgetPass")
+        // cc.log("onClickForgetPass")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showBiglayer, 1)
         this.onClickExit()
     },

@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 09:32:01
+ * @LastEditTime: 2019-10-24 19:29:58
  * @Description: 
  */
 
@@ -36,7 +36,7 @@ cc.Class({
         this.ensurefunc = () => {
             this.onClickExit()
         }
-        
+
         this.subtype = subtype;
         switch (subtype) {
             case 1: // 重置密码
@@ -136,7 +136,7 @@ cc.Class({
     },
 
     onClickCaptcha() {
-        console.log('onClickCaptcha', this.subtype)
+        cc.log('onClickCaptcha', this.subtype)
         this.panelInit(this.subtype)
     },
 
@@ -161,7 +161,7 @@ cc.Class({
         }
         xhr.onload = function () {
             if (this.status == 200) {
-                console.log("请求到了图片")
+                cc.log("请求到了图片")
                 if (CC_JSB) {
                     var fullPath = jsb.fileUtils.getWritablePath() + "yanzhenma.png";
                     if (jsb.fileUtils.isFileExist(fullPath) && jsb.fileUtils.removeFile(fullPath)) {
@@ -230,7 +230,7 @@ cc.Class({
     },
     // 获取手机短信验证码
     onClickGetCaptcha(event, custom) {
-        console.log("获取手机短信验证码")
+        cc.log("获取手机短信验证码")
         let phonenum
         let yanzhenmanum
         if (custom == 1) {
@@ -250,7 +250,7 @@ cc.Class({
         }
         let self = this
         let callback = (data) => {
-            console.log("sendPhoneMessage callback", data)
+            cc.log("sendPhoneMessage callback", data)
             if (data.code == 200) {
                 let btn
                 if (custom == 1) {
@@ -309,7 +309,7 @@ cc.Class({
         }
 
         let callback = (data) => {
-            console.log("成功注册正式账号", data)
+            cc.log("成功注册正式账号", data)
             if (data.code == 200) {
                 gHandler.setPlayerinfo({ phone_number: data.msg })
                 this.getGold(data.msg)
@@ -333,24 +333,20 @@ cc.Class({
         }
         gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
     },
-    // 注册正式账号获取免费金币
+    // 注册正式账号获取免费金币 
     getGold(bindPhoneNum) {
         let payUrl = gHandler.gameGlobal.pay.pay_host + "/api/activity/bindPhone";
         let callBack = (response) => {
-            if (response.status != 0) return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败");
+            if (response.status != 0) return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败:" + response.msg);
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币")
             this.onClickExit()
         }
-        let data = {
-            user_id: gHandler.gameGlobal.player.id,
-            user_name: gHandler.gameGlobal.player.nick,
-            phone_number: bindPhoneNum,
-            token: 'e40f01afbb1b9ae3dd6747ced5bca532',
-            package_id: gHandler.gameGlobal.pay.package_id,
-        }
-        console.log("注册正式账号获取免费金币", payUrl, data)
-        gHandler.http.ajax('POST', payUrl, data, callBack)
-        // this.sendRequestPost(payUrl, data, callBack)
+        let dataStr = "user_id=" + gHandler.gameGlobal.pay.user_id
+        dataStr += "&user_name=" + gHandler.gameGlobal.pay.user_name
+        dataStr += "&phone_number=" + bindPhoneNum
+        dataStr += "&package_id=" + gHandler.gameGlobal.pay.package_id
+        dataStr += "&token=e40f01afbb1b9ae3dd6747ced5bca532"
+        gHandler.http.ajax('POST', payUrl, dataStr, callBack)
     },
     // 重置账号密码 确定
     resetpassEnsure() {
@@ -376,7 +372,7 @@ cc.Class({
         }
 
         let callback = (data) => {
-            console.log("重置账号密码", data)
+            cc.log("重置账号密码", data)
             if (data.code == 200) {
                 this.onClickExit()
             } else {

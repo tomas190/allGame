@@ -42,7 +42,7 @@ cc.Class({
         // this.noticeStartRoll();
     },
     addSliderNotice(msg) {
-        // console.log("addSliderNotice", msg)
+        // cc.log("addSliderNotice", msg)
         for (let i = 0; i < msg.length; i++) {
             this.addNotice(msg[i], 1)
         }
@@ -72,7 +72,7 @@ cc.Class({
     },
     /** 开始滚动 */
     noticeStartRoll() {
-        // console.log(this.noticeList)
+        // cc.log(this.noticeList)
         let item = this.noticeList.shift();
         if (item) {
             if (!item.rollforver) { // tyep = 1 永久滚动 2 滚动一次

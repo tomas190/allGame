@@ -44,7 +44,7 @@ hqqWebSocket.prototype = {
         }, 1000)
     },
     sendPing() {
-        // console.log("发送心跳")
+        // cc.log("发送心跳")
         this.pingTime = 0;
         this.ws && this.ws.send('');
     },
@@ -60,16 +60,16 @@ hqqWebSocket.prototype = {
     },
     sendMessage(name, msg) {
         let data = this.protoDeal.createMsgByName(name, msg);
-        (this.ws || console.log("websocket未初始化")) && this.ws.send(data);
+        (this.ws || cc.log("websocket未初始化")) && this.ws.send(data);
     },
     close() {
-        console.log("大厅websocket主动断开")
+        cc.log("大厅websocket主动断开")
         this.ws && this.ws.close();
         this.needRecon = false;
     },
     register(event, className, callback) {
         if (this.handlers[event] && this.handlers[event][className]) {
-            console.log("大厅该事件已经监听", event, className)
+            cc.log("大厅该事件已经监听", event, className)
         } else {
             if (this.handlers[event]) {
                 this.handlers[event][className] = callback;
@@ -106,11 +106,11 @@ hqqWebSocket.prototype = {
         this.register("/GameServer/GameUser/changeGameUserBalance", "hallWebSocket", this.onReceiveChangeBanlance.bind(this)) // 
     },
     onReceiveNologin(data) {
-        // console.log(" onReceiveNologin", data)
+        // cc.log(" onReceiveNologin", data)
         // gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveNologin,data )
     },
     onReceiveBroadcast(data) {
-        console.log(" onReceiveBroadcast", data)
+        cc.log(" onReceiveBroadcast", data)
         let message = data.message;
         let title = data.send_user.game_nick;
         let mtype = data.type;
@@ -124,11 +124,11 @@ hqqWebSocket.prototype = {
     },
     /** 登陆成功回调 */
     onReceiveLogin(data) {
-        // console.log(" onReceiveLogin", data)
+        // cc.log(" onReceiveLogin", data)
         // gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveLogin, data)
     },
     // onReceiveNotice(data) {
-    //     console.log(" onReceiveNotice", data, data.msg)
+    //     cc.log(" onReceiveNotice", data, data.msg)
     //     gHandler.eventMgr.dispatch(gHandler.eventMgr.addSliderNotice, [{
     //         time: 1,
     //         rollforver: false,
@@ -136,7 +136,7 @@ hqqWebSocket.prototype = {
     //     }])
     // },
     moveBalanceToGame(data) {
-        console.log(" moveBalanceToGame", data)
+        cc.log(" moveBalanceToGame", data)
         // balance game_gold 
         if (!data.balance || !data.game_gold) return;
         gHandler.setPlayerinfo({
@@ -145,15 +145,15 @@ hqqWebSocket.prototype = {
         })
     },
     onReceiveLoginout(data) {
-        // console.log(" onReceiveLoginout", data)
+        // cc.log(" onReceiveLoginout", data)
         gHandler.setGameInfo(data.game_user)
         // gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveLoginout, data)
     },
     onReceiveLoginSubGame(data) {
-        // console.log(" onReceiveLoginSubGame", data)
+        // cc.log(" onReceiveLoginSubGame", data)
     },
     onReceiveChangeBanlance(data) {
-        console.log(" onReceiveChangeBanlance", data)
+        cc.log(" onReceiveChangeBanlance", data)
         if (!data.game_user) return;
         let changegold = data.game_user.game_gold - gHandler.gameGlobal.player.gold
         gHandler.setGameInfo(data.game_user)
@@ -164,7 +164,7 @@ hqqWebSocket.prototype = {
     },
 
     m_onopen() {
-        // console.log("大厅socket连接成功，并开始登陆")
+        // cc.log("大厅socket连接成功，并开始登陆")
         this.isConected = true;
         this.reConnectTime = 0;
         this.startPingPong();
@@ -176,23 +176,23 @@ hqqWebSocket.prototype = {
                     token: gHandler.gameGlobal.token
                 }
             }
-            // console.log("发送登陆", msg)
+            // cc.log("发送登陆", msg)
             this.ws.send(JSON.stringify(msg))
         }
     },
     m_onmessage(msg) {
         let data = JSON.parse(msg.data)
-        // console.log("data --- ", data)
+        // cc.log("data --- ", data)
         this.m_EmitMsg(data.event, data.data.msg, data)
     },
     m_EmitMsg(event, data, msg) {
-        console.log("------大厅收到消息--------", event)
+        cc.log("------大厅收到消息--------", event)
         if (this.handlers[event]) {
             for (let className in this.handlers[event]) {
                 this.handlers[event][className] && this.handlers[event][className](data);
             }
         } else {
-            // console.log("没有注册回调函数", msg)
+            // cc.log("没有注册回调函数", msg)
         }
     },
     m_onerror(e) {
@@ -293,7 +293,7 @@ hqqWebSocket.prototype = {
         }
         const gameMsg = bodyClass.decode(retData.data);
         // if (retData.id > 1) {
-        //     console.log("接收到的数据:", gameMsg);
+        //     cc.log("接收到的数据:", gameMsg);
         // }
         const func = this.mapHandler[retData.id];
         if (func) {
@@ -392,7 +392,7 @@ hqqWebSocket.prototype = {
             return;
         }
         // if (kind !== this.sgjmsg.MessageKind.Ping) {
-        //     console.log("发送协议编号:", kind, "数据:", data);
+        //     cc.log("发送协议编号:", kind, "数据:", data);
         // }
         let bodyClass;
         switch (kind) {

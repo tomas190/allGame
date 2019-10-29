@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 11:28:43
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 14:49:16
+ * @LastEditTime: 2019-10-21 17:13:36
  * @Description: log日志 管理器
  */
 
@@ -38,11 +38,11 @@ let logManager = {
         }
 
         window.addEventListener('error', (e) => {
-            // console.log("error")
+            // cc.log("error")
             this.logerror(e);
         })
         window.addEventListener('unhandledrejection', (e) => {
-            // console.log("unhandledrejection")
+            // cc.log("unhandledrejection")
             this.logerror(e);
         })
         return this;
@@ -69,18 +69,18 @@ let logManager = {
                 package_name: gHandler.appGlobal.packgeName,
                 device_id: gHandler.appGlobal.deviceID,
             }
-            console.log("向服务器发送日志", data)
+            cc.log("向服务器发送日志", data)
             this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath) => {
                 if (bool) {
                     if (CC_JSB) {
-                        console.log("原生日志发送成功")
+                        cc.log("原生日志发送成功")
                         if (islog) {
                             jsb.fileUtils.removeFile(this.logpath + "/logtemp.txt")
                         } else {
                             jsb.fileUtils.removeFile(this.logpath + "/elogtemp.txt")
                         }
                     } else {
-                        console.log("日志发送成功")
+                        cc.log("日志发送成功")
                         if (islog) {
                             cc.sys.localStorage.setItem("log", JSON.stringify(this.output))
                         } else {
@@ -95,7 +95,7 @@ let logManager = {
                             jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
                         }
                     } else {
-                        console.log("日志发送失败")
+                        cc.log("日志发送失败")
                     }
                 }
             });
@@ -128,7 +128,7 @@ let logManager = {
                     jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
                 }
             } else {
-                console.log("未请求到token")
+                cc.log("未请求到token")
             }
         }
     },
@@ -141,8 +141,7 @@ let logManager = {
         for (let i = 0; i < arguments.length; i++) {
             data += arguments[i] + " "
         }
-        this.isRealTimeLog && console.log("__logMgr__", data);
-        if (gHandler.gameGlobal.isdev) { return }
+        this.isRealTimeLog && cc.log("__logMgr__", data);
         this.output += this.getNowTime() + ":" + data + this.tag;
         this.logCheck();
     },
@@ -152,15 +151,14 @@ let logManager = {
      * @return: 
      */
     logerror: function (data) {
-        this.isRealTimeLog && console.log(data);
-        if (gHandler.gameGlobal.isdev) { return }
+        this.isRealTimeLog && cc.log(data);
         if (data.error && data.error.stack) {
             var err = data.error.stack + this.tag;
             for (let i = 0; i < this.poutput.length; i++) {
                 let out = this.poutput[i]
                 let pre = out.substring(out.indexOf(":") + 1)
                 if (err == pre) {
-                    console.log("重复的错误日志")
+                    cc.log("重复的错误日志")
                     return
                 }
             }

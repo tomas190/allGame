@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-10-23 11:22:51
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 16:06:36
+ * @LastEditTime: 2019-10-29 15:55:06
  * @Description: 
  */
 let gHandler = require("gHandler");
@@ -26,7 +26,7 @@ let hqqViewCtr = {
         } else {
             cc.loader.loadRes(path, cc.Prefab, function (err, prefab) {
                 if (err) {
-                    console.log(err)
+                    cc.log(err)
                     gHandler.logMgr.logerror(err)
                     return
                 }
@@ -45,6 +45,7 @@ let hqqViewCtr = {
         gHandler.eventMgr.register(gHandler.eventMgr.showNotice, "hqqViewCtr", this.showNoticelayer.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.showCongratulation, "hqqViewCtr", this.showCongratulation.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.showPayScene, "hqqViewCtr", this.showPayScene.bind(this))
+        gHandler.eventMgr.register(gHandler.eventMgr.showConsole, "hqqViewCtr", this.showConsole.bind(this))
         return this
     },
     showSmallsublayer(data) {
@@ -63,12 +64,12 @@ let hqqViewCtr = {
         this.showLayer(path, scriptname, data, this.tipPanelIndex)
     },
     showRegisterlayer(data) {
-        console.log("showRegister")
         let path = "hall/prefab/registerlayer"
         let scriptname = "hallRegisterLayer"
         this.showLayer(path, scriptname, data, this.registerlayerIndex)
     },
     showPersonallayer(data) {
+        console.log("showPersonallayer")
         let path = "hall/prefab/personallayer"
         let scriptname = "hallPersonLayer"
         this.showLayer(path, scriptname, data, this.personlayerIndex)
@@ -84,7 +85,7 @@ let hqqViewCtr = {
         this.showLayer(path, scriptname, data, this.congratulationIndex)
     },
     showPayScene(data) {
-        if (gHandler.gameGlobal.pay.pay_host == "" && !gHandler.gameGlobal.isdev) {
+        if (gHandler.gameGlobal.pay.pay_host == "") {
             let starttime = gHandler.commonTools.getSM();
             let callback = (url) => {
                 let endtime = gHandler.commonTools.getSM();
@@ -94,7 +95,7 @@ let hqqViewCtr = {
                     gHandler.gameGlobal.pay.from_scene = data
                     cc.director.loadScene(gHandler.gameConfig.subModel.pay.lanchscene)
                 } else {
-                    console.log("请配置充值场景")
+                    cc.log("请配置充值场景")
                 }
             }
             gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
@@ -103,9 +104,15 @@ let hqqViewCtr = {
                 gHandler.gameGlobal.pay.from_scene = data
                 cc.director.loadScene(gHandler.gameConfig.subModel.pay.lanchscene)
             } else {
-                console.log("请配置充值场景")
+                cc.log("请配置充值场景")
             }
         }
+    },
+    showConsole(data) {
+        console.log("showConsole")
+        let path = "hall/prefab/Console"
+        let scriptname = "console"
+        this.showLayer(path, scriptname, data, cc.macro.MAX_ZINDEX)
     },
 
 

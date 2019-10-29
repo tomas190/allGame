@@ -22,7 +22,7 @@ let hqqHttp = {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     let response = xhr.responseText
-                    // console.log("RemoteData", response)
+                    // cc.log("RemoteData", response)
                     if (callBack && !alreadyCallBack) {
                         callBack(response)
                         alreadyCallBack = true
@@ -94,7 +94,7 @@ let hqqHttp = {
         xhr.open("GET", m_url, true);
         let timer = setTimeout(() => {
             if (!alreadyCallBack) {
-                console.log("sendRequestGet RequestGet timeout");
+                cc.log("sendRequestGet RequestGet timeout");
                 xhr.abort(); // 如果请求已经被发送，则立刻终止请求
                 alreadyCallBack = true;
             }
@@ -104,7 +104,7 @@ let hqqHttp = {
     },
 
     sendSecretRequestGet(urlto, param, callback) {
-        console.log("sendSecretRequestGet", urlto)
+        cc.log("sendSecretRequestGet", urlto)
         let alreadyCallBack = false;
         let xhr = new XMLHttpRequest();
         let m_url = urlto || this.m_remoteUrl;
@@ -112,7 +112,7 @@ let hqqHttp = {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     if (callback && !alreadyCallBack) {
-                        console.log("callback")
+                        cc.log("callback")
                         callback(xhr.responseText);
                         alreadyCallBack = true;
                     }
@@ -122,7 +122,7 @@ let hqqHttp = {
         xhr.open("GET", m_url, true);
         let timer = setTimeout(() => {
             if (callback && !alreadyCallBack) {
-                // console.log("sendSecretRequestGet RequestGet timeout");
+                // cc.log("sendSecretRequestGet RequestGet timeout");
                 xhr.abort(); // 如果请求已经被发送，则立刻终止请求
                 // callback(null);
                 // alreadyCallBack = true;
@@ -159,7 +159,7 @@ let hqqHttp = {
             if (callback) {
                 xhr.abort(); // 如果请求已经被发送，则立刻终止请求
                 // callback(null);
-                // console.log("ping RequestGet timeout", urlto);
+                // cc.log("ping RequestGet timeout", urlto);
             }
             clearTimeout(timer);
         }, 3000)
@@ -184,7 +184,7 @@ let hqqHttp = {
         xhr.open("GET", m_url, true);
         let timer = setTimeout(() => {
             if (outcallback && !alreadyCallBack) {
-                console.log("sendRequestGlobalGet RequestGet timeout");
+                cc.log("sendRequestGlobalGet RequestGet timeout");
                 // xhr.abort(); // 如果请求已经被发送，则立刻终止请求
                 outcallback(null);
                 alreadyCallBack = true;
@@ -203,11 +203,11 @@ let hqqHttp = {
         xhr.open("POST", m_url, true); // 初始化一个请求
         // xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
-            // console.log(xhr.readyState, xhr.status)
+            // cc.log(xhr.readyState, xhr.status)
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     let response = xhr.responseText
-                    // console.log("RemoteData", response)
+                    // cc.log("RemoteData", response)
                     if (callback && !alreadyCallBack) {
                         callback(JSON.parse(response))
                         alreadyCallBack = true
@@ -218,7 +218,7 @@ let hqqHttp = {
 
         let timer = setTimeout(() => {
             if (outcallback && !alreadyCallBack) {
-                console.log("sendRequestIpPost RequestGet timeout");
+                cc.log("sendRequestIpPost RequestGet timeout");
                 // xhr.abort(); // 如果请求已经被发送，则立刻终止请求
                 outcallback(null);
                 alreadyCallBack = true;
@@ -237,11 +237,11 @@ let hqqHttp = {
         xhr.open("POST", m_url, true); // 初始化一个请求
         // xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
-            // console.log(xhr.readyState, xhr.status)
+            // cc.log(xhr.readyState, xhr.status)
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     let response = xhr.responseText
-                    // console.log("RemoteData", response)
+                    // cc.log("RemoteData", response)
                     if (callback && !alreadyCallBack) {
                         callback(JSON.parse(response))
                         alreadyCallBack = true
@@ -252,7 +252,7 @@ let hqqHttp = {
 
         let timer = setTimeout(() => {
             if (outcallback && !alreadyCallBack) {
-                console.log("sendRequestIpPost RequestGet timeout");
+                cc.log("sendRequestIpPost RequestGet timeout");
                 // xhr.abort(); // 如果请求已经被发送，则立刻终止请求
                 outcallback(null);
                 alreadyCallBack = true;

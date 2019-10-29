@@ -2,25 +2,26 @@
  * @Author: burt
  * @Date: 2019-07-29 18:38:29
  * @LastEditors: burt
- * @LastEditTime: 2019-10-23 11:11:21
+ * @LastEditTime: 2019-10-28 13:31:27
  * @Description: 大厅动态资源管理器
  */
 let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
     properties: {
+        hallHeadFramePlist: [cc.SpriteFrame],
         hallHeadFrame: [cc.SpriteFrame],
         hallMusic: {
             default: [],
-            type: [cc.AudioClip]
+            type: [cc.AudioClip],
         },
         spineAnimation: {
             default: [],
-            type: [sp.SkeletonData]
+            type: [sp.SkeletonData],
         },
         hallBtnName: {
             default: [],
-            type: [cc.SpriteFrame]
+            type: [cc.SpriteFrame],
         },
     },
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
@@ -36,6 +37,26 @@ cc.Class({
     start() {
 
     },
+    getHallHeadFramePlistLength() {
+        return this.hallHeadFramePlist.length;
+    },
+    getHallHeadFramePlist(id) {
+        if (typeof id == "string" && id.indexOf(".") != -1) {
+            id = id.substring(0, id.indexOf("."))
+        }
+        id = parseInt(id) - 1
+        if (this.hallHeadFramePlist[id]) {
+            return this.hallHeadFramePlist[id]
+        } else {
+            id = id % 10
+            if (this.hallHeadFramePlist[id]) {
+                return this.hallHeadFramePlist[id]
+            } else {
+                cc.log("没有找到头像")
+            }
+        }
+    },
+
     getHallHeadFrameLength() {
         return this.hallHeadFrame.length
     },
@@ -50,7 +71,7 @@ cc.Class({
             if (this.hallHeadFrame[id - 20]) {
                 return this.hallHeadFrame[id - 20]
             } else {
-                console.log("没有找到头像")
+                cc.log("没有找到头像")
             }
         }
     },
@@ -73,7 +94,7 @@ cc.Class({
         if (this.hallMusic[id]) {
             return this.hallMusic[id];
         } else {
-            console.log("没有这个音效");
+            cc.log("没有这个音效");
         }
     },
 

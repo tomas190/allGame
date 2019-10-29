@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 16:01:11
+ * @LastEditTime: 2019-10-29 15:29:42
  * @Description: 游戏中央模块管理器
  */
 
@@ -38,6 +38,7 @@ let gameGlobal = {
         package_id: null, // number类型
         balance: null, // number类型
         temp_host: "", // string类型
+        proxy_host: "", // proxy_host
     },
     pay: { // 充提数据结构
         from_scene: "", // 跳转过来的场景名
@@ -230,7 +231,7 @@ let gameConfig = {
             isDown: false,
         },
         "lhd": {
-            zhname: "新龙虎斗", // 中文游戏名
+            zhname: "龙虎斗", // 中文游戏名
             enname: "lhd", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "lhd", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251717",
@@ -412,8 +413,8 @@ let gameConfig = {
 gHandler.gameConfig = gameConfig
 
 gHandler.setGameInfo = function (game_user, proxy_user, prev_proxy) {
-    // console.log("设置玩家数据")
-    // gHandler.appGlobal.gameuser = game_user;
+    // cc.log("设置玩家数据")
+    gHandler.appGlobal.gameuser = game_user;
     gHandler.gameGlobal.player.account_name = game_user.id
     // gHandler.gameGlobal.player.account_pass = msg.token;
     gHandler.gameGlobal.player.uuid = game_user.uuid;
@@ -450,7 +451,7 @@ gHandler.setGameInfo = function (game_user, proxy_user, prev_proxy) {
         id: game_user.id,
     }
     if (prev_proxy) {
-        // console.log("prev_proxy", prev_proxy)
+        // cc.log("prev_proxy", prev_proxy)
         gHandler.gameGlobal.player.proxy_pid = prev_proxy.proxy_pid;
         gHandler.gameGlobal.pay.proxy_name = prev_proxy.proxy_nick
     }
@@ -465,9 +466,9 @@ gHandler.setGameInfo = function (game_user, proxy_user, prev_proxy) {
 }
 
 gHandler.setPlayerinfo = function (info) {
-    // console.log("设置玩家数据")
+    // cc.log("设置玩家数据")
     let data = {}
-    if (info.game_gold) {
+    if (info.game_gold || info.game_gold == 0) {
         let gold = info.game_gold
         if (gold < 0.01) {
             gold = 0;

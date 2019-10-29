@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 16:57:02
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 14:44:59
+ * @LastEditTime: 2019-10-29 15:55:26
  * @Description: 通用加载场景
  */
 let gHandler = require("gHandler");
@@ -33,7 +33,7 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        console.log("开始游戏代码，loading界面加载")
+        // cc.log("开始游戏代码，loading界面加载")
         // if (cc.sys.platform === cc.sys.ANDROID && cc.sys.os === cc.sys.OS_ANDROID) {
         //     gHandler.appGlobal = appGlobal.init(0);
         //     gHandler.Reflect = javaReflect;
@@ -51,14 +51,15 @@ cc.Class({
         gHandler.logMgr = hqqLogMgr.init();
         gHandler.viewCtr = hqqViewCtr.init();
         gHandler.localStorage = hqqLocalStorage.init();
-
         this.tempTime = 0;
         this.state = 0;
         this.info = "资源加载中";
         this.progress = 0
         this.progressnode.node.active = false
         if (gHandler.gameGlobal.isdev) {
-            cc.director.loadScene('hall')
+            this.scheduleOnce(() => {
+                cc.director.loadScene('hall')
+            }, 0.5)
         } else {
             let appLogin = require("appLogin")
             gHandler.loginMgr = appLogin;

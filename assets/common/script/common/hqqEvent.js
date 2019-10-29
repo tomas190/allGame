@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-11 13:46:20
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 08:59:15
+ * @LastEditTime: 2019-10-29 15:54:55
  * @Description: 事件派发中心
  */
 
@@ -26,6 +26,7 @@ let hqqEvent = {
     showNotice: 26, // 公告界面
     showCongratulation: 27, // 恭喜获得金币
     showPayScene: 28, // 显示充提界面
+    showConsole: 29, // 显示console
 
     onReceiveNologin: 30, // 
     onReceiveBroadcast: 31, // 

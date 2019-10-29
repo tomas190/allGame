@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 10:44:15
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 14:47:38
+ * @LastEditTime: 2019-10-29 15:33:22
  * @Description: 本地化保存
  */
 let gHandler = require("gHandler");
@@ -42,14 +42,14 @@ let localStorage = {
             cc.sys.localStorage.setItem("bgIsOpenKey", true);
             cc.sys.localStorage.setItem("effectIsOpenKey", true);
         }
-        // console.log("log", JSON.parse(cc.sys.localStorage.getItem('log')))
-        // console.log("elog", JSON.parse(cc.sys.localStorage.getItem('elog')))
+        // cc.log("log", JSON.parse(cc.sys.localStorage.getItem('log')))
+        // cc.log("elog", JSON.parse(cc.sys.localStorage.getItem('elog')))
         if (typeof JSON.parse(cc.sys.localStorage.getItem('globalKey')).hotServerKey == "object") {
             let hotserver = this.globalGet("hotServerKey")[0]
             this.globalSet("hotServerKey", hotserver)
         }
-        console.log("global", JSON.parse(cc.sys.localStorage.getItem('globalKey')))
-        // console.log("subgame", JSON.parse(cc.sys.localStorage.getItem('subgameKey')))
+        // cc.log("global", JSON.parse(cc.sys.localStorage.getItem('globalKey')))
+        // cc.log("subgame", JSON.parse(cc.sys.localStorage.getItem('subgameKey')))
         return this;
     },
     set(subgame, key, data) {

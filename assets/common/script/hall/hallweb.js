@@ -15,7 +15,7 @@ cc.Class({
     },
 
     onLoad() {
-        console.log("web界面")
+        cc.log("web界面")
         // this.web.active = true;
         // this.web.url = "https://www.baidu.com"
         // this.web.onEnable()
@@ -40,13 +40,13 @@ cc.Class({
             "&version=" + gHandler.gameConfig.oldGameList['brnn'].remoteData.version +// 游戏版本号
             "&env=" + "dev" + // 环境 online dev pre
             "&time=" + new Date().getTime();// 时间戳
-        console.log(url)
+        cc.log(url)
         this.web.url = url;
         this.web.active = true;
         this.web.onRestore();
         this.web.onEnable();
 
-        console.log(this.web, this.web.node.x, this.web.node.y)
+        cc.log(this.web, this.web.node.x, this.web.node.y)
     },
 
     start() {

@@ -2,10 +2,15 @@
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 16:11:37
+ * @LastEditTime: 2019-10-29 15:59:44
  * @Description: 
  -->
 # all hqq native combined-game project
+
+10.29更新{
+	头像图片资源修改，由原来的20个，改为10个，根据头像图片取10余数，获取对应头像
+	大厅 调用示例 gHandler.eventMgr.dispatch(gHandler.eventMgr.showPerson, null) // 显示个人设置界面
+}
 
 10.24更新{
 	增加事件派发添加大厅页面及跳转充提模块

@@ -62,7 +62,7 @@ let commonTools = {
                 }
                 jsb.saveImageData(picData, width, height, fullPath);
                 let texture = new cc.Texture2D();
-                console.log(width, height)
+                cc.log(width, height)
                 texture.initWithData(picData, texture._format, width, height);
                 let spriteFrame = new cc.SpriteFrame();
                 spriteFrame.setTexture(texture);

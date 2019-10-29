@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 14:03:59
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 16:08:28
+ * @LastEditTime: 2019-10-29 15:54:13
  * @Description: 
  */
 
@@ -29,6 +29,8 @@ cc.Class({
     },
 
     onLoad() {
+        this.cicknum1 = 0
+        this.cicknum2 = 0
         let str = "版本：" + (gHandler.localStorage.getGlobal().versionKey || "1.0.0")
         if (cc.sys.isNative && cc.sys.os != "Windows") {
             str += "剪切板：" + gHandler.Reflect.getClipboard()
@@ -40,8 +42,10 @@ cc.Class({
     },
 
     init(data) {
+        if (gHandler.gameGlobal.isdev) return
         let player = gHandler.gameGlobal.player
-        this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFrame(player.headurl)
+        // this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFrame(player.headurl)
+        this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFramePlist(player.headurl)
         this.goldlabel.string = gHandler.commonTools.fixedFloat(player.gold).replace(".", "/")
         this.nicklabel.string = player.nick
         this.idlabel.string = player.id
@@ -56,7 +60,7 @@ cc.Class({
         // }
 
         if (player.alipay) {
-            this.alipaylabel.string = player.alipay
+            this.alipaylabel.string = player.alipay.substring(0, 2) + "** **** **" + player.alipay.substring(player.alipay.length - 2, player.alipay.length)
             this.alipaylabel.node.color = new cc.Color(225, 225, 225)
             this.alipaybindbtn.active = false
         }
@@ -92,7 +96,7 @@ cc.Class({
         endurl += "&token=e40f01afbb1b9ae3dd6747ced5bca532&package_id=" + gHandler.gameGlobal.pay.package_id
         endurl += "&version=1"
         let callback = (data) => {
-            console.log("getPayInfo callback", data)
+            cc.log("getPayInfo callback", data)
             if (data && data.status == 0) {
                 let list = data.data.list
                 let isNoAlipay = true
@@ -107,7 +111,8 @@ cc.Class({
                         isNotyinhang = false
                     } else if (list[i].type == "2") {
                         gHandler.gameGlobal.player.alipay = JSON.parse(list[i].info).account_card
-                        this.alipaylabel.string = gHandler.gameGlobal.player.alipay
+                        let alistr = gHandler.gameGlobal.player.alipay
+                        this.alipaylabel.string = alistr.substring(0, 2) + "** **** **" + alistr.substring(alistr.length - 2, alistr.length)
                         this.alipaylabel.node.color = new cc.Color(225, 225, 225)
                         this.alipaybindbtn.active = false
                         isNoAlipay = false
@@ -127,16 +132,16 @@ cc.Class({
         }
         let outcallback = () => { // 账号密码登录超时，uuid登录
         }
-        // if (gHandler.gameGlobal.pay.pay_host == "") {
-        //     let qcallback = (url) => {
-        //         gHandler.logMgr.log("最快的pay地址", url)
-        //         gHandler.gameGlobal.pay.pay_host = url;
-        //         this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
-        //     }
-        //     gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", qcallback)
-        // } else {
-        //     this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
-        // }
+        if (gHandler.gameGlobal.pay.pay_host == "") {
+            let qcallback = (url) => {
+                gHandler.logMgr.log("最快的pay地址", url)
+                gHandler.gameGlobal.pay.pay_host = url;
+                this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
+            }
+            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", qcallback)
+        } else {
+            this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
+        }
     },
     sendRequestIpGet(urlto, endurl, callback, outcallback) {
         let alreadyCallBack = false;
@@ -174,11 +179,12 @@ cc.Class({
         if (msg.game_nick) {
             this.nicklabel.string = msg.game_nick
         }
-        if (msg.game_gold) {
+        if (msg.game_gold || msg.game_gold == 0) {
             this.goldlabel.string = msg.game_gold.toString().replace(".", "/")
         }
         if (msg.game_img) {
-            this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFrame(msg.game_img)
+            // this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFrame(msg.game_img)
+            this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFramePlist(msg.game_img)
         }
         if (msg.phone_number) {
             this.phonelabel.string = msg.phone_number
@@ -186,12 +192,12 @@ cc.Class({
             this.phonebindbtn.active = false
         }
         if (msg.alipay) {
-            this.alipaylabel.string = msg.alipay
+            this.alipaylabel.string = msg.alipay.substring(0, 2) + "** **** **" + msg.alipay.substring(msg.alipay.length - 2, msg.alipay.length)
             this.alipaylabel.node.color = new cc.Color(225, 225, 225)
             this.alipaybindbtn.active = false
         }
         if (msg.yinhangka) {
-            this.yinghangkalabel.string = msg.yinhangka
+            this.yinghangkalabel.string = "**** **** **** " + msg.yinhangka.substring(msg.yinhangka.length - 4, msg.yinhangka.length)
             this.yinghangkalabel.node.color = new cc.Color(225, 225, 225)
             this.yinhangkabindbtn.active = false
         }
@@ -204,22 +210,22 @@ cc.Class({
     },
 
     onClickExit() {
-        // console.log("关闭")
+        // cc.log("关闭")
         this.node.removeFromParent(true)
     },
 
     onClickChangeHeadImg() {
-        console.log("切换头像")
+        cc.log("切换头像")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, 1)
     },
 
     onClickNick() {
-        // console.log("修改昵称")
+        // cc.log("修改昵称")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, 3)
     },
 
     onClickCopy() {
-        console.log("复制id", this.idlabel.string)
+        cc.log("复制id", this.idlabel.string)
         if (gHandler.Reflect) {
             if (gHandler.Reflect.setClipboard(this.idlabel.string)) {
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制id成功")
@@ -230,33 +236,46 @@ cc.Class({
     },
 
     obnClickPhoneBind() {
-        // console.log("绑定手机")
+        // cc.log("绑定手机")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showBiglayer, 3)
     },
 
     onClickAlipayBind() {
-        // console.log("绑定支付宝")
+        // cc.log("绑定支付宝")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, 2)
     },
 
     onClickYinHangKaBind() {
-        // console.log("绑定银行卡")
+        // cc.log("绑定银行卡")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showBiglayer, 2)
     },
 
     onClickChangeAccount() {
-        // console.log("切换账号")
+        // cc.log("切换账号")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, 4)
     },
 
     onClickMusic(event) {
-        // console.log("音乐开关")
+        // cc.log("音乐开关")
         gHandler.audioMgr && gHandler.audioMgr.setBgState(event.isChecked)
     },
 
     onClickAudio(event) {
-        // console.log("音效开关")
+        // cc.log("音效开关")
         gHandler.audioMgr && gHandler.audioMgr.setEffectState(event.isChecked)
+    },
+
+    onClicktxtbgm() {
+        this.cicknum1++
+        if ((this.cicknum1 > 10) && (this.cicknum2 > 10)) {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showConsole, null)
+        }
+    },
+    onClicktxtse() {
+        this.cicknum2++
+        if ((this.cicknum1 > 10) && (this.cicknum2 > 10)) {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showConsole, null)
+        }
     },
     // update (dt) {},
 
