@@ -1,0 +1,41 @@
+
+ani_zjh_youwin.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+light01
+  rotate: false
+  xy: 161, 74
+  size: 45, 42
+  orig: 45, 42
+  offset: 0, 0
+  index: -1
+win_!
+  rotate: false
+  xy: 121, 0
+  size: 38, 116
+  orig: 38, 116
+  offset: 0, 0
+  index: -1
+win_la
+  rotate: false
+  xy: 125, 118
+  size: 117, 116
+  orig: 117, 116
+  offset: 0, 0
+  index: -1
+win_win
+  rotate: false
+  xy: 0, 0
+  size: 119, 116
+  orig: 119, 116
+  offset: 0, 0
+  index: -1
+win_you
+  rotate: false
+  xy: 0, 118
+  size: 123, 116
+  orig: 123, 116
+  offset: 0, 0
+  index: -1
