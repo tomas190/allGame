@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors: burt
- * @LastEditTime: 2019-10-29 15:52:39
+ * @LastEditTime: 2019-11-25 10:31:40
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -38,8 +38,8 @@ cc.Class({
             let hqqHttp = require("hqqHttp");
             gHandler.http = hqqHttp;
         }
-        gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
-        gHandler.audioMgr.playBg("hallbg");
+        // gHandler.audioMgr = hqqAudioMgr.init(gHandler.hallResManager);
+        // gHandler.audioMgr.playBg("hallbg");
         this.subGameBtnMap = {};
         this.subGameBtnArr = [];
         this.sgjsubload = false
