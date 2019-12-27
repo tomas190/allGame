@@ -1,12 +1,38 @@
 /*
  * @Author: burt
  * @Date: 2019-07-29 15:52:25
- * @LastEditors: burt
- * @LastEditTime: 2019-10-21 17:11:59
+ * @LastEditors  : burt
+ * @LastEditTime : 2019-12-19 16:24:22
  * @Description: 通用函数
  */
-
 let commonTools = {
+    headRes: null, // 头像资源缓存
+    loadHeadRes(headid, headsprite) {
+        if (typeof headid == "string" && headid.indexOf(".") != -1) {
+            headid = headid.substring(0, headid.indexOf("."))
+        }
+        headid = parseInt(headid) % 10
+        if (this.headRes) {
+            var spriteFrame = this.headRes.getSpriteFrame(`Avatar` + headid)
+            if (spriteFrame) {
+                headsprite.spriteFrame = spriteFrame;
+            } else {
+                headsprite.spriteFrame = t.getSpriteFrame(`Avatar0`);
+            }
+        } else {
+            cc.loader.loadRes(`/head/im_head`, cc.SpriteAtlas, (err, t) => {
+                this.headRes = t
+                var spriteFrame = t.getSpriteFrame(`Avatar` + headid)
+                if (spriteFrame) {
+                    headsprite.spriteFrame = spriteFrame;
+                } else {
+                    headsprite.spriteFrame = t.getSpriteFrame(`Avatar0`);
+                }
+            })
+
+        }
+    },
+
     /** 判断是否为数字 */
     isNumber(obj) {
         if (typeof obj === 'number' && !isNaN(obj)) {
@@ -310,7 +336,12 @@ let commonTools = {
 	 * @param len 需要保留的小数点后位数
 	 */
     fixedFloat(num, len = 2) {
+        // return ~~(num * 100) / 100;
         return num.toFixed(len);
+    },
+    formatGold(num) {
+        num = num.toFixed(6)
+        return ~~(num * 100) / 100;
     },
     /**
 	 * 填充数字，对于长度不足的，自动补零
@@ -320,12 +351,6 @@ let commonTools = {
     padNumber(num, len) {
         const n = ("" + num).length;
         return Array(len > n ? len - n + 1 || 0 : 0).join("0") + num;
-    },
-    getSM() {
-        let date = new Date()
-        let miao = date.getSeconds()
-        let mill = date.getMilliseconds()
-        return { miao, mill }
     },
 }
 

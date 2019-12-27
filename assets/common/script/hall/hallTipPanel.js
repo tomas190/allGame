@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-10-08 18:13:19
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 09:41:49
+ * @LastEditTime: 2019-11-15 15:53:08
  * @Description: 
  */
 
@@ -27,9 +27,9 @@ cc.Class({
         if (!this.dataList) {
             this.dataList = []
             this.isRun = false
-            this.flytime = 0.8
+            this.flytime = 0.6
             this.delaytime = 1.5
-            this.movedis = 200
+            this.movedis = 150
         }
         for (let i = 0; i < this.dataList.length; i++) {
             if (this.dataList[i] == data) {
@@ -51,13 +51,13 @@ cc.Class({
         this.bg.width = this.label.node.width + 100
         this.bg.heigth = this.label.node.heigth
 
-        this.node.setPosition(this.node.x, this.node.y - this.movedis)
-        this.node.opacity = 200
+        this.node.setPosition(cc.winSize.width / 2, cc.winSize.height / 2 - this.movedis)
+        this.node.opacity = 150
         let m0 = cc.moveBy(this.flytime, cc.v2(0, this.movedis))
         let f0 = cc.fadeTo(this.flytime, 255)
         let d0 = cc.delayTime(this.delaytime)
         let m1 = cc.moveBy(this.flytime, cc.v2(0, this.movedis))
-        let f1 = cc.fadeTo(this.flytime, 200)
+        let f1 = cc.fadeTo(this.flytime, 150)
         let ca = cc.callFunc(() => {
             if (this.dataList.length > 0) {
                 this.showTip(this.dataList.shift())

@@ -1,8 +1,8 @@
 /*
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
- * @LastEditors: burt
- * @LastEditTime: 2019-10-24 19:29:58
+ * @LastEditors  : burt
+ * @LastEditTime : 2019-12-27 14:08:52
  * @Description: 
  */
 
@@ -147,7 +147,7 @@ cc.Class({
             jsb.fileUtils.isFileExist(fullPath) && jsb.fileUtils.removeFile(fullPath);
             cc.loader.release(fullPath);
         }
-
+        if (gHandler.gameGlobal.isdev) return
         let imgurl = "http://" + gHandler.appGlobal.server + "/Game/Verify/createCaptcha?"
         imgurl += "id=" + gHandler.appGlobal.gameuser.id;
         imgurl += "&token=" + gHandler.gameGlobal.token;
@@ -244,6 +244,10 @@ cc.Class({
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入手机号")
             return
         }
+        if (phonenum[0] != "1") {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入正确的手机号")
+            return
+        }
         if (yanzhenmanum == "") {
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入图形验证码")
             return
@@ -279,7 +283,11 @@ cc.Class({
                     }
                 }, 1000)
             } else {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取手机验证码失败")
+                if (data.code == 203 && data.msg == "图片验证码错误") {
+                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "输入正确的图形验证码")
+                } else {
+                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取失败:" + data.msg)
+                }
             }
         }
         let outcallback = () => { // 账号密码登录超时，uuid登录
@@ -309,12 +317,13 @@ cc.Class({
         }
 
         let callback = (data) => {
-            cc.log("成功注册正式账号", data)
+            cc.log("成功注册正式账号", data.msg)
             if (data.code == 200) {
                 gHandler.setPlayerinfo({ phone_number: data.msg })
                 this.getGold(data.msg)
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册正式账号成功")
             } else {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册正式账号失败")
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册失败：" + data.msg)
             }
         }
 
@@ -372,23 +381,30 @@ cc.Class({
         }
 
         let callback = (data) => {
-            cc.log("重置账号密码", data)
+            cc.log("重置账号密码", data.msg)
             if (data.code == 200) {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "重置账号密码成功")
                 this.onClickExit()
             } else {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "重置账号密码失败")
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "重置失败：" + data.msg)
             }
         }
 
         let outcallback = () => {
-
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
         }
 
-        let endurl = gHandler.appGlobal.getIpPostEndUrl(5)
+        let endurl = gHandler.appGlobal.getIpPostEndUrl(4)
         let data = {
-            // account_pass:
-            // id:
+            phone_number: phonenum,
+            id: gHandler.gameGlobal.player.id,
+            code: capchanum,
+            password: passnum,
+            captcha: yanzhenmanum,
+            token: gHandler.gameGlobal.token,
         }
+        cc.log("数据", phonenum, passnum, capchanum, data)
+        cc.log('发送的地址', gHandler.appGlobal.server + endurl)
         gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
     },
 

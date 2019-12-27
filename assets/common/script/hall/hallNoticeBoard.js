@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-30 09:11:37
  * @LastEditors: burt
- * @LastEditTime: 2019-11-25 10:40:52
+ * @LastEditTime: 2019-11-18 15:42:28
  * @Description: 公告板
  */
 let gHandler = require("gHandler");
@@ -16,14 +16,16 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
+        
+    },
+    /** enabled和active属性从false变为true时 */
+    onEnable() { 
         this.isRoll = false
         gHandler.eventMgr.register(gHandler.eventMgr.addSliderNotice, "hallNoticeBoard", this.addSliderNotice.bind(this))
         if (gHandler.gameGlobal.slideNoticeList.length > 0) {
             this.addSliderNotice(gHandler.gameGlobal.slideNoticeList)
         }
     },
-    /** enabled和active属性从false变为true时 */
-    // onEnable() { },
     /** 通常用于初始化中间状态操作 */
     start() {
         // let testarr = [
@@ -44,7 +46,7 @@ cc.Class({
     addSliderNotice(msg) {
         // cc.log("addSliderNotice", msg)
         for (let i = 0; i < msg.length; i++) {
-            this.addNotice(msg[i], 1)
+            this.addNotice(msg[i])
         }
         if (!this.isRoll) {
             this.isRoll = true;
@@ -56,12 +58,9 @@ cc.Class({
      * @param {notice} 公告文字（富文本表示<color=#00ff00>RichText</color>）
      * @param {time} 公告滚动次数
      */
-    addNotice(notice, time) {
+    addNotice(notice) {
         if (!this.noticeList) {
             this.noticeList = [];
-        }
-        if (isNaN(time)) {
-            time = 1;
         }
         let noticeItem = {
             text: notice.notice,
@@ -95,6 +94,8 @@ cc.Class({
             }, this)
             let seq = cc.sequence(move1, move2, callfunc);
             this.label.node.runAction(seq);
+        } else {
+            this.isRoll = false;
         }
     },
 

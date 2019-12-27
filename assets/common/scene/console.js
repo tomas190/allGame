@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-10-28 13:44:46
  * @LastEditors: burt
- * @LastEditTime: 2019-10-29 11:14:39
+ * @LastEditTime: 2019-12-13 09:24:42
  * @Description: 
  */
 cc.Class({
@@ -20,8 +20,6 @@ cc.Class({
     },
 
     onLoad: function () {
-        // let appGlobal = require("appGlobal");
-        // if (appGlobal && appGlobal.huanjin == "pre") {
         this.contentlist = [this.content]
         this.num = 0
         this.poslist = [cc.v2(0, 0)]
@@ -36,60 +34,87 @@ cc.Class({
         }
         cc.game.addPersistRootNode(this.node);
         this.node.zIndex = cc.macro.MAX_ZINDEX;
-        this.btn.x = -cc.winSize.width / 2 + 50
-        this.btn.y = -25
-        this.btnpos = cc.v2(-cc.winSize.width / 2 + 50, -25)
+        // this.btn.x = -cc.winSize.width / 2 + 50
+        // this.btn.y = -25
+        this.btnpos = this.btn.getPosition()
         this.btn.on(cc.Node.EventType.TOUCH_MOVE, this.onClickMove, this);
         this.btn.on(cc.Node.EventType.TOUCH_END, this.onClickEnd, this);
-        // this.init();
-        // }
     },
 
     init() {
         var self = this;
 
-        console.log = function (str) {
+        console.error = function () {
+            let data = ""
+            for (let i = 0; i < arguments.length; i++) {
+                data += arguments[i] + " "
+            }
+            self.contentlist[self.num].getComponent(cc.Label).string = 'console.error:' + data;
+            self.contentlist[self.num].color = new cc.Color(255, 0, 0)
+            self.check(self)
+        };
+
+        console.warn = function () {
+            let data = ""
+            for (let i = 0; i < arguments.length; i++) {
+                data += arguments[i] + " "
+            }
+            self.contentlist[self.num].getComponent(cc.Label).string = 'console.warn:' + data;
+            self.contentlist[self.num].color = new cc.Color(0, 0, 255)
+            self.check(self)
+        };
+
+        console.log = function () {
             let data = ""
             for (let i = 0; i < arguments.length; i++) {
                 data += arguments[i] + " "
             }
             self.contentlist[self.num].getComponent(cc.Label).string = 'console.log:' + data;
+            self.contentlist[self.num].color = new cc.Color(0, 0, 0)
             self.check(self)
         };
 
-        cc.log = function (str) {
+        cc.log = function () {
             let data = ""
             for (let i = 0; i < arguments.length; i++) {
                 data += arguments[i] + " "
             }
             self.contentlist[self.num].getComponent(cc.Label).string = 'log:' + data;
+            self.contentlist[self.num].color = new cc.Color(0, 0, 0)
+
             self.check(self)
         };
 
-        cc.warn = function (str) {
+        cc.warn = function () {
             let data = ""
             for (let i = 0; i < arguments.length; i++) {
                 data += arguments[i] + " "
             }
             self.contentlist[self.num].getComponent(cc.Label).string = 'warn:' + data;
+            self.contentlist[self.num].color = new cc.Color(0, 0, 255)
+
             self.check(self)
         };
 
-        cc.error = function (str) {
+        cc.error = function () {
             let data = ""
             for (let i = 0; i < arguments.length; i++) {
                 data += arguments[i] + " "
             }
             self.contentlist[self.num].getComponent(cc.Label).string = 'error:' + data;
+            self.contentlist[self.num].color = new cc.Color(255, 0, 0)
+
             self.check(self)
         };
 
-        cc.syslog = function (str) {
+        cc.syslog = function () {
             let data = ""
             for (let i = 0; i < arguments.length; i++) {
                 data += arguments[i] + " "
             }
             self.contentlist[self.num].getComponent(cc.Label).string = 'syslog:' + data;
+            self.contentlist[self.num].color = new cc.Color(255, 0, 0)
+
             self.check(self)
         };
 
@@ -120,7 +145,6 @@ cc.Class({
         let pos = event.touch.getLocation()
         pos = this.node.convertToNodeSpaceAR(pos)
         if (pos.x <= -cc.winSize.width / 2 + 50 || pos.y >= -25 || pos.x >= cc.winSize.width / 2 - 50 || pos.y <= -cc.winSize.height + 25) {
-            cc.log("嗨，孙贼，你逃不出我的五指山的")
         } else if (this.btnpos.x != pos.x || this.btnpos.y != pos.y) {
             this.btn.setPosition(pos)
         } else {

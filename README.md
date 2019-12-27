@@ -1,11 +1,26 @@
 <!--
  * @Author: burt
  * @Date: 2019-08-15 14:28:50
- * @LastEditors: burt
- * @LastEditTime: 2019-10-29 15:59:44
+ * @LastEditors  : burt
+ * @LastEditTime : 2019-12-27 14:15:25
  * @Description: 
  -->
 # all hqq native combined-game project
+
+12.27更新{
+	合并建议：
+	Git merge 会有很多冲突，可以采用直接删除本地大厅文件夹，从工程文件夹内直接拖至cocos引擎资源管理器替换原有文件夹
+
+	大厅背景音乐播放接口
+	gHandler.audioMgr.playBg()
+	gHandler.audioMgr.stopBg()
+	
+	大厅提示小界面接口
+	gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 10, msg:"需要显示的内容",ensurefunc:function(){"确定按钮的调用的函数"} })
+	
+
+	大厅代码只删除了一个登陆模块
+}
 
 10.29更新{
 	头像图片资源修改，由原来的20个，改为10个，根据头像图片取10余数，获取对应头像

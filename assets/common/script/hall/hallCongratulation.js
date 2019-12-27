@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-10-11 18:07:01
  * @LastEditors: burt
- * @LastEditTime: 2019-10-24 09:32:41
+ * @LastEditTime: 2019-12-17 14:35:43
  * @Description: 恭喜获得金币
  */
 
@@ -16,7 +16,7 @@ cc.Class({
     },
 
     onLoad() {
-        
+
     },
     // start() {},
     init(data) {

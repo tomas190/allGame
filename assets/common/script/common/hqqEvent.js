@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-11 13:46:20
  * @LastEditors: burt
- * @LastEditTime: 2019-10-29 15:54:55
+ * @LastEditTime: 2019-12-13 14:20:39
  * @Description: 事件派发中心
  */
 
@@ -11,6 +11,9 @@ let hqqEvent = {
     hotCheckup: 1, // 热更检查
     hotProgress: 2, // 热更过程
     hotFinish: 3, // 热更结束
+    hotUp: 4, // 待更新状态
+    hotCheck: 5, // 文件检测阶段
+    hotWait: 6, // 暂停更新
 
     setPlayerinfo: 10, // 设置玩家数据
     refreshPlayerinfo: 11, // 刷新玩家数据显示
@@ -26,18 +29,19 @@ let hqqEvent = {
     showNotice: 26, // 公告界面
     showCongratulation: 27, // 恭喜获得金币
     showPayScene: 28, // 显示充提界面
-    showConsole: 29, // 显示console
+    showDownTip: 29, // 显示下拉框
+    showConsole: 30, // 显示log界面
 
-    onReceiveNologin: 30, // 
-    onReceiveBroadcast: 31, // 
-    onReceiveLogin: 32, // 
-    onReceiveNotice: 33, // 
-    onReceiveLoginout: 34, // 
-    onReceiveChangeBanlance: 35, // 
+    onReceiveNologin: 40, // 
+    onReceiveBroadcast: 41, // 
+    onReceiveLogin: 42, // 
+    onReceiveNotice: 43, // 
+    onReceiveLoginout: 44, // 
+    onReceiveChangeBanlance: 45, // 
 
-    getPayInfo: 40,  // 主动获取支付宝银行卡绑定信息
+    getPayInfo: 50,  // 主动获取支付宝银行卡绑定信息
 
-    refreshHallTips: 50, // 刷新大厅提示 广告，聊天，收益
+    refreshHallTips: 60, // 刷新大厅提示 广告，聊天，收益
 
     init() {
         this.mapReciver = {};
@@ -79,7 +83,9 @@ let hqqEvent = {
                 for (let i = 1; i < arguments.length; i++) {
                     paralist.push(arguments[i])
                 }
-                this.mapReciver[event][className](...paralist)
+                if (this.mapReciver[event][className]) {
+                    this.mapReciver[event][className](...paralist)
+                }
             }
         }
     },

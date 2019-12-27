@@ -1,8 +1,8 @@
 /*
  * @Author: burt
  * @Date: 2019-09-30 14:03:59
- * @LastEditors: burt
- * @LastEditTime: 2019-10-29 15:54:13
+ * @LastEditors  : burt
+ * @LastEditTime : 2019-12-27 14:06:27
  * @Description: 
  */
 
@@ -11,6 +11,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        txt_se: cc.Node,
+        txt_bgm: cc.Node,
         versionlabel: cc.Label,
         phonebindbtn: cc.Node,
         alipaybindbtn: cc.Node,
@@ -29,24 +31,26 @@ cc.Class({
     },
 
     onLoad() {
-        this.cicknum1 = 0
-        this.cicknum2 = 0
+        this.num0 = 0
+        this.num1 = 0
         let str = "版本：" + (gHandler.localStorage.getGlobal().versionKey || "1.0.0")
         if (cc.sys.isNative && cc.sys.os != "Windows") {
             str += "剪切板：" + gHandler.Reflect.getClipboard()
         }
         this.versionlabel.string = str
+        if (cc.Button.prototype.setSoundEffect) {
+            this.txt_bgm.getComponent(cc.Button).setSoundEffect(false)
+            this.txt_se.getComponent(cc.Button).setSoundEffect(false)
+        }
     },
 
     start() {
     },
 
     init(data) {
-        if (gHandler.gameGlobal.isdev) return
         let player = gHandler.gameGlobal.player
-        // this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFrame(player.headurl)
-        this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFramePlist(player.headurl)
-        this.goldlabel.string = gHandler.commonTools.fixedFloat(player.gold).replace(".", "/")
+        gHandler.commonTools.loadHeadRes(player.headurl, this.headimg)
+        this.goldlabel.string = gHandler.commonTools.formatGold(player.gold).toString().replace(".", "/")
         this.nicklabel.string = player.nick
         this.idlabel.string = player.id
         if (player.phonenum) {
@@ -92,11 +96,12 @@ cc.Class({
     },
 
     getPayInfo() {
+        if (gHandler.gameGlobal.isdev) return
         let endurl = "/api/with_draw/index?user_id=" + gHandler.gameGlobal.pay.user_id
         endurl += "&token=e40f01afbb1b9ae3dd6747ced5bca532&package_id=" + gHandler.gameGlobal.pay.package_id
         endurl += "&version=1"
         let callback = (data) => {
-            cc.log("getPayInfo callback", data)
+            // cc.log("getPayInfo callback", data)
             if (data && data.status == 0) {
                 let list = data.data.list
                 let isNoAlipay = true
@@ -133,8 +138,9 @@ cc.Class({
         let outcallback = () => { // 账号密码登录超时，uuid登录
         }
         if (gHandler.gameGlobal.pay.pay_host == "") {
+            gHandler.logMgr.time("最快的pay地址")
             let qcallback = (url) => {
-                gHandler.logMgr.log("最快的pay地址", url)
+                gHandler.logMgr.timeEnd("最快的pay地址", url)
                 gHandler.gameGlobal.pay.pay_host = url;
                 this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
             }
@@ -183,13 +189,15 @@ cc.Class({
             this.goldlabel.string = msg.game_gold.toString().replace(".", "/")
         }
         if (msg.game_img) {
-            // this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFrame(msg.game_img)
-            this.headimg.spriteFrame = gHandler.hallResManager.getHallHeadFramePlist(msg.game_img)
+            gHandler.commonTools.loadHeadRes(msg.game_img, this.headimg)
         }
         if (msg.phone_number) {
             this.phonelabel.string = msg.phone_number
             this.phonelabel.node.color = new cc.Color(225, 225, 225)
             this.phonebindbtn.active = false
+        } else if (msg.phone_number == "") {
+            this.phonelabel.string = "暂未绑定手机"
+            this.phonelabel.node.color = new cc.Color(152, 152, 152)
         }
         if (msg.alipay) {
             this.alipaylabel.string = msg.alipay.substring(0, 2) + "** **** **" + msg.alipay.substring(msg.alipay.length - 2, msg.alipay.length)
@@ -215,17 +223,17 @@ cc.Class({
     },
 
     onClickChangeHeadImg() {
-        cc.log("切换头像")
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, 1)
+        // cc.log("切换头像")
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 1 })
     },
 
     onClickNick() {
         // cc.log("修改昵称")
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, 3)
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 3 })
     },
 
     onClickCopy() {
-        cc.log("复制id", this.idlabel.string)
+        // cc.log("复制id", this.idlabel.string)
         if (gHandler.Reflect) {
             if (gHandler.Reflect.setClipboard(this.idlabel.string)) {
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制id成功")
@@ -242,7 +250,7 @@ cc.Class({
 
     onClickAlipayBind() {
         // cc.log("绑定支付宝")
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, 2)
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 2 })
     },
 
     onClickYinHangKaBind() {
@@ -252,7 +260,7 @@ cc.Class({
 
     onClickChangeAccount() {
         // cc.log("切换账号")
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, 4)
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 4 })
     },
 
     onClickMusic(event) {
@@ -265,18 +273,24 @@ cc.Class({
         gHandler.audioMgr && gHandler.audioMgr.setEffectState(event.isChecked)
     },
 
-    onClicktxtbgm() {
-        this.cicknum1++
-        if ((this.cicknum1 > 10) && (this.cicknum2 > 10)) {
+    onClicktxt_se() {
+        this.num0++
+        if (this.num0 > 10 && this.num1 > 10) {
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showConsole, null)
         }
     },
-    onClicktxtse() {
-        this.cicknum2++
-        if ((this.cicknum1 > 10) && (this.cicknum2 > 10)) {
+    onClicktxt_bgm() {
+        this.num1++
+        if (this.num0 > 10 && this.num1 > 10) {
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showConsole, null)
         }
     },
+
+    onclickDownApk() {
+        gHandler.appGlobal.idDownApk = true
+        cc.director.loadScene('loading')
+    },
+
     // update (dt) {},
 
     onEnable() {
