@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-05 16:17:41
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-24 15:00:59
+ * @LastEditTime : 2020-01-20 19:12:28
  * @Description: java原生调用
  */
 
@@ -15,7 +15,7 @@ let myReflect = {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 ret = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/NativeAndroidClass", "getUniqueIdAction", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-
+                ret = jsb.reflection.callStaticMethod("NativeOcClass", "getIDFAAction");
             }
         }
         return ret
@@ -28,7 +28,7 @@ let myReflect = {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 ret = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getClipBoardText", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-
+                ret = jsb.reflection.callStaticMethod("NativeOcClass", "getClipBoardText");
             }
         }
         console.log("getClipboard", ret)
@@ -42,7 +42,7 @@ let myReflect = {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 ret = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "clipBoardAction", "(Ljava/lang/String;)Z", text.toString());
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-
+                ret = jsb.reflection.callStaticMethod("NativeOcClass", "clipBoardAction:", text);
             }
         }
         console.log("setClipboard", ret)
@@ -51,33 +51,33 @@ let myReflect = {
     /** 设置屏幕横竖切换 portrait 竖屏 landscape 横屏 */
     setOrientation(orientation, width, height) {
         var size = cc.view.getFrameSize();
+        width = width || size.width;
+        height = height || size.height;
+        if (orientation == "portrait") {
+            width = 750;
+            height = 1334;
+            cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
+        } else {
+            width = 1334;
+            height = 750;
+            cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE)
+        }
+        cc.view.setFrameSize(width, height);
+        cc.view.setDesignResolutionSize(width, height, cc.ResolutionPolicy.SHOW_ALL);
         if (cc.sys.isBrowser) {
-            if (orientation == "portrait") {
-                cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
-            } else {
-                cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE)
-            }
-            width = width || size.width;
-            height = height || size.height;
-            cc.view.setFrameSize(width, height);
-            // 更改分辨率
-            cc.view.setDesignResolutionSize(width, height, cc.ResolutionPolicy.SHOW_ALL);
         } else {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 if (orientation == "portrait") {
                     jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "setOrientation", "(Ljava/lang/String;)V", "V");
-                    cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
                 } else {
                     jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "setOrientation", "(Ljava/lang/String;)V", "L");
-                    cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE)
                 }
-                width = width || size.width;
-                height = height || size.height;
-                cc.view.setFrameSize(width, height);
-                // 更改分辨率
-                cc.view.setDesignResolutionSize(width, height, cc.ResolutionPolicy.SHOW_ALL);
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-
+                if (orientation == "portrait") {
+                    jsb.reflection.callStaticMethod("AppController", "setOritation:", true);
+                } else {
+                    jsb.reflection.callStaticMethod("AppController", "setOritation:", false);
+                }
             }
         }
     },
@@ -119,7 +119,7 @@ let myReflect = {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 versionname = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getAppVersionName", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-
+                versionname = jsb.reflection.callStaticMethod("NativeOcClass", "getAppBuildVersion");
             }
         }
         return versionname;
@@ -167,7 +167,7 @@ let myReflect = {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 name = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getAppPackageName", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-
+                name = jsb.reflection.callStaticMethod("NativeOcClass", "getAppPackageName");
             }
         }
         return name;

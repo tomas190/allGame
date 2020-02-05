@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 08:41:42
+ * @LastEditTime : 2020-01-10 10:54:58
  * @Description: 
  */
 
@@ -19,6 +19,7 @@ cc.Class({
         download: cc.Node,
         tiplayer: cc.Node,
         tiplayerinfo: cc.Label,
+        iostip: cc.Node,
 
         exitbtn: cc.Node,
         surecg: cc.Node,
@@ -106,15 +107,7 @@ cc.Class({
                 break;
         }
     },
-    openUrl() {
-        let endurl = '?token=' + gHandler.gameGlobal.token + '&deviceid=' + gHandler.appGlobal.deviceID + '&acconunt=' + gHandler.gameGlobal.player.account_name
-        cc.sys.openURL('http://game.539316.com/' + endurl)
-        // if (gHandler.Reflect.setClipboard('http://game.539316.com/' + endurl)) {
-        //     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制地址成功")
-        // } else {
-        //     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制地址失败")
-        // }
-    },
+
     // 清除本地缓存及可读写路径
     clearLocalData() {
         let islocalstorageClear = false
@@ -135,15 +128,7 @@ cc.Class({
         if (gHandler.appDownUrl) {
             cc.sys.openURL(gHandler.appDownUrl)
         } else {
-            let url
-            if (gHandler.appGlobal.huanjin == 'dev') {
-                url = "http://161.117.178.174:12349/com.test.dev.android/apps/app-release.apk"
-            } else if (gHandler.appGlobal.huanjin == 'pre') {
-                url = "http://18.176.74.76:12349/com.test.pre.android/apps/app-release.apk"
-            } else {
-                url = "http://35.220.204.211:12349/com.test.online.android/apps/app-release.apk"
-            }
-            cc.sys.openURL(url)
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "下载链接错误")
         }
     },
     nologinCallback() {

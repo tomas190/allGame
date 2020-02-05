@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 18:52:11
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 10:23:27
+ * @LastEditTime : 2020-01-21 10:55:22
  * @Description: 游戏壳全局索引和数据
  */
 let gHandler = require("gHandler");
@@ -12,11 +12,11 @@ let appGlobal = {
     huanjin: "dev", // pre online
     // huanjin: "pre", // pre online
     // huanjin: "online", // pre online
-    os: "android", // 平台 ios
 
-    // deviceID: "100000004",
+    // deviceID: "100000005",
     // deviceID: "1000000000",
-    deviceID: "123456789",
+    deviceID: "",
+    os: "android", // 平台 android ios
 
     secretlist: [ // 密码本
         "https://lgroup000.gitlab.io/meta/data_q.json",
@@ -88,6 +88,7 @@ let appGlobal = {
         } else if (sys == 2) { // windows
             this.packgeName = this.androidPackgeName;
             this.platform = this.androidPlatform;
+            this.os = "android";
             if (cc.sys.isBrowser) {
                 this.addJsClip()
             }
@@ -149,6 +150,7 @@ let appGlobal = {
                 let time = (now.getTime() / 1000) >> 0;
                 endurl += "/Common/Notice/getNotice?" // 获取公告
                 endurl += "&id=" + appGlobal.gameuser.id;
+                endurl += "&platform_key=" + appGlobal.remoteToken; // terrell 1.2
                 let query = JSON.stringify({
                     'package_ids': { $elemMatch: { $eq: appGlobal.gameuser.package_id } },
                     'is_open': 1,
@@ -205,43 +207,49 @@ let appGlobal = {
         return endurl
     },
 
-    getAutoLoginEndurl() { // code 为 总代号
-        let endurl = ""
-        endurl += "/Game/login/firstLogin?" // 首次登陆
-        endurl += "&uuid=" + appGlobal.deviceID;
-        endurl += "&package_name=" + appGlobal.packgeName;
-        endurl += "&os=" + appGlobal.os;
+    // getAutoLoginEndurl() { // code 为 总代号
+    //     let endurl = ""
+    //     endurl += "/Game/login/firstLogin?" // 首次登陆
+    //     endurl += "&uuid=" + appGlobal.deviceID;
+    //     endurl += "&package_name=" + appGlobal.packgeName;
+    //     endurl += "&os=" + appGlobal.os;
+    //     endurl += "&code=" + this.getGeneralAgency();
+    //     endurl += "&unique_id=" + appGlobal.unique_id;
+    //     endurl += "&account_name=" + gHandler.gameGlobal.player.account_name;
+    //     endurl += "&account_pass=" + gHandler.gameGlobal.player.account_pass;
+    //     endurl += "&token=" + gHandler.gameGlobal.token;
+    //     return endurl
+    // },
+    /**
+     * @Description: 获取总代号
+     */
+    getGeneralAgency() {
         if (this.pinpai == "test") {
             if (this.huanjin == 'dev') {
-                endurl += "&code=" + 873797373;
+                return 351027469;
             } else if (this.huanjin == 'pre') {
-                endurl += "&code=" + 818392292;
+                return 319010216;
             } else {
-                endurl += "&code=" + 442619406;
+                return 442619406;
             }
         } else if (this.pinpai == "debi") {
             if (this.huanjin == 'dev') {
-                endurl += "&code=" + 638044957;
+                return 970374128;
             } else if (this.huanjin == 'pre') {
-                endurl += "&code=" + 818392292;
+                return 218638346;
             } else {
-                endurl += "&code=" + 442619406;
+                return 770256905;
             }
         } else if (this.pinpai == "qibao") {
             if (this.huanjin == 'dev') {
-                endurl += "&code=" + 638044957;
+                return 638044957;
             } else if (this.huanjin == 'pre') {
-                endurl += "&code=" + 818392292;
+                return 818392292;
             } else {
-                endurl += "&code=" + 442619406;
+                return 442619406;
             }
         }
-        endurl += "&unique_id=" + appGlobal.unique_id;
-        endurl += "&account_name=" + gHandler.gameGlobal.player.account_name;
-        endurl += "&account_pass=" + gHandler.gameGlobal.player.account_pass;
-        endurl += "&token=" + gHandler.gameGlobal.token;
-        return endurl
-    },
+    }
 }
 
 module.exports = appGlobal;

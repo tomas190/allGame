@@ -1,8 +1,8 @@
 /*
  * @Author: burt
  * @Date: 2019-10-23 11:22:51
- * @LastEditors: burt
- * @LastEditTime: 2019-11-15 16:11:32
+ * @LastEditors  : burt
+ * @LastEditTime : 2020-01-02 19:31:51
  * @Description: 
  */
 let gHandler = require("gHandler");
@@ -16,7 +16,7 @@ let hqqViewCtr = {
     consoleIndex: cc.macro.MAX_ZINDEX - 10,
     tipPanelIndex: cc.macro.MAX_ZINDEX - 1,
 
-    showLayer(path, script, data, zindex) {
+    showLayer(path, script, data, zindex, ispersist) {
         zindex = zindex || 1000
         let nodename = path.substring(path.lastIndexOf('/') + 1)
         if (cc.director.getScene().getChildByName(nodename)) {
@@ -34,6 +34,9 @@ let hqqViewCtr = {
                 let node = cc.instantiate(prefab)
                 cc.director.getScene().addChild(node, zindex)
                 node.getComponent(script).init(data)
+                if (ispersist) {
+                    cc.game.addPersistRootNode(node);
+                }
             })
         }
     },
@@ -48,6 +51,8 @@ let hqqViewCtr = {
         gHandler.eventMgr.register(gHandler.eventMgr.showPayScene, "hqqViewCtr", this.showPayScene.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.showDownTip, "hqqViewCtr", this.showDownTip.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.showConsole, "hqqViewCtr", this.showConsole.bind(this))
+        gHandler.eventMgr.register(gHandler.eventMgr.showIosWebTip, "hqqViewCtr", this.showIosWebTip.bind(this))
+        gHandler.eventMgr.register(gHandler.eventMgr.showIosTipLayer, "hqqViewCtr", this.showIosTipLayer.bind(this))
         return this
     },
     showSmallsublayer(data) {
@@ -117,6 +122,16 @@ let hqqViewCtr = {
         let path = "hall/prefab/Console"
         let scriptname = "console"
         this.showLayer(path, scriptname, data, this.consoleIndex)
+    },
+    showIosWebTip(data) {
+        let path = "hall/prefab/ioswebtip"
+        let scriptname = "ioswebtip"
+        this.showLayer(path, scriptname, data, this.tipPanelIndex, true)
+    },
+    showIosTipLayer(data) {
+        let path = "hall/prefab/iostiplayer"
+        let scriptname = "iostiplayer"
+        this.showLayer(path, scriptname, data, this.tipPanelIndex)
     },
 
 }

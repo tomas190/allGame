@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 14:03:59
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 14:06:27
+ * @LastEditTime : 2019-12-26 19:49:01
  * @Description: 
  */
 
@@ -96,7 +96,6 @@ cc.Class({
     },
 
     getPayInfo() {
-        if (gHandler.gameGlobal.isdev) return
         let endurl = "/api/with_draw/index?user_id=" + gHandler.gameGlobal.pay.user_id
         endurl += "&token=e40f01afbb1b9ae3dd6747ced5bca532&package_id=" + gHandler.gameGlobal.pay.package_id
         endurl += "&version=1"
@@ -144,6 +143,7 @@ cc.Class({
                 gHandler.gameGlobal.pay.pay_host = url;
                 this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
             }
+            console.log("requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host: " + gHandler.appGlobal.remoteSeverinfo.pay_host + " +/checked");
             gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", qcallback)
         } else {
             this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)

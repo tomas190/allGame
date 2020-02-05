@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-26 19:49:10
+ * @LastEditTime : 2020-01-21 10:34:14
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -52,7 +52,15 @@ hqqWebSocket.prototype = {
     connect(param) {
         this.registerAll()
         this.ip = param || this.ip
-        this.ws = new WebSocket(this.ip)
+        if(cc.sys.platform === cc.sys.ANDROID || cc.sys.os === cc.sys.OS_ANDROID){ //在浏览器调试中，cc.sys.os === cc.sys.OS_ANDROID 是true
+            if(this.ip.indexOf('wss') == -1){
+                this.ws = new WebSocket(this.ip);
+            }else{
+                this.ws = new WebSocket(this.ip, {}, cc.url.raw('resources/hall/cacert.pem'));
+            }
+        }else{
+            this.ws = new WebSocket(this.ip);
+        }
         this.ws.onopen = this.m_onopen.bind(this)
         this.ws.onmessage = this.m_onmessage.bind(this)
         this.ws.onerror = this.m_onerror.bind(this)
@@ -115,9 +123,10 @@ hqqWebSocket.prototype = {
     },
     onReceiveBroadcast(data, msg) {
         // cc.log(" onReceiveBroadcast", msg)
-        let message = msg.data.message;
-        let title = msg.data.send_user.game_nick;
-        let mtype = msg.data.type;
+        msg = msg.data.msg
+        let message = msg.message;
+        let title = msg.send_user.game_nick;
+        let mtype = msg.type;
         if (mtype == 1000) { // im 消息
             gHandler.gameGlobal.imReceive = 1
             gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveBroadcast, mtype)
@@ -150,12 +159,12 @@ hqqWebSocket.prototype = {
     onReceiveNotice(data) {
         cc.log(" onReceiveNotice", data, data.msg)
     },
-    moveBalanceToGame(data) {
-        cc.log(" moveBalanceToGame", data)
-        if (!data.balance || !data.game_gold) return;
+    moveBalanceToGame(data, msg) {
+        cc.log(" moveBalanceToGame", msg)
+        if (!msg.balance || !msg.game_gold) return;
         gHandler.setPlayerinfo({
-            game_gold: data.game_gold,
-            balance: data.balance,
+            game_gold: msg.game_gold,
+            balance: msg.balance,
         })
     },
     onReceivebankerWinSettlement(data) {
@@ -218,7 +227,7 @@ hqqWebSocket.prototype = {
     },
     m_onmessage(msg) {
         let data = JSON.parse(msg.data)
-        // cc.log("data --- ", data)
+        cc.log("data --- ", data)
         this.m_EmitMsg(data.event, data.data.msg, data)
     },
     m_EmitMsg(event, data, msg) {
@@ -241,7 +250,7 @@ hqqWebSocket.prototype = {
         this.m_stopPingPong();
         if (this.needRecon) {
             this.isReconnect = true
-            if (cc.director.getScene().name == "hall") {
+            if (cc.director.getScene().name == "hall" && this.reConnectTime == 0) {
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络断开，正在努力连接中")
             }
             setTimeout(() => {

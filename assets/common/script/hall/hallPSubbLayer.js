@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 14:08:52
+ * @LastEditTime : 2020-01-20 23:44:22
  * @Description: 
  */
 
@@ -25,7 +25,7 @@ cc.Class({
     },
 
     start() {
-
+        console.log("gHandler.gameGlobal.pay.pay_host: ", gHandler.gameGlobal.pay.pay_host);
     },
 
     init(subtype) {
@@ -33,6 +33,7 @@ cc.Class({
         this.showSelect = null
         this.showSelect = false
         this.selectIndex = 0
+        this.time = 0
         this.ensurefunc = () => {
             this.onClickExit()
         }
@@ -147,8 +148,13 @@ cc.Class({
             jsb.fileUtils.isFileExist(fullPath) && jsb.fileUtils.removeFile(fullPath);
             cc.loader.release(fullPath);
         }
-        if (gHandler.gameGlobal.isdev) return
-        let imgurl = "http://" + gHandler.appGlobal.server + "/Game/Verify/createCaptcha?"
+
+        let imgurl = ''
+        if (gHandler.appGlobal.server.indexOf("http:") == -1 && gHandler.appGlobal.server.indexOf("https:") == -1) {
+            imgurl = "http://" + gHandler.appGlobal.server + "/Game/Verify/createCaptcha?"
+        } else {
+            imgurl = gHandler.appGlobal.server + "/Game/Verify/createCaptcha?"
+        }
         imgurl += "id=" + gHandler.appGlobal.gameuser.id;
         imgurl += "&token=" + gHandler.gameGlobal.token;
         let self = this;
@@ -316,46 +322,194 @@ cc.Class({
             return
         }
 
-        let callback = (data) => {
-            cc.log("成功注册正式账号", data.msg)
-            if (data.code == 200) {
-                gHandler.setPlayerinfo({ phone_number: data.msg })
-                this.getGold(data.msg)
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册正式账号成功")
-            } else {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册失败：" + data.msg)
+        // let callback = (data) => {
+        //     cc.log("成功注册正式账号", data.msg)
+        //     if (data.code == 200) {
+        //         gHandler.setPlayerinfo({ phone_number: data.msg })
+        //         this.getGold(data.msg)
+        //         gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册正式账号成功")
+        //     } else {
+        //         gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册失败：" + data.msg)
+        //     }
+        // }
+
+        // let outcallback = () => {
+        //     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
+        // }
+
+        // let endurl = gHandler.appGlobal.getIpPostEndUrl(5)
+        // let data = {
+        //     id: gHandler.gameGlobal.player.id,
+        //     token: gHandler.gameGlobal.token,
+        //     phone_number: phonenum,
+        //     captcha: yanzhenmanum,
+        //     code: capchanum,
+        //     password: passnum,
+        // }
+        // gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
+
+        // let xhr = new XMLHttpRequest();
+        // xhr.onreadystatechange = () => {
+        //     if (xhr.readyState == 4) {
+        //         if (xhr.status >= 200 && xhr.status < 400) {
+        //             let response = xhr.responseText;
+        //             console.log("register response: ", response);
+        //             if (response) {
+        //                 console.log("there is data from response register.");
+        //                 let responsedata = JSON.parse(response);
+        //                 if (responsedata.code == 200) {
+        //                     gHandler.setPlayerinfo({ phone_number: responsedata.msg });
+        //                     this.getGold(responsedata.msg);
+        //                     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册正式账号成功");
+        //                 } else {
+        //                     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册失败：" + data.msg);
+        //                 }
+        //                 console.log("responsedata.status: ", responsedata.status + ", responsedata.code: ", responsedata.code + ", responsedata.msg: ", responsedata.msg);
+        //             } else {
+        //                 console.log("there is no data from response register.");
+        //             }
+        //         } else {
+        //             console.log("response fail from response register.");
+        //             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时");
+        //         }
+        //     }
+        // }
+
+        // let url1 = gHandler.appGlobal.server + gHandler.appGlobal.getIpPostEndUrl(5);
+        // xhr.open("POST", url1, true);
+        // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        // xhr.send("id=" + gHandler.gameGlobal.player.id + "&token=" + gHandler.gameGlobal.token + "&phone_number=" + phonenum + "&captcha=" + yanzhenmanum + "&code=" + capchanum + "&password=" + passnum);
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            gHandler.logMgr.sendMLog("bind phone number onreadystatechange", xhr.readyState, xhr.status, gHandler.gameGlobal.pay.user_id);
+            if (xhr.readyState == 4) {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    let response = xhr.responseText;
+                    console.log("get gold response: ", response);
+                    gHandler.logMgr.sendMLog("bind phone number response: " + response + "   " + gHandler.gameGlobal.pay.user_id);
+                    if (response) {
+                        console.log("there is data from response get gold.");
+                        let responsedata = JSON.parse(response);
+                        // gHandler.logMgr.sendMLog("bind phone number response", gHandler.gameGlobal.pay.user_id, responsedata.status, responsedata.msg, responsedata.code);
+                        if (responsedata.status != 0) {
+                            console.log("fail responsedata.status: ", responsedata.status);
+                            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败:" + responsedata.msg);
+                        } else {
+                            console.log("success responsedata.status: ", responsedata.status);
+                            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币");
+                            gHandler.setPlayerinfo({ phone_number: responsedata.msg });
+                            this.onClickExit();
+                        }
+                    }
+                } else {
+                    gHandler.logMgr.sendMLog("获取免费金币失败", gHandler.gameGlobal.pay.user_id, responsedata.status, responsedata.msg, responsedata.code);
+                    // this.time = this.time + 1; //当成一个活动，金币失败由后端来重试
+                    // if (this.time > 10) {
+                    //     console.log("get gold this.time: ", this.time);
+                    //     return;
+                    // }
+                    // let timer = setTimeout(() => {
+                    //     this.officeloginEnsure();
+                    //     clearTimeout(timer);
+                    // }, 500);
+
+                }
             }
         }
 
-        let outcallback = () => {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
+        let payUrl = gHandler.gameGlobal.pay.pay_host + "/api/activity/bindPhone";
+        let dataStr = "id=" + gHandler.gameGlobal.pay.user_id;
+        if (gHandler.gameGlobal.pay.user_name) {
+            dataStr = dataStr + "&user_name=" + gHandler.gameGlobal.pay.user_name;
+        } else {
+            dataStr = dataStr + "&user_name=" + gHandler.gameGlobal.pay.user_id; //if user_name is null, take the user_id instead, otherwise will get error.
         }
+        dataStr = dataStr + "&package_id=" + gHandler.gameGlobal.pay.package_id;
+        dataStr = dataStr + "&token=e40f01afbb1b9ae3dd6747ced5bca532";
+        dataStr = dataStr + "&phone_number=" + phonenum;
+        dataStr = dataStr + "&captcha=" + yanzhenmanum;
+        dataStr = dataStr + "&code=" + capchanum;
+        dataStr = dataStr + "&password=" + passnum;
+        dataStr = dataStr + "&center_token=" + gHandler.gameGlobal.token;
 
-        let endurl = gHandler.appGlobal.getIpPostEndUrl(5)
-        let data = {
-            id: gHandler.gameGlobal.player.id,
-            token: gHandler.gameGlobal.token,
-            phone_number: phonenum,
-            captcha: yanzhenmanum,
-            code: capchanum,
-            password: passnum,
-        }
-        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
+        gHandler.logMgr.sendMLog("start to post bind phone number", gHandler.gameGlobal.pay.user_id, gHandler.gameGlobal.pay.pay_host, payUrl, gHandler.gameGlobal.pay.user_name, gHandler.gameGlobal.pay.package_id, phonenum, yanzhenmanum, capchanum, passnum, gHandler.gameGlobal.token);
+        gHandler.logMgr.sendMLog("bind phone dataStr: " + dataStr + "   " + gHandler.gameGlobal.pay.user_id);
+        console.log("datastr: ", dataStr);
+        xhr.open("POST", payUrl, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send(dataStr);
+        gHandler.logMgr.sendMLog("post ing bind phone number", gHandler.gameGlobal.pay.user_id, phonenum, payUrl);
     },
     // 注册正式账号获取免费金币 
     getGold(bindPhoneNum) {
-        let payUrl = gHandler.gameGlobal.pay.pay_host + "/api/activity/bindPhone";
-        let callBack = (response) => {
-            if (response.status != 0) return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败:" + response.msg);
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币")
-            this.onClickExit()
+        gHandler.logMgr.log("getGold");
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4) {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    let response = xhr.responseText;
+                    console.log("get gold response: ", response);
+                    if (response) {
+                        console.log("there is data from response get gold.");
+                        let responsedata = JSON.parse(response);
+                        gHandler.logMgr.log("getGold response", responsedata.status, responsedata.msg, responsedata.code);
+                        if (responsedata.status != 0) {
+                            console.log("fail responsedata.status: ", responsedata.status);
+                            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败:" + response.msg);
+                        } else {
+                            console.log("success responsedata.status: ", responsedata.status);
+                            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币");
+                            this.onClickExit();
+                        }
+                    }
+                } else {
+                    gHandler.logMgr.log("获取免费金币失败重试");
+                    this.time = this.time + 1;
+                    if (this.time > 10) {
+                        console.log("get gold this.time: ", this.time);
+                        return;
+                    }
+                    let timer = setTimeout(() => {
+                        this.getGold(bindPhoneNum);
+                        clearTimeout(timer);
+                    }, 500);
+
+                }
+            }
         }
-        let dataStr = "user_id=" + gHandler.gameGlobal.pay.user_id
-        dataStr += "&user_name=" + gHandler.gameGlobal.pay.user_name
-        dataStr += "&phone_number=" + bindPhoneNum
-        dataStr += "&package_id=" + gHandler.gameGlobal.pay.package_id
-        dataStr += "&token=e40f01afbb1b9ae3dd6747ced5bca532"
-        gHandler.http.ajax('POST', payUrl, dataStr, callBack)
+
+        let payUrl = gHandler.gameGlobal.pay.pay_host + "/api/activity/bindPhone";
+        let dataStr = "user_id=" + gHandler.gameGlobal.pay.user_id;
+        dataStr = dataStr + "&user_name=" + gHandler.gameGlobal.pay.user_name;
+        dataStr = dataStr + "&phone_number=" + bindPhoneNum;
+        dataStr = dataStr + "&package_id=" + gHandler.gameGlobal.pay.package_id;
+        dataStr = dataStr + "&token=e40f01afbb1b9ae3dd6747ced5bca532";
+
+        xhr.open("POST", payUrl, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send(dataStr);
+
+        // gHandler.logMgr.log("getGold")
+        // let payUrl = gHandler.gameGlobal.pay.pay_host + "/api/activity/bindPhone";
+        // let callBack = (response) => {
+        //     gHandler.logMgr.log("getGold response", response.status, response.msg, response.code)
+        //     if (response.status != 0) return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败:" + response.msg);
+        //     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币")
+        //     this.onClickExit()
+        // }
+        // let dataStr = "user_id=" + gHandler.gameGlobal.pay.user_id
+        // dataStr += "&user_name=" + gHandler.gameGlobal.pay.user_name
+        // dataStr += "&phone_number=" + bindPhoneNum
+        // dataStr += "&package_id=" + gHandler.gameGlobal.pay.package_id
+        // dataStr += "&token=e40f01afbb1b9ae3dd6747ced5bca532"
+        // let outcallback = () => {
+        //     gHandler.logMgr.log("获取免费金币失败重试")
+        //     this.time++
+        //     if (this.time > 10) return
+        //     this.getGold(bindPhoneNum)
+        // }
+        // gHandler.http.ajax('POST', payUrl, dataStr, callBack, outcallback)
+        // // gHandler.http.majax(payUrl, dataStr, callBack, outcallback)
     },
     // 重置账号密码 确定
     resetpassEnsure() {

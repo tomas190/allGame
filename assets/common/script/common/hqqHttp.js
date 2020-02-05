@@ -2,10 +2,10 @@
  * @Author: burt
  * @Date: 2019-07-29 16:40:03
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-20 15:52:37
+ * @LastEditTime : 2020-01-20 23:02:21
  * @Description: http 
  */
-
+let gHandler = require("gHandler");
 let hqqHttp = {
     m_remoteUrl: "",
     /**
@@ -28,7 +28,6 @@ let hqqHttp = {
         }
         let xhr = new XMLHttpRequest();
         let alreadyCallBack = false;
-        mydata.contenttype && xhr.setRequestHeader("Content-Type", mydata.contenttype)
         let timer = setTimeout(() => {
             if (mydata.outcallback && !alreadyCallBack) {
                 xhr.abort(); // 如果请求已经被发送，则立刻终止请求
@@ -57,8 +56,22 @@ let hqqHttp = {
                 }
             }
         }
-        xhr.open(mydata.method, mydata.urlto, true); // 初始化一个请求
-        xhr.send(mydata.param ? JSON.stringify(mydata.param) : null); // 发送请求，默认是异步请求，请求发送后立刻返回
+        xhr.open(mydata.method, mydata.urlto, true); // 初始化一个请求        
+            if (mydata.contenttype) {
+                xhr.setRequestHeader("Content-Type", mydata.contenttype)
+            } else {
+                xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
+            }
+            var str = ''
+            if (typeof mydata.param == 'object') {
+                for (const key in mydata.param) {
+                    str += `${key}=${mydata.param[key]}&`
+                }
+                str = str.slice(0, -1)
+            } else {
+                str = mydata.param
+            }
+            xhr.send(mydata.param ? str : null); // 发送请求，默认是异步请求，请求发送后立刻返回
     },
     /**
      * @Description: 域名get请求
@@ -103,9 +116,14 @@ let hqqHttp = {
      * @Description: ip方式get请求
      */
     sendRequestIpGet(urlto, endurl, callback, outcallback) {
+        if (urlto.indexOf("http:") == -1 && urlto.indexOf("https:") == -1) {
+            urlto = "http://" + urlto + endurl
+        } else {
+            urlto = urlto + endurl
+        }
         let data = {
             method: 'GET',
-            urlto: "http://" + urlto + endurl,
+            urlto: urlto,
             callback: callback,
             outcallback: outcallback,
             needJsonParse: true,
@@ -116,9 +134,14 @@ let hqqHttp = {
      * @Description: ip方式post请求
      */
     sendRequestIpPost(urlto, param, callback, outcallback) {
+        if (urlto.indexOf("http:") == -1 && urlto.indexOf("https:") == -1) {
+            urlto = "http://" + urlto
+        } else {
+            urlto = urlto
+        }
         let data = {
             method: 'POST',
-            urlto: "http://" + urlto,
+            urlto: urlto,
             param: param,
             callback: callback,
             outcallback: outcallback,
@@ -127,22 +150,20 @@ let hqqHttp = {
         this.sendXMLHttpRequest(data)
     },
     /**
- * @Description: 发送日志
- */
+     * @Description: 发送日志
+     */
     sendRequestLogPost(urlto, param, filepath, callBack) {
-        let str = JSON.stringify(param);
         let xhr = new XMLHttpRequest();
-        let m_url = "http://" + urlto;
-        // 异步请求
+        let m_url = urlto;
+        if (urlto.indexOf("http:") == -1 && urlto.indexOf("https:") == -1) {
+            m_url = "http://" + urlto
+        }
         xhr.open("POST", m_url, true); // 初始化一个请求
-        // xhr.setRequestHeader("Content-Type", "application/json");
         let timer = setTimeout(() => {
             xhr.abort(); // 如果请求已经被发送，则立刻终止请求
-            // callBack && callBack(false)
             clearTimeout(timer);
         }, 3000)
         xhr.onreadystatechange = function () {
-            // cc.log(xhr.readyState, xhr.status)
             if (xhr.readyState == 4) {
                 clearTimeout(timer);
                 if (xhr.status >= 200 && xhr.status < 400) {
@@ -152,7 +173,29 @@ let hqqHttp = {
                 }
             }
         }
+        let str = '';
+        if (gHandler.appGlobal.pinpai == 'test') {
+            xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
+            for (const key in param) {
+                str += `${key}=${param[key]}&`
+            }
+            str = str.slice(0, -1)
+        } else {
+            str = JSON.stringify(param);
+        }
         xhr.send(str); // 发送请求，默认是异步请求，请求发送后立刻返回
+    },
+    majax(payUrl, dataStr, callback, outcallback) {
+        let data = {
+            method: 'POST',
+            urlto: payUrl,
+            param: dataStr,
+            callback: callback,
+            outcallback: outcallback,
+            needJsonParse: true,
+            failcallback: outcallback,
+        }
+        this.sendXMLHttpRequest(data)
     },
     /**
      * @Description: Content-Type  application/x-www-form-urlencoded 请求

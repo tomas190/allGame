@@ -1,8 +1,8 @@
 /*
  * @Author: burt
  * @Date: 2019-09-11 13:46:20
- * @LastEditors: burt
- * @LastEditTime: 2019-12-13 14:20:39
+ * @LastEditors  : burt
+ * @LastEditTime : 2020-01-02 19:30:33
  * @Description: 事件派发中心
  */
 
@@ -31,6 +31,8 @@ let hqqEvent = {
     showPayScene: 28, // 显示充提界面
     showDownTip: 29, // 显示下拉框
     showConsole: 30, // 显示log界面
+    showIosWebTip: 31,  // 显示ios网页添加桌面提示
+    showIosTipLayer: 32,  // 显示ios添加网页版提示界面
 
     onReceiveNologin: 40, // 
     onReceiveBroadcast: 41, // 

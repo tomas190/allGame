@@ -2,14 +2,15 @@
  * @Author: burt
  * @Date: 2019-08-01 13:44:52
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 13:51:20
+ * @LastEditTime : 2020-01-16 19:09:53
  * @Description: 游戏中央模块管理器
  */
 
 let gHandler = {
+
 }
 let gameGlobal = {
-    isdev: true, // 是否开发状态
+    isdev: false, // 是否开发状态
     gameNow: "hall", // 当前游戏的名字
     iconPath: "", // 头像地址前缀
     playerKey: "playerKey",
@@ -54,6 +55,7 @@ let gameGlobal = {
     slideNoticeList: [], // 滚动公告
     imReceive: 0, // im收到的消息
     payReceive: 0, // 收益消息
+    ipList: [], // 本地ip地址列表
 }
 gHandler.gameGlobal = gameGlobal
 
@@ -299,7 +301,7 @@ let gameConfig = {
         "pdk": {
             zhname: "跑得快", // 中文游戏名
             enname: "pdk", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "", // 跳转场景名
+            lanchscene: "pdkroom", // 跳转场景名
             game_id: "5c6a62be7ff09a54amb446aa",
             serverUrl: "", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
@@ -330,6 +332,18 @@ let gameConfig = {
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 19,
             resid: 19,
+            isDown: false,
+        },
+        "pccp": {
+            zhname: "派彩", // 中文游戏名
+            enname: "pccp", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "PaiCai", // 跳转场景名
+            game_id: "569a62be7ff123m117d446aa",
+            serverUrl: "", // 游戏服务器地址
+            hasAccount: false, // 是否已创建子游戏账号
+            remoteData: null, // 服务端发送过来的游戏数据
+            hallid: 20,
+            resid: 20,
             isDown: false,
         },
     },

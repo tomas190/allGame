@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 16:57:02
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 14:02:45
+ * @LastEditTime : 2020-01-18 21:56:32
  * @Description: 通用加载场景
  */
 let gHandler = require("gHandler");
@@ -21,7 +21,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        startAni: sp.Skeleton,
+        test: cc.Node,
+        debi: cc.Node,
+        teststartAni: sp.Skeleton,
+        debistartAni: sp.Skeleton,
         layer: cc.Node,
         downapklabel: cc.Node,
         apkversion: cc.Label,
@@ -38,15 +41,13 @@ cc.Class({
     /** 脚本组件初始化，可以操作this.node // use this for initialization */ // " 开始游戏代码，loading界面加载 D/jswrapper"
     onLoad() {
         console.log("开始游戏代码，loading界面加载")
-
-        this.startAni.setCompleteListener(this.completeListener.bind(this))
-        this.startAni.setAnimation(0, 'animation', false)
-
-        if (cc.sys.platform === cc.sys.ANDROID && cc.sys.os === cc.sys.OS_ANDROID) {
+        if (cc.sys.platform === cc.sys.ANDROID || cc.sys.os === cc.sys.OS_ANDROID) {
             gHandler.appGlobal = appGlobal.init(0);
-        } else if (cc.sys.platform === cc.sys.IPHONE && cc.sys.platform === cc.sys.IPAD && cc.sys.os === cc.sys.OS_IOS) {
-            gHandler.appGlobal = appGlobal.init(1);
-        } else if (cc.sys.platform === cc.sys.WIN32 && cc.sys.os === cc.sys.OS_WINDOWS) {
+        } else if (cc.sys.platform === cc.sys.IPHONE || cc.sys.platform === cc.sys.MACOS || cc.sys.platform === cc.sys.IPAD
+            || cc.sys.os === cc.sys.OS_IOS || cc.sys.os === cc.sys.OS_OSX) {
+            // gHandler.appGlobal = appGlobal.init(1);
+            gHandler.appGlobal = appGlobal.init(0);
+        } else if (cc.sys.platform === cc.sys.WIN32 || cc.sys.os === cc.sys.OS_WINDOWS) {
             gHandler.appGlobal = appGlobal.init(2);
         } else {
             gHandler.appGlobal = appGlobal.init(-1);
@@ -60,6 +61,16 @@ cc.Class({
         gHandler.viewCtr = hqqViewCtr.init();
         gHandler.localStorage = hqqLocalStorage.init();
         gHandler.audioMgr = hqqAudioMgr.init();
+        if (gHandler.appGlobal.pinpai == 'test') {
+            this.teststartAni.setAnimation(0, 'animation', true)
+            this.test.active = true
+            this.debi.active = false
+        } else if (gHandler.appGlobal.pinpai == 'debi') {
+            this.debistartAni.setCompleteListener(this.completeListener.bind(this))
+            this.debistartAni.setAnimation(0, 'animation', false)
+            this.test.active = false
+            this.debi.active = true
+        }
 
         this.tempTime = 0;
         this.state = 0;
@@ -82,6 +93,17 @@ cc.Class({
         if (cc.sys.isBrowser) {
             this.browserDeal()
         }
+
+        this.layer.active = true;
+        if (gHandler.gameGlobal.isdev) {
+            cc.director.loadScene('hall')
+        } else {
+            let appLogin = require("appLogin")
+            gHandler.loginMgr = appLogin;
+            gHandler.loginMgr.init({
+                hallmanifest: this.hallmanifest,
+            })
+        }
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
@@ -103,7 +125,6 @@ cc.Class({
         if (url.indexOf("?") != -1) {
             let strs = url.split("?")[1].split("&");
             for (let i = 0; i < strs.length; i++) {
-                // ?token=c1dbbf63c6d0eaf5b66d897ab2e49983&deviceid=234567991&acconunt=494551945 
                 let temp = strs[i].split("=")[1];
                 if (strs[i].split("=")[0] == "acconunt") {
                     gHandler.webAcconunt = temp;
@@ -114,6 +135,9 @@ cc.Class({
                 }
                 console.log(temp)
             }
+        }
+        if (!gHandler.localStorage.globalGet("noShowIosWebTip")) {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showIosWebTip, null) // ios 网页提示添加桌面
         }
         // this.launchFullscreen(document.documentElement); // 整个网页 启动全屏
     },
@@ -130,7 +154,7 @@ cc.Class({
         }
     },
     completeListener() {
-        this.startAni.setCompleteListener(null)
+        this.debistartAni.setCompleteListener(null)
         this.layer.active = true;
         if (gHandler.gameGlobal.isdev) {
             cc.director.loadScene('hall')
@@ -170,28 +194,16 @@ cc.Class({
                     }
                     gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
                 } else if (gHandler.appGlobal.remoteSeverinfo) {
-                    let remoted = gHandler.appGlobal.remoteSeverinfo[gHandler.appGlobal.os]
-                    let callback = (url) => {
-                        let endurl = remoted.app_down_url.substring(0, remoted.app_down_url.lastIndexOf('/') + 1)
-                        gHandler.appDownUrl = url + endurl + 'app' + remoted.app_version + '.apk'
-                        cc.sys.openURL(gHandler.appDownUrl)
+                    let callback0 = (url) => {
+                        gHandler.gameGlobal.proxy.temp_host = url;
+                        gHandler.appDownUrl = url + "?p=" + gHandler.appGlobal.remoteSeverinfo.id + "&u=" + gHandler.appGlobal.getGeneralAgency() + "&m=" + gHandler.appGlobal.huanjin;
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 8 })
                     }
-                    gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.source_host, '', "/checked", callback)
+                    gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
                 } else {
-                    if (gHandler.appGlobal.huanjin == 'dev') {
-                        gHandler.appDownUrl = "http://161.117.178.174:12349/com.test.dev.android/apps/app-release.apk"
-                    } else if (gHandler.appGlobal.huanjin == 'pre') {
-                        gHandler.appDownUrl = "http://18.176.74.76:12349/com.test.pre.android/apps/app-release.apk"
-                    } else {
-                        gHandler.appDownUrl = "http://35.220.204.211:12349/com.test.online.android/apps/app-release.apk"
-                    }
-                    cc.sys.openURL(gHandler.appDownUrl)
+                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "下载链接错误")
                 }
             }
-            // let hotUpdateMgr = require("hotUpdateMgr");
-            // gHandler.hotUpdateMgr = hotUpdateMgr;
-            // gHandler.hotUpdateMgr.init(this.hallmanifest);
-            // gHandler.hotUpdateMgr.downloadApk(url)
         }
     },
 

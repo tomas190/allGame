@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-29 10:46:50
  * @LastEditors  : burt
- * @LastEditTime : 2019-12-24 18:49:50
+ * @LastEditTime : 2020-01-02 18:40:45
  * @Description: 
  */
 let gHandler = require("gHandler");
@@ -415,7 +415,6 @@ let hotUpdateMgr = {
                 }
                 this._am.loadLocalManifest(nurl);
             } else {
-                // let url = "http://upgrade.539316.com/com.test.pre.android/";
                 let url = gHandler.localStorage.getGlobal().hotServerKey + "/" + gHandler.appGlobal.packgeName + "/";
                 this.log("url", url + this.manifestPre + "project.manifest")
                 var customManifestStr = JSON.stringify({
