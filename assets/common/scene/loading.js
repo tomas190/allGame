@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 16:57:02
  * @LastEditors  : burt
- * @LastEditTime : 2020-01-18 21:56:32
+ * @LastEditTime : 2020-02-06 18:28:21
  * @Description: 通用加载场景
  */
 let gHandler = require("gHandler");
@@ -97,7 +97,7 @@ cc.Class({
         this.layer.active = true;
         if (gHandler.gameGlobal.isdev) {
             cc.director.loadScene('hall')
-        } else {
+        } else if (gHandler.appGlobal.pinpai != 'debi') {
             let appLogin = require("appLogin")
             gHandler.loginMgr = appLogin;
             gHandler.loginMgr.init({

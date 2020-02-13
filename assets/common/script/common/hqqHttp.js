@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 16:40:03
  * @LastEditors  : burt
- * @LastEditTime : 2020-01-20 23:02:21
+ * @LastEditTime : 2020-02-10 18:45:22
  * @Description: http 
  */
 let gHandler = require("gHandler");
@@ -57,26 +57,26 @@ let hqqHttp = {
             }
         }
         xhr.open(mydata.method, mydata.urlto, true); // 初始化一个请求        
-            if (mydata.contenttype) {
-                xhr.setRequestHeader("Content-Type", mydata.contenttype)
-            } else {
-                xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
+        if (mydata.contenttype) {
+            xhr.setRequestHeader("Content-Type", mydata.contenttype)
+        } else {
+            xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
+        }
+        var str = ''
+        if (typeof mydata.param == 'object') {
+            for (const key in mydata.param) {
+                str += `${key}=${mydata.param[key]}&`
             }
-            var str = ''
-            if (typeof mydata.param == 'object') {
-                for (const key in mydata.param) {
-                    str += `${key}=${mydata.param[key]}&`
-                }
-                str = str.slice(0, -1)
-            } else {
-                str = mydata.param
-            }
-            xhr.send(mydata.param ? str : null); // 发送请求，默认是异步请求，请求发送后立刻返回
+            str = str.slice(0, -1)
+        } else {
+            str = mydata.param
+        }
+        xhr.send(mydata.param ? str : null); // 发送请求，默认是异步请求，请求发送后立刻返回
     },
     /**
      * @Description: 域名get请求
      */
-    sendRequestGet(urlto, param, callback, failcallback) {
+    sendRequestGet(urlto, param, callback, failcallback, outcallback) {
         let data = {
             method: 'GET',
             urlto: urlto,
@@ -84,6 +84,7 @@ let hqqHttp = {
             callback: callback,
             needJsonParse: true,
             failcallback: failcallback,
+            outcallback: outcallback,
         }
         this.sendXMLHttpRequest(data)
     },

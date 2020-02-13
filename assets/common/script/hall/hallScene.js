@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-27 14:58:41
  * @LastEditors  : burt
- * @LastEditTime : 2020-01-30 17:02:59
+ * @LastEditTime : 2020-02-13 11:44:22
  * @Description: 大厅场景
  */
 let gHandler = require("gHandler");
@@ -935,7 +935,7 @@ cc.Class({
     // 跳转至子游戏场景
     jumpToSubGame(enname) {
         gHandler.audioMgr.stopBg();
-        if (enname == "hbsl" || enname == 'zrsx1' || enname == 'zrsx2' || enname == 'pccp') { //  真人视讯 红包扫雷 竖屏
+        if (enname == "hbsl" || enname == 'zrsx1' || enname == 'zrsx2' || enname == 'pccp') { //  真人视讯 红包扫雷 派彩 竖屏
             gHandler.Reflect && gHandler.Reflect.setOrientation("portrait")
             if (enname == 'zrsx1') {
                 gHandler.gameGlobal.subGameType = 22
@@ -1053,7 +1053,7 @@ cc.Class({
                 console.log("请配置全民代理场景")
             }
         }
-        if (gHandler.gameGlobal.proxy.temp_host == "") {
+        if (gHandler.gameGlobal.proxy.temp_host == "" || gHandler.gameGlobal.proxy.proxy_host == "") {
             gHandler.logMgr.time("最快的temp_host地址")
             let callback0 = (url) => {
                 gHandler.logMgr.timeEnd("最快的temp_host地址", url)
@@ -1064,6 +1064,7 @@ cc.Class({
             }
             gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
 
+            // gHandler.gameGlobal.proxy.proxy_host = gHandler.appGlobal.remoteSeverinfo.proxy_host[0];
             gHandler.logMgr.time("最快的proxy_host地址")
             let callback1 = (url) => {
                 gHandler.logMgr.timeEnd("最快的proxy_host地址", url)
@@ -1106,7 +1107,6 @@ cc.Class({
                 mcallback && mcallback();
             }
             console.log("requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host: " + gHandler.appGlobal.remoteSeverinfo.pay_host + " +/checked");
-            // gHandler.logMgr.sendMLog("remoteSeverinfo.pay_host: ", gHandler.appGlobal.remoteSeverinfo.pay_host, gHandler.gameGlobal.pay.user_id);
             gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback);
         } else {
             mcallback && mcallback();
@@ -1145,8 +1145,18 @@ cc.Class({
     onClickADPage(event, custom) {
         console.log("点击活动页面", custom)
         if (gHandler.gameGlobal.isdev) return
-        if (custom == 1) {
-            // 复制官网
+        if (custom == 1) { // 复制官网
+            if (gHandler.appGlobal.pinpai == "debi") { // 德比直接打开推广链接
+                gHandler.appDownUrl && cc.sys.openURL(gHandler.appDownUrl)
+            } else {
+                if (gHandler.Reflect) {
+                    if (gHandler.Reflect.setClipboard(gHandler.appGlobal.officialWebsite[gHandler.appGlobal.pinpai])) {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制官网到剪切板成功")
+                    } else {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制官网到剪切板失败")
+                    }
+                }
+            }
         } else if (custom == 2) {
             let enterproxy = function () {
                 if (gHandler.gameConfig.subModel.proxy.lanchscene != "") {
@@ -1177,15 +1187,35 @@ cc.Class({
             } else {
                 enterproxy()
             }
-        } else if (custom == 3) {
-            // 保存下载地址
+        } else if (custom == 3) { // 保存下载地址
+            if (gHandler.Reflect) {
+                if (gHandler.appDownUrl) {
+                    if (gHandler.Reflect.setClipboard(gHandler.appDownUrl)) {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制到剪切板成功")
+                    } else {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制到剪切板失败")
+                    }
+                } else {
+                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取下载链接失败，请重新登陆")
+                }
+            }
         }
     },
     onClickFreeGold(event) {
         console.log("免费金币", event)
         this.clickDelay(event)
         if (gHandler.gameGlobal.isdev) return
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null)
+        if (gHandler.gameGlobal.player.phonenum != "") {
+            if (gHandler.gameConfig.subModel.payActivity.lanchscene != "") {
+                cc.director.loadScene(gHandler.gameConfig.subModel.payActivity.lanchscene)
+            } else {
+                console.log("请配置精彩活动场景")
+            }
+        } else {
+            this.checkFastPayUrl(() => {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null);
+            })
+        }
     },
     onClickIosWeb(event) {
         console.log('打开ios网页')

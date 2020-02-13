@@ -490,7 +490,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "c5eShDLBVBcKlrHEu682uq"
+    "_id": "67cAF6051DgJWcjBIf7PlK"
   },
   {
     "__type__": "cc.Graphics",
@@ -523,7 +523,7 @@
       "a": 255
     },
     "_miterLimit": 10,
-    "_id": "578nwmCE5GGbOHvf9ZUBpg"
+    "_id": "c21Ntt51tPpr2H8ycSbubQ"
   },
   {
     "__type__": "sp.Skeleton",
@@ -1761,7 +1761,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "51Gp8cWXtAfZXC7hIX3pSO"
+    "_id": "d1ycmwL9VFLr7w2qBpv1AJ"
   },
   {
     "__type__": "cc.Label",
@@ -1791,7 +1791,7 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
-    "_id": "26iDeSEOhIuoATMwiFaaw1"
+    "_id": "d1GcBCVrVG24DLHeRdGllO"
   },
   {
     "__type__": "cc.Widget",

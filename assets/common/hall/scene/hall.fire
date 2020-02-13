@@ -5917,7 +5917,7 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "acFi6xdjNKgrZlufbBQqtU"
+    "_id": "ffH+b8gilN+Lrc4zNpmLh2"
   },
   {
     "__type__": "cc.Graphics",
@@ -5950,7 +5950,7 @@
       "a": 255
     },
     "_miterLimit": 10,
-    "_id": "8bruza36lFtJFOcCLXPxmF"
+    "_id": "c7x+ERqHNKNKixDMvsjZus"
   },
   {
     "__type__": "sp.Skeleton",

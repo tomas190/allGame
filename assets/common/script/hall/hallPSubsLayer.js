@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-09-30 16:50:44
  * @LastEditors  : burt
- * @LastEditTime : 2020-01-10 10:54:58
+ * @LastEditTime : 2020-02-11 14:30:40
  * @Description: 
  */
 
@@ -97,7 +97,7 @@ cc.Class({
                 this.surecg.y = -140
                 this.ensurefunc = this.openUrl
                 break;
-            case 10: // 金币不足
+            case 10: // 任意提示信息
                 this.tiplayerinfo.string = data.msg || '金币不足，不能进入该等级的房间'
                 this.tiplayer.active = true
                 this.surecg.y = -140

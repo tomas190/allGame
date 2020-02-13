@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-30 15:38:34
  * @LastEditors  : burt
- * @LastEditTime : 2020-01-20 10:42:51
+ * @LastEditTime : 2020-02-11 14:32:03
  * @Description: 
  */
 let gHandler = require("gHandler");
@@ -55,13 +55,14 @@ let appLogin = {
             gHandler.logMgr.log("browserType - " + cc.sys.browserType);
             gHandler.logMgr.log("browserVersion - " + cc.sys.browserVersion);
         }
-        // appGlobal.clipboard = 'eyJzYWx0IjoiZTFmN2QwOGM5ZjhlIn0=' // debi pre
-        // appGlobal.clipboard = 'eyJzYWx0IjoiM2UwNzBhZDJiM2Q3NiJ9' // debi dev
-        // appGlobal.clipboard = 'eyJzYWx0IjoiZDRlMjgwN2RlYmYyMyJ9' // tert pre
-        // cc.log("appGlobal.clipboard", appGlobal.clipboard)
-        this.loginIndex = 0;
-        this.checkLogin();
-        // gHandler.localStorage.clear();
+
+        // console.log("appGlobal.hotServer", appGlobal.hotServer)
+        if (appGlobal.hotServer && appGlobal.server) { // 本地已经有记录了
+            // this.loginIndex = 0;
+            this.requestFastestHotServer()
+        } else {
+            this.requestSecret(); // 首次登陆
+        }
     },
     /** 本地初始化 */
     localInit() {
@@ -85,20 +86,10 @@ let appLogin = {
 
         if (cc.sys.isBrowser) {
             gHandler.gameGlobal.token = global.tokenKey || gHandler.webToken || ''
-            cc.log('global.playerKey', global.playerKey)
             gHandler.gameGlobal.player.account_name = (global.playerKey && global.playerKey.account_name) || gHandler.webAcconunt
             appGlobal.deviceID = (global.playerKey && global.playerKey.deviceid) || gHandler.webDeviceid || appGlobal.deviceID
         } else {
             gHandler.gameGlobal.token = global.tokenKey || gHandler.gameGlobal.token;
-        }
-    },
-
-    /** 检查本地登录记录 */
-    checkLogin() {
-        if (appGlobal.server) {
-            this.requestGameSeverInfo(appGlobal.server)
-        } else {
-            this.requestSecret(); // 首次登陆
         }
     },
     /** 密码本解密 */
@@ -114,6 +105,7 @@ let appLogin = {
     },
     /** 请求密码本 */
     requestSecret() {
+        // this.loginIndex = 0;
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "请求云端资源")
         let hasreceive = false;
         gHandler.logMgr.time("requestSecret")
@@ -124,10 +116,11 @@ let appLogin = {
                 // console.log("密碼本", data)
                 let book = data[appGlobal.huanjin];
                 gHandler.logMgr.timeEnd("requestSecret", "upgrade:", book.upgrade, ";select:", book.select)
+                // console.log("密碼本服务器列表", book.upgrade)
                 gHandler.localStorage.globalSet(appGlobal.hotServerKey, book.upgrade)
                 appGlobal.codeBook = book.select;
                 gHandler.localStorage.globalSet(appGlobal.codeBookKey, book.select);
-                this.requestFastestEnterServer(book.select);
+                this.requestFastestHotServer();
             }
         }
         for (let i = 0; i < appGlobal.secretlist.length; i++) {
@@ -139,27 +132,37 @@ let appLogin = {
         let urllist = gHandler.localStorage.globalGet(gHandler.appGlobal.hotServerKey)
         if ((urllist instanceof Array)) {
             appGlobal.hotServer = urllist[0]
-            gHandler.logMgr.time("requestFastestHotServer callback")
+            gHandler.logMgr.time("requestFastestHotServer")
             let callback = (url) => {
-                gHandler.logMgr.timeEnd("requestFastestHotServer callback", url)
+                gHandler.logMgr.timeEnd("requestFastestHotServer", url)
                 appGlobal.hotServer = url;
+                this.getRemoteVersionInfo();
             }
-            gHandler.http.requestFastestUrl(urllist, null, "/checked", callback)
+            let outcallback = () => {
+                gHandler.logMgr.log("请求最快的热更服务器失败，重新请求密码本")
+                this.requestSecret();
+            }
+            gHandler.http.requestFastestUrl(urllist, null, "/checked", callback, outcallback)
         } else {
             appGlobal.hotServer = urllist
+            this.getRemoteVersionInfo();
         }
     },
     /** 请求最快的接待服务器 */
     requestFastestEnterServer(urllist) {
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "云端资源检测")
-        gHandler.logMgr.time("requestFastestEnterServer callback")
+        gHandler.logMgr.time("requestFastestEnterServer")
         let callback = (url) => {
-            gHandler.logMgr.timeEnd("requestFastestEnterServer callback", url)
+            gHandler.logMgr.timeEnd("requestFastestEnterServer", url)
             appGlobal.enterServer = url;
             gHandler.localStorage.globalSet(appGlobal.enterServerKey, url);
             this.requestServerList(url, true);
         }
-        gHandler.http.requestFastestUrl(urllist, null, null, callback)
+        let outcallback = () => {
+            gHandler.logMgr.log("请求最快的接待服务器失败，重新请求密码本")
+            this.requestSecret();
+        }
+        gHandler.http.requestFastestUrl(urllist, null, null, callback, outcallback)
     },
     /** 节点服务器解码 */
     decodeServer(response) {
@@ -192,9 +195,9 @@ let appLogin = {
     /** 请求最快的节点服务器 */
     requestFastestServer(urllist) {
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "云端资源点检测")
-        gHandler.logMgr.time("requestFastestServer callback")
+        gHandler.logMgr.time("requestFastestServer")
         let callback = (url) => {
-            gHandler.logMgr.timeEnd("requestFastestServer callback", url)
+            gHandler.logMgr.timeEnd("requestFastestServer", url)
             appGlobal.server = url;
             gHandler.localStorage.globalSet(appGlobal.serverKey, url);
             this.requestGameSeverInfo(url);
@@ -204,39 +207,9 @@ let appLogin = {
             this.requestSecret();
         }
         for (let i = 0; i < urllist.length; i++) {
-            // var pattern = /((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}/g
-            // if (cc.sys.platform === cc.sys.IPHONE || cc.sys.platform === cc.sys.MACOS || cc.sys.platform === cc.sys.IPAD
-            //     || cc.sys.os === cc.sys.OS_IOS || cc.sys.os === cc.sys.OS_OSX) {
-            //     if (urllist[i].indexOf("http:") == -1) {
-            //         if (pattern.test(urllist[i])) {
-            //             delete urllist[i]
-            //         } else {
-            //             urllist[i] = "http://" + urllist[i]
-            //         }
-            //     } else {
-            //         urllist[i] = urllist[i].substring(7)
-            //         if (pattern.test(urllist[i])) {
-            //             delete urllist[i]
-            //         } else {
-            //             urllist[i] = "http://" + urllist[i];
-            //         }
-            //     }
-            // } else {
-            //     if (urllist[i].indexOf("http:") == -1) {
-            //         urllist[i] = "http://" + urllist[i]
-            //     }
-            // }
             if (urllist[i].indexOf("http:") == -1 && urllist[i].indexOf("https:") == -1) {
                 urllist[i] = "http://" + urllist[i];
             }
-            // if (urllist[i].indexOf("://") == -1) {
-            //     if (cc.sys.platform === cc.sys.IPHONE || cc.sys.platform === cc.sys.MACOS || cc.sys.platform === cc.sys.IPAD
-            //         || cc.sys.os === cc.sys.OS_IOS || cc.sys.os === cc.sys.OS_OSX) {
-            //         delete urllist[i]
-            //     } else {
-            //         urllist[i] = "http://" + urllist[i];
-            //     }
-            // }
         }
         gHandler.http.requestFastestUrl(urllist, '', "/checked", callback, outcallback)
     },
@@ -249,17 +222,16 @@ let appLogin = {
             this.log(" getserverinfo callback", data)
             if (data.code === 200) {
                 appGlobal.remoteSeverinfo = data.msg;
-                this.checkApkUpdata();
+                this.requestGameListInfo(appGlobal.server);
             }
         }
         let outcallback = () => {
-            gHandler.logMgr.log("getserverinfo timeout requestSecret again")
+            gHandler.logMgr.log("获取服务器信息失败，重新请求密码本")
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "网络太差，重新登陆")
             this.requestSecret();
         }
         let endurl = appGlobal.remotePath + appGlobal.remoteGetSeverInfo + "?platform_key=" + appGlobal.remoteToken + "&package_name=" + appGlobal.packgeName + "&os=" + appGlobal.os;
         gHandler.http.sendRequestIpGet(url, endurl, callback, outcallback);
-        this.requestFastestHotServer()
     },
     /** 请求游戏列表 */
     requestGameListInfo(url) {
@@ -299,20 +271,47 @@ let appLogin = {
                         }
                     }
                 }
-                this.loginIndex++;
-                if (this.loginIndex == 2) {
-                    this.login();
-                }
+                // this.loginIndex++;
+                // if (this.loginIndex == 2) {
+                this.login();
+                // }
             }
         }
+        let outcallback = () => {
+            gHandler.logMgr.log("获取游戏列表失败，重新请求密码本")
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "网络太差，重新登陆")
+            this.requestSecret();
+        }
         let endurl = appGlobal.remotePath + appGlobal.remoteGetGameList + "?platform_key=" + appGlobal.remoteToken + "&package_id=" + appGlobal.remoteSeverinfo.id;
-        gHandler.http.sendRequestIpGet(url, endurl, callback);
+        gHandler.http.sendRequestIpGet(url, endurl, callback, outcallback);
     },
-    checkApkUpdata() {
-        let remoted = appGlobal.remoteSeverinfo[appGlobal.os]
-        let vA = remoted.app_version.split('.');
+    /**
+     * @Description: 获取云端版本配置文件
+     */
+    getRemoteVersionInfo() {
+        let v = Math.floor(Math.random() * 10000)
+        let packageUrl = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.packgeName + "/" + 'version.json?' + v
+        let callback = (data, url) => {
+            // console.log('getRemoteVersionInfo callback', data, url)
+            this.checkApkUpdata(data)
+        }
+        let failcallback = (status) => {
+            console.log('getRemoteVersionInfo failcallback', status)
+            this.isupdataCallback(false) // 直接跳过更新
+        }
+        let outcallback = () => {
+            console.log('getRemoteVersionInfo outcallback')
+            this.isupdataCallback(false) // 直接跳过更新
+        }
+        gHandler.http.sendRequestGet(packageUrl, null, callback, failcallback, outcallback)
+    },
+    /**
+     * @Description: 检查apk更新  "/com.test.dev.android/temp/1/?packageID=1&M=dev&proxyUserID=351027469"
+     */
+    checkApkUpdata(data) {
+        let vA = data.apkversion.split('.');
         let needUp = false
-        this.log(" 本地 apkVersion", appGlobal.apkVersion, "服务端 apkVersion", remoted.app_version)
+        this.log(" 本地 apkVersion", appGlobal.apkVersion, "服务端 apkVersion", data.apkversion)
         if (appGlobal.apkVersion) {
             let vB = appGlobal.apkVersion.split('.');
             for (var i = 0; i < vA.length; ++i) {
@@ -329,32 +328,41 @@ let appLogin = {
                 needUp = true;
             }
         }
-        if (needUp && !cc.sys.isBrowser && cc.sys.os != "OS X" && cc.sys.os != "Windows") {
-            if (gHandler.gameGlobal.player.account_name) {
-                let callback0 = (url) => {
-                    gHandler.gameGlobal.proxy.temp_host = url;
-                    gHandler.appDownUrl = url + "?p=" + appGlobal.remoteSeverinfo.id + "&u=" + gHandler.gameGlobal.player.account_name + "&m=" + gHandler.appGlobal.huanjin;
-                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 8 })
-                }
-                gHandler.http.requestFastestUrl(appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
-            } else {
-                let callback0 = (url) => {
-                    gHandler.gameGlobal.proxy.temp_host = url;
-                    gHandler.appDownUrl = url + "?p=" + appGlobal.remoteSeverinfo.id + "&u=" + gHandler.appGlobal.getGeneralAgency() + "&m=" + gHandler.appGlobal.huanjin;
-                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 8 })
-                }
-                gHandler.http.requestFastestUrl(appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
+        if (needUp && !cc.sys.isBrowser && cc.sys.os != "OS X" && cc.sys.os != "Windows") { //  
+            let callback0 = (url) => {
+                gHandler.gameGlobal.proxy.temp_host = url;
+                gHandler.appDownUrl = url + "/" + appGlobal.packgeName + "/temp/1/?packageID=" + data[appGlobal.pinpai].packageID + "&M=" + appGlobal.huanjin + "&proxyUserID=" + data[appGlobal.pinpai][appGlobal.huanjin].proxyUserID
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 8 })
             }
+            let outcallback = () => {
+                gHandler.logMgr.log("temp_host请求失败，重新请求密码本")
+                this.requestSecret();
+            }
+            gHandler.http.requestFastestUrl(data.temp_host[appGlobal.huanjin], null, "/checked", callback0, outcallback)
             gHandler.logMgr.log("安装包需要更新")
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "安装包更新")
         } else {
             gHandler.logMgr.log("apk不需要更新")
-            if (cc.sys.isBrowser || cc.sys.os == "Windows") { // 
-                this.loginIndex++;
-            } else {
-                this.hallUpdataCheck(remoted.hall_version);
+            let callback0 = (url) => {
+                gHandler.gameGlobal.proxy.temp_host = url;
+                gHandler.appDownUrl = url + "/" + appGlobal.packgeName + "/temp/1/?packageID=" + data[appGlobal.pinpai].packageID + "&M=" + appGlobal.huanjin + "&proxyUserID=" + data[appGlobal.pinpai][appGlobal.huanjin].proxyUserID
             }
-            this.requestGameListInfo(appGlobal.server);
+            let outcallback = () => {
+                gHandler.logMgr.log("temp_host请求失败，重新请求密码本")
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取下载链接失败")
+            }
+            gHandler.http.requestFastestUrl(data.temp_host[appGlobal.huanjin], null, "/checked", callback0, outcallback)
+            if (cc.sys.isBrowser || cc.sys.os == "Windows") { // 
+                // this.loginIndex++;
+                if (appGlobal.server) {
+                    this.requestGameSeverInfo(appGlobal.server)
+                } else {
+                    let select = gHandler.localStorage.globalGet(appGlobal.codeBookKey)
+                    this.requestFastestEnterServer(select);
+                }
+            } else {
+                this.hallUpdataCheck(data.version.hall);
+            }
         }
     },
     isupdataCallback(bool) {
@@ -364,10 +372,16 @@ let appLogin = {
         } else {
             gHandler.logMgr.log("大厅不需要更新")
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "大厅不需要更新")
-            this.loginIndex++;
-            if (this.loginIndex == 2) {
-                this.login();
+            if (appGlobal.server) {
+                this.requestGameSeverInfo(appGlobal.server)
+            } else {
+                let select = gHandler.localStorage.globalGet(appGlobal.codeBookKey)
+                this.requestFastestEnterServer(select);
             }
+            // this.loginIndex++;
+            // if (this.loginIndex == 2) {
+            //     this.login();
+            // }
         }
     },
     failCallback() {
@@ -389,6 +403,7 @@ let appLogin = {
         gHandler.eventMgr.register(gHandler.eventMgr.hotFail, "appLogin", this.failCallback.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.hotProgress, "appLogin", this.progressCallback.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.hotFinish, "appLogin", this.finishCallback.bind(this))
+        hall_version = hall_version == '1.0.0' ? '' : hall_version
         gHandler.hotUpdateMgr.checkUpdate({
             subname: "hall",
             version: appGlobal.version,
@@ -423,7 +438,7 @@ let appLogin = {
                     this.login2()
                 }
                 let str = "";
-                if(appGlobal.clipboard){
+                if (appGlobal.clipboard) {
                     str = gHandler.base64.decode(appGlobal.clipboard);
                 }
                 // let str = gHandler.base64.decode(appGlobal.clipboard)
@@ -602,15 +617,15 @@ let appLogin = {
                 if (!gHandler.gameGlobal.isdev && gHandler.hallWebSocket) {
                     gHandler.hallWebSocket.close()
                     let url = gHandler.appGlobal.server;
-                    if(url.indexOf("://") == -1){
+                    if (url.indexOf("://") == -1) {
                         url = "ws://" + url;
-                    }else{
+                    } else {
                         let sourl = url.split("://")[1];
                         let header = url.split("://")[0];
                         let soHeader = "";
-                        if(header == "http"){
+                        if (header == "http") {
                             soHeader = "ws://";
-                        }else if(header == "https"){
+                        } else if (header == "https") {
                             soHeader = "wss://";
                         }
                         url = soHeader + sourl;
@@ -648,6 +663,10 @@ let appLogin = {
     autoLogin() {
         gHandler.logMgr.log("autologin")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "自动登录中")
+        if (cc.sys.os === cc.sys.OS_IOS && !gHandler.appGlobal.deviceID) {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { msg: "请打开手机的'设置'里的'隐私'-'广告'，将'限制广告跟踪'设置为关闭，然后重新进入。" })
+            return
+        }
         let callback = (data, url) => {
             this.log(" autologin callback", data, url)
             if (data.code !== 200) {

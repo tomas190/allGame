@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-08-29 10:46:50
  * @LastEditors  : burt
- * @LastEditTime : 2020-01-02 18:40:45
+ * @LastEditTime : 2020-02-10 19:55:35
  * @Description: 
  */
 let gHandler = require("gHandler");
@@ -15,7 +15,7 @@ let hotUpdateMgr = {
     _data: {
         subname: "",
         version: "1.0.0",
-        remotev: '1.0.0',
+        remotev: '',
     },
     updataList: [],
     data: {},
@@ -500,6 +500,20 @@ let hotUpdateMgr = {
         return false
     },
     /**
+     * @Description: 热更失败或者不需要更新
+     */
+    failcallback(status) {
+        status && this.log("更新失败 status", status)
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheckup, false, this.data.subname)
+        this._am.setEventCallback(null);
+        this._checkListener = null;
+        this._am = null;
+        if (this.updataList.length > 0) {
+            let data = this.updataList.shift();
+            this.checkUpdate(data);
+        }
+    },
+    /**
      * @Description: 开始更新
      */
     checkUpdate: function (data) {
@@ -532,20 +546,30 @@ let hotUpdateMgr = {
             this.log('加载本地manifest文件失败 ...');
             return false;
         }
-        // this._am.setEventCallback(this._checkCb.bind(this));
-        // this._am.checkUpdate(); // downloadVersion
-
         this._am.setEventCallback(this._updateCb.bind(this));
 
         let hallversion = gHandler.localStorage.globalGet(gHandler.appGlobal.versionKey)
+        hallversion = hallversion ? hallversion : ''
         this.log('开始更新 version', this.data.version, 'hallversion', hallversion)
         let verstr = ''
-        if (this.data.subname == 'hall') {
+        if (this.data.subname == 'hall' && this.data.remotev) {
             verstr = this.data.remotev + '/'
         } else if (hallversion) {
             verstr = hallversion + '/'
         }
         let packageUrl = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.packgeName + "/" + verstr
+        let callback = (responseText) => {
+            // console.log('responseText version.manifest', responseText)
+            if (this.versionCompareHandle(this.data.version, responseText.version) == -1) { // 需要更新
+                this.startUpdate(packageUrl)
+            } else { // 已经是最新的版本，不需要更新
+                this.failcallback()
+            }
+        }
+        gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'version.manifest', null, callback, this.failcallback.bind(this))
+        return true;
+    },
+    startUpdate(packageUrl) {
         let callback = (responseText) => {
             this.log('responseText.packageUrl', responseText.packageUrl)
             responseText.packageUrl = packageUrl
@@ -554,21 +578,15 @@ let hotUpdateMgr = {
             var manifest = new jsb.Manifest(customManifestStr, this._storagePath);
             this.log('loadRemoteManifest', this._am.loadRemoteManifest(manifest))
         }
-        let failcallback = (status) => {
-            this.log("更新失败 status", status)
-            this.log("packageUrl", packageUrl)
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheckup, false, this.data.subname)
-            this._am.setEventCallback(null);
-            this._checkListener = null;
-            this._am = null;
-            if (this.updataList.length > 0) {
-                let data = this.updataList.shift();
-                this.checkUpdate(data);
-            }
+        let falicallback = (status) => {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "热更project失败" + status)
+            this.startUpdate(packageUrl)
         }
-        gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'project.manifest', null, callback, failcallback)
-
-        return true;
+        let outcallback = () => {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "热更project超时")
+            this.startUpdate(packageUrl)
+        }
+        gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'project.manifest', null, callback, falicallback, outcallback)
     },
     // 正式进行热更
     hotUpdate: function (subname) {
@@ -635,7 +653,7 @@ let hotUpdateMgr = {
         for (let i = 0; i < arguments.length; i++) {
             data += arguments[i] + " "
         }
-        cc.log("_HotLog_", data);
+        console.log("_HotLog_", data);
         this._log += data + this._tag;
     },
     sendlog() {

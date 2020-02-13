@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-07-29 15:11:55
  * @LastEditors  : burt
- * @LastEditTime : 2020-01-21 10:34:14
+ * @LastEditTime : 2020-02-12 20:49:08
  * @Description: 长连接与心跳包
  */
 let gHandler = require("gHandler");
@@ -52,13 +52,13 @@ hqqWebSocket.prototype = {
     connect(param) {
         this.registerAll()
         this.ip = param || this.ip
-        if(cc.sys.platform === cc.sys.ANDROID || cc.sys.os === cc.sys.OS_ANDROID){ //在浏览器调试中，cc.sys.os === cc.sys.OS_ANDROID 是true
-            if(this.ip.indexOf('wss') == -1){
+        if (cc.sys.platform === cc.sys.ANDROID || cc.sys.os === cc.sys.OS_ANDROID) { //在浏览器调试中，cc.sys.os === cc.sys.OS_ANDROID 是true
+            if (this.ip.indexOf('wss') == -1) {
                 this.ws = new WebSocket(this.ip);
-            }else{
+            } else {
                 this.ws = new WebSocket(this.ip, {}, cc.url.raw('resources/hall/cacert.pem'));
             }
-        }else{
+        } else {
             this.ws = new WebSocket(this.ip);
         }
         this.ws.onopen = this.m_onopen.bind(this)
@@ -108,7 +108,7 @@ hqqWebSocket.prototype = {
         this.register("Broadcast", "hallWebSocket", this.onReceiveBroadcast.bind(this)) // 广播
         this.register("/Game/Login/login", "hallWebSocket", this.onReceiveLogin.bind(this)) // 登陆回调
         this.register("/GameServer/Notice/notice", "hallWebSocket", this.onReceiveNotice.bind(this)) // 跑马灯 下拉框 等
-        this.register("/Proxy/User/moveBalanceToGame", "hallWebSocket", this.moveBalanceToGame.bind(this)) // 代理押金转移
+        this.register("/Proxy/Proxy/moveBalanceToGame", "hallWebSocket", this.moveBalanceToGame.bind(this)) // 代理押金转移
         this.register("/GameServer/GameUser/loginout", "hallWebSocket", this.onReceiveLoginout.bind(this)) // 玩家离开子游戏
         this.register("/GameServer/GameUser/login", "hallWebSocket", this.onReceiveLoginSubGame.bind(this)) // 玩家加入子游戏
         this.register("/GameServer/GameUser/changeGameUserBalance", "hallWebSocket", this.onReceiveChangeBanlance.bind(this)) // 用户金额改变
@@ -160,11 +160,14 @@ hqqWebSocket.prototype = {
         cc.log(" onReceiveNotice", data, data.msg)
     },
     moveBalanceToGame(data, msg) {
-        cc.log(" moveBalanceToGame", msg)
-        if (!msg.balance || !msg.game_gold) return;
+        // if (!msg.balance || !msg.game_gold) return;
+        let changegold = gHandler.commonTools.formatGold(data.game_gold - gHandler.gameGlobal.player.gold)
+        if (changegold > 0) {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showCongratulation, changegold)
+        }
         gHandler.setPlayerinfo({
-            game_gold: msg.game_gold,
-            balance: msg.balance,
+            game_gold: data.game_gold,
+            balance: data.balance,
         })
     },
     onReceivebankerWinSettlement(data) {
