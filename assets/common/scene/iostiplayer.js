@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2020-01-02 19:25:51
- * @LastEditors  : burt
- * @LastEditTime : 2020-01-02 19:51:41
- * @Description: ios提示面板
- */
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,

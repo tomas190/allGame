@@ -1,25 +1,12 @@
-<<<<<<< HEAD
 
 
 let gHandler = {
     appDownUrl: '', // app下载地址
     hqqisShowNotice: false, // 首次从登陆进入
     hqqisShowFree: false, // 首次从登陆进入
-=======
-/*
- * @Author: burt
- * @Date: 2019-08-01 13:44:52
- * @LastEditors  : burt
- * @LastEditTime : 2020-02-12 15:23:53
- * @Description: 游戏中央模块管理器
- */
-
-let gHandler = {
-
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 }
 let gameGlobal = {
-    isdev: false, // 是否开发状态
+    isdev: true, // 是否开发状态
     gameNow: "hall", // 当前游戏的名字
     iconPath: "", // 头像地址前缀
     playerKey: "playerKey",
@@ -65,10 +52,7 @@ let gameGlobal = {
     imReceive: 0, // im收到的消息
     payReceive: 0, // 收益消息
     ipList: [], // 本地ip地址列表
-<<<<<<< HEAD
     ipapiData: {}, // 通过ipapi获得的数据
-=======
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 }
 gHandler.gameGlobal = gameGlobal
 
@@ -372,12 +356,8 @@ let gameConfig = {
             enname: "pccp", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "PaiCai", // 跳转场景名
             game_id: "569a62be7ff123m117d446aa",
-<<<<<<< HEAD
             serverUrl: "/paicai", // 游戏服务器地址
             endUrl: "/paicai", // 游戏服务器地址
-=======
-            serverUrl: "", // 游戏服务器地址
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 20,

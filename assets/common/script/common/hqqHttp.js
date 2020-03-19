@@ -1,15 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2019-07-29 16:40:03
- * @LastEditors  : burt
- * @LastEditTime : 2020-02-10 18:45:22
- * @Description: http 
- */
-let gHandler = require("gHandler");
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let hqqHttp = {
     m_remoteUrl: "",
     /**
@@ -31,11 +20,6 @@ let hqqHttp = {
         if (!mydata.method) {
             return cc.log("method 参数为空")
         }
-<<<<<<< HEAD
-=======
-        let xhr = new XMLHttpRequest();
-        let alreadyCallBack = false;
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         let timer = setTimeout(() => {
             if (mydata.failcallback) {
                 mydata.failcallback(xhr.status, true)
@@ -61,12 +45,8 @@ let hqqHttp = {
                 }
             }
         }
-<<<<<<< HEAD
         xhr.open(mydata.method, encodeURI(mydata.urlto), true); // 初始化一个请求 针对特殊字符进行  encodeURIComponent 编码转换 
         // xhr.open(mydata.method, mydata.urlto, true); // 初始化一个请求        
-=======
-        xhr.open(mydata.method, mydata.urlto, true); // 初始化一个请求        
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         if (mydata.contenttype) {
             xhr.setRequestHeader("Content-Type", mydata.contenttype)
         } else {
@@ -81,16 +61,13 @@ let hqqHttp = {
         } else {
             str = mydata.param
         }
-<<<<<<< HEAD
         xhr.timeout = mydata.timeout ? mydata.timeout : 3000 // 超时 xhr.readyState = 4，调用failcallback
-=======
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         xhr.send(mydata.param ? str : null); // 发送请求，默认是异步请求，请求发送后立刻返回
     },
     /**
      * @Description: 域名get请求
      */
-    sendRequestGet(urlto, param, callback, failcallback, outcallback) {
+    sendRequestGet(urlto, param, callback, failcallback) {
         let data = {
             method: 'GET',
             urlto: urlto,
@@ -98,7 +75,6 @@ let hqqHttp = {
             callback: callback,
             needJsonParse: true,
             failcallback: failcallback,
-            outcallback: outcallback,
         }
         this.sendXMLHttpRequest(data)
     },
@@ -132,11 +108,7 @@ let hqqHttp = {
     /**
      * @Description: ip方式get请求
      */
-<<<<<<< HEAD
     sendRequestIpGet(urlto, endurl, callback, failcallback) {
-=======
-    sendRequestIpGet(urlto, endurl, callback, outcallback) {
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         if (urlto.indexOf("http:") == -1 && urlto.indexOf("https:") == -1) {
             urlto = "http://" + urlto + endurl
         } else {
@@ -154,11 +126,7 @@ let hqqHttp = {
     /**
      * @Description: ip方式post请求
      */
-<<<<<<< HEAD
     sendRequestIpPost(urlto, param, callback, failcallback) {
-=======
-    sendRequestIpPost(urlto, param, callback, outcallback) {
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         if (urlto.indexOf("http:") == -1 && urlto.indexOf("https:") == -1) {
             urlto = "http://" + urlto
         } else {
@@ -175,7 +143,6 @@ let hqqHttp = {
         this.sendXMLHttpRequest(data)
     },
     /**
-<<<<<<< HEAD
      * @Description: 详细配置的方式http请求
      * data.method           方法
      * data.contenttype      Content-Type
@@ -212,8 +179,6 @@ let hqqHttp = {
         this.sendXMLHttpRequest(xmldata)
     },
     /**
-=======
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
      * @Description: 发送日志
      */
     sendRequestLogPost(urlto, param, filepath, callBack) {
@@ -223,13 +188,6 @@ let hqqHttp = {
             m_url = "http://" + urlto
         }
         xhr.open("POST", m_url, true); // 初始化一个请求
-<<<<<<< HEAD
-=======
-        let timer = setTimeout(() => {
-            xhr.abort(); // 如果请求已经被发送，则立刻终止请求
-            clearTimeout(timer);
-        }, 3000)
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
@@ -241,37 +199,13 @@ let hqqHttp = {
             }
         }
         let str = '';
-<<<<<<< HEAD
         xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
         for (const key in param) {
             str += `${key}=${param[key]}&`
         }
         str = str.slice(0, -1)
         xhr.timeout = 3000
-=======
-        if (gHandler.appGlobal.pinpai == 'test') {
-            xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
-            for (const key in param) {
-                str += `${key}=${param[key]}&`
-            }
-            str = str.slice(0, -1)
-        } else {
-            str = JSON.stringify(param);
-        }
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         xhr.send(str); // 发送请求，默认是异步请求，请求发送后立刻返回
-    },
-    majax(payUrl, dataStr, callback, outcallback) {
-        let data = {
-            method: 'POST',
-            urlto: payUrl,
-            param: dataStr,
-            callback: callback,
-            outcallback: outcallback,
-            needJsonParse: true,
-            failcallback: outcallback,
-        }
-        this.sendXMLHttpRequest(data)
     },
     /**
      * @Description: 专门测试线路的请求

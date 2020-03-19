@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2019-07-29 15:11:55
- * @LastEditors  : burt
- * @LastEditTime : 2020-02-12 20:49:08
- * @Description: 长连接与心跳包
- */
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 
 let hqqWebSocket = function () { }
@@ -234,17 +224,12 @@ hqqWebSocket.prototype = {
     },
     m_onmessage(msg) {
         let data = JSON.parse(msg.data)
-<<<<<<< HEAD
         console.log("data --- ", JSON.stringify(data))
         let datamsg = null
         if (data.data && data.data.msg) {
             datamsg = data.data.msg
         }
         this.m_EmitMsg(data.event, datamsg, data)
-=======
-        cc.log("data --- ", data)
-        this.m_EmitMsg(data.event, data.data.msg, data)
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     },
     m_EmitMsg(event, data, msg) {
         console.log("--------大厅收到消息--------", event)

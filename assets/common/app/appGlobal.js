@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2019-07-29 18:52:11
- * @LastEditors  : burt
- * @LastEditTime : 2020-01-21 10:55:22
- * @Description: 游戏壳全局索引和数据
- */
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 let appGlobal = {
     isRelease: true, // 是否是版本发布状态 网页版加载子包处理
@@ -19,11 +9,6 @@ let appGlobal = {
     huanjin: "pre", // pre online
     // huanjin: "online", // pre online
 
-<<<<<<< HEAD
-=======
-    // deviceID: "100000005",
-    // deviceID: "1000000000",
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     deviceID: "",
     os: "android", // 平台 android ios
 
@@ -143,12 +128,6 @@ let appGlobal = {
             this.packgeName = this.androidPackgeName;
             this.platform = this.androidPlatform;
             this.os = "android";
-<<<<<<< HEAD
-=======
-            if (cc.sys.isBrowser) {
-                this.addJsClip()
-            }
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         } else {
             this.packgeName = this.androidPackgeName;
             this.platform = this.androidPlatform;
@@ -247,27 +226,10 @@ let appGlobal = {
         return endurl
     },
 
-<<<<<<< HEAD
-=======
-    // getAutoLoginEndurl() { // code 为 总代号
-    //     let endurl = ""
-    //     endurl += "/Game/login/firstLogin?" // 首次登陆
-    //     endurl += "&uuid=" + appGlobal.deviceID;
-    //     endurl += "&package_name=" + appGlobal.packgeName;
-    //     endurl += "&os=" + appGlobal.os;
-    //     endurl += "&code=" + this.getGeneralAgency();
-    //     endurl += "&unique_id=" + appGlobal.unique_id;
-    //     endurl += "&account_name=" + gHandler.gameGlobal.player.account_name;
-    //     endurl += "&account_pass=" + gHandler.gameGlobal.player.account_pass;
-    //     endurl += "&token=" + gHandler.gameGlobal.token;
-    //     return endurl
-    // },
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     /**
      * @Description: 获取总代号
      */
     getGeneralAgency() {
-<<<<<<< HEAD
         return this.GeneralAgency[this.pinpai][this.huanjin]
     },
     /**
@@ -276,32 +238,6 @@ let appGlobal = {
     setGeneralAgency(data) {
         for (let huanjin in data[this.pinpai]) {
             this.GeneralAgency[this.pinpai][huanjin] = data[this.pinpai][huanjin].proxyUserID
-=======
-        if (this.pinpai == "test") {
-            if (this.huanjin == 'dev') {
-                return 351027469;
-            } else if (this.huanjin == 'pre') {
-                return 319010216;
-            } else {
-                return 442619406;
-            }
-        } else if (this.pinpai == "debi") {
-            if (this.huanjin == 'dev') {
-                return 970374128;
-            } else if (this.huanjin == 'pre') {
-                return 218638346;
-            } else {
-                return 770256905;
-            }
-        } else if (this.pinpai == "qibao") {
-            if (this.huanjin == 'dev') {
-                return 638044957;
-            } else if (this.huanjin == 'pre') {
-                return 818392292;
-            } else {
-                return 442619406;
-            }
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         }
     }
 }

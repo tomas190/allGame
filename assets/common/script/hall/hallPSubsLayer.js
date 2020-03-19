@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2019-09-30 16:50:44
- * @LastEditors  : burt
- * @LastEditTime : 2020-02-11 14:30:40
- * @Description: 
- */
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 
 let gHandler = require("gHandler");
 cc.Class({
@@ -23,7 +13,6 @@ cc.Class({
         download: cc.Node,
         tiplayer: cc.Node,
         tiplayerinfo: cc.Label,
-        iostip: cc.Node,
 
         exitbtn: cc.Node,
         surecg: cc.Node,

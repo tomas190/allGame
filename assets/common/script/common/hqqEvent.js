@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2019-09-11 13:46:20
- * @LastEditors  : burt
- * @LastEditTime : 2020-01-02 19:30:33
- * @Description: 事件派发中心
- */
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 
 let hqqEvent = {
     hotFail: 0, // 热更失败

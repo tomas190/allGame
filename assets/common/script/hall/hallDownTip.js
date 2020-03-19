@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2019-10-30 18:17:28
- * @LastEditors: burt
- * @LastEditTime: 2019-11-11 15:00:07
- * @Description: 
- */
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 
 cc.Class({
     extends: cc.Component,
@@ -41,21 +31,12 @@ cc.Class({
 
     showTip(data) {
         this.isRun = true
-<<<<<<< HEAD
         if (data.msg.length > 8) {
             data.msg = data.msg.substring(0, 8) + "..."
         }
         let str = "<color=#000000>" + data.msg + "</c>"
         if (data.nick) {
             str = "<color=#000000>" + data.nick + "</c> " + str
-=======
-        let str = "<color=#000000>" + data.msg + "</c>"
-        if (data.msg.length > 16) {
-            data.msg = data.msg.substring(0, 16) + "..."
-        }
-        if (data.nick) {
-            str = "<b><color=#000000>" + data.nick + "</c></b>   " + str
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         }
         this.label.string = str
 

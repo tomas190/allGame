@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2019-09-30 14:03:59
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-26 19:49:01
- * @Description: 
- */
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 
 let gHandler = require("gHandler");
 cc.Class({
@@ -130,7 +120,6 @@ cc.Class({
                 gHandler.gameGlobal.pay.pay_host = url;
                 gHandler.http.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, failcallback);
             }
-            console.log("requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host: " + gHandler.appGlobal.remoteSeverinfo.pay_host + " +/checked");
             gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", qcallback)
         } else {
             gHandler.http.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, failcallback);

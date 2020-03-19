@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
- * @Author: burt
- * @Date: 2019-07-27 14:58:41
- * @LastEditors  : burt
- * @LastEditTime : 2020-02-13 11:44:22
- * @Description: 大厅场景
- */
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 let hallWebSocket = require("hallWebSocket");
 
@@ -49,12 +39,6 @@ cc.Class({
         //     let btn2 = cc.find('Canvas/Main Camera/toppanel/btnpanel/btn_iosweb')
         //     btn2.active = true;
         // }
-<<<<<<< HEAD
-=======
-        gHandler.commonTools.getUserIP(function (ip) {
-            gHandler.gameGlobal.ipList.push(ip)
-        });
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     },
     setButtonEffect(b) {
         if (b) {
@@ -83,18 +67,11 @@ cc.Class({
     // onEnable() { },
     /** 通常用于初始化中间状态操作 */
     start() {
-<<<<<<< HEAD
         if (gHandler.hqqisShowFree) {
             gHandler.hqqisShowFree = false
             this.checkFastPayUrl(() => { // 测速后有返回了，再弹出绑定手机的界面
                 if (gHandler.gameGlobal.player.phonenum == "") {
                     // if (gHandler.appGlobal.huanjin == "dev") return
-=======
-        //测速后有返回了，再弹出绑定手机的界面
-        if (gHandler.gameGlobal.pay.pay_host == "") {
-            this.checkFastPayUrl(() => {
-                if (gHandler.gameGlobal.player.phonenum == "") {
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
                     gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null);
                 }
             })
@@ -146,16 +123,12 @@ cc.Class({
             if (key == "zjh" || key == "ddz" || key == "hwby") {
                 itembtn.getChildByName("experience").active = true;
             }
-<<<<<<< HEAD
             if (key == "hbld" || key == "brnn" || key == 'jbpby') {
-=======
-            if (key == "hbld" || key == "brnn") {
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
                 itembtn.getChildByName("hot").active = true;
             }
             this.subGameBtnMap[tempdata.enname] = itembtn;
             this.subGameBtnArr[tempdata.hallid] = itembtn;
-            if (gHandler.hotUpdateMgr.getSubGameIsOnUp(tempdata.enname)) { // 子游戏在更新列表中
+            if (gHandler.hotUpdateMgr && gHandler.hotUpdateMgr.getSubGameIsOnUp(tempdata.enname)) { // 子游戏在更新列表中
                 this.setSubGameBtnUpWait(tempdata.enname);
             } else if (!gHandler.gameGlobal.isdev) {
                 this.checkSubGameDownload(tempdata.enname);
@@ -493,11 +466,7 @@ cc.Class({
         let callback = (data, url) => {
             // console.log("公告 callback", data)
             if (data.code == 200) {
-<<<<<<< HEAD
                 if (!data.msg || data.msg.length == 0) {
-=======
-                if (data.msg == null || data.msg.length == 0) {
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
                     // console.log("没有公告需要显示")
                 } else {
                     let deleteNotice = gHandler.localStorage.getGlobal().noticeDeleteKey
@@ -629,7 +598,6 @@ cc.Class({
             this.subGameBtnMap[enname].downflag.active = true;
             gHandler.gameConfig.gamelist[enname].isDown = false
         } else {
-<<<<<<< HEAD
             // if (cc.sys.isBrowser) { // 浏览器
             //     this.subGameBtnMap[enname].downflag.active = false;
             //     this.subGameBtnMap[enname].progress.active = false;
@@ -639,17 +607,6 @@ cc.Class({
             //     button.clickEvents.push(clickEventHandler);
             //     return
             // }
-=======
-            if (cc.sys.isBrowser) { // 浏览器
-                this.subGameBtnMap[enname].downflag.active = false;
-                this.subGameBtnMap[enname].progress.active = false;
-                this.subGameBtnMap[enname].jiantou.active = false;
-                clickEventHandler.handler = "onClickSubgame";
-                let button = this.subGameBtnMap[enname].getComponent(cc.Button);
-                button.clickEvents.push(clickEventHandler);
-                return
-            }
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             // if (cc.sys.os == "Windows") { // 模拟器
             //     this.subGameBtnMap[enname].downflag.active = false;
             //     this.subGameBtnMap[enname].progress.active = false;
@@ -1063,11 +1020,7 @@ cc.Class({
     onClickPlayerBtn(event) {
         // console.log("玩家设置")
         this.clickDelay(event)
-<<<<<<< HEAD
         // if (gHandler.gameGlobal.isdev) return
-=======
-        if (gHandler.gameGlobal.isdev) return
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showPerson, null)
     },
     /** 充值 */
@@ -1084,11 +1037,7 @@ cc.Class({
         let mgameid = "569a62be7ff123m117d446aa"
 
         let sub = [
-<<<<<<< HEAD
             691014351, 721199228, 957437641, 144461224, 597347745
-=======
-            746283225 // 625166449-194551 , 203206599 - 515127, 204902259-492893
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         ]
         if (typeof this.tempindex == 'undefined') {
             this.tempindex = 0;
@@ -1131,25 +1080,10 @@ cc.Class({
         }
         gHandler.loginMgr.accountChange(account, pass, mcallback)
     },
-<<<<<<< HEAD
     /**
      * @Description: 代理线路选择
      */
     checkFastProxyUrl(mcallback) {
-=======
-    /** 全民代理  */
-    onClickQMDL(event) {
-        console.log("全民代理")
-        this.clickDelay(event)
-        if (gHandler.gameGlobal.isdev) return
-        let enterproxy = function () {
-            if (gHandler.gameConfig.subModel.proxy.lanchscene != "") {
-                cc.director.loadScene(gHandler.gameConfig.subModel.proxy.lanchscene)
-            } else {
-                console.log("请配置全民代理场景")
-            }
-        }
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         if (gHandler.gameGlobal.proxy.temp_host == "" || gHandler.gameGlobal.proxy.proxy_host == "") {
             gHandler.logMgr.time("最快的temp_host地址")
             let callback0 = (url) => {
@@ -1160,11 +1094,6 @@ cc.Class({
                 }
             }
             gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
-<<<<<<< HEAD
-=======
-
-            // gHandler.gameGlobal.proxy.proxy_host = gHandler.appGlobal.remoteSeverinfo.proxy_host[0];
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             gHandler.logMgr.time("最快的proxy_host地址")
             let callback1 = (url) => {
                 gHandler.logMgr.timeEnd("最快的proxy_host地址", url)
@@ -1197,14 +1126,11 @@ cc.Class({
         console.log("公告")
         // this._creatSubAccount()
         // return
-<<<<<<< HEAD
         // clearInterval(gHandler.loginMgr.stableServerTest)
         // let urllist = gHandler.appGlobal.serverList
         // urllist.push('https://center.whjfxly66.com')
         // gHandler.loginMgr.requestStableServerUrl(urllist)
         // return
-=======
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         if (gHandler.gameGlobal.isdev) return
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showNotice, null)
     },
@@ -1228,10 +1154,6 @@ cc.Class({
                 gHandler.gameGlobal.pay.pay_host = url;
                 mcallback && mcallback();
             }
-<<<<<<< HEAD
-=======
-            console.log("requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host: " + gHandler.appGlobal.remoteSeverinfo.pay_host + " +/checked");
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback);
         } else {
             mcallback && mcallback();
@@ -1304,26 +1226,10 @@ cc.Class({
                     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取下载链接失败，请重新登陆")
                 }
             }
-<<<<<<< HEAD
-=======
-        } else if (custom == 3) { // 保存下载地址
-            if (gHandler.Reflect) {
-                if (gHandler.appDownUrl) {
-                    if (gHandler.Reflect.setClipboard(gHandler.appDownUrl)) {
-                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制到剪切板成功")
-                    } else {
-                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制到剪切板失败")
-                    }
-                } else {
-                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取下载链接失败，请重新登陆")
-                }
-            }
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         }
     },
     onClickFreeGold(event) {
         console.log("免费金币", event)
-<<<<<<< HEAD
         this.clickDelay(event)
         if (gHandler.gameGlobal.isdev) return
         if (gHandler.gameGlobal.player.phonenum != "") {
@@ -1341,25 +1247,6 @@ cc.Class({
     onClickIosWeb(event) {
         console.log('打开ios网页')
         this.clickDelay(event)
-=======
-        this.clickDelay(event)
-        if (gHandler.gameGlobal.isdev) return
-        if (gHandler.gameGlobal.player.phonenum != "") {
-            if (gHandler.gameConfig.subModel.payActivity.lanchscene != "") {
-                cc.director.loadScene(gHandler.gameConfig.subModel.payActivity.lanchscene)
-            } else {
-                console.log("请配置精彩活动场景")
-            }
-        } else {
-            this.checkFastPayUrl(() => {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null);
-            })
-        }
-    },
-    onClickIosWeb(event) {
-        console.log('打开ios网页')
-        this.clickDelay(event)
->>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         let endurl = '?token=' + gHandler.gameGlobal.token + '&deviceid=' + gHandler.appGlobal.deviceID + '&acconunt=' + gHandler.gameGlobal.player.account_name
         if (cc.sys.os === cc.sys.OS_ANDROID) {
             if (gHandler.Reflect.setClipboard('http://game.539316.com/' + endurl)) {
