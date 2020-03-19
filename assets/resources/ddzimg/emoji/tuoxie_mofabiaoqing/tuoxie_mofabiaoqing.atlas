@@ -1,0 +1,62 @@
+
+tuoxie_mofabiaoqing.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+tuoxie
+  rotate: false
+  xy: 351, 180
+  size: 46, 52
+  orig: 46, 52
+  offset: 0, 0
+  index: -1
+tuoxieyanwu/tuoxieyanwu0001
+  rotate: false
+  xy: 0, 117
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: -1
+tuoxieyanwu/tuoxieyanwu0002
+  rotate: false
+  xy: 0, 0
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: -1
+tuoxieyanwu/tuoxieyanwu0003
+  rotate: false
+  xy: 117, 117
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: -1
+tuoxieyanwu/tuoxieyanwu0004
+  rotate: false
+  xy: 117, 0
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: -1
+tuoxieyanwu/tuoxieyanwu0005
+  rotate: false
+  xy: 234, 117
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: -1
+tuoxieyanwu/tuoxieyanwu0006
+  rotate: false
+  xy: 234, 0
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: -1
+xiebanying
+  rotate: false
+  xy: 351, 126
+  size: 33, 52
+  orig: 33, 52
+  offset: 0, 0
+  index: -1

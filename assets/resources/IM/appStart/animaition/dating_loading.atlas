@@ -1,0 +1,97 @@
+
+dating_loading.png
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 542, 8
+  size: 404, 212
+  orig: 404, 212
+  offset: 0, 0
+  index: -1
+cm
+  rotate: false
+  xy: 1549, 8
+  size: 231, 231
+  orig: 231, 231
+  offset: 0, 0
+  index: -1
+faguang1
+  rotate: false
+  xy: 948, 213
+  size: 365, 26
+  orig: 365, 26
+  offset: 0, 0
+  index: -1
+guan4
+  rotate: false
+  xy: 1782, 39
+  size: 204, 200
+  orig: 204, 200
+  offset: 0, 0
+  index: -1
+mid
+  rotate: false
+  xy: 0, 0
+  size: 540, 220
+  orig: 540, 220
+  offset: 0, 0
+  index: -1
+pingtai
+  rotate: false
+  xy: 1315, 213
+  size: 232, 26
+  orig: 232, 26
+  offset: 0, 0
+  index: -1
+poker1
+  rotate: false
+  xy: 1059, 44
+  size: 121, 121
+  orig: 121, 121
+  offset: 0, 0
+  index: -1
+poker2
+  rotate: false
+  xy: 948, 36
+  size: 109, 129
+  orig: 109, 129
+  offset: 0, 0
+  index: -1
+poker3
+  rotate: false
+  xy: 1182, 44
+  size: 80, 121
+  orig: 80, 121
+  offset: 0, 0
+  index: -1
+shanguang
+  rotate: true
+  xy: 1304, 111
+  size: 100, 102
+  orig: 100, 102
+  offset: 0, 0
+  index: -1
+sz
+  rotate: false
+  xy: 1408, 124
+  size: 89, 87
+  orig: 89, 87
+  offset: 0, 0
+  index: -1
+yule
+  rotate: false
+  xy: 948, 167
+  size: 354, 44
+  orig: 354, 44
+  offset: 0, 0
+  index: -1
+zi
+  rotate: false
+  xy: 0, 222
+  size: 886, 17
+  orig: 886, 17
+  offset: 0, 0
+  index: -1

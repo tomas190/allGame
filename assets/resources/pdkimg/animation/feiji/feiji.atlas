@@ -1,0 +1,41 @@
+
+feiji.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+feiji
+  rotate: false
+  xy: 168, 81
+  size: 169, 98
+  orig: 170, 98
+  offset: 1, 0
+  index: -1
+feiji2
+  rotate: false
+  xy: 1374, 297
+  size: 198, 112
+  orig: 200, 113
+  offset: 1, 1
+  index: -1
+shanye1
+  rotate: false
+  xy: 2, 2
+  size: 164, 293
+  orig: 164, 293
+  offset: 0, 0
+  index: -1
+shanye2
+  rotate: false
+  xy: 168, 181
+  size: 241, 114
+  orig: 241, 114
+  offset: 0, 0
+  index: -1
+yan
+  rotate: false
+  xy: 2, 297
+  size: 1370, 112
+  orig: 1384, 115
+  offset: 4, 0
+  index: -1

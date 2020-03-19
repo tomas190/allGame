@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-08-01 11:28:43
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-18 14:00:47
- * @Description: log日志 管理器
- */
+
 
 let hqqHttp = require("hqqHttp");
 let gHandler = require("gHandler");
@@ -21,24 +15,15 @@ let logManager = {
     tag: "\r\n",
     logpath: "",
     _times: {},
-
+    waitList: '',
     /**
      * 初始化
      */
     init: function () {
-        if (CC_JSB) {
-            this.logpath = jsb.fileUtils.getWritablePath() + "log";
-            if (jsb.fileUtils.isDirectoryExist(this.logpath)) {
-                this.output = jsb.fileUtils.getStringFromFile(this.logpath + "/logtemp.txt")
-                this.eoutput = jsb.fileUtils.getStringFromFile(this.logpath + "/elogtemp.txt")
-            } else {
-                jsb.fileUtils.createDirectory(jsb.fileUtils.getWritablePath() + "log");
-            }
-        } else {
-            // this.isRealTimeLog = false;
-            this.output = JSON.parse(cc.sys.localStorage.getItem('log'))
-            this.eoutput = JSON.parse(cc.sys.localStorage.getItem('elog'))
-        }
+        this.output = JSON.parse(cc.sys.localStorage.getItem('log'))
+        this.eoutput = JSON.parse(cc.sys.localStorage.getItem('elog'))
+        cc.sys.localStorage.setItem("log", JSON.stringify(""))
+        cc.sys.localStorage.setItem("elog", JSON.stringify(""))
 
         window.addEventListener('error', (e) => {
             // console.log("error")
@@ -50,19 +35,22 @@ let logManager = {
         })
         return this;
     },
-    // 发送特定的日志
+    // 发送特定的日志 data为字符串
     sendMLog(data) {
+        console.log("__logMgr__", data);
         this.send(data, true);
     },
     // 立即发送日志
     sendLog() {
-        this.send(this.output, true);
+        let temp = this.output
         this.output = ""
+        this.send(temp, true);
     },
     // 立即发送错误日志
     sendError() {
-        this.send(this.eoutput);
+        let temp = this.eoutput
         this.eoutput = ""
+        this.send(temp);
     },
     /** 向服务器发送日志 */
     send: function (logstr, islog) {
@@ -71,7 +59,7 @@ let logManager = {
             let data = {
                 token: gHandler.gameGlobal.token,
                 type: islog ? "log" : "error",
-                id: gHandler.gameGlobal.player.id,
+                id: gHandler.gameGlobal.player.id + '',
                 msg: logstr,
                 package_name: gHandler.appGlobal.packgeName,
                 device_id: gHandler.appGlobal.deviceID,
@@ -79,69 +67,36 @@ let logManager = {
             // console.log("向服务器发送日志", data)
             this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath) => {
                 if (bool) {
-                    if (CC_JSB) {
-                        console.log("原生日志发送成功")
-                        if (islog) {
-                            jsb.fileUtils.removeFile(this.logpath + "/logtemp.txt")
-                        } else {
-                            jsb.fileUtils.removeFile(this.logpath + "/elogtemp.txt")
-                        }
-                    } else {
-                        console.log("日志发送成功")
-                        if (islog) {
-                            cc.sys.localStorage.setItem("log", JSON.stringify(this.output))
-                        } else {
-                            cc.sys.localStorage.setItem("elog", JSON.stringify(this.eoutput))
-                        }
-                    }
+                    console.log("日志发送成功")
+                    // if (islog) {
+                    //     cc.sys.localStorage.setItem("log", JSON.stringify(""))
+                    // } else {
+                    //     cc.sys.localStorage.setItem("elog", JSON.stringify(""))
+                    // }
                 } else {
-                    if (CC_JSB) {
-                        console.log("原生日志发送失败")
-                        if (jsb.fileUtils.writeStringToFile) {
-                            if (islog) {
-                                jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
-                            } else {
-                                jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
-                            }
-                        }
+                    this.log("日志发送失败")
+                    // if (islog) {
+                    //     cc.sys.localStorage.setItem("log", JSON.stringify(logstr))
+                    // } else {
+                    //     cc.sys.localStorage.setItem("elog", JSON.stringify(logstr))
+                    // }
+                    if (islog) {
+                        this.output += logstr + this.tag;
+                        this.output += this.getNowTime() + ":日志发送失败" + this.tag;
                     } else {
-                        console.log("日志发送失败")
+                        this.eoutput += logstr + this.tag;
+                        this.eoutput += this.getNowTime() + ":日志发送失败" + this.tag;
                     }
                 }
             });
-            if (CC_JSB) {
-                let files = jsb.fileUtils.listFiles(this.logpath);
-                for (let i = 0; i < files.length; i++) {
-                    if (files[i].indexOf("logtemp") != -1 || files[i].indexOf("elogtemp") != -1) {
-                        let str = jsb.fileUtils.getStringFromFile(files[i])
-                        let iselog = files[i].indexOf("elog") != -1
-                        let data = {
-                            token: gHandler.gameGlobal.token,
-                            type: iselog ? "error" : "log",
-                            id: gHandler.gameGlobal.player.id,
-                            msg: str,
-                            package_name: gHandler.appGlobal.packgeName,
-                        }
-                        this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, files[i], (bool, filepath) => {
-                            if (bool) {
-                                jsb.fileUtils.removeFile(filepath)
-                            }
-                        });
-                    }
-                }
-            }
         } else {
-            if (CC_JSB) {
-                console.log("未请求到token")
-                if (jsb.fileUtils.writeStringToFile) {
-                    if (islog) {
-                        jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/log" + this.getNowTime() + ".txt")
-                    } else {
-                        jsb.fileUtils.writeStringToFile(logstr, this.logpath + "/elog" + this.getNowTime() + ".txt")
-                    }
-                }
+            console.log("未请求到token")
+            if (islog) {
+                this.output += logstr + this.tag;
+                this.output += this.getNowTime() + ":未请求到token" + this.tag;
             } else {
-                console.log("未请求到token")
+                this.eoutput += logstr + this.tag;
+                this.eoutput += this.getNowTime() + ":未请求到token" + this.tag;
             }
         }
     },
@@ -203,15 +158,8 @@ let logManager = {
         }
     },
     saveLog: function () {
-        if (CC_JSB) {
-            if (jsb.fileUtils.writeStringToFile) {
-                jsb.fileUtils.writeStringToFile(this.output, this.logpath + "/logtemp.txt")
-                jsb.fileUtils.writeStringToFile(this.eoutput, this.logpath + "/elogtemp.txt")
-            }
-        } else {
-            cc.sys.localStorage.setItem("log", JSON.stringify(this.output))
-            cc.sys.localStorage.setItem("elog", JSON.stringify(this.eoutput))
-        }
+        cc.sys.localStorage.setItem("log", JSON.stringify(this.output))
+        cc.sys.localStorage.setItem("elog", JSON.stringify(this.eoutput))
     },
     getNowTime: function () {
         let date = new Date();
@@ -232,15 +180,17 @@ let logManager = {
     logCheck: function () {
         let lines = this.output.split(this.tag);
         if (lines.length > this.logMaxLine) {
-            this.send(this.output, true);
+            let temp = this.output
             this.output = ""
+            this.send(temp, true);
         }
     },
     elogCheck: function () {
         let lines = this.eoutput.split(this.tag);
         if (lines.length > this.logMaxLine) {
-            this.send(this.eoutput);
+            let temp = this.eoutput
             this.eoutput = ""
+            this.send(temp);
         }
     },
 

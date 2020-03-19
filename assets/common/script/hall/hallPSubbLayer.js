@@ -1,16 +1,11 @@
-/*
- * @Author: burt
- * @Date: 2019-09-30 16:50:44
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 14:08:52
- * @Description: 
- */
+
 
 let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
 
     properties: {
+        ensurebtn: cc.Button,
         resetpass: cc.Node,
         bindyinhangka: cc.Node,
         officelogin: cc.Node,
@@ -25,7 +20,7 @@ cc.Class({
     },
 
     start() {
-
+        console.log("gHandler.gameGlobal.pay.pay_host: ", gHandler.gameGlobal.pay.pay_host);
     },
 
     init(subtype) {
@@ -33,6 +28,7 @@ cc.Class({
         this.showSelect = null
         this.showSelect = false
         this.selectIndex = 0
+        this.time = 0
         this.ensurefunc = () => {
             this.onClickExit()
         }
@@ -41,14 +37,20 @@ cc.Class({
         switch (subtype) {
             case 1: // 重置密码
                 this.resetpass.active = true
+                this.bindyinhangka.active = false
+                this.officelogin.active = false
                 this.panelInit(1)
                 this.ensurefunc = this.resetpassEnsure
                 break;
             case 2: // 绑定银行卡
+                this.resetpass.active = false
                 this.bindyinhangka.active = true
+                this.officelogin.active = false
                 this.ensurefunc = this.bindyinhangkaEnsure
                 break;
             case 3: // 注册正式账号
+                this.resetpass.active = false
+                this.bindyinhangka.active = false
                 this.officelogin.active = true
                 this.panelInit(2)
                 this.ensurefunc = this.officeloginEnsure
@@ -57,7 +59,9 @@ cc.Class({
     },
 
     onClickXiala() {
-        var results = ['中国农业银行', '交通银行', '中国建设银行', '兴业银行', '民生银行', '中信银行', '华夏银行', '中国工商银行', '浦发银行', '招商银行', '中国银行']
+        var results = ['中国农业银行', '交通银行', '中国建设银行', '兴业银行', '民生银行', '中信银行', '华夏银行',
+            '中国工商银行', '浦发银行', '招商银行', '中国银行', '光大银行', '广发银行', '北京银行', '杭州银行', '宁波银行',
+            '平安银行', '中国邮政']
         if (!this.showSelect) {
             for (var i = 0; i < results.length; i++) {
                 var node = cc.instantiate(this.BankSelectItem);
@@ -79,33 +83,39 @@ cc.Class({
     },
 
     onClickItem(event, custom) {
-        this.bindyinhangka.getChildByName("yinhangname").getComponent(cc.EditBox).string = custom
+        let yinhanglabel = this.bindyinhangka.getChildByName("yinhangname").getChildByName('yinhanglabel')
+        yinhanglabel.getComponent(cc.Label).string = custom
+        yinhanglabel.color = new cc.Color(255, 255, 255)
+        this.onClickXiala()
+    },
+    yinhangkaChange(event) { // 银行卡号输入后忽略空格符
+        this.bindyinhangka.getChildByName("kahaoeditbox").getComponent(cc.EditBox).string = event.string.replace(/\s+/g, "")
     },
 
     bindyinhangkaEnsure() {
-        let url = gHandler.gameGlobal.pay.pay_host + "/api/payment_account/saveAccount"
+        this.ensurebtn.interactable = false
         let card_num = this.bindyinhangka.getChildByName("kahaoeditbox").getComponent(cc.EditBox).string
         if (card_num.length == 0) {
-            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入银行卡卡号")
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "银行卡卡号不能为空！")
         }
-        if (card_num.length < 15) {
-            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入正确的银行卡卡号")
+        if (card_num.length < 15 || card_num.length > 19) {
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "无效卡号！")
         }
         let card_name = this.bindyinhangka.getChildByName("nameediftox").getComponent(cc.EditBox).string
         if (card_name.length == 0) {
-            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入银行卡收款人姓名")
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "银行卡收款人姓名不能为空！")
         }
-        let bank_name = this.bindyinhangka.getChildByName("yinhangname").getComponent(cc.EditBox).string
-        if (bank_name.length == 0) {
-            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入开户银行")
+        let bank_name = this.bindyinhangka.getChildByName("yinhangname").getChildByName('yinhanglabel').getComponent(cc.Label).string
+        if (bank_name == '选择开户银行' || bank_name.length == 0) {
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "开户行不能为空！")
         }
         let branch_name = this.bindyinhangka.getChildByName("zhihang").getComponent(cc.EditBox).string
         if (branch_name.length == 0) {
-            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入开户行支行")
+            return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "开户支行不能为空！")
         }
         let obj = {};
         obj = {
-            card_num: card_num,
+            card_num: card_num.replace(/\s+/g, ""),
             card_name: card_name,
             bank_name: bank_name,
             branch_name: branch_name,
@@ -129,14 +139,15 @@ cc.Class({
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, response.msg)
             }
         }
-        let outcallback = (status) => {
+        let failcallback = (status) => {
+            this.ensurebtn.interactable = true
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时:" + status)
         }
-        gHandler.http.ajax('POST', url, dataStr, callback, outcallback)
+        let url = gHandler.gameGlobal.pay.pay_host + "/api/payment_account/saveAccount"
+        gHandler.http.sendRequestPost(url, dataStr, callback, failcallback)
     },
 
     onClickCaptcha() {
-        cc.log('onClickCaptcha', this.subtype)
         this.panelInit(this.subtype)
     },
 
@@ -147,8 +158,13 @@ cc.Class({
             jsb.fileUtils.isFileExist(fullPath) && jsb.fileUtils.removeFile(fullPath);
             cc.loader.release(fullPath);
         }
-        if (gHandler.gameGlobal.isdev) return
-        let imgurl = "http://" + gHandler.appGlobal.server + "/Game/Verify/createCaptcha?"
+
+        let imgurl = ''
+        if (gHandler.appGlobal.server.indexOf("http:") == -1 && gHandler.appGlobal.server.indexOf("https:") == -1) {
+            imgurl = "http://" + gHandler.appGlobal.server + "/Game/Verify/createCaptcha?"
+        } else {
+            imgurl = gHandler.appGlobal.server + "/Game/Verify/createCaptcha?"
+        }
         imgurl += "id=" + gHandler.appGlobal.gameuser.id;
         imgurl += "&token=" + gHandler.gameGlobal.token;
         let self = this;
@@ -161,7 +177,6 @@ cc.Class({
         }
         xhr.onload = function () {
             if (this.status == 200) {
-                cc.log("请求到了图片")
                 if (CC_JSB) {
                     var fullPath = jsb.fileUtils.getWritablePath() + "yanzhenma.png";
                     if (jsb.fileUtils.isFileExist(fullPath) && jsb.fileUtils.removeFile(fullPath)) {
@@ -230,7 +245,6 @@ cc.Class({
     },
     // 获取手机短信验证码
     onClickGetCaptcha(event, custom) {
-        cc.log("获取手机短信验证码")
         let phonenum
         let yanzhenmanum
         if (custom == 1) {
@@ -254,7 +268,6 @@ cc.Class({
         }
         let self = this
         let callback = (data) => {
-            cc.log("sendPhoneMessage callback", data)
             if (data.code == 200) {
                 let btn
                 if (custom == 1) {
@@ -303,6 +316,7 @@ cc.Class({
     },
     // 注册正式账号 确定
     officeloginEnsure() {
+        this.ensurebtn.interactable = false
         let phonenum = this.officelogin.getChildByName("phoneeditbox").getComponent(cc.EditBox).string
         let yanzhenmanum = this.officelogin.getChildByName("yanzheneditbox").getComponent(cc.EditBox).string
         let capchanum = this.officelogin.getChildByName("capchaeditbox").getComponent(cc.EditBox).string
@@ -315,50 +329,38 @@ cc.Class({
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入有效密码")
             return
         }
-
-        let callback = (data) => {
-            cc.log("成功注册正式账号", data.msg)
-            if (data.code == 200) {
-                gHandler.setPlayerinfo({ phone_number: data.msg })
-                this.getGold(data.msg)
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册正式账号成功")
+        let callback = (responsedata) => {
+            if (responsedata.status != 0) {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败" + responsedata.status);
             } else {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "注册失败：" + data.msg)
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币");
+                gHandler.setPlayerinfo({ phone_number: responsedata.msg });
+                this.onClickExit();
             }
         }
-
-        let outcallback = () => {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
+        let failcallback = (status) => {
+            this.ensurebtn.interactable = true
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币网络连接失败" + status);
         }
-
-        let endurl = gHandler.appGlobal.getIpPostEndUrl(5)
-        let data = {
-            id: gHandler.gameGlobal.player.id,
-            token: gHandler.gameGlobal.token,
-            phone_number: phonenum,
-            captcha: yanzhenmanum,
-            code: capchanum,
-            password: passnum,
-        }
-        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
-    },
-    // 注册正式账号获取免费金币 
-    getGold(bindPhoneNum) {
         let payUrl = gHandler.gameGlobal.pay.pay_host + "/api/activity/bindPhone";
-        let callBack = (response) => {
-            if (response.status != 0) return gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败:" + response.msg);
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币")
-            this.onClickExit()
+        let dataStr = "id=" + gHandler.gameGlobal.pay.user_id;
+        if (gHandler.gameGlobal.pay.user_name) {
+            dataStr = dataStr + "&user_name=" + gHandler.gameGlobal.pay.user_name;
+        } else {
+            dataStr = dataStr + "&user_name=" + gHandler.gameGlobal.pay.user_id; //if user_name is null, take the user_id instead, otherwise will get error.
         }
-        let dataStr = "user_id=" + gHandler.gameGlobal.pay.user_id
-        dataStr += "&user_name=" + gHandler.gameGlobal.pay.user_name
-        dataStr += "&phone_number=" + bindPhoneNum
-        dataStr += "&package_id=" + gHandler.gameGlobal.pay.package_id
-        dataStr += "&token=e40f01afbb1b9ae3dd6747ced5bca532"
-        gHandler.http.ajax('POST', payUrl, dataStr, callBack)
+        dataStr = dataStr + "&package_id=" + gHandler.gameGlobal.pay.package_id;
+        dataStr = dataStr + "&token=e40f01afbb1b9ae3dd6747ced5bca532";
+        dataStr = dataStr + "&phone_number=" + phonenum;
+        dataStr = dataStr + "&captcha=" + yanzhenmanum;
+        dataStr = dataStr + "&code=" + capchanum;
+        dataStr = dataStr + "&password=" + passnum;
+        dataStr = dataStr + "&center_token=" + gHandler.gameGlobal.token;
+        gHandler.http.sendRequestPost(payUrl, dataStr, callback, failcallback)
     },
     // 重置账号密码 确定
     resetpassEnsure() {
+        this.ensurebtn.interactable = false
         let phonenum = this.resetpass.getChildByName("phoneeditbox").getComponent(cc.EditBox).string
         let yanzhenmanum = this.resetpass.getChildByName("yanzheneditbox").getComponent(cc.EditBox).string
         let capchanum = this.resetpass.getChildByName("capchaeditbox").getComponent(cc.EditBox).string
@@ -381,7 +383,6 @@ cc.Class({
         }
 
         let callback = (data) => {
-            cc.log("重置账号密码", data.msg)
             if (data.code == 200) {
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "重置账号密码成功")
                 this.onClickExit()
@@ -391,6 +392,7 @@ cc.Class({
         }
 
         let outcallback = () => {
+            this.ensurebtn.interactable = true
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
         }
 
@@ -403,8 +405,6 @@ cc.Class({
             captcha: yanzhenmanum,
             token: gHandler.gameGlobal.token,
         }
-        cc.log("数据", phonenum, passnum, capchanum, data)
-        cc.log('发送的地址', gHandler.appGlobal.server + endurl)
         gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
     },
 

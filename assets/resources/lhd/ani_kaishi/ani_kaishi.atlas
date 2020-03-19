@@ -1,0 +1,55 @@
+
+ani_kaishi.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guang
+  rotate: false
+  xy: 0, 0
+  size: 60, 14
+  orig: 60, 14
+  offset: 0, 0
+  index: -1
+kaishi
+  rotate: false
+  xy: 482, 16
+  size: 451, 136
+  orig: 451, 136
+  offset: 0, 0
+  index: -1
+kaishi2
+  rotate: false
+  xy: 0, 16
+  size: 480, 136
+  orig: 480, 136
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 0, 328
+  size: 1017, 619
+  orig: 1017, 619
+  offset: 0, 0
+  index: -1
+p_waitdi
+  rotate: false
+  xy: 0, 154
+  size: 645, 85
+  orig: 645, 85
+  offset: 0, 0
+  index: -1
+sparkle01
+  rotate: false
+  xy: 668, 302
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+wait_light
+  rotate: false
+  xy: 0, 241
+  size: 666, 85
+  orig: 666, 85
+  offset: 0, 0
+  index: -1

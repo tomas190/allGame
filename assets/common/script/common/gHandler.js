@@ -1,12 +1,9 @@
-/*
- * @Author: burt
- * @Date: 2019-08-01 13:44:52
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 13:51:20
- * @Description: 游戏中央模块管理器
- */
+
 
 let gHandler = {
+    appDownUrl: '', // app下载地址
+    hqqisShowNotice: false, // 首次从登陆进入
+    hqqisShowFree: false, // 首次从登陆进入
 }
 let gameGlobal = {
     isdev: true, // 是否开发状态
@@ -54,6 +51,8 @@ let gameGlobal = {
     slideNoticeList: [], // 滚动公告
     imReceive: 0, // im收到的消息
     payReceive: 0, // 收益消息
+    ipList: [], // 本地ip地址列表
+    ipapiData: {}, // 通过ipapi获得的数据
 }
 gHandler.gameGlobal = gameGlobal
 
@@ -97,6 +96,7 @@ let gameConfig = {
             lanchscene: "NNGame", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251714",
             serverUrl: "/qznn", // 游戏服务器地址
+            endUrl: "/qznn", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 0,
@@ -109,6 +109,7 @@ let gameConfig = {
             lanchscene: "ZJHLoad", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251715",
             serverUrl: "/zhajh", // 游戏服务器地址
+            endUrl: "/zhajh", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 1,
@@ -121,6 +122,7 @@ let gameConfig = {
             lanchscene: "LiveGame", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f25173",
             serverUrl: "/zhenrensx", // 游戏服务器地址
+            endUrl: "/zhenrensx", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 2,
@@ -133,6 +135,7 @@ let gameConfig = {
             lanchscene: "FruitGame", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251712",
             serverUrl: "/shuigj", // 游戏服务器地址
+            endUrl: "/shuigj", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 3,
@@ -146,6 +149,7 @@ let gameConfig = {
             // lanchscene: "bcbmload_me", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251716",
             serverUrl: "/bcbm", // 游戏服务器地址
+            endUrl: "/bcbm", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 4,
@@ -158,6 +162,7 @@ let gameConfig = {
             lanchscene: "hhlobby", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251719",
             serverUrl: "/redblackwar", // 游戏服务器地址
+            endUrl: "/redblackwar", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 5,
@@ -170,6 +175,7 @@ let gameConfig = {
             lanchscene: "hwby", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f2517a6",
             serverUrl: "/haiwangby", // 游戏服务器地址
+            endUrl: "/haiwangby", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 6,
@@ -182,6 +188,7 @@ let gameConfig = {
             lanchscene: "brnn", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251718",
             serverUrl: "/bairennn", // 游戏服务器地址
+            endUrl: "/bairennn", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 7,
@@ -194,6 +201,7 @@ let gameConfig = {
             lanchscene: "ebg", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251720",
             serverUrl: "/erbg", // 游戏服务器地址
+            endUrl: "/erbg", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 8,
@@ -206,6 +214,7 @@ let gameConfig = {
             lanchscene: "lp", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251713",
             serverUrl: "/lunpan", // 游戏服务器地址
+            endUrl: "/lunpan", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 9,
@@ -218,6 +227,7 @@ let gameConfig = {
             lanchscene: "bjl_baccarat_hall", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251721",
             serverUrl: "/baijl", // 游戏服务器地址
+            endUrl: "/baijl", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 10,
@@ -229,7 +239,8 @@ let gameConfig = {
             enname: "lhd", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "lhd", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251717",
-            serverUrl: "/longhudou", // 游戏服务器地址
+            serverUrl: "/go_lhd", // 游戏服务器地址
+            endUrl: "/go_lhd", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 11,
@@ -241,7 +252,8 @@ let gameConfig = {
             enname: "ddz", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "ddzloading_bg", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f251711",
-            serverUrl: "", // 游戏服务器地址
+            serverUrl: "/landlord", // 游戏服务器地址
+            endUrl: "/landlord", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 12,
@@ -253,7 +265,8 @@ let gameConfig = {
             enname: "sss", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "SSSLoad", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f25171",
-            serverUrl: "", // 游戏服务器地址
+            serverUrl: "/shisanshui", // 游戏服务器地址
+            endUrl: "/shisanshui", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 13,
@@ -266,6 +279,7 @@ let gameConfig = {
             lanchscene: "hbslGame", // 跳转场景名
             game_id: "5b1f3a3cb76alkje7f25170",
             serverUrl: "/hongbaosl", // 游戏服务器地址
+            endUrl: "/hongbaosl", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 14,
@@ -278,6 +292,7 @@ let gameConfig = {
             lanchscene: "LiveGame", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f25173",
             serverUrl: "/zhenrensx", // 游戏服务器地址
+            endUrl: "/zhenrensx", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 15,
@@ -289,7 +304,8 @@ let gameConfig = {
             enname: "2rmj", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f25170",
-            serverUrl: "", // 游戏服务器地址
+            serverUrl: "/ermj", // 游戏服务器地址
+            endUrl: "/ermj", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 16,
@@ -299,9 +315,10 @@ let gameConfig = {
         "pdk": {
             zhname: "跑得快", // 中文游戏名
             enname: "pdk", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "", // 跳转场景名
+            lanchscene: "pdkroom", // 跳转场景名
             game_id: "5c6a62be7ff09a54amb446aa",
-            serverUrl: "", // 游戏服务器地址
+            serverUrl: "/paodekuai", // 游戏服务器地址
+            endUrl: "/paodekuai", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 17,
@@ -313,7 +330,8 @@ let gameConfig = {
             enname: "jbpby", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "jbpby", // 跳转场景名
             game_id: "5c6a62be56209ac117d446aa",
-            serverUrl: "", // 游戏服务器地址
+            serverUrl: "/jbpby", // 游戏服务器地址
+            endUrl: "/jbpby", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 18,
@@ -325,11 +343,25 @@ let gameConfig = {
             enname: "hbld", // 英文游戏名 （子游戏文件路径，更新子路径）
             lanchscene: "hbldGame", // 跳转场景名
             game_id: "5c6a62be7ff587m117d446aa",
-            serverUrl: "", // 游戏服务器地址
+            serverUrl: "/hongbaold", // 游戏服务器地址
+            endUrl: "/hongbaold", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 19,
             resid: 19,
+            isDown: false,
+        },
+        "pccp": {
+            zhname: "派彩", // 中文游戏名
+            enname: "pccp", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "PaiCai", // 跳转场景名
+            game_id: "569a62be7ff123m117d446aa",
+            serverUrl: "/paicai", // 游戏服务器地址
+            endUrl: "/paicai", // 游戏服务器地址
+            hasAccount: false, // 是否已创建子游戏账号
+            remoteData: null, // 服务端发送过来的游戏数据
+            hallid: 20,
+            resid: 20,
             isDown: false,
         },
     },
@@ -389,53 +421,63 @@ let gameConfig = {
 gHandler.gameConfig = gameConfig
 
 gHandler.setGameInfo = function (game_user, proxy_user, prev_proxy) {
-    // cc.log("大厅 设置玩家数据")
-    gHandler.appGlobal.gameuser = game_user;
-    gHandler.gameGlobal.player.account_name = game_user.id
-    gHandler.gameGlobal.player.uuid = game_user.uuid;
-    let gold = game_user.game_gold
-    if (gold < 0.01) {
-        gold = 0;
-    } else {
-        gold = gHandler.commonTools.formatGold(game_user.game_gold);
+    // cc.log("gHandler.setGameInfo", game_user)
+    let data = { token: gHandler.gameGlobal.token }
+    data.ischangeAccount = false
+    if (game_user) {
+        if (game_user.id) {
+            if (gHandler.gameGlobal.player.id != "" && gHandler.gameGlobal.player.id != game_user.id) {
+                data.ischangeAccount = true
+            }
+            gHandler.gameGlobal.player.account_name = game_user.id;
+            gHandler.gameGlobal.pay.user_id = game_user.id;
+            gHandler.gameGlobal.player.id = game_user.id;
+            data.id = game_user.id;
+        }
+
+        if (game_user.game_gold || game_user.game_gold == 0) {
+            let gold = game_user.game_gold
+            if (gold < 0.01) {
+                gold = 0;
+            } else {
+                gold = gHandler.commonTools.formatGold(game_user.game_gold);
+            }
+            gHandler.gameGlobal.player.gold = gold;
+            data.game_gold = gold
+        }
+        if (game_user.game_img) {
+            gHandler.gameGlobal.player.headurl = game_user.game_img;
+            data.game_img = game_user.game_img;
+        }
+        if (game_user.game_nick || game_user.game_nick == '') {
+            gHandler.gameGlobal.player.nick = game_user.game_nick;
+            gHandler.gameGlobal.pay.user_name = game_user.game_nick
+            data.game_nick = game_user.game_nick;
+        }
+        if (game_user.phone_number || game_user.phone_number == "") {
+            gHandler.gameGlobal.player.phonenum = game_user.phone_number;
+            data.phone_number = game_user.phone_number;
+        }
+        if (game_user.uuid) {
+            gHandler.gameGlobal.player.uuid = game_user.uuid
+            gHandler.gameGlobal.pay.proxy_user_id = game_user.proxy_user_id
+            gHandler.gameGlobal.pay.package_id = game_user.package_id
+        }
     }
-    gHandler.gameGlobal.player.gold = gold;
-    gHandler.gameGlobal.player.headurl = game_user.game_img;
-    gHandler.gameGlobal.player.nick = game_user.game_nick;
-    gHandler.gameGlobal.player.id = game_user.id;
-    gHandler.gameGlobal.player.phonenum = game_user.phone_number;
-    // gHandler.gameGlobal.player.code = game_user.phone_number;
 
-    // proxy_pid: 0, // 代理id
-    // uuid: 0,
-    // id: 0,
-    // code: 0, // 上级id  邀请码
-
-    gHandler.gameGlobal.pay.user_id = game_user.id
-    gHandler.gameGlobal.pay.user_name = game_user.game_nick
-    gHandler.gameGlobal.pay.proxy_user_id = game_user.proxy_user_id
-    gHandler.gameGlobal.pay.package_id = game_user.package_id
-
-    let data = {
-        game_nick: game_user.game_nick,
-        game_gold: gold,
-        game_img: game_user.game_img,
-        id: game_user.id,
-        phone_number: game_user.phone_number,
-        token: gHandler.gameGlobal.token,
+    for (let k in game_user) {
+        gHandler.appGlobal.gameuser[k] = gHandler.appGlobal.gameuser[k] || game_user[k]
     }
+
     if (prev_proxy) {
-        // cc.log("prev_proxy", prev_proxy)
         gHandler.gameGlobal.player.proxy_pid = prev_proxy.proxy_pid;
         gHandler.gameGlobal.pay.proxy_name = prev_proxy.proxy_nick
     }
-
     if (proxy_user) {
         gHandler.gameGlobal.proxy.package_id = proxy_user.package_id
         gHandler.gameGlobal.proxy.balance = proxy_user.balance
         data.balance = proxy_user.balance
     }
-
     gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshPlayerinfo, data)
 }
 

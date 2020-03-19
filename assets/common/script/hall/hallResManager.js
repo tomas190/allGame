@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-07-29 18:38:29
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-26 19:01:36
- * @Description: 大厅动态资源管理器
- */
+
 let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,

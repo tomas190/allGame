@@ -1,0 +1,170 @@
+{
+"skeleton": { "hash": "c0af7smI+nK5AeECaasGp/HEM3E", "spine": "3.6.53", "width": 244, "height": 57 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "public/tips/watch_guan", "parent": "root", "x": -64, "y": 5 },
+	{ "name": "public/tips/watch_point", "parent": "root", "x": 102, "y": -4 },
+	{ "name": "public/tips/watch_point2", "parent": "root", "x": 124, "y": -4 },
+	{ "name": "public/tips/watch_point3", "parent": "root", "x": 146, "y": -4.97 },
+	{ "name": "public/tips/watch_zhan", "parent": "root", "x": -4, "y": 5 },
+	{ "name": "public/tips/watch_zhong", "parent": "root", "x": 56, "y": 5 }
+],
+"slots": [
+	{ "name": "二八杠", "bone": "root" },
+	{ "name": "p_gzbg", "bone": "root" },
+	{ "name": "public/tips/watch_guan", "bone": "public/tips/watch_guan", "attachment": "public/tips/watch_guan" },
+	{ "name": "public/tips/watch_point", "bone": "public/tips/watch_point", "attachment": "public/tips/watch_point" },
+	{ "name": "public/tips/watch_point2", "bone": "public/tips/watch_point2", "attachment": "public/tips/watch_point" },
+	{ "name": "public/tips/watch_point3", "bone": "public/tips/watch_point3", "attachment": "public/tips/watch_point" },
+	{ "name": "public/tips/watch_zhan", "bone": "public/tips/watch_zhan", "attachment": "public/tips/watch_zhan" },
+	{ "name": "public/tips/watch_zhong", "bone": "public/tips/watch_zhong", "attachment": "public/tips/watch_zhong" }
+],
+"skins": {
+	"default": {
+		"public/tips/watch_guan": {
+			"public/tips/watch_guan": { "width": 53, "height": 55 }
+		},
+		"public/tips/watch_point": {
+			"public/tips/watch_point": { "width": 15, "height": 18 }
+		},
+		"public/tips/watch_point2": {
+			"public/tips/watch_point": { "width": 15, "height": 18 }
+		},
+		"public/tips/watch_point3": {
+			"public/tips/watch_point": { "width": 15, "height": 18 }
+		},
+		"public/tips/watch_zhan": {
+			"public/tips/watch_zhan": { "width": 51, "height": 57 }
+		},
+		"public/tips/watch_zhong": {
+			"public/tips/watch_zhong": { "width": 48, "height": 57 }
+		}
+	}
+},
+"animations": {
+	"ani_gzz": {
+		"bones": {
+			"public/tips/watch_guan": {
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{
+						"time": 0.1667,
+						"x": 1,
+						"y": 1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 0.2667, "x": 1.1, "y": 1.1, "curve": "stepped" },
+					{
+						"time": 0.3,
+						"x": 1.1,
+						"y": 1.1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 0.4, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 2, "x": 1, "y": 1 }
+				]
+			},
+			"public/tips/watch_zhan": {
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{
+						"time": 0.3667,
+						"x": 1,
+						"y": 1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 0.4667, "x": 1.1, "y": 1.1, "curve": "stepped" },
+					{
+						"time": 0.5,
+						"x": 1.1,
+						"y": 1.1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 0.6, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 2, "x": 1, "y": 1 }
+				]
+			},
+			"public/tips/watch_zhong": {
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{
+						"time": 0.5667,
+						"x": 1,
+						"y": 1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 0.6667, "x": 1.1, "y": 1.1, "curve": "stepped" },
+					{
+						"time": 0.7,
+						"x": 1.1,
+						"y": 1.1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 0.8, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 2, "x": 1, "y": 1 }
+				]
+			},
+			"public/tips/watch_point": {
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{
+						"time": 0.8,
+						"x": 1,
+						"y": 1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 0.9, "x": 1.1, "y": 1.1, "curve": "stepped" },
+					{
+						"time": 0.9333,
+						"x": 1.1,
+						"y": 1.1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 1.0333, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 2, "x": 1, "y": 1 }
+				]
+			},
+			"public/tips/watch_point2": {
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{
+						"time": 1,
+						"x": 1,
+						"y": 1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 1.1, "x": 1.1, "y": 1.1, "curve": "stepped" },
+					{
+						"time": 1.1333,
+						"x": 1.1,
+						"y": 1.1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 1.2333, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 2, "x": 1, "y": 1 }
+				]
+			},
+			"public/tips/watch_point3": {
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1, "curve": "stepped" },
+					{
+						"time": 1.2,
+						"x": 1,
+						"y": 1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 1.3, "x": 1.1, "y": 1.1, "curve": "stepped" },
+					{
+						"time": 1.3333,
+						"x": 1.1,
+						"y": 1.1,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 1.4333, "x": 1, "y": 1, "curve": "stepped" },
+					{ "time": 2, "x": 1, "y": 1 }
+				]
+			}
+		}
+	}
+}
+}

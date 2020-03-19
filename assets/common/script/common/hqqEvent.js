@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-09-11 13:46:20
- * @LastEditors: burt
- * @LastEditTime: 2019-12-13 14:20:39
- * @Description: 事件派发中心
- */
+
 
 let hqqEvent = {
     hotFail: 0, // 热更失败
@@ -19,6 +13,8 @@ let hqqEvent = {
     refreshPlayerinfo: 11, // 刷新玩家数据显示
     setnoticelist: 12, // 设置公告列表数据
     addSliderNotice: 13, // 显示滚动公告
+    refreshBgState: 14, // 刷新背景音乐状态
+    refreshEffectState: 15, // 刷新背景音乐状态
 
     showSamlllayer: 20, // 显示小的设置界面  修改头像 绑定支付宝 修改昵称 切换账号
     showBiglayer: 21, // 显示大的设置界面 重置密码 绑定银行卡 注册正式账号
@@ -31,6 +27,8 @@ let hqqEvent = {
     showPayScene: 28, // 显示充提界面
     showDownTip: 29, // 显示下拉框
     showConsole: 30, // 显示log界面
+    showIosWebTip: 31,  // 显示ios网页添加桌面提示
+    showIosTipLayer: 32,  // 显示ios添加网页版提示界面
 
     onReceiveNologin: 40, // 
     onReceiveBroadcast: 41, // 

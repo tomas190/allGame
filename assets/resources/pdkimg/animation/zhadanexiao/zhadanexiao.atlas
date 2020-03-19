@@ -1,0 +1,118 @@
+
+zhadanexiao.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+2huo1
+  rotate: false
+  xy: 329, 42
+  size: 31, 44
+  orig: 31, 44
+  offset: 0, 0
+  index: -1
+2huo2
+  rotate: true
+  xy: 292, 2
+  size: 34, 43
+  orig: 34, 43
+  offset: 0, 0
+  index: -1
+2huo3
+  rotate: false
+  xy: 387, 42
+  size: 36, 40
+  orig: 36, 40
+  offset: 0, 0
+  index: -1
+2huo4
+  rotate: true
+  xy: 387, 7
+  size: 33, 36
+  orig: 33, 36
+  offset: 0, 0
+  index: -1
+3huo
+  rotate: true
+  xy: 284, 88
+  size: 38, 52
+  orig: 38, 52
+  offset: 0, 0
+  index: -1
+dan1
+  rotate: false
+  xy: 219, 20
+  size: 42, 54
+  orig: 42, 54
+  offset: 0, 0
+  index: -1
+guang1
+  rotate: true
+  xy: 390, 84
+  size: 42, 48
+  orig: 42, 48
+  offset: 0, 0
+  index: -1
+huo1
+  rotate: true
+  xy: 425, 41
+  size: 41, 28
+  orig: 41, 28
+  offset: 0, 0
+  index: -1
+huo2
+  rotate: true
+  xy: 455, 44
+  size: 44, 29
+  orig: 44, 29
+  offset: 0, 0
+  index: -1
+huo3
+  rotate: false
+  xy: 440, 90
+  size: 47, 36
+  orig: 47, 36
+  offset: 0, 0
+  index: -1
+huo4
+  rotate: true
+  xy: 292, 38
+  size: 48, 35
+  orig: 48, 35
+  offset: 0, 0
+  index: -1
+huo5
+  rotate: false
+  xy: 338, 89
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1
+huo6
+  rotate: true
+  xy: 263, 22
+  size: 52, 27
+  orig: 52, 27
+  offset: 0, 0
+  index: -1
+huo7
+  rotate: true
+  xy: 362, 35
+  size: 52, 23
+  orig: 52, 23
+  offset: 0, 0
+  index: -1
+yan
+  rotate: false
+  xy: 219, 76
+  size: 63, 50
+  orig: 63, 50
+  offset: 0, 0
+  index: -1
+zhadan
+  rotate: false
+  xy: 2, 12
+  size: 215, 114
+  orig: 215, 114
+  offset: 0, 0
+  index: -1

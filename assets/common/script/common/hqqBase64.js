@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-08-02 11:27:29
- * @LastEditors: burt
- * @LastEditTime: 2019-10-22 15:19:24
- * @Description: base64
- */
+
 
 let hqqBase64 = {
 

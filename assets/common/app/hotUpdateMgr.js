@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-08-29 10:46:50
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-24 18:49:50
- * @Description: 
- */
+
 let gHandler = require("gHandler");
 let crypto = require('crypto');
 let nodeJsBufferTool = require('buffer').Buffer;
@@ -15,13 +9,18 @@ let hotUpdateMgr = {
     _data: {
         subname: "",
         version: "1.0.0",
-        remotev: '1.0.0',
+        remotev: '',
     },
     updataList: [],
     data: {},
     _progress: 0,
     _log: "",
     _tag: "\r\n",
+    _getVersionTry: 0,
+    _getVersionMaxTry: 3,
+    _getProjectTry: 0,
+    _getProjectMaxTry: 5,
+    _packageUrl: '',
 
     init(hallmanifest) {
         if (!cc.sys.isBrowser) {
@@ -275,10 +274,12 @@ let hotUpdateMgr = {
         return { bool: false, manifest: null };
     },
     /**
-     * @Description: 文件比对 失败重新更新
+     * @Description: 热更结束，文件比对 失败重新更新
      */
     m_updataAfter() {
         this._am = null;
+        this._getProjectTry = 0;
+        this._getVersionTry = 0;
         gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheck, this.data.subname)
         let checkManifest = this._storagePath + '/project.manifest'
         let check = this.checkFile(checkManifest)
@@ -395,7 +396,7 @@ let hotUpdateMgr = {
         return this._storagePath + subname + "_project.manifest"
     },
 
-    _loadCustomManifest: function (subname) {
+    _loadCustomManifest: function (subname, verstr) {
         this.manifestPre = (subname ? subname + "_" : "")
         // this.log("pre", this.manifestPre)
         let localpath = this.getLocalManifestPath(subname);  //本地project.manifest文件路径
@@ -415,8 +416,7 @@ let hotUpdateMgr = {
                 }
                 this._am.loadLocalManifest(nurl);
             } else {
-                // let url = "http://upgrade.539316.com/com.test.pre.android/";
-                let url = gHandler.localStorage.getGlobal().hotServerKey + "/" + gHandler.appGlobal.packgeName + "/";
+                let url = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.hotupdatePath + "/" + verstr;
                 this.log("url", url + this.manifestPre + "project.manifest")
                 var customManifestStr = JSON.stringify({
                     "packageUrl": url,
@@ -501,6 +501,46 @@ let hotUpdateMgr = {
         return false
     },
     /**
+     * @Description: 热更失败或者不需要更新
+     */
+    vfailcallback(status, forcejump) {
+        this.log("更新失败 status", status, forcejump, this._getVersionTry)
+        if (this._getVersionTry < this._getVersionMaxTry) {
+            this._getVersionTry++
+            gHandler.http.sendRequestGet(this._packageUrl + this.manifestPre + 'version.manifest', null, this.vcallback, this.vfailcallback)
+            return
+        }
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheckup, false, this.data.subname)
+        this._am.setEventCallback(null);
+        this._checkListener = null;
+        this._am = null;
+        this._getProjectTry = 0;
+        this._getVersionTry = 0;
+        if (this.updataList.length > 0) {
+            let data = this.updataList.shift();
+            this.checkUpdate(data);
+        }
+    },
+    /**
+     * @Description: 获取version成功
+     */
+    vcallback(responseText) {
+        if (this.versionCompareHandle(this.data.version, responseText.version) == -1) { // 需要更新
+            this.startUpdate(this._packageUrl)
+        } else { // 已经是最新的版本，不需要更新
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheckup, false, this.data.subname)
+            this._am.setEventCallback(null);
+            this._checkListener = null;
+            this._am = null;
+            this._getProjectTry = 0;
+            this._getVersionTry = 0;
+            if (this.updataList.length > 0) {
+                let data = this.updataList.shift();
+                this.checkUpdate(data);
+            }
+        }
+    },
+    /**
      * @Description: 开始更新
      */
     checkUpdate: function (data) {
@@ -525,28 +565,35 @@ let hotUpdateMgr = {
         for (let k in this._data) {
             this.data[k] = data[k] || this._data[k]
         }
+        let hallversion = gHandler.localStorage.globalGet(gHandler.appGlobal.versionKey)
+        hallversion = hallversion ? hallversion : ''
+        this.log('开始更新 version', this.data.version, 'hallversion', hallversion)
+        let verstr = ''
+        if (this.data.subname == 'hall' && this.data.remotev) {
+            verstr = this.data.remotev + '/'
+        } else if (hallversion) {
+            verstr = hallversion + '/'
+        }
+
         this._newAssetManeger()
         if (this._am.getState() === jsb.AssetsManager.State.UNINITED) {
-            this._loadCustomManifest(this.data.subname);
+            this._loadCustomManifest(this.data.subname, verstr);
         }
         if (!this._am.getLocalManifest() || !this._am.getLocalManifest().isLoaded()) {
             this.log('加载本地manifest文件失败 ...');
             return false;
         }
-        // this._am.setEventCallback(this._checkCb.bind(this));
-        // this._am.checkUpdate(); // downloadVersion
-
         this._am.setEventCallback(this._updateCb.bind(this));
 
-        let hallversion = gHandler.localStorage.globalGet(gHandler.appGlobal.versionKey)
-        this.log('开始更新 version', this.data.version, 'hallversion', hallversion)
-        let verstr = ''
-        if (this.data.subname == 'hall') {
-            verstr = this.data.remotev + '/'
-        } else if (hallversion) {
-            verstr = hallversion + '/'
-        }
-        let packageUrl = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.packgeName + "/" + verstr
+        this._packageUrl = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.hotupdatePath + "/" + verstr
+        this.log('热更请求地址', this._packageUrl)
+        gHandler.http.sendRequestGet(this._packageUrl + this.manifestPre + 'version.manifest', null, this.vcallback.bind(this), this.vfailcallback.bind(this))
+        return true;
+    },
+    /**
+     * @Description: 开始更新对比project
+     */
+    startUpdate(packageUrl) {
         let callback = (responseText) => {
             this.log('responseText.packageUrl', responseText.packageUrl)
             responseText.packageUrl = packageUrl
@@ -555,21 +602,26 @@ let hotUpdateMgr = {
             var manifest = new jsb.Manifest(customManifestStr, this._storagePath);
             this.log('loadRemoteManifest', this._am.loadRemoteManifest(manifest))
         }
-        let failcallback = (status) => {
-            this.log("更新失败 status", status)
-            this.log("packageUrl", packageUrl)
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheckup, false, this.data.subname)
-            this._am.setEventCallback(null);
-            this._checkListener = null;
-            this._am = null;
-            if (this.updataList.length > 0) {
-                let data = this.updataList.shift();
-                this.checkUpdate(data);
+        let falicallback = (status, forcejump) => {
+            this.log('热更project失败', status, forcejump, this._getProjectTry)
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "热更project失败" + status)
+            if (this._getProjectTry < this._getProjectMaxTry) {
+                this._getProjectTry++
+                this.startUpdate(packageUrl)
+            } else {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheckup, false, this.data.subname)
+                this._am.setEventCallback(null);
+                this._checkListener = null;
+                this._am = null;
+                this._getProjectTry = 0;
+                this._getVersionTry = 0;
+                if (this.updataList.length > 0) {
+                    let data = this.updataList.shift();
+                    this.checkUpdate(data);
+                }
             }
         }
-        gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'project.manifest', null, callback, failcallback)
-
-        return true;
+        gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'project.manifest', null, callback, falicallback)
     },
     // 正式进行热更
     hotUpdate: function (subname) {
@@ -636,7 +688,7 @@ let hotUpdateMgr = {
         for (let i = 0; i < arguments.length; i++) {
             data += arguments[i] + " "
         }
-        cc.log("_HotLog_", data);
+        console.log("_HotLog_", data);
         this._log += data + this._tag;
     },
     sendlog() {

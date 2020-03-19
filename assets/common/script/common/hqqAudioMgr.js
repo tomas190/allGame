@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-08-10 10:32:38
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 11:31:01
- * @Description: 音效管理器，子游戏音效管理器需实现getMusic(name)获取cc.AudionClip资源的函数接口
- */
+
 let gHandler = require("gHandler");
 let audioMgr = {
     bgIsOpen: true,
@@ -31,6 +25,44 @@ let audioMgr = {
             }
         }
         return this;
+    },
+    getBgVolume() {
+        return this.bgVolume
+    },
+    getBgState() {
+        return this.bgIsOpen
+    },
+    setBgState(bgof) {
+        this.bgIsOpen = !!bgof
+        gHandler.localStorage.globalSet("bgIsOpenKey", this.bgIsOpen)
+        if (cc.director.getScene().name == "hall") {
+            if (!this.bgIsOpen) {
+                this.stopBg()
+            } else {
+                this.bgId = cc.audioEngine.playMusic(this.bgchip, true, this.bgVolume);
+            }
+        } else {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshBgState, this.bgIsOpen)
+        }
+    },
+    getEffectVolume() {
+        return this.effectVolume
+    },
+    getEffectState() {
+        return this.effectIsOpen
+    },
+    setEffectState(efof) {
+        this.effectIsOpen = !!efof
+        gHandler.localStorage.globalSet("effectIsOpenKey", this.effectIsOpen)
+        if (cc.director.getScene().name == "hall") {
+            if (!this.effectIsOpen) {
+                cc.audioEngine.stopAllEffects()
+            } else {
+                cc.audioEngine.resumeAllEffects()
+            }
+        } else {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshEffectState, this.effectIsOpen)
+        }
     },
     register(name, path) {
         this.nameToMusicPath[name] = path;
@@ -76,24 +108,6 @@ let audioMgr = {
             } else {
                 console.log('没有这个音效')
             }
-        }
-    },
-    setBgState(bgof) {
-        this.bgIsOpen = !!bgof
-        gHandler.localStorage.globalSet("bgIsOpenKey", this.bgIsOpen)
-        if (!this.bgIsOpen) {
-            this.stopBg()
-        } else {
-            this.bgId = cc.audioEngine.playMusic(this.bgchip, true, this.bgVolume);
-        }
-    },
-    setEffectState(efof) {
-        this.effectIsOpen = !!efof
-        gHandler.localStorage.globalSet("effectIsOpenKey", this.effectIsOpen)
-        if (!this.effectIsOpen) {
-            cc.audioEngine.stopAllEffects()
-        } else {
-            cc.audioEngine.resumeAllEffects()
         }
     },
     setBgVolume(num) {

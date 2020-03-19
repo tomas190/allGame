@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-07-30 10:44:15
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 14:02:14
- * @Description: 本地化保存
- */
+
 let gHandler = require("gHandler");
 let localStorage = {
     subgameKey: "subgameKey",
@@ -29,7 +23,7 @@ let localStorage = {
         if (cc.sys.localStorage.getItem(this.subgameKey)) {
             this.subdata = JSON.parse(cc.sys.localStorage.getItem(this.subgameKey));
         } else {
-            for (let i = 0; i < gHandler.gameConfig.gamelist.length; i++) {
+            for (let i in gHandler.gameConfig.gamelist) {
                 this.subdata[gHandler.gameConfig.gamelist[i].enname] = gHandler.commonTools.jsonCopy(gHandler.gameConfig.gamelist[i]);
             }
             cc.sys.localStorage.setItem(this.subgameKey, JSON.stringify(this.subdata));
@@ -45,10 +39,6 @@ let localStorage = {
         }
         // console.log("log", JSON.parse(cc.sys.localStorage.getItem('log')))
         // console.log("elog", JSON.parse(cc.sys.localStorage.getItem('elog')))
-        // if (typeof JSON.parse(cc.sys.localStorage.getItem('globalKey')).hotServerKey == "object") {
-        //     let hotserver = this.globalGet("hotServerKey")[0]
-        //     this.globalSet("hotServerKey", hotserver)
-        // }
         // console.log("global", JSON.parse(cc.sys.localStorage.getItem('globalKey')))
         // console.log("subgame", JSON.parse(cc.sys.localStorage.getItem('subgameKey')))
         return this;
@@ -64,7 +54,6 @@ let localStorage = {
         if (this.subdata[subgame] && this.subdata[subgame][key]) {
             return true;
         } else {
-            // gHandler.logMgr.log("localstorage don`t has:", subgame, key)
             return false;
         }
     },

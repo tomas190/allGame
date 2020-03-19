@@ -1,0 +1,54 @@
+{
+"skeleton": { "hash": "+3WkwCqMuubuf3kxPgJvgGqRUH8", "spine": "3.6.53", "width": 1290, "height": 170 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "p_waitdi", "parent": "root", "scaleX": 2, "scaleY": 2 },
+	{ "name": "tingzhixiazhu", "parent": "root", "y": -25 }
+],
+"slots": [
+	{ "name": "p_waitdi", "bone": "p_waitdi", "attachment": "p_waitdi" },
+	{ "name": "tingzhixiazhu", "bone": "tingzhixiazhu", "attachment": "tingzhixiazhu" }
+],
+"skins": {
+	"default": {
+		"p_waitdi": {
+			"p_waitdi": { "width": 645, "height": 85 }
+		},
+		"tingzhixiazhu": {
+			"tingzhixiazhu": { "y": 25, "width": 413, "height": 97 }
+		}
+	}
+},
+"animations": {
+	"ani_tingzhixiazhu": {
+		"slots": {
+			"p_waitdi": {
+				"color": [
+					{ "time": 0, "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.8333, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			},
+			"tingzhixiazhu": {
+				"color": [
+					{ "time": 0, "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.8333, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"tingzhixiazhu": {
+				"translate": [
+					{ "time": 0, "x": -950, "y": 0 },
+					{ "time": 0.1667, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.8333, "x": 0, "y": 0 },
+					{ "time": 1, "x": 950, "y": 0 }
+				]
+			}
+		}
+	}
+}
+}

@@ -1,0 +1,76 @@
+
+youxikaishi.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guangxiao
+  rotate: false
+  xy: 2, 474
+  size: 395, 505
+  orig: 395, 505
+  offset: 0, 0
+  index: -1
+guangxiao2
+  rotate: false
+  xy: 2, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+kaishi
+  rotate: false
+  xy: 399, 411
+  size: 215, 112
+  orig: 215, 112
+  offset: 0, 0
+  index: -1
+kaishi1
+  rotate: true
+  xy: 115, 81
+  size: 240, 141
+  orig: 240, 141
+  offset: 0, 0
+  index: -1
+kaishi2
+  rotate: true
+  xy: 2, 36
+  size: 285, 111
+  orig: 285, 111
+  offset: 0, 0
+  index: -1
+kaishibg
+  rotate: false
+  xy: 399, 809
+  size: 623, 170
+  orig: 623, 170
+  offset: 0, 0
+  index: -1
+youxi
+  rotate: false
+  xy: 690, 525
+  size: 219, 111
+  orig: 219, 111
+  offset: 0, 0
+  index: -1
+youxi1
+  rotate: false
+  xy: 2, 323
+  size: 253, 149
+  orig: 253, 149
+  offset: 0, 0
+  index: -1
+youxi2
+  rotate: false
+  xy: 399, 525
+  size: 289, 111
+  orig: 289, 111
+  offset: 0, 0
+  index: -1
+youxibg
+  rotate: false
+  xy: 399, 638
+  size: 601, 169
+  orig: 601, 169
+  offset: 0, 0
+  index: -1

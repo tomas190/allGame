@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-10-28 13:44:46
- * @LastEditors: burt
- * @LastEditTime: 2019-12-13 09:24:42
- * @Description: 
- */
+
 cc.Class({
     extends: cc.Component,
 

@@ -1,6 +1,6 @@
 {
   "ver": "2.3.3",
-  "uuid": "89d8d5a4-680c-4546-9e91-59fc3b5edbdd",
+  "uuid": "bcc9d6e7-d4fc-4560-85fa-3901507aebee",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -11,8 +11,8 @@
   "subMetas": {
     "new_loading_DBgame": {
       "ver": "1.0.4",
-      "uuid": "9aedaa42-0852-430a-8c5c-d1a03347ad16",
-      "rawTextureUuid": "89d8d5a4-680c-4546-9e91-59fc3b5edbdd",
+      "uuid": "32d4a306-84a1-48f7-940d-a35a99834d5b",
+      "rawTextureUuid": "bcc9d6e7-d4fc-4560-85fa-3901507aebee",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

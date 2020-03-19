@@ -1,22 +1,16 @@
-/*
- * @Author: burt
- * @Date: 2019-07-29 18:52:11
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 10:23:27
- * @Description: 游戏壳全局索引和数据
- */
+
 let gHandler = require("gHandler");
 let appGlobal = {
+    isRelease: true, // 是否是版本发布状态 网页版加载子包处理
     /* ------------------------------------------------------------------- */
     pinpai: "test", // 渠道 test debi qibao
-    huanjin: "dev", // pre online
-    // huanjin: "pre", // pre online
+    // pinpai: "debi", // 渠道 test debi qibao
+    // huanjin: "dev", // pre online
+    huanjin: "pre", // pre online
     // huanjin: "online", // pre online
-    os: "android", // 平台 ios
 
-    // deviceID: "100000004",
-    // deviceID: "1000000000",
-    deviceID: "123456789",
+    deviceID: "",
+    os: "android", // 平台 android ios
 
     secretlist: [ // 密码本
         "https://lgroup000.gitlab.io/meta/data_q.json",
@@ -39,15 +33,26 @@ let appGlobal = {
     serverListKey: "serverListKey", // 长连接服务器列表
     serverList: "", // 长连接服务器列表
 
+    stableServerListKey: "stableServerListKey", // 恒定检测长连接服务器列表
+    stableServerList: "", // 恒定检测长连接服务器列表
+
     serverKey: "serverKey", // 长连接服务器
     server: "", // 长连接服务器
 
-    hotServerKey: "hotServerKey", // 热更服务器
-    hotServer: "", // 热更服务器
+    hotServerKey: "hotServerKey", // 热更服务器列表
+    hotServer: "", // 热更服务器列表
 
-    noticeKey: "noticeKey",
+    canHotServerKey: "canHotServerKey", // 热更服务器
+    canHotServer: "", // 热更服务器
+
+    recordTimeKey: "recordTimeKey", // 记录时间
+    recordTime: '', // 记录时间
+
+    noticeKey: "noticeKey", // 公告已读
+    noticeDeleteKey: "noticeDeleteKey", // 公道删除
 
     packgeName: "com.test.pre.android", // 包名
+    hotupdatePath: "com.test.pre.android", // 热更服务器下的资源路径
 
     remotePath: "/entry/info/",
     remoteGetSeverInfo: "getserverinfo",
@@ -70,8 +75,42 @@ let appGlobal = {
     clipboard: "", // 剪贴板
     code: "0", // 邀请码
     unique_id: "0", // 代理档位
+    packageID: 0, // 
+    proxyUserID: 0, // 
 
-    init(sys) {
+    officialWebsite: { // 官网
+        test: "https://temp.7kpi3g.cn?m=online&p=1&u=442619406",
+        debi: "db31.cn"
+    },
+    GeneralAgency: { // 总代
+        test: {
+            dev: 351027469,
+            pre: 319010216,
+            online: 442619406
+        },
+        debi: {
+            dev: 970374128,
+            pre: 218638346,
+            online: 770256905
+        },
+        qibao: {
+            dev: 638044957,
+            pre: 818392292,
+            online: 442619406
+        }
+    },
+
+    init(sys) { // '{"pinpai":"test","huanjin":"online","system":"android","version":"1.0.7"}'
+        let packageinfo = gHandler.Reflect.getHqqPackageInfo()
+        if (packageinfo) {
+            let info = JSON.parse(packageinfo)
+            this.pinpai = info.pinpai
+            this.huanjin = info.huanjin
+            this.apkVersion = info.version
+            this.hotupdatePath = "com.test." + this.huanjin + ".android";
+        } else {
+            this.hotupdatePath = "com." + this.pinpai + "." + this.huanjin + ".android";
+        }
         this.platform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
         this.androidPlatform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
         this.iosPlatform = "/com." + this.pinpai + "." + this.huanjin + ".ios/";
@@ -88,45 +127,26 @@ let appGlobal = {
         } else if (sys == 2) { // windows
             this.packgeName = this.androidPackgeName;
             this.platform = this.androidPlatform;
-            if (cc.sys.isBrowser) {
-                this.addJsClip()
-            }
+            this.os = "android";
         } else {
             this.packgeName = this.androidPackgeName;
             this.platform = this.androidPlatform;
         }
+        if (this.pinpai == "test") {
+            this.packageID = 1
+        } else if (this.pinpai == "debi") {
+            this.packageID = 2
+        }
+        if (CC_DEBUG) {
+            this.isRelease = false
+            // this.deviceID = "100000005" // 测试
+            // this.deviceID = "100000006" // 测试
+            // this.deviceID = "1000000000" // 测试
+            // this.deviceID="123456789", // carlson
+            // this.deviceID="1234567890", // fido
+            this.deviceID = "987654321" // burt
+        }
         return this;
-    },
-    addJsClip() {
-        // demo 程序将粘贴事件绑定到 document 上
-        document.addEventListener("paste", function (e) {
-            var cbd = e.clipboardData;
-            var ua = window.navigator.userAgent;
-
-            // 如果是 Safari 直接 return
-            if (!(e.clipboardData && e.clipboardData.items)) {
-                return;
-            }
-
-            // Mac平台下Chrome49版本以下 复制Finder中的文件的Bug Hack掉
-            if (cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" &&
-                cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" &&
-                ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49) {
-                return;
-            }
-
-            for (var i = 0; i < cbd.items.length; i++) {
-                var item = cbd.items[i];
-                if (item.kind == "file") {
-                    var blob = item.getAsFile();
-                    if (blob.size === 0) {
-                        return;
-                    }
-                    // blob 就是从剪切板获得的文件 可以进行上传或其他操作
-                    cc.log("从剪切板获得的文件", blob)
-                }
-            }
-        }, false);
     },
 
     getIpGetEndurl(gettype) {
@@ -149,6 +169,7 @@ let appGlobal = {
                 let time = (now.getTime() / 1000) >> 0;
                 endurl += "/Common/Notice/getNotice?" // 获取公告
                 endurl += "&id=" + appGlobal.gameuser.id;
+                endurl += "&platform_key=" + appGlobal.remoteToken; // terrell 1.2
                 let query = JSON.stringify({
                     'package_ids': { $elemMatch: { $eq: appGlobal.gameuser.package_id } },
                     'is_open': 1,
@@ -205,43 +226,20 @@ let appGlobal = {
         return endurl
     },
 
-    getAutoLoginEndurl() { // code 为 总代号
-        let endurl = ""
-        endurl += "/Game/login/firstLogin?" // 首次登陆
-        endurl += "&uuid=" + appGlobal.deviceID;
-        endurl += "&package_name=" + appGlobal.packgeName;
-        endurl += "&os=" + appGlobal.os;
-        if (this.pinpai == "test") {
-            if (this.huanjin == 'dev') {
-                endurl += "&code=" + 873797373;
-            } else if (this.huanjin == 'pre') {
-                endurl += "&code=" + 818392292;
-            } else {
-                endurl += "&code=" + 442619406;
-            }
-        } else if (this.pinpai == "debi") {
-            if (this.huanjin == 'dev') {
-                endurl += "&code=" + 638044957;
-            } else if (this.huanjin == 'pre') {
-                endurl += "&code=" + 818392292;
-            } else {
-                endurl += "&code=" + 442619406;
-            }
-        } else if (this.pinpai == "qibao") {
-            if (this.huanjin == 'dev') {
-                endurl += "&code=" + 638044957;
-            } else if (this.huanjin == 'pre') {
-                endurl += "&code=" + 818392292;
-            } else {
-                endurl += "&code=" + 442619406;
-            }
-        }
-        endurl += "&unique_id=" + appGlobal.unique_id;
-        endurl += "&account_name=" + gHandler.gameGlobal.player.account_name;
-        endurl += "&account_pass=" + gHandler.gameGlobal.player.account_pass;
-        endurl += "&token=" + gHandler.gameGlobal.token;
-        return endurl
+    /**
+     * @Description: 获取总代号
+     */
+    getGeneralAgency() {
+        return this.GeneralAgency[this.pinpai][this.huanjin]
     },
+    /**
+     * @Description: 根据热更version.json提供的信息设置本地总代
+     */
+    setGeneralAgency(data) {
+        for (let huanjin in data[this.pinpai]) {
+            this.GeneralAgency[this.pinpai][huanjin] = data[this.pinpai][huanjin].proxyUserID
+        }
+    }
 }
 
 module.exports = appGlobal;

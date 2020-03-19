@@ -1,0 +1,34 @@
+{
+  "ver": "2.3.3",
+  "uuid": "0266b8ef-ec8d-4858-912c-2859d30c1356",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "platformSettings": {},
+  "subMetas": {
+    "mini_golden_audi": {
+      "ver": "1.0.4",
+      "uuid": "66dd7e9e-dba9-4b3e-90b6-070d8de19977",
+      "rawTextureUuid": "0266b8ef-ec8d-4858-912c-2859d30c1356",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -0.5,
+      "trimX": 0,
+      "trimY": 8,
+      "width": 35,
+      "height": 17,
+      "rawWidth": 35,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

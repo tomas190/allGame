@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-09-17 09:02:11
- * @LastEditors: burt
- * @LastEditTime: 2019-09-17 15:57:53
- * @Description: 
- */
+
 
 let gHandler = require("gHandler");
 cc.Class({

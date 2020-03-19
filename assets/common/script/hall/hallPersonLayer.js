@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-09-30 14:03:59
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 14:06:27
- * @Description: 
- */
+
 
 let gHandler = require("gHandler");
 cc.Class({
@@ -58,50 +52,31 @@ cc.Class({
             this.phonelabel.node.color = new cc.Color(225, 225, 225)
             this.phonebindbtn.active = false
         }
-        // else {
-        //     this.phonelabel.string = "暂未绑定手机"
-        //     this.phonelabel.node.color = new cc.Color(152, 152, 152)
-        // }
-
         if (player.alipay) {
             this.alipaylabel.string = player.alipay.substring(0, 2) + "** **** **" + player.alipay.substring(player.alipay.length - 2, player.alipay.length)
             this.alipaylabel.node.color = new cc.Color(225, 225, 225)
             this.alipaybindbtn.active = false
         }
-        // else {
-        //     this.alipaylabel.string = "暂未绑定支付宝"
-        //     this.alipaylabel.node.color = new cc.Color(152, 152, 152)
-        // }
-
         if (player.yinhangka) {
             let kahaostr = player.yinhangka.toString()
             this.yinghangkalabel.string = "**** **** **** " + kahaostr.substring(kahaostr.length - 4, kahaostr.length)
             this.yinghangkalabel.node.color = new cc.Color(225, 225, 225)
             this.yinhangkabindbtn.active = false
         }
-        //  else {
-        //     this.yinghangkalabel.string = "暂未绑定银行卡"
-        //     this.yinghangkalabel.node.color = new cc.Color(152, 152, 152)
-        // }
-
         gHandler.audioMgr && gHandler.audioMgr.bgIsOpen ? this.musictoggle.check() : this.musictoggle.uncheck()
         gHandler.audioMgr && gHandler.audioMgr.effectIsOpen ? this.audiotoggle.check() : this.audiotoggle.uncheck()
-
         gHandler.eventMgr.register(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer", this.setPlayerInfo.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.getPayInfo, "hallPersonLayer", this.getPayInfo.bind(this))
-
-        if (!player.alipay || !player.yinhangka) {
-            this.getPayInfo();
+        if (!gHandler.gameGlobal.isdev) {
+            this.getPayInfo(); // 存在解绑的情况，所以每次进来都重新拉取一次支付宝和银行卡信息
         }
     },
 
     getPayInfo() {
-        if (gHandler.gameGlobal.isdev) return
         let endurl = "/api/with_draw/index?user_id=" + gHandler.gameGlobal.pay.user_id
         endurl += "&token=e40f01afbb1b9ae3dd6747ced5bca532&package_id=" + gHandler.gameGlobal.pay.package_id
         endurl += "&version=1"
         let callback = (data) => {
-            // cc.log("getPayInfo callback", data)
             if (data && data.status == 0) {
                 let list = data.data.list
                 let isNoAlipay = true
@@ -110,7 +85,7 @@ cc.Class({
                     if (list[i].type == "3") {
                         gHandler.gameGlobal.player.yinhangka = JSON.parse(list[i].info).card_num
                         let kahaostr = gHandler.gameGlobal.player.yinhangka.toString()
-                        this.yinghangkalabel.string = "**** **** **** " + kahaostr.substring(kahaostr.length - 4, kahaostr.length)
+                        this.yinghangkalabel.string = kahaostr.substring(0, 3) + "* **** **** " + kahaostr.substring(kahaostr.length - 4, kahaostr.length)
                         this.yinghangkalabel.node.color = new cc.Color(225, 225, 225)
                         this.yinhangkabindbtn.active = false
                         isNotyinhang = false
@@ -135,50 +110,20 @@ cc.Class({
                 }
             }
         }
-        let outcallback = () => { // 账号密码登录超时，uuid登录
+        let failcallback = (status) => {
+            cc.log('获取个人信息失败', status)
         }
         if (gHandler.gameGlobal.pay.pay_host == "") {
             gHandler.logMgr.time("最快的pay地址")
             let qcallback = (url) => {
                 gHandler.logMgr.timeEnd("最快的pay地址", url)
                 gHandler.gameGlobal.pay.pay_host = url;
-                this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
+                gHandler.http.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, failcallback);
             }
             gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", qcallback)
         } else {
-            this.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, outcallback)
+            gHandler.http.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, failcallback);
         }
-    },
-    sendRequestIpGet(urlto, endurl, callback, outcallback) {
-        let alreadyCallBack = false;
-        let xhr = new XMLHttpRequest();
-        let m_url = urlto + endurl;
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                if (xhr.status >= 200 && xhr.status < 400) {
-                    if (callback && !alreadyCallBack) {
-                        let response = JSON.parse(xhr.responseText);
-                        callback(response, urlto);
-                        alreadyCallBack = true;
-                    }
-                } else {
-                    if (callback && !alreadyCallBack) {
-                        callback(null);
-                        alreadyCallBack = true;
-                    }
-                }
-            }
-        };
-        xhr.open("GET", m_url, true);
-        let timer = setTimeout(() => {
-            if (outcallback && !alreadyCallBack) {
-                // xhr.abort(); // 如果请求已经被发送，则立刻终止请求
-                outcallback(null);
-                alreadyCallBack = true;
-            }
-            clearTimeout(timer);
-        }, 3000)
-        xhr.send();
     },
 
     setPlayerInfo(msg) {
@@ -195,9 +140,10 @@ cc.Class({
             this.phonelabel.string = msg.phone_number
             this.phonelabel.node.color = new cc.Color(225, 225, 225)
             this.phonebindbtn.active = false
-        } else if (msg.phone_number == "") {
+        } else if (msg.ischangeAccount) {
             this.phonelabel.string = "暂未绑定手机"
             this.phonelabel.node.color = new cc.Color(152, 152, 152)
+            this.phonebindbtn.active = true
         }
         if (msg.alipay) {
             this.alipaylabel.string = msg.alipay.substring(0, 2) + "** **** **" + msg.alipay.substring(msg.alipay.length - 2, msg.alipay.length)
@@ -209,7 +155,7 @@ cc.Class({
             this.yinghangkalabel.node.color = new cc.Color(225, 225, 225)
             this.yinhangkabindbtn.active = false
         }
-        if (msg.id) {
+        if (msg.ischangeAccount) {
             this.idlabel.string = msg.id
             if (!msg.alipay || !msg.yinhangka) {
                 this.getPayInfo();
@@ -223,17 +169,14 @@ cc.Class({
     },
 
     onClickChangeHeadImg() {
-        // cc.log("切换头像")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 1 })
     },
 
     onClickNick() {
-        // cc.log("修改昵称")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 3 })
     },
 
     onClickCopy() {
-        // cc.log("复制id", this.idlabel.string)
         if (gHandler.Reflect) {
             if (gHandler.Reflect.setClipboard(this.idlabel.string)) {
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制id成功")
@@ -244,32 +187,26 @@ cc.Class({
     },
 
     obnClickPhoneBind() {
-        // cc.log("绑定手机")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showBiglayer, 3)
     },
 
     onClickAlipayBind() {
-        // cc.log("绑定支付宝")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 2 })
     },
 
     onClickYinHangKaBind() {
-        // cc.log("绑定银行卡")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showBiglayer, 2)
     },
 
     onClickChangeAccount() {
-        // cc.log("切换账号")
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 4 })
     },
 
     onClickMusic(event) {
-        // cc.log("音乐开关")
         gHandler.audioMgr && gHandler.audioMgr.setBgState(event.isChecked)
     },
 
     onClickAudio(event) {
-        // cc.log("音效开关")
         gHandler.audioMgr && gHandler.audioMgr.setEffectState(event.isChecked)
     },
 

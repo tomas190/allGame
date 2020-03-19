@@ -1,10 +1,4 @@
-/*
- * @Author: burt
- * @Date: 2019-07-27 14:58:41
- * @LastEditors  : burt
- * @LastEditTime : 2019-12-27 14:10:58
- * @Description: 大厅场景
- */
+
 let gHandler = require("gHandler");
 let hallWebSocket = require("hallWebSocket");
 
@@ -37,22 +31,14 @@ cc.Class({
         this.scheduleOnce(() => {
             this.startInit();
         }, 0)
-        if (gHandler.appGlobal.huanjin == 'dev' || cc.sys.os === cc.sys.OS_IOS) {
-            let btn = cc.find('Canvas/Main Camera/toppanel/linkbtn')
-            btn.active = true;
-        }
-    },
-    createLink() {
-        let endurl = '?token=' + gHandler.gameGlobal.token + '&deviceid=' + gHandler.appGlobal.deviceID + '&acconunt=' + gHandler.gameGlobal.player.account_name
-        if (cc.sys.os === cc.sys.OS_ANDROID) {
-            if (gHandler.Reflect.setClipboard('http://game.539316.com/' + endurl)) {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制地址成功")
-            } else {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制地址失败")
-            }
-        } else if (cc.sys.os === cc.sys.OS_IOS) {
-            cc.sys.openURL('http://game.539316.com/' + endurl)
-        }
+        //网页版问题都处理完成前先屏蔽
+        // if (cc.sys.os === cc.sys.OS_IOS) { // gHandler.appGlobal.huanjin == 'dev' ||
+        //     if (!gHandler.localStorage.globalGet("isShowIosTip")) {
+        //         gHandler.eventMgr.dispatch(gHandler.eventMgr.showIosTipLayer, {})
+        //     }
+        //     let btn2 = cc.find('Canvas/Main Camera/toppanel/btnpanel/btn_iosweb')
+        //     btn2.active = true;
+        // }
     },
     setButtonEffect(b) {
         if (b) {
@@ -81,6 +67,15 @@ cc.Class({
     // onEnable() { },
     /** 通常用于初始化中间状态操作 */
     start() {
+        if (gHandler.hqqisShowFree) {
+            gHandler.hqqisShowFree = false
+            this.checkFastPayUrl(() => { // 测速后有返回了，再弹出绑定手机的界面
+                if (gHandler.gameGlobal.player.phonenum == "") {
+                    // if (gHandler.appGlobal.huanjin == "dev") return
+                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null);
+                }
+            })
+        }
     },
     startInit() { // 最先注册，及时监听来自子游戏的退出事件
         gHandler.eventMgr.register(gHandler.eventMgr.hotCheckup, "hallScene", this.isupdataCallback.bind(this))
@@ -94,6 +89,8 @@ cc.Class({
         gHandler.eventMgr.register(gHandler.eventMgr.onReceiveBroadcast, "hallScene", this.onReceiveBroadcast.bind(this))
         this.setButtonEffect(true);
         gHandler.audioMgr.playBg("hallbg");
+        this.huodonghongdian = cc.find('Canvas/Main Camera/toppanel/btnpanel/btn_huodong/redpoint')
+        this.huodonghongdian && !gHandler.hallactivitybtn && (this.huodonghongdian.active = true);
         this.scheduleOnce(() => {
             this.addSubgame();
         }, 0)
@@ -123,7 +120,12 @@ cc.Class({
             itembtn.jiantou = itembtn.getChildByName('jiantou')
             itembtn.progresslabel = itembtn.getChildByName('progresslabel').getComponent(cc.Label)
             // itembtn.getChildByName("wait").active = false;
-            // itembtn.getChildByName("experience").active = false;
+            if (key == "zjh" || key == "ddz" || key == "hwby") {
+                itembtn.getChildByName("experience").active = true;
+            }
+            if (key == "hbld" || key == "brnn" || key == 'jbpby') {
+                itembtn.getChildByName("hot").active = true;
+            }
             this.subGameBtnMap[tempdata.enname] = itembtn;
             this.subGameBtnArr[tempdata.hallid] = itembtn;
             if (gHandler.hotUpdateMgr && gHandler.hotUpdateMgr.getSubGameIsOnUp(tempdata.enname)) { // 子游戏在更新列表中
@@ -178,7 +180,6 @@ cc.Class({
     adPageRun() {
         let child = this.pageviewchildren[0]
         let cur = this.pageview.getCurrentPageIndex()
-        // if (cur == 2) {
         let PCP = this.pageview.content.getPosition()
         let posto = cc.v2(PCP.x - child.width, PCP.y)
         let action = cc.moveTo(1, posto)
@@ -200,9 +201,6 @@ cc.Class({
             }
         }, this)
         this.pageview.content.runAction(cc.sequence(action, callfunc0, callfunc))
-        // } else {
-        //     this.pageview.scrollToPage(cur + 1, 1)
-        // }
     },
     /** 子模块更新检查 im，充提 */
     checkSubModule() {
@@ -221,14 +219,40 @@ cc.Class({
                 }
                 gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.im_host, null, "/checked", callback)
             }
+            if (gHandler.gameGlobal.proxy.temp_host == "") {
+                gHandler.logMgr.time("最快的temp_host地址")
+                let callback0 = (url) => {
+                    gHandler.logMgr.timeEnd("最快的temp_host地址", url)
+                    gHandler.gameGlobal.proxy.temp_host = url;
+                }
+                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
+            }
+            if (gHandler.gameGlobal.proxy.proxy_host == "") {
+                gHandler.logMgr.time("最快的proxy_host地址")
+                let callback1 = (url) => {
+                    gHandler.logMgr.timeEnd("最快的proxy_host地址", url)
+                    gHandler.gameGlobal.proxy.proxy_host = url;
+                }
+                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.proxy_host, null, "/checked", callback1)
+            }
         }
         this.scheduleOnce(() => {
             if (!gHandler.gameGlobal.isdev && !gHandler.hallWebSocket) {
                 gHandler.hallWebSocket = new hallWebSocket();
                 gHandler.hallWebSocket.init();
                 let url = gHandler.appGlobal.server;
-                if (cc.sys.isBrowser) {
+                if (url.indexOf("://") == -1) {
                     url = "ws://" + url;
+                } else {
+                    var socket = url.split("://")[1];
+                    var header = url.split("://")[0];
+                    var socketHeader = '';
+                    if (header == "http") {
+                        socketHeader = "ws://"
+                    } else if (header == "https") {
+                        socketHeader = "wss://"
+                    }
+                    url = socketHeader + socket;
                 }
                 gHandler.hallWebSocket.connect(url);
             }
@@ -269,6 +293,9 @@ cc.Class({
         }
         if (!needup) {
             this.getSgjPool()
+            if (!cc.director.getScheduler().isScheduled(this.getSgjPool, this)) {
+                this.schedule(this.getSgjPool, 3)
+            }
         }
     },
     getSgjPool() {
@@ -276,9 +303,6 @@ cc.Class({
         gHandler.http.sendRequestGet(url, null, this.showsgjPoolNum.bind(this))
     },
     showsgjPoolNum(data) {
-        if (!cc.director.getScheduler().isScheduled(this.getSgjPool, this)) {
-            this.schedule(this.getSgjPool, 3)
-        }
         let gold = 0
         if (data < 0.01) {
             gold = 0;
@@ -330,6 +354,9 @@ cc.Class({
         }
         if (!needup) {
             this.getHbslPool()
+            if (!cc.director.getScheduler().isScheduled(this.getHbslPool, this)) {
+                this.schedule(this.getHbslPool, 3)
+            }
         }
     },
     getHbslPool() {
@@ -337,9 +364,6 @@ cc.Class({
         gHandler.http.sendRequestGet(url, null, this.showhbslPoolNum.bind(this))
     },
     showhbslPoolNum(data) {
-        if (!cc.director.getScheduler().isScheduled(this.getHbslPool, this)) {
-            this.schedule(this.getHbslPool, 3)
-        }
         let gold = 0
         if (data < 0.01) {
             gold = 0;
@@ -391,6 +415,9 @@ cc.Class({
         }
         if (!needup) {
             this.getHbldPool()
+            if (!cc.director.getScheduler().isScheduled(this.getHbldPool, this)) {
+                this.schedule(this.getHbldPool, 3)
+            }
         }
     },
     getHbldPool() {
@@ -398,9 +425,6 @@ cc.Class({
         gHandler.http.sendRequestGet(url, null, this.showhbldPoolNum.bind(this))
     },
     showhbldPoolNum(data) {
-        if (!cc.director.getScheduler().isScheduled(this.getHbldPool, this)) {
-            this.schedule(this.getHbldPool, 3)
-        }
         let gold = 0
         if (data < 0.01) {
             gold = 0;
@@ -424,29 +448,43 @@ cc.Class({
      * @Description: 获取公告
      */
     getNotice() {
-        if (gHandler.gameGlobal.noticeList.length > 0) return
+        if (gHandler.gameGlobal.noticeList.length > 0) {
+            let isallread = true
+            for (let i = 0; i < gHandler.gameGlobal.noticeList.length; i++) {
+                if (gHandler.gameGlobal.noticeList[i].isread == 0) {
+                    isallread = false
+                    break
+                }
+            }
+            if (!isallread) {
+                this.gonggaobtn.getChildByName("redpoint").active = true;
+                this.gonggaobtn.getChildByName("topbubble").active = true;
+                gHandler.eventMgr.register(gHandler.eventMgr.refreshHallTips, "hallScene", this.setNoticeReadState.bind(this))
+            }
+            return
+        }
         let callback = (data, url) => {
             // console.log("公告 callback", data)
             if (data.code == 200) {
-                if (data.msg.length == 0) {
+                if (!data.msg || data.msg.length == 0) {
                     // console.log("没有公告需要显示")
                 } else {
-                    let noticehistory = gHandler.localStorage.getGlobal().noticeKey
+                    let deleteNotice = gHandler.localStorage.getGlobal().noticeDeleteKey
                     data.msg.sort((a, b) => a.sort - b.sort).forEach((e, i) => {
                         if (e.type === 2) { // type == 2 是公告 == 1 是活动  is_slider
-                            let isread = false
-                            if (noticehistory) {
-                                for (let j = 0; j < noticehistory.length; j++) {
-                                    if (noticehistory[j] == e.create_time) {
-                                        isread = true
+                            let isdelete = false
+                            if (deleteNotice) {
+                                for (let j = 0; j < deleteNotice.length; j++) {
+                                    if (deleteNotice[j] == e.create_time) {
+                                        isdelete = true
                                         break
                                     }
                                 }
                             }
-                            if (!isread) {
+                            if (!isdelete) {
                                 let notice = {
                                     key: gHandler.gameGlobal.noticeList.length,
-                                    isShow: 0,
+                                    isread: 0,
                                     type: e.type,
                                     title: e.title,
                                     words: e.words,
@@ -469,6 +507,10 @@ cc.Class({
                         this.gonggaobtn.getChildByName("redpoint").active = true;
                         this.gonggaobtn.getChildByName("topbubble").active = true;
                         gHandler.eventMgr.register(gHandler.eventMgr.refreshHallTips, "hallScene", this.setNoticeReadState.bind(this))
+                        if (gHandler.hqqisShowNotice) {
+                            gHandler.hqqisShowNotice = false
+                            gHandler.eventMgr.dispatch(gHandler.eventMgr.showNotice, null)
+                        }
                     }
                     if (gHandler.gameGlobal.slideNoticeList.length > 0) {
                         gHandler.eventMgr.dispatch(gHandler.eventMgr.addSliderNotice, gHandler.gameGlobal.slideNoticeList)
@@ -476,10 +518,10 @@ cc.Class({
                 }
             }
         }
-        let outcallback = () => { // 账号密码登录超时，uuid登录
+        let failcallback = (status) => {
         }
         let endurl = gHandler.appGlobal.getIpGetEndurl(4);
-        gHandler.http.sendRequestIpGet(gHandler.appGlobal.server, endurl, callback, outcallback);
+        gHandler.http.sendRequestIpGet(gHandler.appGlobal.server, endurl, callback, failcallback);
     },
     /**
      * @Description: 设置公告提示状态
@@ -556,24 +598,24 @@ cc.Class({
             this.subGameBtnMap[enname].downflag.active = true;
             gHandler.gameConfig.gamelist[enname].isDown = false
         } else {
-            if (cc.sys.isBrowser) { // 浏览器
-                this.subGameBtnMap[enname].downflag.active = false;
-                this.subGameBtnMap[enname].progress.active = false;
-                this.subGameBtnMap[enname].jiantou.active = false;
-                clickEventHandler.handler = "onClickSubgame";
-                let button = this.subGameBtnMap[enname].getComponent(cc.Button);
-                button.clickEvents.push(clickEventHandler);
-                return
-            }
-            if (cc.sys.os == "Windows") { // 模拟器
-                this.subGameBtnMap[enname].downflag.active = false;
-                this.subGameBtnMap[enname].progress.active = false;
-                this.subGameBtnMap[enname].jiantou.active = false;
-                clickEventHandler.handler = "onClickSubgame";
-                let button = this.subGameBtnMap[enname].getComponent(cc.Button);
-                button.clickEvents.push(clickEventHandler);
-                return
-            }
+            // if (cc.sys.isBrowser) { // 浏览器
+            //     this.subGameBtnMap[enname].downflag.active = false;
+            //     this.subGameBtnMap[enname].progress.active = false;
+            //     this.subGameBtnMap[enname].jiantou.active = false;
+            //     clickEventHandler.handler = "onClickSubgame";
+            //     let button = this.subGameBtnMap[enname].getComponent(cc.Button);
+            //     button.clickEvents.push(clickEventHandler);
+            //     return
+            // }
+            // if (cc.sys.os == "Windows") { // 模拟器
+            //     this.subGameBtnMap[enname].downflag.active = false;
+            //     this.subGameBtnMap[enname].progress.active = false;
+            //     this.subGameBtnMap[enname].jiantou.active = false;
+            //     clickEventHandler.handler = "onClickSubgame";
+            //     let button = this.subGameBtnMap[enname].getComponent(cc.Button);
+            //     button.clickEvents.push(clickEventHandler);
+            //     return
+            // }
             let subgamev = subdata.version;
             let localsubv = gHandler.localStorage.get(enname, "versionKey");
             if (enname == 'zrsx1' || enname == 'zrsx2') {
@@ -598,7 +640,7 @@ cc.Class({
                     needup = true;
                 }
             }
-            if (needup) {
+            if (needup && !cc.sys.isBrowser) {
                 // console.log(txt + " | subgame : " + enname + " need update");
                 gHandler.gameConfig.gamelist[enname].isDown = false
                 this.subGameBtnMap[enname].downflag.active = true;
@@ -613,24 +655,28 @@ cc.Class({
                 this.subGameBtnMap[enname].jiantou.active = false;
                 clickEventHandler.handler = "onClickSubgame";
 
-                let subgamern = enname
-                if (enname == "zrsx1" || enname == "zrsx2") {
-                    subgamern = "zrsx"
-                    if (enname == "zrsx1") {
-                        !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
+                if (gHandler.appGlobal.isRelease) {
+                    let subgamern = enname
+                    if (enname == "zrsx1" || enname == "zrsx2") {
+                        subgamern = "zrsx"
+                        if (enname == "zrsx1") {
+                            // !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
+                            !gHandler.gameGlobal.isdev && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
+                                if (err) {
+                                    return console.error(err);
+                                }
+                                // console.log('load subpackage script successfully.', subgamern);
+                            });
+                        }
+                    } else {
+                        // !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
+                        !gHandler.gameGlobal.isdev && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
                             if (err) {
                                 return console.error(err);
                             }
-                            console.log('load subpackage script successfully.', subgamern);
+                            // console.log('load subpackage script successfully.', subgamern);
                         });
                     }
-                } else {
-                    !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
-                        if (err) {
-                            return console.error(err);
-                        }
-                        console.log('load subpackage script successfully.', subgamern);
-                    });
                 }
             }
             let button = this.subGameBtnMap[enname].getComponent(cc.Button);
@@ -673,8 +719,8 @@ cc.Class({
                 console.log("创建子游戏账号失败")
             }
         }
-        let outcallback = () => {
-            console.log("创建子游戏账号 超时")
+        let failcallback = (status, forcejump) => {
+            console.log("创建子游戏账号 超时", status, forcejump)
         }
         let endurl = "/Game/User/createGameAccount";
         let data = {
@@ -684,7 +730,17 @@ cc.Class({
             id: gHandler.gameGlobal.player.id,
             token: gHandler.gameGlobal.token,
         }
-        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
+        // gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, failcallback); // 创建子游戏账号会有成功，但超时失败的情况，延长超时
+        gHandler.http.sendRequestDetail({
+            method: "POST",
+            urlto: gHandler.appGlobal.server + endurl,
+            param: data,
+            callback: callback,
+            failcallback: failcallback,
+            needJsonParse: true,
+            timeout: 5000,
+            failtimeout: 7000,
+        });
     },
     /**
      * @Description: 设置按钮状态为检测文件
@@ -852,7 +908,6 @@ cc.Class({
             mprogress = mprogress.substring(0, mprogress.indexOf("."))
         }
         mprogress += "%"
-
         if (enname == "zrsx") {
             this.subGameBtnMap['zrsx1'].downflag.active = true;
             this.subGameBtnMap['zrsx1'].jiantou.active = false;
@@ -906,18 +961,20 @@ cc.Class({
         } else if (enname == 'hbld') {
             this.hbldConnect()
         }
-
-        !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(enname, (err) => {
-            if (err) {
-                return console.error(err);
-            }
-            console.log('load subpackage script successfully.', enname);
-        });
+        if (gHandler.appGlobal.isRelease) {
+            // !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(enname, (err) => {
+            !gHandler.gameGlobal.isdev && cc.loader.downloader.loadSubpackage(enname, (err) => {
+                if (err) {
+                    return console.error(err);
+                }
+                // console.log('load subpackage script successfully.', enname);
+            });
+        }
     },
     // 跳转至子游戏场景
     jumpToSubGame(enname) {
         gHandler.audioMgr.stopBg();
-        if (enname == "hbsl" || enname == 'zrsx1' || enname == 'zrsx2') { //  真人视讯 红包扫雷 竖屏
+        if (enname == "hbsl" || enname == 'zrsx1' || enname == 'zrsx2' || enname == 'pccp') { //  真人视讯 红包扫雷 派彩 竖屏
             gHandler.Reflect && gHandler.Reflect.setOrientation("portrait")
             if (enname == 'zrsx1') {
                 gHandler.gameGlobal.subGameType = 22
@@ -963,6 +1020,7 @@ cc.Class({
     onClickPlayerBtn(event) {
         // console.log("玩家设置")
         this.clickDelay(event)
+        // if (gHandler.gameGlobal.isdev) return
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showPerson, null)
     },
     /** 充值 */
@@ -976,13 +1034,10 @@ cc.Class({
      * @description: 批量创建子游戏账号
      */
     _creatSubAccount() {
-        let mgameid = "5b1f3a3cb76a591e7f25171"
+        let mgameid = "569a62be7ff123m117d446aa"
 
         let sub = [
-            777190609, 134843079, 148283582, 906184375, 658534508,
-            954356646, 694737646, 230582691, 837047682, 905424470,
-            150951243, 547119797, 961730865, 815602997, 697447774,
-            900079314, 463949558, 255177425, 962310984
+            691014351, 721199228, 957437641, 144461224, 597347745
         ]
         if (typeof this.tempindex == 'undefined') {
             this.tempindex = 0;
@@ -1025,6 +1080,33 @@ cc.Class({
         }
         gHandler.loginMgr.accountChange(account, pass, mcallback)
     },
+    /**
+     * @Description: 代理线路选择
+     */
+    checkFastProxyUrl(mcallback) {
+        if (gHandler.gameGlobal.proxy.temp_host == "" || gHandler.gameGlobal.proxy.proxy_host == "") {
+            gHandler.logMgr.time("最快的temp_host地址")
+            let callback0 = (url) => {
+                gHandler.logMgr.timeEnd("最快的temp_host地址", url)
+                gHandler.gameGlobal.proxy.temp_host = url;
+                if (gHandler.gameGlobal.proxy.proxy_host != "") {
+                    mcallback && mcallback();
+                }
+            }
+            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
+            gHandler.logMgr.time("最快的proxy_host地址")
+            let callback1 = (url) => {
+                gHandler.logMgr.timeEnd("最快的proxy_host地址", url)
+                gHandler.gameGlobal.proxy.proxy_host = url;
+                if (gHandler.gameGlobal.proxy.temp_host != "") {
+                    mcallback && mcallback();
+                }
+            }
+            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.proxy_host, null, "/checked", callback1)
+        } else {
+            mcallback && mcallback();
+        }
+    },
     /** 全民代理  */
     onClickQMDL(event) {
         console.log("全民代理")
@@ -1037,33 +1119,19 @@ cc.Class({
                 console.log("请配置全民代理场景")
             }
         }
-        if (gHandler.gameGlobal.proxy.temp_host == "") {
-            gHandler.logMgr.time("最快的temp_host地址")
-            let callback0 = (url) => {
-                gHandler.logMgr.timeEnd("最快的temp_host地址", url)
-                gHandler.gameGlobal.proxy.temp_host = url;
-                if (gHandler.gameGlobal.proxy.proxy_host != "") {
-                    enterproxy()
-                }
-            }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
-
-            gHandler.logMgr.time("最快的proxy_host地址")
-            let callback1 = (url) => {
-                gHandler.logMgr.timeEnd("最快的proxy_host地址", url)
-                gHandler.gameGlobal.proxy.proxy_host = url;
-                if (gHandler.gameGlobal.proxy.temp_host != "") {
-                    enterproxy()
-                }
-            }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.proxy_host, null, "/checked", callback1)
-        } else {
-            enterproxy()
-        }
+        this.checkFastProxyUrl(enterproxy.bind(this))
     },
     /** 公告 */
     onClickGongGaoBtn() {
         console.log("公告")
+        // this._creatSubAccount()
+        // return
+        // clearInterval(gHandler.loginMgr.stableServerTest)
+        // let urllist = gHandler.appGlobal.serverList
+        // urllist.push('https://center.whjfxly66.com')
+        // gHandler.loginMgr.requestStableServerUrl(urllist)
+        // return
+        if (gHandler.gameGlobal.isdev) return
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showNotice, null)
     },
     /** 聊天 */
@@ -1084,11 +1152,11 @@ cc.Class({
             let callback = (url) => {
                 gHandler.logMgr.timeEnd("最快的pay地址", url)
                 gHandler.gameGlobal.pay.pay_host = url;
-                mcallback && mcallback()
+                mcallback && mcallback();
             }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
+            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback);
         } else {
-            mcallback && mcallback()
+            mcallback && mcallback();
         }
     },
     /** 跳转至充提场景 */
@@ -1104,10 +1172,11 @@ cc.Class({
         console.log("兑换")
         this.clickDelay(event)
         if (gHandler.gameGlobal.isdev) return
-        this.checkFastPayUrl(this.jumpToCashScene)
+        this.checkFastPayUrl(this.jumpToCashScene.bind(this))
     },
     // 跳转至精彩活动场景
     jumpToPayActivityScene() {
+        this.huodonghongdian && (this.huodonghongdian.active = false, gHandler.hallactivitybtn = true);
         if (gHandler.gameConfig.subModel.payActivity.lanchscene != "") {
             cc.director.loadScene(gHandler.gameConfig.subModel.payActivity.lanchscene)
         } else {
@@ -1118,14 +1187,24 @@ cc.Class({
     onClickHuoDongBtn(event) {
         console.log("精彩活动")
         if (gHandler.gameGlobal.isdev) return
-        this.checkFastPayUrl(this.jumpToPayActivityScene)
+        this.checkFastPayUrl(this.jumpToPayActivityScene.bind(this))
     },
     /** 活动页面 */
     onClickADPage(event, custom) {
         console.log("点击活动页面", custom)
         if (gHandler.gameGlobal.isdev) return
-        if (custom == 1) {
-            // 复制官网
+        if (custom == 1) { // 复制官网
+            if (gHandler.appGlobal.pinpai == "debi") { // 德比直接打开推广链接
+                gHandler.appDownUrl && cc.sys.openURL(gHandler.appDownUrl)
+            } else {
+                if (gHandler.Reflect) {
+                    if (gHandler.Reflect.setClipboard(gHandler.appGlobal.officialWebsite[gHandler.appGlobal.pinpai])) {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制官网到剪切板成功")
+                    } else {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制官网到剪切板失败")
+                    }
+                }
+            }
         } else if (custom == 2) {
             let enterproxy = function () {
                 if (gHandler.gameConfig.subModel.proxy.lanchscene != "") {
@@ -1134,36 +1213,50 @@ cc.Class({
                     console.log("请配置全民代理场景")
                 }
             }
-            if (gHandler.gameGlobal.proxy.temp_host == "") {
-                gHandler.logMgr.time("最快的temp_host地址")
-                let callback0 = (url) => {
-                    gHandler.logMgr.timeEnd("最快的temp_host地址", url)
-                    gHandler.gameGlobal.proxy.temp_host = url;
-                    if (gHandler.gameGlobal.proxy.proxy_host != "") {
-                        enterproxy()
+            this.checkFastProxyUrl(enterproxy.bind(this))
+        } else if (custom == 3) { // 保存下载地址
+            if (gHandler.Reflect) {
+                if (gHandler.appDownUrl) {
+                    if (gHandler.Reflect.setClipboard(gHandler.appDownUrl)) {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制到剪切板成功")
+                    } else {
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制到剪切板失败")
                     }
+                } else {
+                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取下载链接失败，请重新登陆")
                 }
-                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
-                gHandler.logMgr.time("最快的proxy_host地址")
-                let callback1 = (url) => {
-                    gHandler.logMgr.timeEnd("最快的proxy_host地址", url)
-                    gHandler.gameGlobal.proxy.proxy_host = url;
-                    if (gHandler.gameGlobal.proxy.temp_host != "") {
-                        enterproxy()
-                    }
-                }
-                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.proxy_host, null, "/checked", callback1)
-            } else {
-                enterproxy()
             }
-        } else if (custom == 3) {
-            // 保存下载地址
         }
     },
     onClickFreeGold(event) {
-        console.log("免费金币")
+        console.log("免费金币", event)
         this.clickDelay(event)
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null)
+        if (gHandler.gameGlobal.isdev) return
+        if (gHandler.gameGlobal.player.phonenum != "") {
+            if (gHandler.gameConfig.subModel.payActivity.lanchscene != "") {
+                cc.director.loadScene(gHandler.gameConfig.subModel.payActivity.lanchscene)
+            } else {
+                console.log("请配置精彩活动场景")
+            }
+        } else {
+            this.checkFastPayUrl(() => {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null);
+            })
+        }
+    },
+    onClickIosWeb(event) {
+        console.log('打开ios网页')
+        this.clickDelay(event)
+        let endurl = '?token=' + gHandler.gameGlobal.token + '&deviceid=' + gHandler.appGlobal.deviceID + '&acconunt=' + gHandler.gameGlobal.player.account_name
+        if (cc.sys.os === cc.sys.OS_ANDROID) {
+            if (gHandler.Reflect.setClipboard('http://game.539316.com/' + endurl)) {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制地址成功")
+            } else {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制地址失败")
+            }
+        } else if (cc.sys.os === cc.sys.OS_IOS) {
+            cc.sys.openURL('http://game.539316.com/' + endurl)
+        }
     },
     enterSubWeb(custom) {
         // let getIconPath = () => {

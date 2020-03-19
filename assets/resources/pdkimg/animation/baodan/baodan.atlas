@@ -1,0 +1,27 @@
+
+baodan.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jingbaoqi2
+  rotate: false
+  xy: 242, 72
+  size: 175, 168
+  orig: 175, 168
+  offset: 0, 0
+  index: -1
+jingbaoqi3
+  rotate: false
+  xy: 2, 2
+  size: 238, 238
+  orig: 238, 238
+  offset: 0, 0
+  index: -1
+jingbaoqidi
+  rotate: false
+  xy: 419, 126
+  size: 102, 114
+  orig: 102, 114
+  offset: 0, 0
+  index: -1

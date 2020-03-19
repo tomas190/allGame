@@ -1,0 +1,20 @@
+
+ani_tingzhi.png
+size: 2048,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+p_waitdi
+  rotate: false
+  xy: 0, 12
+  size: 645, 85
+  orig: 645, 85
+  offset: 0, 0
+  index: -1
+tingzhixiazhu
+  rotate: false
+  xy: 647, 0
+  size: 413, 97
+  orig: 413, 97
+  offset: 0, 0
+  index: -1
