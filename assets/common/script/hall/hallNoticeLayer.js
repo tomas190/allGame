@@ -1,4 +1,14 @@
 
+<<<<<<< HEAD
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-09-28 17:12:14
+ * @LastEditors: burt
+ * @LastEditTime: 2019-10-24 08:32:55
+ * @Description: 大厅公告页
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 
 let gHandler = require("gHandler");
 cc.Class({
@@ -34,8 +44,12 @@ cc.Class({
     onLoad() {
         this.subData = null
 
+<<<<<<< HEAD
         // this.noticedata = gHandler.commonTools.jsonCopy(gHandler.gameGlobal.noticeList)
         this.noticedata = gHandler.gameGlobal.noticeList
+=======
+        this.noticedata = gHandler.commonTools.jsonCopy(gHandler.gameGlobal.noticeList)
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         this.emaildata = []
 
         this.noticeItemList = []
@@ -62,7 +76,11 @@ cc.Class({
         for (let i = 0; i < this.noticedata.length; i++) {
             let mitem = cc.instantiate(this.item)
             let readstate = mitem.getChildByName("readstate").getComponent(cc.Sprite)
+<<<<<<< HEAD
             readstate.spriteFrame = this.noticedata[i].isread ? this.hasreadframe : this.noreadframe;
+=======
+            readstate.spriteFrame = this.noticedata[i].isShow ? this.hasreadframe : this.noreadframe;
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             let time = mitem.getChildByName("time").getComponent(cc.Label)
             let notice = mitem.getChildByName("notice")
             notice.active = true
@@ -93,7 +111,11 @@ cc.Class({
         for (let i = 0; i < this.emaildata.length; i++) {
             let mitem = cc.instantiate(this.item)
             let readstate = mitem.getChildByName("readstate").getComponent(cc.Sprite)
+<<<<<<< HEAD
             readstate.spriteFrame = this.emaildata[i].isread ? this.hasreadframe : this.noreadframe;
+=======
+            readstate.spriteFrame = this.emaildata[i].isShow ? this.hasreadframe : this.noreadframe;
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             let time = mitem.getChildByName("time").getComponent(cc.Label)
             let notice = mitem.getChildByName("notice")
             notice.active = false
@@ -110,7 +132,11 @@ cc.Class({
             clickEventHandler.handler = "onClickReadItem";
             let btnnode = email.getChildByName("btn")
             let btnsprite = btnnode.getComponent(cc.Sprite)
+<<<<<<< HEAD
             btnsprite.spriteFrame = this.emaildata[i].isread ? this.ehasreadframe : this.enoreadframe;
+=======
+            btnsprite.spriteFrame = this.emaildata[i].isShow ? this.ehasreadframe : this.enoreadframe;
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             let btn = btnnode.getComponent(cc.Button);
             btn.clickEvents.push(clickEventHandler);
             mitem.setPosition(0, -(0.5 + i) * (mitem.height + 16) - 22)
@@ -136,9 +162,15 @@ cc.Class({
     onClickYouJian(event, custom) {
         return
         // cc.log("邮件")
+<<<<<<< HEAD
         this.emaildata[custom.key].isread = 1
         this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.emaildata[custom.key].isread ? this.hasreadframe : this.noreadframe;
         this.emailItemList[custom.key].getChildByName("email").getChildByName("btn").getComponent(cc.Sprite).spriteFrame = this.emaildata[custom.key].isread ? this.ehasreadframe : this.enoreadframe;
+=======
+        this.emaildata[custom.key].isShow = 1
+        this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.emaildata[custom.key].isShow ? this.hasreadframe : this.noreadframe;
+        this.emailItemList[custom.key].getChildByName("email").getChildByName("btn").getComponent(cc.Sprite).spriteFrame = this.emaildata[custom.key].isShow ? this.ehasreadframe : this.enoreadframe;
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         this.gonggaobtn.interactable = true
         this.emailbtn.interactable = false
         this.noticescroll.node.active = false
@@ -148,6 +180,7 @@ cc.Class({
 
     onClickReadItem(event, custom) {
         // cc.log("点击", custom)
+<<<<<<< HEAD
         this.noticedata[custom.key].isread = 1
         this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.noticedata[custom.key].isread ? this.hasreadframe : this.noreadframe;
         this.sublayer.active = true
@@ -162,11 +195,31 @@ cc.Class({
         //     noticehistory.splice(0, 150)
         // }
         // gHandler.localStorage.globalSet('noticeKey', noticehistory)
+=======
+        this.noticedata[custom.key].isShow = 1
+        this.noticeItemList[custom.key].getChildByName("readstate").getComponent(cc.Sprite).spriteFrame = this.noticedata[custom.key].isShow ? this.hasreadframe : this.noreadframe;
+        this.sublayer.active = true
+        this.initSubLayer(custom)
+        this.checkIsAllRead()
+        let noticehistory = gHandler.localStorage.getGlobal().noticeKey
+        if (!noticehistory) {
+            noticehistory = []
+        }
+        noticehistory.push(custom.create_time)
+        if (noticehistory.length > 200) {
+            noticehistory.splice(0, 150)
+        }
+        gHandler.localStorage.globalSet('noticeKey', noticehistory)
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     },
 
     checkIsAllRead() {
         for (let i = 0; i < this.noticedata.length; i++) {
+<<<<<<< HEAD
             if (this.noticedata[i].isread == 0) {
+=======
+            if (this.noticedata[i].isShow == 0) {
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
                 return
             }
         }
@@ -178,12 +231,17 @@ cc.Class({
         this.initEmailScroll()
     },
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     onClickSubClose() {
         this.sublayer.active = false
     },
 
     onClickDelete() {
         if (this.subData.type == 2) {
+<<<<<<< HEAD
             let deleteNotice = gHandler.localStorage.getGlobal().noticeDeleteKey
             if (!deleteNotice) {
                 deleteNotice = []
@@ -193,6 +251,8 @@ cc.Class({
                 deleteNotice.splice(0, 150)
             }
             gHandler.localStorage.globalSet('noticeDeleteKey', deleteNotice)
+=======
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             for (let i = 0; i < this.noticedata.length; i++) {
                 if (this.noticedata[i].key == this.subData.key) {
                     this.noticedata.splice(i, 1)

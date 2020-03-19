@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-10-28 13:44:46
+ * @LastEditors: burt
+ * @LastEditTime: 2019-12-13 09:24:42
+ * @Description: 
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 cc.Class({
     extends: cc.Component,
 

@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-07-30 10:44:15
+ * @LastEditors  : burt
+ * @LastEditTime : 2020-02-12 14:14:02
+ * @Description: 本地化保存
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 let localStorage = {
     subgameKey: "subgameKey",

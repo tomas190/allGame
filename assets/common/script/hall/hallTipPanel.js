@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-10-08 18:13:19
+ * @LastEditors: burt
+ * @LastEditTime: 2019-11-15 15:53:08
+ * @Description: 
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 
 cc.Class({
     extends: cc.Component,
@@ -44,6 +54,10 @@ cc.Class({
         this.label._updateRichText()
         this.bg.width = this.label.node.width + 100
         this.bg.heigth = this.label.node.heigth
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         this.node.setPosition(cc.winSize.width / 2, cc.winSize.height / 2 - this.movedis)
         this.node.opacity = 150
         let m0 = cc.moveBy(this.flytime, cc.v2(0, this.movedis))

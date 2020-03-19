@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-08-05 16:17:41
+ * @LastEditors  : burt
+ * @LastEditTime : 2020-02-11 20:04:08
+ * @Description: java原生调用
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 
 let myReflect = {
     /** 获取设备id */
@@ -108,7 +118,13 @@ let myReflect = {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "saveTextureToLocal", "(Ljava/lang/String;)V", pngPath.toString());
             } else if (cc.sys.os === cc.sys.OS_IOS) {
+<<<<<<< HEAD
                 let ret = jsb.reflection.callStaticMethod("AppController", "saveTextureToLocal:", pngPath);
+=======
+                let ret = jsb.reflection.callStaticMethod("AppController",
+                    "saveTextureToLocal:",
+                    pngPath);
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
             }
         }
     },

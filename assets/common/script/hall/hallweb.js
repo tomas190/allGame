@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-09-17 09:02:11
+ * @LastEditors: burt
+ * @LastEditTime: 2019-09-17 15:57:53
+ * @Description: 
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 
 let gHandler = require("gHandler");
 cc.Class({

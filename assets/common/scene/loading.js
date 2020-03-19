@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-07-27 16:57:02
+ * @LastEditors  : burt
+ * @LastEditTime : 2020-02-06 18:28:21
+ * @Description: 通用加载场景
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 let hqqLocalStorage = require("hqqLocalStorage");
 let hqqLogMgr = require("hqqLogMgr");
@@ -33,7 +43,21 @@ cc.Class({
     /** 脚本组件初始化，可以操作this.node // use this for initialization */ // " 开始游戏代码，loading界面加载 D/jswrapper"
     onLoad() {
         console.log("开始游戏代码，loading界面加载")
+<<<<<<< HEAD
         // cc.debug.setDisplayStats(false)
+=======
+        if (cc.sys.platform === cc.sys.ANDROID || cc.sys.os === cc.sys.OS_ANDROID) {
+            gHandler.appGlobal = appGlobal.init(0);
+        } else if (cc.sys.platform === cc.sys.IPHONE || cc.sys.platform === cc.sys.MACOS || cc.sys.platform === cc.sys.IPAD
+            || cc.sys.os === cc.sys.OS_IOS || cc.sys.os === cc.sys.OS_OSX) {
+            // gHandler.appGlobal = appGlobal.init(1);
+            gHandler.appGlobal = appGlobal.init(0);
+        } else if (cc.sys.platform === cc.sys.WIN32 || cc.sys.os === cc.sys.OS_WINDOWS) {
+            gHandler.appGlobal = appGlobal.init(2);
+        } else {
+            gHandler.appGlobal = appGlobal.init(-1);
+        }
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         gHandler.base64 = hqqBase64;
         gHandler.Reflect = myReflect;
         gHandler.http = hqqHttp;
@@ -64,9 +88,12 @@ cc.Class({
             this.debistartAni.setAnimation(0, 'animation', false)
             this.test.active = false
             this.debi.active = true
+<<<<<<< HEAD
         } else {
             this.test.active = false
             this.debi.active = false
+=======
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         }
 
         this.tempTime = 0;
@@ -113,6 +140,17 @@ cc.Class({
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showLoadingInfo, "error:" + error)
             }
         }
+
+        this.layer.active = true;
+        if (gHandler.gameGlobal.isdev) {
+            cc.director.loadScene('hall')
+        } else if (gHandler.appGlobal.pinpai != 'debi') {
+            let appLogin = require("appLogin")
+            gHandler.loginMgr = appLogin;
+            gHandler.loginMgr.init({
+                hallmanifest: this.hallmanifest,
+            })
+        }
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
@@ -157,6 +195,10 @@ cc.Class({
         if (!gHandler.localStorage.globalGet("noShowIosWebTip")) {
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showIosWebTip, null) // ios 网页提示添加桌面
         }
+<<<<<<< HEAD
+=======
+        // this.launchFullscreen(document.documentElement); // 整个网页 启动全屏
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     },
     // 判断各种浏览器，找到正确的方法
     launchFullscreen(element) {
@@ -203,6 +245,7 @@ cc.Class({
         if (!this.isapkdown) {
             this.isapkdown = true
             if (this.clearLocalData()) {
+<<<<<<< HEAD
                 if (gHandler.gameGlobal.player.account_name && gHandler.appGlobal.packageID && gHandler.gameGlobal.proxy.temp_host) {
                     gHandler.appDownUrl = gHandler.gameGlobal.proxy.temp_host + "?p=" + gHandler.appGlobal.packageID + "&u=" + gHandler.gameGlobal.player.account_name + "&m=" + gHandler.appGlobal.huanjin;
                     cc.sys.openURL(gHandler.appDownUrl)
@@ -216,6 +259,24 @@ cc.Class({
                         cc.sys.openURL("https://temp.7kpi3g.cn?p=2&u=770256905")
                     }
                     // gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "下载链接错误")
+=======
+                if (gHandler.gameGlobal.player.account_name && gHandler.appGlobal.remoteSeverinfo) {
+                    let callback0 = (url) => {
+                        gHandler.gameGlobal.proxy.temp_host = url;
+                        gHandler.appDownUrl = url + "?p=" + gHandler.appGlobal.remoteSeverinfo.id + "&u=" + gHandler.gameGlobal.player.account_name + "&m=" + gHandler.gameGlobal.huanjin;
+                        cc.sys.openURL(gHandler.appDownUrl)
+                    }
+                    gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
+                } else if (gHandler.appGlobal.remoteSeverinfo) {
+                    let callback0 = (url) => {
+                        gHandler.gameGlobal.proxy.temp_host = url;
+                        gHandler.appDownUrl = url + "?p=" + gHandler.appGlobal.remoteSeverinfo.id + "&u=" + gHandler.appGlobal.getGeneralAgency() + "&m=" + gHandler.appGlobal.huanjin;
+                        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 8 })
+                    }
+                    gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
+                } else {
+                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "下载链接错误")
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
                 }
             }
         }

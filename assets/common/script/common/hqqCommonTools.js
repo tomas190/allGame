@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-07-29 15:52:25
+ * @LastEditors  : burt
+ * @LastEditTime : 2020-01-18 20:25:11
+ * @Description: 通用函数
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let commonTools = {
     headRes: null, // 头像资源缓存
     loadHeadRes(headid, headsprite) {

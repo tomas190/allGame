@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-07-30 09:11:37
+ * @LastEditors: burt
+ * @LastEditTime: 2019-11-18 15:42:28
+ * @Description: 公告板
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
@@ -10,10 +20,17 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
+<<<<<<< HEAD
 
     },
     /** enabled和active属性从false变为true时 */
     onEnable() {
+=======
+        
+    },
+    /** enabled和active属性从false变为true时 */
+    onEnable() { 
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         this.isRoll = false
         gHandler.eventMgr.register(gHandler.eventMgr.addSliderNotice, "hallNoticeBoard", this.addSliderNotice.bind(this))
         if (gHandler.gameGlobal.slideNoticeList.length > 0) {

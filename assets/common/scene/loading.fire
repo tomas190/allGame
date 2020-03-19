@@ -201,7 +201,11 @@
         "__id__": 8
       }
     ],
+<<<<<<< HEAD
     "_active": false,
+=======
+    "_active": true,
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     "_level": 2,
     "_components": [
       {
@@ -490,7 +494,11 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
+<<<<<<< HEAD
     "_id": "f612mzz/BOZZPWBT/O03eb"
+=======
+    "_id": "67cAF6051DgJWcjBIf7PlK"
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
   },
   {
     "__type__": "cc.Graphics",
@@ -523,7 +531,11 @@
       "a": 255
     },
     "_miterLimit": 10,
+<<<<<<< HEAD
     "_id": "d7U4fI+AhLNovSHDnGOPEO"
+=======
+    "_id": "c21Ntt51tPpr2H8ycSbubQ"
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
   },
   {
     "__type__": "sp.Skeleton",
@@ -605,7 +617,11 @@
         "__id__": 14
       }
     ],
+<<<<<<< HEAD
     "_active": false,
+=======
+    "_active": true,
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     "_level": 2,
     "_components": [
       {
@@ -1761,7 +1777,11 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "showInEditor": false,
+<<<<<<< HEAD
     "_id": "31WnqIzAJKio3unVtwoKd3"
+=======
+    "_id": "d1ycmwL9VFLr7w2qBpv1AJ"
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
   },
   {
     "__type__": "cc.Label",
@@ -1791,7 +1811,11 @@
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
+<<<<<<< HEAD
     "_id": "83AyUza2pI1Y9E/KiK6Twd"
+=======
+    "_id": "d1GcBCVrVG24DLHeRdGllO"
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
   },
   {
     "__type__": "cc.Widget",
@@ -2054,6 +2078,15 @@
     },
     "apkversion": {
       "__id__": 35
+<<<<<<< HEAD
+=======
+    },
+    "tippanelPrefab": {
+      "__uuid__": "6c4e8feb-5cbd-4ea9-b1ee-9535e707d0f4"
+    },
+    "smallsublayerPrefab": {
+      "__uuid__": "94febe73-e975-44d6-824b-5feb897b1207"
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     },
     "progressnode": {
       "__id__": 32

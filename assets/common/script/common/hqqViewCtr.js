@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-10-23 11:22:51
+ * @LastEditors  : burt
+ * @LastEditTime : 2020-01-02 19:31:51
+ * @Description: 
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 let hqqViewCtr = {
     noticelayerIndex: cc.macro.MAX_ZINDEX - 16,

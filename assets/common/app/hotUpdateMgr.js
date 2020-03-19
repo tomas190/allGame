@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 
+=======
+/*
+ * @Author: burt
+ * @Date: 2019-08-29 10:46:50
+ * @LastEditors  : burt
+ * @LastEditTime : 2020-02-10 19:55:35
+ * @Description: 
+ */
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
 let gHandler = require("gHandler");
 let crypto = require('crypto');
 let nodeJsBufferTool = require('buffer').Buffer;
@@ -416,7 +426,11 @@ let hotUpdateMgr = {
                 }
                 this._am.loadLocalManifest(nurl);
             } else {
+<<<<<<< HEAD
                 let url = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.hotupdatePath + "/" + verstr;
+=======
+                let url = gHandler.localStorage.getGlobal().hotServerKey + "/" + gHandler.appGlobal.packgeName + "/";
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
                 this.log("url", url + this.manifestPre + "project.manifest")
                 var customManifestStr = JSON.stringify({
                     "packageUrl": url,
@@ -503,6 +517,7 @@ let hotUpdateMgr = {
     /**
      * @Description: 热更失败或者不需要更新
      */
+<<<<<<< HEAD
     vfailcallback(status, forcejump) {
         this.log("更新失败 status", status, forcejump, this._getVersionTry)
         if (this._getVersionTry < this._getVersionMaxTry) {
@@ -510,18 +525,26 @@ let hotUpdateMgr = {
             gHandler.http.sendRequestGet(this._packageUrl + this.manifestPre + 'version.manifest', null, this.vcallback, this.vfailcallback)
             return
         }
+=======
+    failcallback(status) {
+        status && this.log("更新失败 status", status)
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheckup, false, this.data.subname)
         this._am.setEventCallback(null);
         this._checkListener = null;
         this._am = null;
+<<<<<<< HEAD
         this._getProjectTry = 0;
         this._getVersionTry = 0;
+=======
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
         if (this.updataList.length > 0) {
             let data = this.updataList.shift();
             this.checkUpdate(data);
         }
     },
     /**
+<<<<<<< HEAD
      * @Description: 获取version成功
      */
     vcallback(responseText) {
@@ -541,6 +564,8 @@ let hotUpdateMgr = {
         }
     },
     /**
+=======
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
      * @Description: 开始更新
      */
     checkUpdate: function (data) {
@@ -585,6 +610,7 @@ let hotUpdateMgr = {
         }
         this._am.setEventCallback(this._updateCb.bind(this));
 
+<<<<<<< HEAD
         this._packageUrl = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.hotupdatePath + "/" + verstr
         this.log('热更请求地址', this._packageUrl)
         gHandler.http.sendRequestGet(this._packageUrl + this.manifestPre + 'version.manifest', null, this.vcallback.bind(this), this.vfailcallback.bind(this))
@@ -594,6 +620,30 @@ let hotUpdateMgr = {
      * @Description: 开始更新对比project
      */
     startUpdate(packageUrl) {
+=======
+        let hallversion = gHandler.localStorage.globalGet(gHandler.appGlobal.versionKey)
+        hallversion = hallversion ? hallversion : ''
+        this.log('开始更新 version', this.data.version, 'hallversion', hallversion)
+        let verstr = ''
+        if (this.data.subname == 'hall' && this.data.remotev) {
+            verstr = this.data.remotev + '/'
+        } else if (hallversion) {
+            verstr = hallversion + '/'
+        }
+        let packageUrl = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.packgeName + "/" + verstr
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
+        let callback = (responseText) => {
+            // console.log('responseText version.manifest', responseText)
+            if (this.versionCompareHandle(this.data.version, responseText.version) == -1) { // 需要更新
+                this.startUpdate(packageUrl)
+            } else { // 已经是最新的版本，不需要更新
+                this.failcallback()
+            }
+        }
+        gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'version.manifest', null, callback, this.failcallback.bind(this))
+        return true;
+    },
+    startUpdate(packageUrl) {
         let callback = (responseText) => {
             this.log('responseText.packageUrl', responseText.packageUrl)
             responseText.packageUrl = packageUrl
@@ -602,6 +652,7 @@ let hotUpdateMgr = {
             var manifest = new jsb.Manifest(customManifestStr, this._storagePath);
             this.log('loadRemoteManifest', this._am.loadRemoteManifest(manifest))
         }
+<<<<<<< HEAD
         let falicallback = (status, forcejump) => {
             this.log('热更project失败', status, forcejump, this._getProjectTry)
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "热更project失败" + status)
@@ -622,6 +673,17 @@ let hotUpdateMgr = {
             }
         }
         gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'project.manifest', null, callback, falicallback)
+=======
+        let falicallback = (status) => {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "热更project失败" + status)
+            this.startUpdate(packageUrl)
+        }
+        let outcallback = () => {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "热更project超时")
+            this.startUpdate(packageUrl)
+        }
+        gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'project.manifest', null, callback, falicallback, outcallback)
+>>>>>>> 1d13304ef16cf6bd8851bc1c4693c3ec45597bd8
     },
     // 正式进行热更
     hotUpdate: function (subname) {
