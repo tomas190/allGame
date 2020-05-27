@@ -7,7 +7,7 @@ all hqq native combined-game project
 另外必须修改 deviceID 字段，必须是唯一，不与其他人的设备id冲突，推荐使用自己开发的gameid，再额外加几位数字    
 比如抢庄牛牛  
 ```js
-"'5b1f3a3cb76a591e7f251714' + '123456789' = '5b1f3a3cb76a591e7f251714123456789'"
+"5b1f3a3cb76a591e7f251714 + 123456789 = 5b1f3a3cb76a591e7f251714123456789"
 ``` 
 
 # 合并master分支建议：

@@ -584,6 +584,12 @@
     "OneMonthMillion": {
       "__uuid__": "050f15f9-1aab-4c0e-b5ac-608d0e0c456f"
     },
+    "RechargeRebate": {
+      "__uuid__": "ebcabade-ac3b-4f6d-ad7c-9a79c8306606"
+    },
+    "RecommendFriends": {
+      "__uuid__": "fe13d13f-e0ea-45b7-9469-39fb1e5845ee"
+    },
     "app": null,
     "_id": ""
   },

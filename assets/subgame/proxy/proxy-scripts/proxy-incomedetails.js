@@ -70,7 +70,7 @@ cc.Class({
 								if (xhr2.readyState == 4 && xhr2.status === 200) {
 									const res = JSON.parse(xhr2.responseText);
 									console.log("请求第三列佣金贡献数据", res);
-									if (res.msg) {
+									if (res.code===200&&res.msg) {
 										res.msg.forEach((ele) => {
 											gridData.forEach((item) => {
 												if (ele.proxy_user_id === item.cell2) {
@@ -101,7 +101,7 @@ cc.Class({
 								if (xhr2.readyState == 4 && xhr2.status === 200) {
 									const res = JSON.parse(xhr2.responseText);
 									console.log("请求第三列佣金贡献数据", res);
-									if (res.msg) {
+									if (res.code===200&&res.msg) {
 										res.msg.forEach((ele) => {
 											gridData.forEach((item) => {
 												if (ele.game_user_id === item.cell2) {

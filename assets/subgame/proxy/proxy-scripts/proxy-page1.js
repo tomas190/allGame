@@ -56,7 +56,7 @@ cc.Class({
 			.getChildByName("myURL")
 			.getChildByName("URL")
 			.getComponent("cc.Label")
-			._updateRenderData(true);
+			._forceUpdateRenderData(true);
 		//给专属链接复制按钮绑定事件
 		var URLEventHandler = new cc.Component.EventHandler();
 		URLEventHandler.target = cc.find("Canvas"); // 这个 node 节点是你的事件处理代码组件所属的节点

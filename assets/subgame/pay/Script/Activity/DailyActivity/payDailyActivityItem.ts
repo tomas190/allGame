@@ -1,6 +1,6 @@
 import payDailyActivity from "./payDailyActivity"
-import gHandler = require("../../../../../common/script/common/gHandler")
-const { ccclass, property } = cc._decorator;
+import gHandler = require("../../../../../common/script/common/gHandler") 
+const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class NewClass extends cc.Component {
@@ -25,158 +25,158 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     goToBtn: cc.Node = null; // 前往按钮
 
-    payDailyCompoment: payDailyActivity = null
+    payDailyCompoment :payDailyActivity = null
     key = ''
     data = null
     task_id = 0
-    onLoad() {
+    onLoad () {
         this.goldLabel.string = `x${this.data.gold}`
         this.rewardLabel.string = `奖励: ${this.data.gold}金币, ${this.data.integral}积分`
-        switch (this.key) {
-            case "game":
+        switch (this.key){
+            case "game" :
                 var gameName = this.switchGameId(this.data.game_id)
-                if (this.data.rounds) {
+                if(this.data.rounds){
                     this.targetLabel.string = `完成${this.data.rounds}局${gameName}`
-                } else if (this.data.winround) {
+                }else if(this.data.winround){
                     this.targetLabel.string = `${gameName}获胜${this.data.winround}局`
                 }
                 break
-            case "proxy":
+            case "proxy" :
                 this.targetLabel.string = `发展下级完成首充${this.data.children_firstpay_num}人`
                 break
-            case "recharge":
-                if (this.data.recharge_num) {
+            case "recharge" :
+                if(this.data.recharge_num){
                     this.targetLabel.string = `今日充值${this.data.recharge_num}次`
-                } else if (this.data.recharge_amount) {
+                }else if(this.data.recharge_amount){
                     this.targetLabel.string = `今日充值${this.data.recharge_amount}金币`
                 }
                 break
         }
     }
-    init(key, data) {
+    init(key,data){
         this.key = `${key}`
         this.data = data
         this.task_id = data.task_id
     }
-    setDetail(Detail, payDailyCompoment) {
+    setDetail(Detail,payDailyCompoment){
         this.payDailyCompoment = payDailyCompoment
         let isReceive = false
-        if (Detail.receive_task_id.indexOf(`${this.task_id}`) != -1) {
+        if(Detail.receive_task_id.indexOf(`${this.task_id}`) != -1) {
             //数组里存在，则表示已领取
             isReceive = true
         }
-        switch (this.key) {
-            case "game":
-                let GameData = Detail["game"][this.data.game_id]
-                if (!GameData) break
-                if (this.data.rounds) {
-                    this.progressLabel.string = `${GameData.totalrounds > this.data.rounds ? this.data.rounds : GameData.totalrounds}/${this.data.rounds}`
-                    if (GameData.totalrounds >= this.data.rounds) {
-                        if (!isReceive) {
+        switch (this.key){
+            case "game" :
+                let GameData =  Detail["game"][this.data.game_id]
+                if(!GameData) break
+                if(this.data.rounds){
+                    this.progressLabel.string = `${GameData.totalrounds > this.data.rounds ?this.data.rounds:GameData.totalrounds}/${this.data.rounds}`
+                    if(GameData.totalrounds >= this.data.rounds){
+                        if(!isReceive){
                             this.switchBtn("lingquBtn")
-                        } else {
+                        }else{
                             this.switchBtn("lingquDoneBtn")
                         }
-                    } else {
+                    }else{
                         this.switchBtn("goToBtn")
                     }
-                } else if (this.data.winround) {
-                    this.progressLabel.string = `${GameData.winround > this.data.winround ? this.data.winround : GameData.winround}/${this.data.winround}`
-                    if (GameData.winround >= this.data.winround) {
-                        if (!isReceive) {
+                }else if(this.data.winround){
+                    this.progressLabel.string = `${GameData.winround > this.data.winround ?this.data.winround:GameData.winround}/${this.data.winround}`
+                    if(GameData.winround >= this.data.winround){
+                        if(!isReceive){
                             this.switchBtn("lingquBtn")
-                        } else {
+                        }else{
                             this.switchBtn("lingquDoneBtn")
                         }
-                    } else {
+                    }else{
                         this.switchBtn("goToBtn")
                     }
                 }
                 break
-            case "proxy":
-                this.progressLabel.string = `${Detail.children_firstpay_num > this.data.children_firstpay_num ? this.data.children_firstpay_num : Detail.children_firstpay_num}/${this.data.children_firstpay_num}`
-                if (Detail.children_firstpay_num >= this.data.children_firstpay_num) {
-                    if (!isReceive) {
+            case "proxy" :
+                this.progressLabel.string = `${Detail.children_firstpay_num > this.data.children_firstpay_num ? this.data.children_firstpay_num :Detail.children_firstpay_num}/${this.data.children_firstpay_num}`
+                if(Detail.children_firstpay_num >= this.data.children_firstpay_num){
+                    if(!isReceive){
                         this.switchBtn("lingquBtn")
-                    } else {
+                    }else{
                         this.switchBtn("lingquDoneBtn")
                     }
-                } else {
+                }else{
                     this.switchBtn("goToBtn")
                 }
                 break
-            case "recharge":
-                if (this.data.recharge_num) {
-                    this.progressLabel.string = `${Detail.recharge_num > this.data.recharge_num ? this.data.recharge_num : Detail.recharge_num}/${this.data.recharge_num}`
-                    if (Detail.recharge_num >= this.data.recharge_num) {
-                        if (!isReceive) {
+            case "recharge" :
+                if(this.data.recharge_num){
+                    this.progressLabel.string = `${Detail.recharge_num > this.data.recharge_num ? this.data.recharge_num: Detail.recharge_num}/${this.data.recharge_num}`
+                    if(Detail.recharge_num >= this.data.recharge_num){
+                        if(!isReceive){
                             this.switchBtn("lingquBtn")
-                        } else {
+                        }else{
                             this.switchBtn("lingquDoneBtn")
                         }
-                    } else {
+                    }else{
                         this.switchBtn("goToBtn")
                     }
-                } else if (this.data.recharge_amount) {
-                    this.progressLabel.string = `${Detail.recharge_amount > this.data.recharge_amount ? this.data.recharge_amount : Detail.recharge_amount}/${this.data.recharge_amount}`
-                    if (Detail.recharge_amount >= this.data.recharge_amount) {
-                        if (!isReceive) {
+                }else if(this.data.recharge_amount){
+                    this.progressLabel.string = `${Detail.recharge_amount > this.data.recharge_amount ? this.data.recharge_amount :Detail.recharge_amount}/${this.data.recharge_amount}`
+                    if(Detail.recharge_amount >= this.data.recharge_amount){
+                        if(!isReceive){
                             this.switchBtn("lingquBtn")
-                        } else {
+                        }else{
                             this.switchBtn("lingquDoneBtn")
                         }
-                    } else {
+                    }else{
                         this.switchBtn("goToBtn")
                     }
                 }
                 break
         }
     }
-    switchGameId(Gameid) {
-        switch (Gameid) {
-            case "5b1f3a3cb76a591e7f251715":
+    switchGameId(Gameid){
+        switch(Gameid) {
+            case "5b1f3a3cb76a591e7f251715" :
                 return "炸金花"
-            case "5b1f3a3cb76a591e7f251711":
+            case "5b1f3a3cb76a591e7f251711" :
                 return "斗地主"
-            default:
+            default :
                 return ""
         }
     }
-    switchBtn(btnName) {
+    switchBtn(btnName){
         this.lingquBtn.active = false
         this.lingquDoneBtn.active = false
         this.goToBtn.active = false
-        if (btnName == 'lingquBtn') {
+        if(btnName == 'lingquBtn'){
             this.lingquBtn.active = true
-        } else if (btnName == "lingquDoneBtn") {
+        }else if (btnName =="lingquDoneBtn") {
             this.lingquDoneBtn.active = true
-        } else if (btnName == "goToBtn") {
+        }else if (btnName =="goToBtn") {
             this.goToBtn.active = true
         }
     }
-    linquBtnClick() {
+    linquBtnClick(){
         this.lingquBtn.getComponent(cc.Button).interactable = false
         let self = this;
-        this.payDailyCompoment.fetchGetTask(this.key, this.task_id, () => {
+        this.payDailyCompoment.fetchGetTask(this.key,this.task_id,()=>{
             self.lingquBtn.getComponent(cc.Button).interactable = true
         })
     }
     //点击前往
-    goToBtnClick() {
-        switch (this.key) {
-            case "game":
+    goToBtnClick(){
+         switch (this.key){
+            case "game" :
                 var gameName = this.switchGameId(this.data.game_id)
-                if (gameName == "炸金花") {
+                if(gameName == "炸金花"){
                     this.checkSubGameDownload("zjh")
-                } else if (gameName == "斗地主") {
+                }else if(gameName == "斗地主"){
                     this.checkSubGameDownload("ddz")
                 }
                 break
-            case "proxy":
+            case "proxy" :
                 cc.director.loadScene(gHandler.gameConfig.subModel["proxy"].lanchscene);
                 break
-            case "recharge":
-                cc.director.loadScene(gHandler.gameConfig.subModel["pay"].lanchscene);
+            case "recharge" :
+            cc.director.loadScene(gHandler.gameConfig.subModel["pay"].lanchscene);
                 break
         }
     }
@@ -198,7 +198,7 @@ export default class NewClass extends cc.Component {
     checkSubGameDownload(enname) {
         let subdata = this.getRemoteSubgame(gHandler.gameConfig.gamelist[enname].game_id)
         cc.log(enname)
-        cc.log("gHandler.gameConfig.gamelist", gHandler.gameConfig.gamelist)
+        cc.log("gHandler.gameConfig.gamelist",gHandler.gameConfig.gamelist)
         if (subdata.open == 0) {
             cc.log(" | subgame : " + enname + " subdata.open 等于0");
             gHandler.gameConfig.gamelist[enname].isDown = false
@@ -212,7 +212,7 @@ export default class NewClass extends cc.Component {
                 subgamev = gHandler.appGlobal.subGameVersion[enname];
             }
             let needup = false
-            cc.log("活动前往子游戏", "subgamev", subgamev, "localsubv", localsubv)
+            cc.log("活动前往子游戏","subgamev",subgamev,"localsubv",localsubv)
             if (!localsubv) {
                 needup = true;
             } else {
@@ -248,7 +248,7 @@ export default class NewClass extends cc.Component {
                         cc.director.loadScene(gHandler.gameConfig.gamelist[subgamern].lanchscene);
                         // console.log('load subpackage script successfully.', subgamern);
                     });
-                } else {
+                }else{
                     cc.director.loadScene(gHandler.gameConfig.gamelist[subgamern].lanchscene);
                 }
             }

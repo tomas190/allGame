@@ -82,8 +82,9 @@ export default class NewClass extends cc.Component {
         let imHost = this.app.UrlData.imHost;
         let url = `${imHost}/im/api/artificial`;
         let amount = Number(this.amountLabel.string);
-        let dataStr = `user_id=${this.app.UrlData.user_id}&user_name=${decodeURI(this.app.UrlData.user_name)}&replace_id=${this.data.user_id}&replace_name=${this.data.nick_name}&gold=${this.amountLabel.string}&amount=${amount}&exchange_price=1&client=${this.app.UrlData.client}&proxy_user_id=${this.app.UrlData.proxy_user_id}&proxy_name=${decodeURI(this.app.UrlData.proxy_name)}&package_id=${this.app.UrlData.package_id}&token=${this.app.token}`
+        let dataStr = `user_id=${this.app.UrlData.user_id}&user_name=${decodeURI(this.app.UrlData.user_name)}&replace_id=${this.data.user_id}&replace_name=${decodeURI(this.data.nick_name)}&gold=${this.amountLabel.string}&amount=${amount}&exchange_price=1&client=${this.app.UrlData.client}&proxy_user_id=${this.app.UrlData.proxy_user_id}&proxy_name=${decodeURI(this.app.UrlData.proxy_name)}&package_id=${this.app.UrlData.package_id}&token=${this.app.token}`
         let self = this;
+        console.log("人工代充 url",url,",dataStr",dataStr)
         this.app.ajax('POST',url,dataStr,(response)=>{
             if(response.code == 0){
                 self.app.showAlert('操作成功,请移至聊天中心交易！');
@@ -91,6 +92,7 @@ export default class NewClass extends cc.Component {
                 gHandler.Reflect.setOrientation("portrait", 640, 1136)
                 cc.director.loadScene('IMappStart');
             }else{
+                console.log("im/api/artificial :",response)
                 self.app.showAlert(response.msg)
             }
         },(errstatus)=>{

@@ -70,7 +70,10 @@ export default class NewClass extends cc.Component {
 
     public addHuodong(){
         this.huodongConfig.data.forEach((e)=>{
-            if(e.is_close == 2 && (e.name =='流水闯关活动' || e.name == '救济金活动' || e.name == "首充送金活动"||e.name == "每日任务"||e.name == "新人大礼包"||e.name == "月入百万"||e.name == "每周佣金奖励"||e.name == "15天送58元")){
+            if(e.is_close == 2 && (e.name =='流水闯关活动' || e.name == '救济金活动' || 
+            e.name == "首充送金活动"||e.name == "每日任务"||e.name == "新人大礼包"||
+            e.name == "月入百万"||e.name == "每周佣金奖励"||e.name == "15天送58元" ||
+            e.name == "充值返利" || e.name == "推荐好友")){
                 this.arr.push(e);
             }
         });
@@ -105,6 +108,10 @@ export default class NewClass extends cc.Component {
             node.getComponent('payActivityNav').addNewPlayerGift('每周佣金奖励');
         }else if(this.arr[0].name =='15天送58元'){
             node.getComponent('payActivityNav').addNewPlayerGift('15天送58元');
+        }else if(this.arr[0].name =='充值返利'){
+            node.getComponent('payActivityNav').addNewPlayerGift('充值返利');
+        }else if(this.arr[0].name =='推荐好友'){
+            node.getComponent('payActivityNav').addNewPlayerGift('推荐好友');
         }
     }
     

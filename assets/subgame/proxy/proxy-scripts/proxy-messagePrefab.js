@@ -22,7 +22,7 @@ cc.Class({
       .getChildByName("bg")
       .getChildByName("message")
       .getComponent("cc.Label")
-      ._updateRenderData(true);
+      ._forceUpdateRenderData(true);
     let newWidth = this.node.getChildByName("bg").getChildByName("message")
       .width;
     this.node.getChildByName("bg").setContentSize(newWidth + 40, 40);

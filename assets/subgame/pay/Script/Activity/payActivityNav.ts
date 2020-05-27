@@ -34,6 +34,11 @@ export default class NewClass extends cc.Component {
     @property(cc.Prefab)
     OneMonthMillion: cc.Prefab = null;
 
+    @property(cc.Prefab)
+    RechargeRebate: cc.Prefab = null;//充值返利
+    @property(cc.Prefab)
+    RecommendFriends: cc.Prefab = null;//推荐好友
+
     @property
     app = null;
     name = null;
@@ -80,6 +85,14 @@ export default class NewClass extends cc.Component {
             this.app.loadIcon('activity/btn_58for15days2',this.normalIcon,242,86)
             this.app.loadIcon('activity/btn_58for15days1',this.currentIcon,249,86);
         }
+        else if(data.name == "充值返利"){
+            this.app.loadIcon('activity/btn_cashback2',this.normalIcon,242,86)
+            this.app.loadIcon('activity/btn_cashback1',this.currentIcon,249,86);
+        }
+        else if(data.name == "推荐好友"){
+            this.app.loadIcon('activity/btn_referralFee2',this.normalIcon,242,86)
+            this.app.loadIcon('activity/btn_referralFee1',this.currentIcon,249,86);
+        }
     }
     // LIFE-CYCLE CALLBACKS:
 
@@ -116,6 +129,12 @@ export default class NewClass extends cc.Component {
         }
         else if(this.name == "15天送58元") {
             this.addNewPlayerGift('15天送58元')
+        }
+        else if(this.name == "充值返利") {
+            this.addNewPlayerGift('充值返利')
+        }
+        else if(this.name == "推荐好友") {
+            this.addNewPlayerGift('推荐好友')
         }
     }
 
@@ -159,6 +178,10 @@ export default class NewClass extends cc.Component {
             var node = cc.instantiate(this.OnceWeekGift)
         }else if (name == "15天送58元") {
             var node = cc.instantiate(this.HalfMonthGift)
+        }else if (name == "充值返利") {
+            var node = cc.instantiate(this.RechargeRebate)
+        }else if (name == "推荐好友") {
+            var node = cc.instantiate(this.RecommendFriends)
         }
         content.removeAllChildren();
         content.addChild(node);
