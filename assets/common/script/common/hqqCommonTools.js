@@ -2,7 +2,7 @@
 let commonTools = {
     headRes: null, // 头像资源缓存
     loadHeadRes(headid, headsprite) {
-        if (typeof headid == "string" && headid.indexOf(".") != -1) {
+        if (typeof headid == "string" && headid.includes(".")) {
             headid = headid.substring(0, headid.indexOf("."))
         }
         headid = parseInt(headid) % 10
@@ -334,8 +334,15 @@ let commonTools = {
         return num.toFixed(len);
     },
     formatGold(num) {
+        // num = num.toFixed(6)
+        // return ~~(num * 100) / 100;
         num = num.toFixed(6)
-        return ~~(num * 100) / 100;
+        let str = num.toString()
+        if (str.includes(".")) {
+            return str.substring(0, str.indexOf(".") + 3)
+        } else {
+            return str
+        }
     },
     /**
 	 * 填充数字，对于长度不足的，自动补零
@@ -387,7 +394,11 @@ let commonTools = {
                 ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
             };
         }
-    }
+    },
+    swapItem(arr, fromIndex, toIndex) {
+        arr[toIndex] = arr.splice(fromIndex, 1, arr[toIndex])[0];
+        return arr;
+    },
 
 }
 

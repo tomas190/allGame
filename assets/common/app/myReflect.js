@@ -1,5 +1,12 @@
 
 let myReflect = {
+    framesise: {
+        width: 0,
+        height: 0
+    },
+    Cocos2dGameContainer_style: "",
+    Cocos2dGameContainer_portrait_style: "transform: rotate(90deg); width: 788px; height: 1385px; margin: 0px 0px 0px 1385px; padding: 0px; display: block; transform-origin: 0px 0px 0px;",
+    GameCanvas_style: "",
     /** 获取设备id */
     getDeviceId() {
         let ret
@@ -15,7 +22,7 @@ let myReflect = {
     },
     /** 获取粘贴文字 成功返回粘贴文字，失败返回空 */
     getClipboard() {
-        let ret
+        let ret = ""
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
@@ -53,22 +60,40 @@ let myReflect = {
     /** 设置屏幕横竖切换 portrait 竖屏 landscape 横屏 */
     setOrientation(orientation, width, height) {
         orientation = orientation || 'landscape'
-        var size = cc.view.getFrameSize();
-        width = width || size.width;
-        height = height || size.height;
-        if (orientation == "portrait") {
-            width = 750;
-            height = 1334;
-            cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
-        } else {
-            width = 1334;
-            height = 750;
-            cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE)
-        }
-        cc.view.setFrameSize(width, height);
-        cc.view.setDesignResolutionSize(width, height, cc.ResolutionPolicy.SHOW_ALL);
         if (cc.sys.isBrowser) {
+            var bsize = cc.view.getFrameSize();
+            if (this.framesise.width < bsize.width) {
+                this.framesise.width = bsize.width
+            }
+            if (this.framesise.height < bsize.height) {
+                this.framesise.height = bsize.height
+            }
+            width = width || this.framesise.width;
+            height = height || this.framesise.height;
+            console.log("设置屏幕横竖切换", JSON.stringify(this.framesise))
+            if (orientation == "portrait") {
+                console.log("设置屏幕横竖切换 portrait", width, height)
+                cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
+                // cc.view.setFrameSize(750 / 1334 * height, height);
+            } else {
+                cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE)
+                // cc.view.setFrameSize(width, height);
+            }
         } else {
+            var size = cc.view.getFrameSize();
+            width = width || size.width;
+            height = height || size.height;
+            if (orientation == "portrait") {
+                width = 750;
+                height = 1334;
+                cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
+            } else {
+                width = 1334;
+                height = 750;
+                cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE)
+            }
+            cc.view.setFrameSize(width, height);
+            cc.view.setDesignResolutionSize(width, height, cc.ResolutionPolicy.SHOW_ALL);
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 if (orientation == "portrait") {
                     jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "setOrientation", "(Ljava/lang/String;)V", "V");
@@ -83,6 +108,29 @@ let myReflect = {
                 }
             }
         }
+    },
+    webSetCanvas(orientation) {
+        console.log('webSetCanvas')
+        let Cocos2dGameContainer = document.getElementById('Cocos2dGameContainer')
+        let GameCanvas = document.getElementById('GameCanvas')
+        if (this.Cocos2dGameContainer_style == "") {
+            this.Cocos2dGameContainer_style = Cocos2dGameContainer.getAttribute("style")
+            this.GameCanvas_style = GameCanvas.getAttribute("style")
+        }
+
+        if (orientation == "portrait") {
+            console.log("修改为竖屏")
+            Cocos2dGameContainer.setAttribute("style", "transform: rotate(90deg); width: " + this.framesise.height + "px; height: " + this.framesise.width + "px; margin: 0px 0px 0px " + this.framesise.width + "px; padding: 0px; display: block; transform-origin: 0px 0px 0px;")
+            GameCanvas.setAttribute("style", "width: " + this.framesise.height + "px; height: " + this.framesise.width + "px;")
+        } else {
+            Cocos2dGameContainer.setAttribute("style", this.Cocos2dGameContainer_style)
+            GameCanvas.setAttribute("style", this.GameCanvas_style)
+        }
+        // setAttribute
+        let gs1 = Cocos2dGameContainer.getAttribute("style")
+        console.log("gs1", gs1)
+        let gs2 = GameCanvas.getAttribute("style")
+        console.log("gs2", gs2)
     },
     /**
      * @Description: 保存base64图片
@@ -196,6 +244,7 @@ let myReflect = {
     getHqqPackageInfo() {
         let packageinfo
         if (cc.sys.isBrowser) {
+            // return '{"pinpai":"test","huanjin":"dev","system":"android","version":"1.0.9","proxyid":"123456"}';
         } else {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 packageinfo = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getHqqPackageInfo", "()Ljava/lang/String;");

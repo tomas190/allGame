@@ -27,7 +27,7 @@ cc.Class({
         this.subGameBtnMap = {};
         this.subGameBtnArr = [];
         this.sgjsubload = false
-        !gHandler.gameGlobal.isdev && this.getNotice();
+        this.getNotice();
         this.scheduleOnce(() => {
             this.startInit();
         }, 0)
@@ -71,7 +71,7 @@ cc.Class({
             gHandler.hqqisShowFree = false
             this.checkFastPayUrl(() => { // 测速后有返回了，再弹出绑定手机的界面
                 if (gHandler.gameGlobal.player.phonenum == "") {
-                    // if (gHandler.appGlobal.huanjin == "dev") return
+                    if (gHandler.appGlobal.huanjin == "dev") return
                     gHandler.eventMgr.dispatch(gHandler.eventMgr.showRegister, null);
                 }
             })
@@ -128,7 +128,7 @@ cc.Class({
             }
             this.subGameBtnMap[tempdata.enname] = itembtn;
             this.subGameBtnArr[tempdata.hallid] = itembtn;
-            if (gHandler.hotUpdateMgr && gHandler.hotUpdateMgr.getSubGameIsOnUp(tempdata.enname)) { // 子游戏在更新列表中
+            if (gHandler.hotUpdateMgr.getSubGameIsOnUp(tempdata.enname)) { // 子游戏在更新列表中
                 this.setSubGameBtnUpWait(tempdata.enname);
             } else if (!gHandler.gameGlobal.isdev) {
                 this.checkSubGameDownload(tempdata.enname);
@@ -213,31 +213,46 @@ cc.Class({
         if (!gHandler.gameGlobal.isdev) {
             if (gHandler.gameGlobal.im_host == "") {
                 gHandler.logMgr.time("最快的im地址")
-                let callback = (url) => {
+                let callback = (receive, url) => {
                     gHandler.logMgr.timeEnd("最快的im地址", url)
                     gHandler.gameGlobal.im_host = url;
                 }
-                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.im_host, null, "/checked", callback)
+                gHandler.http.requestFastestUrlLine({
+                    urllist: gHandler.appGlobal.remoteSeverinfo.im_host,
+                    endurl: "/checked",
+                    callback: callback,
+                    needJsonParse: false,
+                })
             }
             if (gHandler.gameGlobal.proxy.temp_host == "") {
                 gHandler.logMgr.time("最快的temp_host地址")
-                let callback0 = (url) => {
+                let callback0 = (receive, url) => {
                     gHandler.logMgr.timeEnd("最快的temp_host地址", url)
                     gHandler.gameGlobal.proxy.temp_host = url;
                 }
-                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
+                gHandler.http.requestFastestUrlLine({
+                    urllist: gHandler.appGlobal.remoteSeverinfo.temp_host,
+                    endurl: "/checked",
+                    callback: callback0,
+                    needJsonParse: false,
+                })
             }
             if (gHandler.gameGlobal.proxy.proxy_host == "") {
                 gHandler.logMgr.time("最快的proxy_host地址")
-                let callback1 = (url) => {
+                let callback1 = (receive, url) => {
                     gHandler.logMgr.timeEnd("最快的proxy_host地址", url)
                     gHandler.gameGlobal.proxy.proxy_host = url;
                 }
-                gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.proxy_host, null, "/checked", callback1)
+                gHandler.http.requestFastestUrlLine({
+                    urllist: gHandler.appGlobal.remoteSeverinfo.proxy_host,
+                    endurl: "/checked",
+                    callback: callback1,
+                    needJsonParse: false,
+                })
             }
         }
         this.scheduleOnce(() => {
-            if (!gHandler.gameGlobal.isdev && !gHandler.hallWebSocket) {
+            if (!gHandler.hallWebSocket) {
                 gHandler.hallWebSocket = new hallWebSocket();
                 gHandler.hallWebSocket.init();
                 let url = gHandler.appGlobal.server;
@@ -256,9 +271,9 @@ cc.Class({
                 }
                 gHandler.hallWebSocket.connect(url);
             }
-            !gHandler.gameGlobal.isdev && this.sgjConnect()
-            !gHandler.gameGlobal.isdev && this.hbslConnect()
-            !gHandler.gameGlobal.isdev && this.hbldConnect()
+            this.sgjConnect()
+            this.hbslConnect()
+            this.hbldConnect()
         }, 0)
     },
     /**
@@ -291,7 +306,7 @@ cc.Class({
         if (cc.sys.os == "Windows") { // 模拟器
             needup = false
         }
-        if (!needup) {
+        if (!needup || gHandler.appGlobal.isRelease) {
             this.getSgjPool()
             if (!cc.director.getScheduler().isScheduled(this.getSgjPool, this)) {
                 this.schedule(this.getSgjPool, 3)
@@ -299,8 +314,17 @@ cc.Class({
         }
     },
     getSgjPool() {
-        let url = gHandler.gameConfig.gamelist["sgj"].serverUrl.replace("ws", "http") + "/jackpot"
-        gHandler.http.sendRequestGet(url, null, this.showsgjPoolNum.bind(this))
+        let failcallback = () => {
+            this.unschedule(this.getSgjPool, this)
+        }
+        let url = gHandler.gameConfig.gamelist["sgj"].serverUrl.replace("ws", "http") + "/api/jackpot"
+        gHandler.http.sendXMLHttpRequest({
+            method: 'GET',
+            urlto: url,
+            callback: this.showsgjPoolNum.bind(this),
+            needJsonParse: true,
+            failcallback: failcallback,
+        })
     },
     showsgjPoolNum(data) {
         let gold = 0
@@ -309,17 +333,19 @@ cc.Class({
         } else {
             gold = gHandler.commonTools.formatGold(data);
         }
-        if (this.subGameBtnMap["sgj"].getChildByName("goldlabel")) {
-            this.subGameBtnMap["sgj"].getChildByName("goldlabel").getComponent(cc.Label).string = gold
-        } else {
-            let node = new cc.Node();
-            let label = node.addComponent(cc.Label);
-            label.font = gHandler.hallResManager.hbslnum
-            label.fontSize = 28
-            label.string = gold
-            node.name = "goldlabel"
-            node.setPosition(0, 68)
-            this.subGameBtnMap["sgj"].addChild(node)
+        if (this && this.subGameBtnMap && this.subGameBtnMap["sgj"]) {
+            if (this.subGameBtnMap["sgj"].getChildByName("goldlabel")) {
+                this.subGameBtnMap["sgj"].getChildByName("goldlabel").getComponent(cc.Label).string = gold
+            } else {
+                let node = new cc.Node();
+                let label = node.addComponent(cc.Label);
+                label.font = gHandler.hallResManager.hbslnum
+                label.fontSize = 28
+                label.string = gold
+                node.name = "goldlabel"
+                node.setPosition(0, 68)
+                this.subGameBtnMap["sgj"].addChild(node)
+            }
         }
     },
     /**
@@ -352,7 +378,7 @@ cc.Class({
         if (cc.sys.os == "Windows") { // 模拟器
             needup = false
         }
-        if (!needup) {
+        if (!needup || gHandler.appGlobal.isRelease) {
             this.getHbslPool()
             if (!cc.director.getScheduler().isScheduled(this.getHbslPool, this)) {
                 this.schedule(this.getHbslPool, 3)
@@ -360,8 +386,17 @@ cc.Class({
         }
     },
     getHbslPool() {
-        let url = gHandler.gameConfig.gamelist["hbsl"].serverUrl.replace("ws", "http") + "/jackpot"
-        gHandler.http.sendRequestGet(url, null, this.showhbslPoolNum.bind(this))
+        let failcallback = () => {
+            this.unschedule(this.getHbslPool, this)
+        }
+        let url = gHandler.gameConfig.gamelist["hbsl"].serverUrl.replace("ws", "http") + "/api/jackpot"
+        gHandler.http.sendXMLHttpRequest({
+            method: 'GET',
+            urlto: url,
+            callback: this.showhbslPoolNum.bind(this),
+            needJsonParse: true,
+            failcallback: failcallback,
+        })
     },
     showhbslPoolNum(data) {
         let gold = 0
@@ -370,17 +405,19 @@ cc.Class({
         } else {
             gold = gHandler.commonTools.formatGold(data);
         }
-        if (this.subGameBtnMap["hbsl"].getChildByName("goldlabel")) {
-            this.subGameBtnMap["hbsl"].getChildByName("goldlabel").getComponent(cc.Label).string = gold
-        } else {
-            let node = new cc.Node();
-            let label = node.addComponent(cc.Label);
-            label.font = gHandler.hallResManager.hbslnum
-            label.fontSize = 28
-            label.string = gold
-            node.name = "goldlabel"
-            node.setPosition(0, 68)
-            this.subGameBtnMap["hbsl"].addChild(node)
+        if (this && this.subGameBtnMap && this.subGameBtnMap["hbsl"]) {
+            if (this.subGameBtnMap["hbsl"].getChildByName("goldlabel")) {
+                this.subGameBtnMap["hbsl"].getChildByName("goldlabel").getComponent(cc.Label).string = gold
+            } else {
+                let node = new cc.Node();
+                let label = node.addComponent(cc.Label);
+                label.font = gHandler.hallResManager.hbslnum
+                label.fontSize = 28
+                label.string = gold
+                node.name = "goldlabel"
+                node.setPosition(0, 68)
+                this.subGameBtnMap["hbsl"].addChild(node)
+            }
         }
     },
     /**
@@ -413,7 +450,7 @@ cc.Class({
         if (cc.sys.os == "Windows") { // 模拟器
             needup = false
         }
-        if (!needup) {
+        if (!needup || gHandler.appGlobal.isRelease) {
             this.getHbldPool()
             if (!cc.director.getScheduler().isScheduled(this.getHbldPool, this)) {
                 this.schedule(this.getHbldPool, 3)
@@ -421,8 +458,17 @@ cc.Class({
         }
     },
     getHbldPool() {
-        let url = gHandler.gameConfig.gamelist["hbld"].serverUrl.replace("ws", "http") + "/http/jackpot"
-        gHandler.http.sendRequestGet(url, null, this.showhbldPoolNum.bind(this))
+        let failcallback = () => {
+            this.unschedule(this.getHbldPool, this)
+        }
+        let url = gHandler.gameConfig.gamelist["hbld"].serverUrl.replace("ws", "http") + "/api/jackpot"
+        gHandler.http.sendXMLHttpRequest({
+            method: 'GET',
+            urlto: url,
+            callback: this.showhbldPoolNum.bind(this),
+            needJsonParse: true,
+            failcallback: failcallback,
+        })
     },
     showhbldPoolNum(data) {
         let gold = 0
@@ -431,17 +477,19 @@ cc.Class({
         } else {
             gold = gHandler.commonTools.formatGold(data);
         }
-        if (this.subGameBtnMap["hbld"].getChildByName("goldlabel")) {
-            this.subGameBtnMap["hbld"].getChildByName("goldlabel").getComponent(cc.Label).string = gold
-        } else {
-            let node = new cc.Node();
-            let label = node.addComponent(cc.Label);
-            label.font = gHandler.hallResManager.hbslnum
-            label.fontSize = 28
-            label.string = gold
-            node.name = "goldlabel"
-            node.setPosition(0, 68)
-            this.subGameBtnMap["hbld"].addChild(node)
+        if (this && this.subGameBtnMap && this.subGameBtnMap["hbld"]) {
+            if (this.subGameBtnMap["hbld"].getChildByName("goldlabel")) {
+                this.subGameBtnMap["hbld"].getChildByName("goldlabel").getComponent(cc.Label).string = gold
+            } else {
+                let node = new cc.Node();
+                let label = node.addComponent(cc.Label);
+                label.font = gHandler.hallResManager.hbslnum
+                label.fontSize = 28
+                label.string = gold
+                node.name = "goldlabel"
+                node.setPosition(0, 68)
+                this.subGameBtnMap["hbld"].addChild(node)
+            }
         }
     },
     /**
@@ -496,11 +544,20 @@ cc.Class({
                             }
                         }
                         if (e.is_slider === 1) { // 是否跑马灯
-                            gHandler.gameGlobal.slideNoticeList.push({
-                                time: 1,
-                                rollforver: true,
-                                notice: e.words.replace(/\s+/g, "")
-                            })
+                            let needinsert = true
+                            for (let i = 0; i < gHandler.gameGlobal.slideNoticeList.length; i++) {
+                                if (gHandler.gameGlobal.slideNoticeList[i].notice == e.words.replace(/\s+/g, "")) {
+                                    needinsert = false
+                                    break
+                                }
+                            }
+                            if (needinsert) {
+                                gHandler.gameGlobal.slideNoticeList.push({
+                                    time: 1,
+                                    rollforver: true,
+                                    notice: e.words.replace(/\s+/g, "")
+                                })
+                            }
                         }
                     })
                     if (gHandler.gameGlobal.noticeList.length > 0) {
@@ -518,10 +575,17 @@ cc.Class({
                 }
             }
         }
-        let failcallback = (status) => {
+        let failcallback = (status, forcejump, url, err) => {
         }
         let endurl = gHandler.appGlobal.getIpGetEndurl(4);
-        gHandler.http.sendRequestIpGet(gHandler.appGlobal.server, endurl, callback, failcallback);
+        gHandler.http.sendXMLHttpRequest({
+            method: "GET",
+            urlto: gHandler.appGlobal.server,
+            endurl: endurl,
+            callback: callback,
+            failcallback: failcallback,
+            needJsonParse: true,
+        });
     },
     /**
      * @Description: 设置公告提示状态
@@ -552,7 +616,7 @@ cc.Class({
         } else {
             let player = gHandler.gameGlobal.player;
             this.namelabel.string = player.nick;
-            this.coinlabel.string = gHandler.commonTools.formatGold(player.gold);
+            this.coinlabel.string = player.gold;
             gHandler.commonTools.loadHeadRes(player.headurl, this.headimg);
             if (gHandler.gameGlobal.player.phonenum != "") {
                 this.youkeicon.active = false
@@ -616,10 +680,14 @@ cc.Class({
             //     button.clickEvents.push(clickEventHandler);
             //     return
             // }
-            let subgamev = subdata.version;
+            // let subgamev = subdata.version;
+            let subgamev;
             let localsubv = gHandler.localStorage.get(enname, "versionKey");
             if (enname == 'zrsx1' || enname == 'zrsx2') {
                 localsubv = gHandler.localStorage.get('zrsx', "versionKey");
+                subgamev = gHandler.appGlobal.subGameVersion['zrsx'];
+            } else {
+                subgamev = gHandler.appGlobal.subGameVersion[enname];
             }
             // let txt = "local version: " + localsubv + " | remote version:" + subgamev;
             let needup = false
@@ -654,93 +722,53 @@ cc.Class({
                 this.subGameBtnMap[enname].progress.active = false;
                 this.subGameBtnMap[enname].jiantou.active = false;
                 clickEventHandler.handler = "onClickSubgame";
-
                 if (gHandler.appGlobal.isRelease) {
                     let subgamern = enname
                     if (enname == "zrsx1" || enname == "zrsx2") {
                         subgamern = "zrsx"
                         if (enname == "zrsx1") {
-                            // !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
-                            !gHandler.gameGlobal.isdev && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
+                            if (cc.sys.isBrowser) {
+                                setTimeout(() => {
+                                    cc.loader.downloader.loadSubpackage(subgamern, function (err) {
+                                        if (err) {
+                                            return console.error(err);
+                                        }
+                                        // console.log('load subpackage script successfully.', subgamern);
+                                    });
+                                }, 3000)
+                            } else {
+                                cc.loader.downloader.loadSubpackage(subgamern, function (err) {
+                                    if (err) {
+                                        return console.error(err);
+                                    }
+                                    // console.log('load subpackage script successfully.', subgamern);
+                                });
+                            }
+                        }
+                    } else {
+                        if (cc.sys.isBrowser) {
+                            setTimeout(() => {
+                                cc.loader.downloader.loadSubpackage(subgamern, function (err) {
+                                    if (err) {
+                                        return console.error(err);
+                                    }
+                                    // console.log('load subpackage script successfully.', subgamern);
+                                });
+                            }, 3000)
+                        } else {
+                            cc.loader.downloader.loadSubpackage(subgamern, function (err) {
                                 if (err) {
                                     return console.error(err);
                                 }
                                 // console.log('load subpackage script successfully.', subgamern);
                             });
                         }
-                    } else {
-                        // !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
-                        !gHandler.gameGlobal.isdev && cc.loader.downloader.loadSubpackage(subgamern, function (err) {
-                            if (err) {
-                                return console.error(err);
-                            }
-                            // console.log('load subpackage script successfully.', subgamern);
-                        });
                     }
                 }
             }
             let button = this.subGameBtnMap[enname].getComponent(cc.Button);
             button.clickEvents.push(clickEventHandler);
         }
-    },
-    /** 创建子游戏账号 */
-    createSubAccount(enname, mcallback, custom) {
-        if (gHandler.gameConfig.gamelist[enname].hasAccount) {
-            // console.log("已经有账号了")
-            if (custom) {
-                mcallback && mcallback(custom);
-            } else {
-                mcallback && mcallback(enname);
-            }
-            return
-        }
-        let subdata = gHandler.appGlobal.remoteGamelist[0]
-        for (let i = 0; i < gHandler.appGlobal.remoteGamelist.length; i++) {
-            if (gHandler.gameConfig.gamelist[enname].game_id == gHandler.appGlobal.remoteGamelist[i].game_id) {
-                subdata = gHandler.appGlobal.remoteGamelist[i]
-                break;
-            }
-        }
-        let callback = (data) => {
-            console.log("创建子游戏账号 callback", data)
-            if (data.code == 200 || data.code == 203) {
-                for (let gname in gHandler.gameConfig.gamelist) {
-                    if (gHandler.gameConfig.gamelist[gname].game_id == subdata.game_id) {
-                        gHandler.gameConfig.gamelist[gname].hasAccount = true;
-                        gHandler.localStorage.set(gname, "hasAccount", true);
-                    }
-                }
-                if (custom) {
-                    mcallback && mcallback(custom);
-                } else {
-                    mcallback && mcallback(enname);
-                }
-            } else {
-                console.log("创建子游戏账号失败")
-            }
-        }
-        let failcallback = (status, forcejump) => {
-            console.log("创建子游戏账号 超时", status, forcejump)
-        }
-        let endurl = "/Game/User/createGameAccount";
-        let data = {
-            game_id: subdata.game_id,
-            package_id: subdata.package_id,
-            balance: 0,//gHandler.gameGlobal.player.gold,
-            id: gHandler.gameGlobal.player.id,
-            token: gHandler.gameGlobal.token,
-        }
-        // gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, failcallback); // 创建子游戏账号会有成功，但超时失败的情况，延长超时
-        gHandler.http.sendRequestDetail({
-            method: "POST",
-            urlto: gHandler.appGlobal.server + endurl,
-            param: data,
-            callback: callback,
-            failcallback: failcallback,
-            needJsonParse: true,
-            timeout: 5000,
-            failtimeout: 7000,
-        });
     },
     /**
      * @Description: 设置按钮状态为检测文件
@@ -899,12 +927,15 @@ cc.Class({
      * @description: 下载进度
      */
     progressCallback(progress, enname) {
+        if (enname == "apk" || enname == "hall" || enname == "jiazai") {
+            return
+        }
         if (isNaN(progress)) {
             progress = 0;
         }
         let mprogress = progress * 100
         mprogress += ""
-        if (mprogress.indexOf(".") != -1) {
+        if (mprogress.includes(".")) {
             mprogress = mprogress.substring(0, mprogress.indexOf("."))
         }
         mprogress += "%"
@@ -941,16 +972,16 @@ cc.Class({
             this.subGameBtnMap["zrsx2"].downflag.active = false;
             this.subGameBtnMap["zrsx2"].progresslabel.string = ""
             this.subGameBtnMap["zrsx2"].getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
-            if (!gHandler.gameConfig.gamelist['zrsx1'].hasAccount && !gHandler.gameGlobal.isdev) {
-                this.createSubAccount("zrsx1")
+            if (!gHandler.gameConfig.gamelist['zrsx1'].hasAccount) {
+                gHandler.loginMgr.createSubAccount("zrsx1")
             }
         } else {
             this.subGameBtnMap[enname].progress.active = false;
             this.subGameBtnMap[enname].downflag.active = false;
             this.subGameBtnMap[enname].progresslabel.string = ""
             this.subGameBtnMap[enname].getComponent(cc.Button).clickEvents[0].handler = "onClickSubgame";
-            if (!gHandler.gameConfig.gamelist[enname].hasAccount && !gHandler.gameGlobal.isdev) {
-                this.createSubAccount(enname)
+            if (!gHandler.gameConfig.gamelist[enname].hasAccount) {
+                gHandler.loginMgr.createSubAccount(enname)
             }
         }
 
@@ -962,8 +993,7 @@ cc.Class({
             this.hbldConnect()
         }
         if (gHandler.appGlobal.isRelease) {
-            // !gHandler.gameGlobal.isdev && cc.sys.os != "Windows" && cc.loader.downloader.loadSubpackage(enname, (err) => {
-            !gHandler.gameGlobal.isdev && cc.loader.downloader.loadSubpackage(enname, (err) => {
+            cc.loader.downloader.loadSubpackage(enname, (err) => {
                 if (err) {
                     return console.error(err);
                 }
@@ -997,12 +1027,10 @@ cc.Class({
     onClickSubgame(event, enname) {
         this.clickDelay(event)
         let callback = () => {
-            if (gHandler.gameGlobal.isdev) {
-                this.jumpToSubGame(enname)
-            } else if (gHandler.gameConfig.gamelist[enname].hasAccount) {
+            if (gHandler.gameConfig.gamelist[enname].hasAccount) {
                 this.jumpToSubGame(enname)
             } else {
-                this.createSubAccount(enname, this.jumpToSubGame)
+                gHandler.loginMgr.createSubAccount(enname, this.jumpToSubGame)
             }
         }
         // if (cc.sys.isBrowser) {
@@ -1020,24 +1048,22 @@ cc.Class({
     onClickPlayerBtn(event) {
         // console.log("玩家设置")
         this.clickDelay(event)
-        // if (gHandler.gameGlobal.isdev) return
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showPerson, null)
     },
     /** 充值 */
     onClickChongZhiBtn(event) {
         // console.log("充值")
         this.clickDelay(event)
-        if (gHandler.gameGlobal.isdev) return
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showPayScene, "hall")
     },
     /**
      * @description: 批量创建子游戏账号
      */
     _creatSubAccount() {
-        let mgameid = "569a62be7ff123m117d446aa"
+        let mgameid = "5b1f3a3cb76a591e7f25170"
 
         let sub = [
-            691014351, 721199228, 957437641, 144461224, 597347745
+            135927249, 292331486, 932338419, 977327711, 884044857
         ]
         if (typeof this.tempindex == 'undefined') {
             this.tempindex = 0;
@@ -1053,7 +1079,7 @@ cc.Class({
                 console.log("创建子游戏账号 callback", data)
                 this._creatSubAccount()
             }
-            let outcallback = () => {
+            let failcallback = () => {
                 console.log("创建子游戏账号 超时")
             }
             let endurl = "/Game/User/createGameAccount";
@@ -1064,7 +1090,14 @@ cc.Class({
                 id: gHandler.gameGlobal.player.id,
                 token: token,
             }
-            gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
+            gHandler.http.sendXMLHttpRequest({
+                method: 'POST',
+                urlto: gHandler.appGlobal.server + endurl,
+                param: data,
+                callback: callback,
+                failcallback: failcallback,
+                needJsonParse: true,
+            })
         }
 
         gHandler.hallWebSocket.unregister("/Game/Login/login", "hallScene")
@@ -1086,23 +1119,33 @@ cc.Class({
     checkFastProxyUrl(mcallback) {
         if (gHandler.gameGlobal.proxy.temp_host == "" || gHandler.gameGlobal.proxy.proxy_host == "") {
             gHandler.logMgr.time("最快的temp_host地址")
-            let callback0 = (url) => {
+            let callback0 = (receive, url) => {
                 gHandler.logMgr.timeEnd("最快的temp_host地址", url)
                 gHandler.gameGlobal.proxy.temp_host = url;
                 if (gHandler.gameGlobal.proxy.proxy_host != "") {
                     mcallback && mcallback();
                 }
             }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.temp_host, null, "/checked", callback0)
+            gHandler.http.requestFastestUrlLine({
+                urllist: gHandler.appGlobal.remoteSeverinfo.temp_host,
+                endurl: "/checked",
+                callback: callback0,
+                needJsonParse: false,
+            })
             gHandler.logMgr.time("最快的proxy_host地址")
-            let callback1 = (url) => {
+            let callback1 = (receive, url) => {
                 gHandler.logMgr.timeEnd("最快的proxy_host地址", url)
                 gHandler.gameGlobal.proxy.proxy_host = url;
                 if (gHandler.gameGlobal.proxy.temp_host != "") {
                     mcallback && mcallback();
                 }
             }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.proxy_host, null, "/checked", callback1)
+            gHandler.http.requestFastestUrlLine({
+                urllist: gHandler.appGlobal.remoteSeverinfo.proxy_host,
+                endurl: "/checked",
+                callback: callback1,
+                needJsonParse: false,
+            })
         } else {
             mcallback && mcallback();
         }
@@ -1111,7 +1154,6 @@ cc.Class({
     onClickQMDL(event) {
         console.log("全民代理")
         this.clickDelay(event)
-        if (gHandler.gameGlobal.isdev) return
         let enterproxy = function () {
             if (gHandler.gameConfig.subModel.proxy.lanchscene != "") {
                 cc.director.loadScene(gHandler.gameConfig.subModel.proxy.lanchscene)
@@ -1124,21 +1166,35 @@ cc.Class({
     /** 公告 */
     onClickGongGaoBtn() {
         console.log("公告")
+        // let endurl = '?token=' + gHandler.gameGlobal.token + '&deviceid=' + gHandler.appGlobal.deviceID + '&acconunt=' + gHandler.gameGlobal.player.account_name
+        // console.log("http://webgame.539316.com/" + endurl)
+        // return
         // this._creatSubAccount()
         // return
-        // clearInterval(gHandler.loginMgr.stableServerTest)
-        // let urllist = gHandler.appGlobal.serverList
-        // urllist.push('https://center.whjfxly66.com')
-        // gHandler.loginMgr.requestStableServerUrl(urllist)
-        // return
-        if (gHandler.gameGlobal.isdev) return
+        // let callback = (data) => {
+        //     console.log("12228 callback", data)
+        // }
+        // let failcallback = (status) => {
+        //     console.log("12228 failcallback", status)
+        // }
+        // let url = "http://game.539316.com/bairennn/api/getGameData?round_id=1512333&id=812251388"
+        // // let url = "http://game.539316.com/bairennn/api/getGameData"
+        // // let url = "http://192.168.254.104:1343/api/getGameData?round_id=1512333&id=812251388"
+        // let data = {
+        //     method: 'GET',
+        //     urlto: url,
+        //     param: null,
+        //     callback: callback,
+        //     needJsonParse: false,
+        //     failcallback: failcallback,
+        // }
+        // gHandler.http. sendXMLHttpRequest(data)
         gHandler.eventMgr.dispatch(gHandler.eventMgr.showNotice, null)
     },
     /** 聊天 */
     onClickChatBtn(event) {
         console.log("聊天")
         this.clickDelay(event)
-        if (gHandler.gameGlobal.isdev) return
         if (gHandler.gameGlobal.im_host != "") {
             gHandler.gameGlobal.imReceive = 0;
             gHandler.Reflect && gHandler.Reflect.setOrientation("portrait")
@@ -1149,12 +1205,17 @@ cc.Class({
     checkFastPayUrl(mcallback) {
         if (gHandler.gameGlobal.pay.pay_host == "") {
             gHandler.logMgr.time("最快的pay地址")
-            let callback = (url) => {
+            let callback = (receive, url) => {
                 gHandler.logMgr.timeEnd("最快的pay地址", url)
                 gHandler.gameGlobal.pay.pay_host = url;
                 mcallback && mcallback();
             }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback);
+            gHandler.http.requestFastestUrlLine({
+                urllist: gHandler.appGlobal.remoteSeverinfo.pay_host,
+                endurl: "/checked",
+                callback: callback,
+                needJsonParse: false,
+            });
         } else {
             mcallback && mcallback();
         }
@@ -1171,7 +1232,6 @@ cc.Class({
     onClickDuiHuanBtn(event) {
         console.log("兑换")
         this.clickDelay(event)
-        if (gHandler.gameGlobal.isdev) return
         this.checkFastPayUrl(this.jumpToCashScene.bind(this))
     },
     // 跳转至精彩活动场景
@@ -1186,13 +1246,11 @@ cc.Class({
     /** 精彩活动 */
     onClickHuoDongBtn(event) {
         console.log("精彩活动")
-        if (gHandler.gameGlobal.isdev) return
         this.checkFastPayUrl(this.jumpToPayActivityScene.bind(this))
     },
     /** 活动页面 */
     onClickADPage(event, custom) {
         console.log("点击活动页面", custom)
-        if (gHandler.gameGlobal.isdev) return
         if (custom == 1) { // 复制官网
             if (gHandler.appGlobal.pinpai == "debi") { // 德比直接打开推广链接
                 gHandler.appDownUrl && cc.sys.openURL(gHandler.appDownUrl)
@@ -1231,7 +1289,6 @@ cc.Class({
     onClickFreeGold(event) {
         console.log("免费金币", event)
         this.clickDelay(event)
-        if (gHandler.gameGlobal.isdev) return
         if (gHandler.gameGlobal.player.phonenum != "") {
             if (gHandler.gameConfig.subModel.payActivity.lanchscene != "") {
                 cc.director.loadScene(gHandler.gameConfig.subModel.payActivity.lanchscene)

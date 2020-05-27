@@ -37,7 +37,7 @@ let logManager = {
     },
     // 发送特定的日志 data为字符串
     sendMLog(data) {
-        console.log("__logMgr__", data);
+        // console.log("__logMgr__", data);
         this.send(data, true);
     },
     // 立即发送日志
@@ -65,16 +65,16 @@ let logManager = {
                 device_id: gHandler.appGlobal.deviceID,
             }
             // console.log("向服务器发送日志", data)
-            this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath) => {
+            this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath, err) => {
                 if (bool) {
-                    console.log("日志发送成功")
+                    // console.log("日志发送成功")
                     // if (islog) {
                     //     cc.sys.localStorage.setItem("log", JSON.stringify(""))
                     // } else {
                     //     cc.sys.localStorage.setItem("elog", JSON.stringify(""))
                     // }
                 } else {
-                    this.log("日志发送失败")
+                    this.log("日志发送失败", err)
                     // if (islog) {
                     //     cc.sys.localStorage.setItem("log", JSON.stringify(logstr))
                     // } else {
@@ -90,7 +90,7 @@ let logManager = {
                 }
             });
         } else {
-            console.log("未请求到token")
+            // console.log("未请求到token")
             if (islog) {
                 this.output += logstr + this.tag;
                 this.output += this.getNowTime() + ":未请求到token" + this.tag;

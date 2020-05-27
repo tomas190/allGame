@@ -10,35 +10,21 @@ cc.Class({
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-
+        this.isRoll = false
+        gHandler.eventMgr.register(gHandler.eventMgr.addSliderNotice, "hallNoticeBoard", this.addSliderNotice.bind(this))
     },
     /** enabled和active属性从false变为true时 */
     onEnable() {
-        this.isRoll = false
-        gHandler.eventMgr.register(gHandler.eventMgr.addSliderNotice, "hallNoticeBoard", this.addSliderNotice.bind(this))
         if (gHandler.gameGlobal.slideNoticeList.length > 0) {
             this.addSliderNotice(gHandler.gameGlobal.slideNoticeList)
         }
     },
     /** 通常用于初始化中间状态操作 */
     start() {
-        // let testarr = [
-        //     "<color=#00ff00>RichText</color>",
-        //     "<color=#0fffff>Creates the action easing object with the rate parameter.</color>",
-        //     "<color=#0fffff>From slow to fast.</color>",
-        //     "<color=#0fffff>zh 创建 easeIn 缓动对象，由慢到快。</color>",
-        // ]
-        // this.noticeList = [];
-        // for (let i = 0; i < testarr.length; i++) {
-        //     this.noticeList.push({
-        //         text: testarr[i],
-        //         time: 2,
-        //     })
-        // }
-        // this.noticeStartRoll();
+
     },
     addSliderNotice(msg) {
-        // cc.log("addSliderNotice", msg)
+        // cc.log("addSliderNotice", this.isRoll, msg.length, msg)
         for (let i = 0; i < msg.length; i++) {
             this.addNotice(msg[i])
         }
@@ -65,7 +51,7 @@ cc.Class({
     },
     /** 开始滚动 */
     noticeStartRoll() {
-        // cc.log(this.noticeList)
+        // cc.log("noticeStartRoll")
         let item = this.noticeList.shift();
         if (item) {
             if (!item.rollforver) { // tyep = 1 永久滚动 2 滚动一次
@@ -77,11 +63,9 @@ cc.Class({
             }
             let time = text.length * 0.1 + 15;
             this.label.string = text;
-            // this.label._updateRenderData(true);
             let x = this.noticeScroll.node.width / 2 + this.label.node.width / 2;
             this.label.node.setPosition(x, 0);
             let move1 = cc.moveTo(time / 3, cc.v2(0, 0));
-            // let delay = cc.delayTime(time / 3);
             let move2 = cc.moveTo(time / 3, cc.v2(-x, 0));
             let callfunc = cc.callFunc(() => {
                 this.noticeStartRoll();

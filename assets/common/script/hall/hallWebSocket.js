@@ -47,7 +47,7 @@ hqqWebSocket.prototype = {
         this.registerAll()
         this.ip = param || this.ip
         if (cc.sys.platform === cc.sys.ANDROID || cc.sys.os === cc.sys.OS_ANDROID) { //在浏览器调试中，cc.sys.os === cc.sys.OS_ANDROID 是true
-            if (this.ip.indexOf('wss') == -1) {
+            if (this.ip.indexOf('wss') == -1 || cc.sys.isBrowser) {
                 this.ws = new WebSocket(this.ip);
             } else {
                 this.ws = new WebSocket(this.ip, {}, cc.url.raw('resources/hall/cacert.pem'));
@@ -155,9 +155,9 @@ hqqWebSocket.prototype = {
     },
     moveBalanceToGame(data, msg) {
         // if (!msg.balance || !msg.game_gold) return;
-        let changegold = gHandler.commonTools.formatGold(data.game_gold - gHandler.gameGlobal.player.gold)
+        let changegold = data.game_gold - gHandler.gameGlobal.player.gold
         if (changegold > 0) {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showCongratulation, changegold)
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showCongratulation, gHandler.commonTools.formatGold(changegold))
         }
         gHandler.setPlayerinfo({
             game_gold: data.game_gold,
@@ -189,13 +189,13 @@ hqqWebSocket.prototype = {
         gHandler.setGameInfo(data.game_user)
     },
     onReceiveChangeBanlance(data) {
-        // cc.log(" onReceiveChangeBanlance", data)
+        // cc.log(" onReceiveChangeBanlance", JSON.stringify(data))
         if (!data.game_user) return;
         gHandler.setGameInfo(data.game_user)
         if (!data.final_pay) return;
-        let changegold = gHandler.commonTools.formatGold(data.final_pay);
+        let changegold = data.final_pay;
         if (changegold > 0) {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showCongratulation, changegold)
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showCongratulation, gHandler.commonTools.formatGold(changegold))
         }
     },
 

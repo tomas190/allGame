@@ -217,7 +217,11 @@ cc.Class({
             this.subtitle.spriteFrame = this.notice
         }
         this.subtxt.string = custom.words
-        this.subtxt._updateRenderData(true)
+        if (cc.ENGINE_VERSION == "2.1.3") {
+            this.subtxt._updateRenderData(true) // 2.1.3
+        } else {
+            this.subtxt._lazyUpdateRenderData(true) // 2.2.2
+        }
         this.subscroll.content.height = this.subtime.node.height + this.subtxt.node.height
     }
 

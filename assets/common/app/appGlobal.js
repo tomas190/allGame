@@ -1,21 +1,17 @@
 
 let gHandler = require("gHandler");
 let appGlobal = {
-    isRelease: true, // 是否是版本发布状态 网页版加载子包处理
+    isRelease: true, // 是否是版本发布状态
     /* ------------------------------------------------------------------- */
-    pinpai: "test", // 渠道 test debi qibao
-    // pinpai: "debi", // 渠道 test debi qibao
-    // huanjin: "dev", // pre online
-    huanjin: "pre", // pre online
-    // huanjin: "online", // pre online
+    pinpai: "test", // 渠道 test （特斯特） debi （德比） qibao（七宝） xingba （杏吧娱乐）
+    huanjin: "dev", // dev pre 
+    // huanjin: "pre", // pre 
 
-    deviceID: "",
+    deviceID: "", // 必须单独设置
     os: "android", // 平台 android ios
 
     secretlist: [ // 密码本
-        "https://lgroup000.gitlab.io/meta/data_q.json",
-        "https://gitee.com/lgroup111/lobbygame/raw/master/data_q.json",
-        "https://vvv56789.github.io/lobbygame/data_q.json",
+
     ],
 
     apkVersionKey: "apkVersionKey",
@@ -27,8 +23,8 @@ let appGlobal = {
     codeBookKey: "codeBookKey", // 密码本
     codeBook: "", // 密码本
 
-    enterServerKey: "enterServerKey", // 转接服务器
-    enterServer: "", // 转接服务器
+    selectServerIndexKey: "selectServerIndexKey", // 转接服务器索引
+    selectServerIndex: 0, // 转接服务器索引
 
     serverListKey: "serverListKey", // 长连接服务器列表
     serverList: "", // 长连接服务器列表
@@ -39,14 +35,23 @@ let appGlobal = {
     serverKey: "serverKey", // 长连接服务器
     server: "", // 长连接服务器
 
+    serverIndexKey: "serverIndexKey", // 长连接服务器索引
+    serverIndex: 0, // 长连接服务器索引
+
     hotServerKey: "hotServerKey", // 热更服务器列表
     hotServer: "", // 热更服务器列表
 
+    hotServerIndexKey: "hotServerIndexKey", // 热更服务器列表索引
+    hotServerIndex: 0, // 热更服务器列表索引
+
+    tempServerIndexKey: "tempServerIndexKey", // temp服务器列表索引
+    tempServerIndex: 0, // temp服务器列表索引
+
+    payServerIndexKey: "payServerIndexKey", // 充提服务器列表索引
+    payServerIndex: 0, // 充提服务器列表索引
+
     canHotServerKey: "canHotServerKey", // 热更服务器
     canHotServer: "", // 热更服务器
-
-    recordTimeKey: "recordTimeKey", // 记录时间
-    recordTime: '', // 记录时间
 
     noticeKey: "noticeKey", // 公告已读
     noticeDeleteKey: "noticeDeleteKey", // 公道删除
@@ -79,10 +84,12 @@ let appGlobal = {
     proxyUserID: 0, // 
 
     officialWebsite: { // 官网
-        test: "https://temp.7kpi3g.cn?m=online&p=1&u=442619406",
-        debi: "db31.cn"
+        test: "https://temp.jsksafe.com?p=1&u=442619406",
+        debi: "https://temp.jsksafe.com?p=2&u=770256905",
+        xingba: "https://temp.jsksafe.com?p=3&u=811425071",
     },
     GeneralAgency: { // 总代
+        isgetFromJava: false, // 是否从java代码中获得代理信息
         test: {
             dev: 351027469,
             pre: 319010216,
@@ -97,7 +104,15 @@ let appGlobal = {
             dev: 638044957,
             pre: 818392292,
             online: 442619406
+        },
+        xingba: {
+            dev: 118411497,
+            pre: 491187717,
+            online: 811425071
         }
+    },
+    subGameVersion: {
+
     },
 
     init(sys) { // '{"pinpai":"test","huanjin":"online","system":"android","version":"1.0.7"}'
@@ -108,8 +123,20 @@ let appGlobal = {
             this.huanjin = info.huanjin
             this.apkVersion = info.version
             this.hotupdatePath = "com.test." + this.huanjin + ".android";
+            if (info.engine_version) {
+                if (info.engine_version == '2.1.3') {
+                    this.hotupdatePath += "/ccc2.2.2"
+                } else {
+                    this.hotupdatePath += "/ccc" + info.engine_version
+                }
+            }
+            if (info.proxyid) { // 如果有代理id则使用包自带的代理id
+                this.GeneralAgency.isgetFromJava = true
+                this.GeneralAgency[this.pinpai][this.huanjin] = info.proxyid
+            }
         } else {
-            this.hotupdatePath = "com." + this.pinpai + "." + this.huanjin + ".android";
+            this.hotupdatePath = "com.test." + this.huanjin + ".android";
+            this.hotupdatePath += "/ccc2.2.2"
         }
         this.platform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
         this.androidPlatform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
@@ -136,15 +163,24 @@ let appGlobal = {
             this.packageID = 1
         } else if (this.pinpai == "debi") {
             this.packageID = 2
+        } else if (this.pinpai == "xingba") {
+            this.packageID = 3
+            if (this.huanjin == "dev") {
+                this.packageID = 5
+            }
         }
         if (CC_DEBUG) {
             this.isRelease = false
-            // this.deviceID = "100000005" // 测试
-            // this.deviceID = "100000006" // 测试
-            // this.deviceID = "1000000000" // 测试
-            // this.deviceID="123456789", // carlson
-            // this.deviceID="1234567890", // fido
-            this.deviceID = "987654321" // burt
+            // this.deviceID = "123456789" // burt
+            if (gHandler.gameGlobal.isdev) {
+                if (this.huanjin == 'dev') {
+                    this.server = 'http://center.539316.com'
+                    this.canHotServer = this.hotServer = 'https://upgrade.tampk.club'
+                } else if (this.huanjin == 'pre') {
+                    this.server = 'https://center.lymrmfyp.com'
+                    this.canHotServer = this.hotServer = 'https://upgrade.lymrmfyp.com'
+                }
+            }
         }
         return this;
     },
@@ -225,7 +261,6 @@ let appGlobal = {
         }
         return endurl
     },
-
     /**
      * @Description: 获取总代号
      */
@@ -236,6 +271,9 @@ let appGlobal = {
      * @Description: 根据热更version.json提供的信息设置本地总代
      */
     setGeneralAgency(data) {
+        if (this.GeneralAgency.isgetFromJava) {
+            return
+        }
         for (let huanjin in data[this.pinpai]) {
             this.GeneralAgency[this.pinpai][huanjin] = data[this.pinpai][huanjin].proxyUserID
         }

@@ -144,7 +144,14 @@ cc.Class({
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时:" + status)
         }
         let url = gHandler.gameGlobal.pay.pay_host + "/api/payment_account/saveAccount"
-        gHandler.http.sendRequestPost(url, dataStr, callback, failcallback)
+        gHandler.http.sendXMLHttpRequest({
+            method: 'POST',
+            urlto: url,
+            param: dataStr,
+            callback: callback,
+            needJsonParse: true,
+            failcallback: failcallback,
+        })
     },
 
     onClickCaptcha() {
@@ -239,7 +246,14 @@ cc.Class({
                     };
                     oFileReader.readAsDataURL(blob);
                 }
+                xhr.abort()
             }
+        }
+        xhr.ontimeout = () => {
+            xhr.abort()
+        }
+        xhr.onerror = () => {
+            xhr.abort()
         }
         xhr.send();
     },
@@ -303,7 +317,7 @@ cc.Class({
                 }
             }
         }
-        let outcallback = () => { // 账号密码登录超时，uuid登录
+        let failcallback = () => { // 账号密码登录超时，uuid登录
         }
         let endurl = gHandler.appGlobal.getIpPostEndUrl(7);
         let data = {
@@ -312,11 +326,17 @@ cc.Class({
             phone_number: phonenum,
             captcha: yanzhenmanum,
         }
-        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
+        gHandler.http.sendXMLHttpRequest({
+            method: 'POST',
+            urlto: gHandler.appGlobal.server + endurl,
+            param: data,
+            callback: callback,
+            failcallback: failcallback,
+            needJsonParse: true,
+        })
     },
     // 注册正式账号 确定
     officeloginEnsure() {
-        this.ensurebtn.interactable = false
         let phonenum = this.officelogin.getChildByName("phoneeditbox").getComponent(cc.EditBox).string
         let yanzhenmanum = this.officelogin.getChildByName("yanzheneditbox").getComponent(cc.EditBox).string
         let capchanum = this.officelogin.getChildByName("capchaeditbox").getComponent(cc.EditBox).string
@@ -329,8 +349,10 @@ cc.Class({
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "请输入有效密码")
             return
         }
+        this.ensurebtn.interactable = false
         let callback = (responsedata) => {
             if (responsedata.status != 0) {
+                this.ensurebtn.interactable = true
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "获取免费金币失败" + responsedata.status);
             } else {
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "成功获取免费金币");
@@ -356,7 +378,14 @@ cc.Class({
         dataStr = dataStr + "&code=" + capchanum;
         dataStr = dataStr + "&password=" + passnum;
         dataStr = dataStr + "&center_token=" + gHandler.gameGlobal.token;
-        gHandler.http.sendRequestPost(payUrl, dataStr, callback, failcallback)
+        gHandler.http.sendXMLHttpRequest({
+            method: 'POST',
+            urlto: payUrl,
+            param: dataStr,
+            callback: callback,
+            needJsonParse: true,
+            failcallback: failcallback,
+        })
     },
     // 重置账号密码 确定
     resetpassEnsure() {
@@ -391,7 +420,7 @@ cc.Class({
             }
         }
 
-        let outcallback = () => {
+        let failcallback = () => {
             this.ensurebtn.interactable = true
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
         }
@@ -405,7 +434,14 @@ cc.Class({
             captcha: yanzhenmanum,
             token: gHandler.gameGlobal.token,
         }
-        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
+        gHandler.http.sendXMLHttpRequest({
+            method: 'POST',
+            urlto: gHandler.appGlobal.server + endurl,
+            param: data,
+            callback: callback,
+            failcallback: failcallback,
+            needJsonParse: true,
+        })
     },
 
     onClickExit() {

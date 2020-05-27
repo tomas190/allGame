@@ -87,7 +87,7 @@ cc.Class({
             case 8: // 安装包跳转下载
                 this.download.active = true
                 if (data.msg) {
-                    let label = this.download.getChildByName('download').getComponent(cc.Label)
+                    let label = this.download.getChildByName('downlabel').getComponent(cc.Label)
                     label.string = data.msg || '安装包有更新，请点击确定进行重新下载安装'
                 }
                 this.exitbtn.active = false
@@ -141,6 +141,7 @@ cc.Class({
         this.surecg.y = this.surecg.y - 61
         this.login.active = true
         this.login.getChildByName("phoneeditbox").getComponent(cc.EditBox).string = gHandler.gameGlobal.player.id
+        this.data = { type: 7 }
         this.ensurefunc = this.loginCallback
     },
 
@@ -153,7 +154,7 @@ cc.Class({
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "修改失败:" + data.msg)
             }
         }
-        let outcallback = () => {
+        let failcallback = () => {
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
         }
 
@@ -163,7 +164,14 @@ cc.Class({
             token: gHandler.gameGlobal.token,
             image: this.headindex + ".png",
         }
-        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
+        gHandler.http.sendXMLHttpRequest({
+            method: 'POST',
+            urlto: gHandler.appGlobal.server + endurl,
+            param: data,
+            callback: callback,
+            failcallback: failcallback,
+            needJsonParse: true,
+        })
     },
 
     alipayInputCheck(event) { // 支付宝账号输入检测
@@ -226,19 +234,26 @@ cc.Class({
         let failcallback = () => {
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
         }
-        gHandler.http.sendRequestPost(url, dataStr, callback, failcallback)
+        gHandler.http.sendXMLHttpRequest({
+            method: 'POST',
+            urlto: url,
+            param: dataStr,
+            callback: callback,
+            needJsonParse: true,
+            failcallback: failcallback,
+        })
     },
 
     nickchangeCallback() {
         let callback = (data, url) => {
             if (data.code == 200) {
-                gHandler.gHandler.eventMgr.refreshPlayerinfo({ game_nick: data.msg })
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshPlayerinfo, { game_nick: data.msg })
                 this.onClickExit()
             } else {
                 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "修改失败:" + data.msg)
             }
         }
-        let outcallback = () => {
+        let failcallback = () => {
             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络超时")
         }
 
@@ -253,7 +268,14 @@ cc.Class({
             token: gHandler.gameGlobal.token,
             game_nick: nick,
         }
-        gHandler.http.sendRequestIpPost(gHandler.appGlobal.server + endurl, data, callback, outcallback);
+        gHandler.http.sendXMLHttpRequest({
+            method: 'POST',
+            urlto: gHandler.appGlobal.server + endurl,
+            param: data,
+            callback: callback,
+            failcallback: failcallback,
+            needJsonParse: true,
+        })
     },
 
     loginCallback() {

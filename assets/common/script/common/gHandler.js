@@ -15,7 +15,7 @@ let gameGlobal = {
     huanjin: "", // dev pre online
     subGameType: 0, // number类型 真人视讯子游戏类型
     player: { // 玩家信息
-        gold: 0, // 金币
+        gold: "", // 金币
         nick: "", // 昵称
         sex: 0,// 男 0  女 1
         headurl: "1.png", // 头像
@@ -299,10 +299,10 @@ let gameConfig = {
             resid: 16,
             isDown: false,
         },
-        "2rmj": {
+        "ermj": {
             zhname: "二人麻将", // 中文游戏名
-            enname: "2rmj", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "", // 跳转场景名
+            enname: "ermj", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "ERMJHallScene", // 跳转场景名
             game_id: "5b1f3a3cb76a591e7f25170",
             serverUrl: "/ermj", // 游戏服务器地址
             endUrl: "/ermj", // 游戏服务器地址
@@ -362,6 +362,32 @@ let gameConfig = {
             remoteData: null, // 服务端发送过来的游戏数据
             hallid: 20,
             resid: 20,
+            isDown: false,
+        },
+        "21d": {
+            zhname: "二十一点", // 中文游戏名
+            enname: "21d", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "21dRoomList", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f251722",
+            serverUrl: "/21d", // 游戏服务器地址
+            endUrl: "/21d", // 游戏服务器地址
+            hasAccount: false, // 是否已创建子游戏账号
+            remoteData: null, // 服务端发送过来的游戏数据
+            hallid: 21,
+            resid: 21,
+            isDown: false,
+        },
+        "dzpk": {
+            zhname: "德州扑克", // 中文游戏名
+            enname: "dzpk", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "dzpk_roomList", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f25176",
+            serverUrl: "/dezhoupoker", // 游戏服务器地址
+            endUrl: "/dezhoupoker", // 游戏服务器地址
+            hasAccount: false, // 是否已创建子游戏账号
+            remoteData: null, // 服务端发送过来的游戏数据
+            hallid: 22,
+            resid: 22,
             isDown: false,
         },
     },
@@ -438,7 +464,7 @@ gHandler.setGameInfo = function (game_user, proxy_user, prev_proxy) {
         if (game_user.game_gold || game_user.game_gold == 0) {
             let gold = game_user.game_gold
             if (gold < 0.01) {
-                gold = 0;
+                gold = "0";
             } else {
                 gold = gHandler.commonTools.formatGold(game_user.game_gold);
             }
@@ -487,7 +513,7 @@ gHandler.setPlayerinfo = function (info) {
     if (info.game_gold || info.game_gold == 0) {
         let gold = info.game_gold
         if (gold < 0.01) {
-            gold = 0;
+            gold = "0";
         } else {
             gold = gHandler.commonTools.formatGold(info.game_gold);
         }

@@ -503,11 +503,20 @@ let hotUpdateMgr = {
     /**
      * @Description: 热更失败或者不需要更新
      */
-    vfailcallback(status, forcejump) {
-        this.log("更新失败 status", status, forcejump, this._getVersionTry)
+    vfailcallback(status, forcejump, url, err) {
+        this.log("更新失败", status, forcejump, url, err, this._getVersionTry, this._getVersionMaxTry)
         if (this._getVersionTry < this._getVersionMaxTry) {
+            this.log("重新尝试下载version.manifest")
             this._getVersionTry++
-            gHandler.http.sendRequestGet(this._packageUrl + this.manifestPre + 'version.manifest', null, this.vcallback, this.vfailcallback)
+            gHandler.http.sendXMLHttpRequest({
+                method: 'GET',
+                urlto: this._packageUrl + this.manifestPre + 'version.manifest',
+                callback: this.vcallback.bind(this),
+                needJsonParse: true,
+                failcallback: this.vfailcallback.bind(this),
+                timeout: 5000,
+                failtimeout: 7000,
+            })
             return
         }
         gHandler.eventMgr.dispatch(gHandler.eventMgr.hotCheckup, false, this.data.subname)
@@ -587,7 +596,15 @@ let hotUpdateMgr = {
 
         this._packageUrl = gHandler.appGlobal.hotServer + "/" + gHandler.appGlobal.hotupdatePath + "/" + verstr
         this.log('热更请求地址', this._packageUrl)
-        gHandler.http.sendRequestGet(this._packageUrl + this.manifestPre + 'version.manifest', null, this.vcallback.bind(this), this.vfailcallback.bind(this))
+        gHandler.http.sendXMLHttpRequest({
+            method: 'GET',
+            urlto: this._packageUrl + this.manifestPre + 'version.manifest',
+            callback: this.vcallback.bind(this),
+            needJsonParse: true,
+            failcallback: this.vfailcallback.bind(this),
+            timeout: 5000,
+            failtimeout: 7000,
+        })
         return true;
     },
     /**
@@ -602,9 +619,9 @@ let hotUpdateMgr = {
             var manifest = new jsb.Manifest(customManifestStr, this._storagePath);
             this.log('loadRemoteManifest', this._am.loadRemoteManifest(manifest))
         }
-        let falicallback = (status, forcejump) => {
-            this.log('热更project失败', status, forcejump, this._getProjectTry)
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "热更project失败" + status)
+        let falicallback = (status, forcejump, url, err) => {
+            this.log('热更project失败', status, forcejump, url, err, this._getProjectTry, this._getProjectMaxTry)
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "热更project第" + ++this._getProjectTry + "失败")
             if (this._getProjectTry < this._getProjectMaxTry) {
                 this._getProjectTry++
                 this.startUpdate(packageUrl)
@@ -621,7 +638,15 @@ let hotUpdateMgr = {
                 }
             }
         }
-        gHandler.http.sendRequestGet(packageUrl + this.manifestPre + 'project.manifest', null, callback, falicallback)
+        gHandler.http.sendXMLHttpRequest({
+            method: 'GET',
+            urlto: packageUrl + this.manifestPre + 'project.manifest',
+            callback: callback,
+            needJsonParse: true,
+            failcallback: falicallback,
+            timeout: 5000,
+            failtimeout: 7000,
+        })
     },
     // 正式进行热更
     hotUpdate: function (subname) {

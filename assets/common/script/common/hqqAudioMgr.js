@@ -39,7 +39,7 @@ let audioMgr = {
             if (!this.bgIsOpen) {
                 this.stopBg()
             } else {
-                this.bgId = cc.audioEngine.playMusic(this.bgchip, true, this.bgVolume);
+                this.playBg()
             }
         } else {
             gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshBgState, this.bgIsOpen)

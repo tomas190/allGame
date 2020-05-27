@@ -87,7 +87,7 @@ let hqqViewCtr = {
     showPayScene(data) {
         if (gHandler.gameGlobal.pay.pay_host == "") {
             gHandler.logMgr.time("最快的pay地址")
-            let callback = (url) => {
+            let callback = (mdata, url) => {
                 gHandler.logMgr.timeEnd("最快的pay地址", url)
                 gHandler.gameGlobal.pay.pay_host = url;
                 if (gHandler.gameConfig.subModel.pay.lanchscene != "") {
@@ -97,7 +97,12 @@ let hqqViewCtr = {
                     console.log("请配置充值场景")
                 }
             }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", callback)
+            gHandler.http.requestFastestUrlLine({
+                urllist: gHandler.appGlobal.remoteSeverinfo.pay_host,
+                endurl: "/checked",
+                callback: callback,
+                needJsonParse: false,
+            })
         } else {
             if (gHandler.gameConfig.subModel.pay.lanchscene != "") {
                 gHandler.gameGlobal.pay.from_scene = data

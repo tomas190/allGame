@@ -2,6 +2,7 @@
   "android-instant": {
     "REMOTE_SERVER_ROOT": "",
     "host": "",
+    "packageName": "org.dev.AG",
     "pathPattern": "",
     "recordPath": "",
     "scheme": "https",
@@ -14,36 +15,47 @@
     "orientation": "portrait",
     "subContext": ""
   },
-  "encryptJs": false,
+  "encryptJs": true,
   "excludeScenes": [],
   "fb-instant-games": {},
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
-  "md5Cache": true,
+  "md5Cache": false,
   "mergeStartScene": false,
-  "optimizeHotUpdate": false,
+  "optimizeHotUpdate": true,
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "com.test.pre.android",
+  "packageName": "org.dev.AG",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait",
     "zip": false
   },
-  "startScene": "28bf5e58-907a-4e67-a834-71dc7a840774",
-  "title": "allgame",
+  "startScene": "cde9ef7f-c993-4fd1-b7a0-fa5b4d7019b4",
+  "title": "Test_dev",
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
     "appid": "wx6ac3f5090a6b99c5",
     "orientation": "portrait",
+    "separate_engine": false,
     "subContext": ""
   },
-  "xxteaKey": "3db9001b-6c1b-48",
-  "zipCompressJs": true
+  "xxteaKey": "L9QoAp1Qv6pJqYAM",
+  "zipCompressJs": true,
+  "android": {
+    "packageName": "org.dev.AG"
+  },
+  "ios": {
+    "packageName": "org.dev.AG"
+  },
+  "mac": {
+    "packageName": "org.dev.AG"
+  },
+  "win32": {}
 }

@@ -2,7 +2,7 @@ var $jscomp = {
     scope: {},
     getGlobal: function (a) {
         if (window != null) {
-            console.log("getGlobal as window " + window);
+            // console.log("getGlobal as window " + window);
             return window;
         }
         return "undefined" != typeof window && window === a ? a : "undefined" != typeof global ? global : a

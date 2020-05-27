@@ -40,6 +40,7 @@ let hqqEvent = {
     getPayInfo: 50,  // 主动获取支付宝银行卡绑定信息
 
     refreshHallTips: 60, // 刷新大厅提示 广告，聊天，收益
+    refreshLoading: 61, // 刷新loading显示
 
     init() {
         this.mapReciver = {};

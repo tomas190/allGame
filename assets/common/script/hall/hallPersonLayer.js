@@ -36,6 +36,7 @@ cc.Class({
             this.txt_bgm.getComponent(cc.Button).setSoundEffect(false)
             this.txt_se.getComponent(cc.Button).setSoundEffect(false)
         }
+        this.alipaybindbtn.active = false
     },
 
     start() {
@@ -44,7 +45,7 @@ cc.Class({
     init(data) {
         let player = gHandler.gameGlobal.player
         gHandler.commonTools.loadHeadRes(player.headurl, this.headimg)
-        this.goldlabel.string = gHandler.commonTools.formatGold(player.gold).toString().replace(".", "/")
+        this.goldlabel.string = player.gold.toString().replace(".", "/")
         this.nicklabel.string = player.nick
         this.idlabel.string = player.id
         if (player.phonenum) {
@@ -55,7 +56,7 @@ cc.Class({
         if (player.alipay) {
             this.alipaylabel.string = player.alipay.substring(0, 2) + "** **** **" + player.alipay.substring(player.alipay.length - 2, player.alipay.length)
             this.alipaylabel.node.color = new cc.Color(225, 225, 225)
-            this.alipaybindbtn.active = false
+            // this.alipaybindbtn.active = false
         }
         if (player.yinhangka) {
             let kahaostr = player.yinhangka.toString()
@@ -67,9 +68,7 @@ cc.Class({
         gHandler.audioMgr && gHandler.audioMgr.effectIsOpen ? this.audiotoggle.check() : this.audiotoggle.uncheck()
         gHandler.eventMgr.register(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer", this.setPlayerInfo.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.getPayInfo, "hallPersonLayer", this.getPayInfo.bind(this))
-        if (!gHandler.gameGlobal.isdev) {
-            this.getPayInfo(); // 存在解绑的情况，所以每次进来都重新拉取一次支付宝和银行卡信息
-        }
+        this.getPayInfo(); // 存在解绑的情况，所以每次进来都重新拉取一次支付宝和银行卡信息
     },
 
     getPayInfo() {
@@ -94,14 +93,14 @@ cc.Class({
                         let alistr = gHandler.gameGlobal.player.alipay
                         this.alipaylabel.string = alistr.substring(0, 2) + "** **** **" + alistr.substring(alistr.length - 2, alistr.length)
                         this.alipaylabel.node.color = new cc.Color(225, 225, 225)
-                        this.alipaybindbtn.active = false
+                        // this.alipaybindbtn.active = false
                         isNoAlipay = false
                     }
                 }
                 if (isNoAlipay) {
                     this.alipaylabel.string = "暂未绑定支付宝"
                     this.alipaylabel.node.color = new cc.Color(152, 152, 152)
-                    this.alipaybindbtn.active = true
+                    // this.alipaybindbtn.active = true
                 }
                 if (isNotyinhang) {
                     this.yinghangkalabel.string = "暂未绑定银行卡"
@@ -115,14 +114,33 @@ cc.Class({
         }
         if (gHandler.gameGlobal.pay.pay_host == "") {
             gHandler.logMgr.time("最快的pay地址")
-            let qcallback = (url) => {
+            let qcallback = (data, url) => {
                 gHandler.logMgr.timeEnd("最快的pay地址", url)
                 gHandler.gameGlobal.pay.pay_host = url;
-                gHandler.http.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, failcallback);
+                gHandler.http.sendXMLHttpRequest({
+                    method: "GET",
+                    urlto: url,
+                    endurl: endurl,
+                    callback: callback,
+                    failcallback: failcallback,
+                    needJsonParse: true,
+                });
             }
-            gHandler.http.requestFastestUrl(gHandler.appGlobal.remoteSeverinfo.pay_host, null, "/checked", qcallback)
+            gHandler.http.requestFastestUrlLine({
+                urllist: gHandler.appGlobal.remoteSeverinfo.pay_host,
+                endurl: "/checked",
+                callback: qcallback,
+                needJsonParse: false,
+            })
         } else {
-            gHandler.http.sendRequestIpGet(gHandler.gameGlobal.pay.pay_host, endurl, callback, failcallback);
+            gHandler.http.sendXMLHttpRequest({
+                method: "GET",
+                urlto: gHandler.gameGlobal.pay.pay_host,
+                endurl: endurl,
+                callback: callback,
+                failcallback: failcallback,
+                needJsonParse: true,
+            });
         }
     },
 
@@ -148,7 +166,7 @@ cc.Class({
         if (msg.alipay) {
             this.alipaylabel.string = msg.alipay.substring(0, 2) + "** **** **" + msg.alipay.substring(msg.alipay.length - 2, msg.alipay.length)
             this.alipaylabel.node.color = new cc.Color(225, 225, 225)
-            this.alipaybindbtn.active = false
+            // this.alipaybindbtn.active = false
         }
         if (msg.yinhangka) {
             this.yinghangkalabel.string = "**** **** **** " + msg.yinhangka.substring(msg.yinhangka.length - 4, msg.yinhangka.length)

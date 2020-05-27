@@ -2,7 +2,7 @@
   "assets-sort-type": "name",
   "collision-matrix": [
     [
-      false
+      true
     ],
     [
       false,
@@ -17,7 +17,15 @@
   ],
   "design-resolution-height": 750,
   "design-resolution-width": 1334,
-  "excluded-modules": [],
+  "excluded-modules": [
+    "MotionStreak",
+    "VideoPlayer",
+    "StudioComponent",
+    "Native Socket",
+    "Geom Utils",
+    "3D",
+    "3D Primitive"
+  ],
   "facebook": {
     "appID": "",
     "audience": {
@@ -28,20 +36,20 @@
       "enable": false
     }
   },
-  "fit-height": false,
+  "fit-height": true,
   "fit-width": false,
   "group-list": [
     "default",
     "Bullet",
     "Fish"
   ],
-  "last-module-event-record-time": 1566466357367,
+  "last-module-event-record-time": 1590412055187,
   "simulator-orientation": false,
   "simulator-resolution": {
     "height": 640,
     "width": 960
   },
-  "start-scene": "45733fa3-9fce-4fe2-93c2-53003a08e17b",
+  "start-scene": "cde9ef7f-c993-4fd1-b7a0-fa5b4d7019b4",
   "use-customize-simulator": true,
   "use-project-simulator-setting": false
 }

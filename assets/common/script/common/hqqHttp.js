@@ -1,4 +1,4 @@
-
+let appGlobal = require("appGlobal");
 let hqqHttp = {
     m_remoteUrl: "",
     /**
@@ -20,37 +20,105 @@ let hqqHttp = {
         if (!mydata.method) {
             return cc.log("method 参数为空")
         }
+        let url = mydata.urlto
+        if (url.indexOf("http:") == -1 && url.indexOf("https:") == -1) {
+            url = "http://" + url;
+        }
+        url = url.replace(/\s+/g, "");
+        if (mydata.head) {
+            url = mydata.head + url;
+        }
+        if (mydata.endurl) {
+            url += mydata.endurl;
+        }
+        let xhr = new XMLHttpRequest();
+        let hascall = false
         let timer = setTimeout(() => {
             if (mydata.failcallback) {
-                mydata.failcallback(xhr.status, true)
-                mydata = null
+                let status = xhr.status;
+                xhr.abort();
+                if (hascall) {
+                    return
+                }
+                hascall = true
+                mydata.failcallback(status, true, mydata.urlto, "setTimeout");
+            } else {
+                xhr.abort();
             }
+            mydata = null;
         }, mydata.failtimeout ? mydata.failtimeout : 4000)
-        let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
-                clearTimeout(timer)
+                clearTimeout(timer);
                 if (xhr.status >= 200 && xhr.status < 400) {
                     if (mydata.callback) {
                         if (mydata.needJsonParse) {
-                            mydata.callback(JSON.parse(xhr.responseText), mydata.urlto)
+                            let responseText = xhr.responseText;
+                            xhr.abort();
+                            if (hascall) {
+                                return
+                            }
+                            hascall = true
+                            mydata.callback(JSON.parse(responseText), mydata.urlto);
                         } else {
-                            mydata.callback(xhr.responseText, mydata.urlto)
+                            let responseText = xhr.responseText;
+                            xhr.abort();
+                            if (hascall) {
+                                return
+                            }
+                            hascall = true
+                            mydata.callback(responseText, mydata.urlto);
                         }
                     }
                 } else {
+                    console.log("mgr --- xhr.status", xhr.status, mydata.urlto)
                     if (mydata.failcallback) {
-                        mydata.failcallback(xhr.status)
+                        let status = xhr.status;
+                        xhr.abort();
+                        if (hascall) {
+                            return
+                        }
+                        hascall = true
+                        mydata.failcallback(status, false, mydata.urlto, "ontimeout");
+                    } else {
+                        xhr.abort();
                     }
                 }
             }
         }
-        xhr.open(mydata.method, encodeURI(mydata.urlto), true); // 初始化一个请求 针对特殊字符进行  encodeURIComponent 编码转换 
-        // xhr.open(mydata.method, mydata.urlto, true); // 初始化一个请求        
+        xhr.ontimeout = () => {
+            console.log("mgr --- ontimeout", mydata.urlto)
+            if (mydata.failcallback) {
+                let status = xhr.status;
+                xhr.abort();
+                if (hascall) {
+                    return
+                }
+                hascall = true
+                mydata.failcallback(status, false, mydata.urlto, "ontimeout");
+            } else {
+                xhr.abort();
+            }
+        }
+        xhr.onerror = () => {
+            console.log("mgr --- onerror", mydata.urlto)
+            if (mydata.failcallback) {
+                let status = xhr.status;
+                xhr.abort();
+                if (hascall) {
+                    return
+                }
+                hascall = true
+                mydata.failcallback(status, false, mydata.urlto, "onerror");
+            } else {
+                xhr.abort();
+            }
+        }
+        xhr.open(mydata.method, encodeURI(url), true); // 初始化一个请求 针对特殊字符进行  encodeURIComponent 编码转换 
         if (mydata.contenttype) {
-            xhr.setRequestHeader("Content-Type", mydata.contenttype)
+            xhr.setRequestHeader("Content-Type", mydata.contenttype);
         } else {
-            xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
+            xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
         }
         var str = ''
         if (typeof mydata.param == 'object') {
@@ -65,118 +133,18 @@ let hqqHttp = {
         xhr.send(mydata.param ? str : null); // 发送请求，默认是异步请求，请求发送后立刻返回
     },
     /**
-     * @Description: 域名get请求
-     */
-    sendRequestGet(urlto, param, callback, failcallback) {
-        let data = {
-            method: 'GET',
-            urlto: urlto,
-            param: param,
-            callback: callback,
-            needJsonParse: true,
-            failcallback: failcallback,
-        }
-        this.sendXMLHttpRequest(data)
-    },
-    /**
-     * @Description: 域名post请求
-     */
-    sendRequestPost(urlto, param, callback, failcallback) {
-        let data = {
-            method: 'POST',
-            urlto: urlto,
-            param: param,
-            callback: callback,
-            needJsonParse: true,
-            failcallback: failcallback,
-        }
-        this.sendXMLHttpRequest(data)
-    },
-    /**
-     * @Description: 请求密码本
-     */
-    sendSecretRequestGet(urlto, param, callback, failcallback) {
-        let data = {
-            method: 'GET',
-            urlto: urlto,
-            param: param,
-            callback: callback,
-            failcallback: failcallback,
-        }
-        this.sendXMLHttpRequest(data)
-    },
-    /**
      * @Description: ip方式get请求
      */
     sendRequestIpGet(urlto, endurl, callback, failcallback) {
-        if (urlto.indexOf("http:") == -1 && urlto.indexOf("https:") == -1) {
-            urlto = "http://" + urlto + endurl
-        } else {
-            urlto = urlto + endurl
-        }
         let data = {
             method: 'GET',
             urlto: urlto,
+            endurl: endurl,
             callback: callback,
             failcallback: failcallback,
-            needJsonParse: true,
+            needJsonParse: false,
         }
-        this.sendXMLHttpRequest(data)
-    },
-    /**
-     * @Description: ip方式post请求
-     */
-    sendRequestIpPost(urlto, param, callback, failcallback) {
-        if (urlto.indexOf("http:") == -1 && urlto.indexOf("https:") == -1) {
-            urlto = "http://" + urlto
-        } else {
-            urlto = urlto
-        }
-        let data = {
-            method: 'POST',
-            urlto: urlto,
-            param: param,
-            callback: callback,
-            failcallback: failcallback,
-            needJsonParse: true,
-        }
-        this.sendXMLHttpRequest(data)
-    },
-    /**
-     * @Description: 详细配置的方式http请求
-     * data.method           方法
-     * data.contenttype      Content-Type
-     * data.urlto            地址
-     * data.param            参数
-     * data.callback         成功回调
-     * data.failcallback     失败回调
-     * data.needJsonParse    是否需要jsonparse返回值
-     * data.timeout          超时
-     * data.failtimeout      失败超时
-     */
-    sendRequestDetail(data) {
-        if (!data.urlto) {
-            return console.log("请配置http地址")
-        }
-        if (!data.method) {
-            return console.log("请配置http方法")
-        }
-        if (data.urlto.indexOf("http:") == -1 && data.urlto.indexOf("https:") == -1) {
-            data.urlto = "http://" + data.urlto
-        } else {
-            data.urlto = data.urlto
-        }
-        let xmldata = {
-            method: data.method,
-            urlto: data.urlto,
-            param: data.param,
-            callback: data.callback,
-            failcallback: data.failcallback,
-            needJsonParse: data.needJsonParse,
-            timeout: data.timeout,
-            failtimeout: data.failtimeout,
-        }
-        this.sendXMLHttpRequest(xmldata)
+        this.sendXMLHttpRequest(data);
     },
     /**
      * @Description: 发送日志
@@ -191,12 +159,21 @@ let hqqHttp = {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
+                    xhr.abort()
                     callBack && callBack(true, filepath)
                 } else {
-                    xhr.abort(); // 如果请求已经被发送，则立刻终止请求
-                    callBack && callBack(false)
+                    xhr.abort()
+                    callBack && callBack(false, null, "status")
                 }
             }
+        }
+        xhr.ontimeout = () => {
+            xhr.abort();
+            callBack && callBack(false, null, "ontimeout")
+        }
+        xhr.onerror = () => {
+            xhr.abort();
+            callBack && callBack(false, null, "onerror")
         }
         let str = '';
         xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
@@ -204,234 +181,74 @@ let hqqHttp = {
             str += `${key}=${param[key]}&`
         }
         str = str.slice(0, -1)
-        xhr.timeout = 3000
+        xhr.timeout = 7000
         xhr.send(str); // 发送请求，默认是异步请求，请求发送后立刻返回
     },
-    /**
-     * @Description: 专门测试线路的请求
-     */
-    ping(urlto, head, endurl, callback, errcallback) {
-        head = head || ""
-        endurl = endurl || null
-        urlto = urlto.replace(/\s+/g, "")
-        let xhr = new XMLHttpRequest();
-        let m_url = urlto;
-        if (head) {
-            m_url = head + m_url;
-        }
-        if (endurl) {
-            m_url += endurl;
-        }
-        let timer = setTimeout(() => {
-            xhr.abort(); // 如果请求已经被发送，则立刻终止请求 Cancels any network activity.
-            errcallback("dead", xhr.status)
-        }, 4000)
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                clearTimeout(timer)
-                if (xhr.status >= 200 && xhr.status < 400) {
-                    if (callback) {
-                        callback(urlto);
-                    }
-                } else if (xhr.status >= 400 && xhr.status < 500) {
-                    errcallback("connectError", xhr.status);
-                } else if (xhr.status >= 500) {
-                    errcallback("serverError", xhr.status);
-                } else {
-                    xhr.abort(); // 如果请求已经被发送，则立刻终止请求
-                    errcallback("timeout", xhr.status);
-                }
-            }
-        };
-        xhr.timeout = 3000
-        xhr.open("GET", m_url, true);
-        xhr.send();
-    },
-
-    /** 线路选择
+    /** 单线线路选择
      * @param {array} urllist url列表
      * @param {string} head url前缀
      * @param {string} endurl url尾缀
-     * @param {function} mcallback 回调函数
+     * @param {function} callback 回调函数
+     * @param {function} merrcallback 失败回调函数
      */
-    requestFastestUrl(urllist, head, endurl, mcallback, merrcallback) {
-        head = head || ""
-        endurl = endurl || null
+    requestFastestUrlLine(data) {
+        if (!data.urllist) {
+            return console.log("请配置http列表地址")
+        }
+        let checknum = 0;
         let hasreceive = false;
-        let callback = (url) => {
-            if (!hasreceive && url) {
+        let callback = (responseText, urlto, checknum) => {
+            if (!hasreceive && urlto) {
                 hasreceive = true;
-                mcallback && mcallback(url)
+                data.callback && data.callback(responseText, urlto, checknum)
             }
         }
-        let t = 0
-        let c = 0
-        let s = 0
-        let d = 0
-        let errcallback = (errstr, status) => {
-            // cc.log(errstr, status)
-            if (errstr == 'timeout') {
-                t++
-            } else if (errstr == 'connectError') {
-                c++
-            } else if (errstr == 'serverError') {
-                s++
-            } else if (errstr == 'serverError') {
-                d++
+        let needJsonParse = data.needJsonParse
+        let errcallback = (status, forcejump, url, err) => {
+            // console.log("请求失败", checknum, data.urllist.length, data.urllist[checknum])
+            checknum++
+            if (data.tipcallback) {
+                data.tipcallback(checknum)
             }
-            if ((t + c + s + d) == urllist.length && merrcallback) {
-                merrcallback()
-                // let str = ""
-                // if (t > 0) {
-                //     str += "timeout "
-                // }
-                // if (c > 0) {
-                //     str += "conerr "
-                // }
-                // if (s > 0) {
-                //     str += "sererr "
-                // }
-                // let gHandler = require("gHandler");
-                // console.log("urllist", urllist)
-                // gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, str)
+            if (hasreceive) {
+                return
+            }
+            if (checknum < data.urllist.length) {
+                this.sendXMLHttpRequest({
+                    method: 'GET',
+                    urlto: data.urllist[checknum],
+                    head: data.head,
+                    endurl: data.endurl,
+                    callback: callback,
+                    needJsonParse: needJsonParse,
+                    failcallback: errcallback,
+                    timeout: data.timeout,
+                    failtimeout: data.failtimeout,
+                })
+            } else {
+                data.failcallback && data.failcallback(status, forcejump, url, err)
             }
         }
-        for (let i = 0; i < urllist.length; i++) {
-            this.ping(urllist[i], head, endurl, callback, errcallback)
-        }
-    },
-    /**
-     * @Description: 线路稳定性测试
-     */
-    stabilityPing(url, head, endurl, callback) {
-        url = url.replace(/\s+/g, "")
-        let m_url = url
-        head && (m_url = head + m_url);
-        endurl && (m_url += endurl);
-        let timeout = 1000 // 超时时间
-        let requesetTime = 100 // 测试次数
-        let minGetTime = 0
-        let maxGetTime = 0
-        let averageTime = 0
-        let timeNow = 0
-        let error = { 'url': url, err: [] }
-        function requesetOne() {
-            let xhr = new XMLHttpRequest()
-            xhr.timeout = timeout
-            let timestart
-            xhr.onloadstart = () => {
-                timestart = Date.now()
-            }
-            xhr.ontimeout = (data) => {
-                timeNow++
-                error.err.push({ 'errtype': "timeout" + xhr.status, 'timeNow': timeNow })
-                if (timeNow == requesetTime) {
-                    callback(error, url, maxGetTime, minGetTime, averageTime)
-                } else {
-                    setTimeout(() => {
-                        requesetOne()
-                    }, 100);
-                }
-            }
-            xhr.onerror = (data) => {
-                timeNow++
-                error.err.push({ 'errtype': "error" + xhr.status, 'timeNow': timeNow })
-                if (timeNow == requesetTime) {
-                    callback(error, url, maxGetTime, minGetTime, averageTime)
-                } else {
-                    setTimeout(() => {
-                        requesetOne()
-                    }, 100);
-                }
-            }
-            xhr.onload = () => {
-                let spendtime = Date.now() - timestart
-                if (spendtime > maxGetTime) {
-                    maxGetTime = spendtime
-                }
-                if (minGetTime == 0) {
-                    minGetTime = spendtime
-                }
-                if (spendtime < minGetTime) {
-                    minGetTime = spendtime
-                }
-                timeNow++
-                if (timeNow == requesetTime) {
-                    averageTime = averageTime / requesetTime
-                    callback(error, url, maxGetTime, minGetTime, averageTime)
-                } else {
-                    averageTime += spendtime
-                    setTimeout(() => {
-                        requesetOne()
-                    }, 100);
-                }
-            }
-            xhr.open("GET", m_url, true);
-            xhr.send();
-        }
-        requesetOne()
-    },
-    /**
-     * @Description: 请求最稳定的线路
-     */
-    requestStabilityUrl(urllist, head, endurl, mcallback, merrcallback) {
-        head = head || ""
-        endurl = endurl || ""
-        let len = urllist.length
-        let sortarry = []
-        let totalnum = 0
-        let errnum = 0
-        let merrarry = []
-        let sortfunc = (resultlist, merrarry) => {
-            resultlist.sort(function (a, b) {
-                if (a.floatTime && b.floatTime) {
-                    return a.floatTime - b.floatTime
-                }
-            })
-            // console.log('resultlist', resultlist)
-            // console.log('merrarry', merrarry)
-            let stable = resultlist[0]
-            if (resultlist[1]) {
-                stable = resultlist[0].averageTime < resultlist[1].averageTime ? resultlist[0] : resultlist[1]
-            }
-            mcallback && mcallback(stable, resultlist, merrarry)
-        }
-        let callback = (errarry, url, maxGetTime, minGetTime, averageTime) => {
-            totalnum++
-            if (errarry.err.length > 0) { // 此条线路不行
-                errnum++
-                errarry.maxGetTime = maxGetTime
-                errarry.minGetTime = minGetTime
-                errarry.floatTime = maxGetTime - minGetTime
-                errarry.averageTime = averageTime
-                merrarry.push(errarry)
-                if (errnum == len) {
-                    merrcallback(errarry)
-                } else if (totalnum == len) {
-                    sortfunc(sortarry, merrarry)
-                }
-            } else { // 此条线路可以，记录
-                sortarry.push({ "url": url, "maxGetTime": maxGetTime, "minGetTime": minGetTime, "floatTime": maxGetTime - minGetTime, "averageTime": averageTime })
-                if (totalnum == len) {
-                    sortfunc(sortarry, merrarry)
-                }
-            }
-        }
-        for (let i = 0; i < urllist.length; i++) {
-            this.stabilityPing(urllist[i], head, endurl, callback)
-        }
+        this.sendXMLHttpRequest({
+            method: 'GET',
+            urlto: data.urllist[checknum],
+            head: data.head,
+            endurl: data.endurl,
+            callback: callback,
+            needJsonParse: needJsonParse,
+            failcallback: errcallback,
+            timeout: data.timeout,
+            failtimeout: data.failtimeout,
+        })
     },
     /**
      * @Description: 线路恒定检测
      */
-    serverCheck(serverDB, callback) {
-        function checkEnd() {
-            for (let k = 0; k < serverDB.serverList.length; k++) {
-                if (serverDB.serverList[k].status == 0) {
-                    return // 有线路没有测完
-                }
-            }
-            let choiceob = JSON.parse(JSON.stringify(serverDB.serverList))
+    requestStableUrlLine(data) {
+        let checknum = 0;
+        let callback = (returnList, url, isserver) => {
+            // console.log("一条线路检测结束", url)
+            let choiceob = JSON.parse(JSON.stringify(returnList.serverList))
             choiceob.sort(function (a, b) { // 错误排序
                 return a.errnum - b.errnum
             })
@@ -452,77 +269,89 @@ let hqqHttp = {
             ob.sort(function (a, b) { // 平均时间排序
                 return a.averageTime - b.averageTime
             })
-            for (let i = 0; i < serverDB.serverList.length; i++) {
-                serverDB.serverList[i].status = 0
-            }
-            serverDB.stable = ob[0]
-            callback && callback(serverDB)
-        }
-        function checkOne(index, serverDB) {
-            let xhr = new XMLHttpRequest()
-            xhr.timeout = 1000 // 超时时间
-            serverDB.serverList[index].testnum++
-            let avnernum = serverDB.serverList[index].testnum
-            if (serverDB.serverList[index].testnum >= 100) {
-                serverDB.serverList[index].errnum = serverDB.serverList[index].errnum - 0.01 > 0 ? serverDB.serverList[index].errnum - 0.01 : serverDB.serverList[index].errnum
-                avnernum = 99
-            }
-
-            let timestart
-            xhr.onloadstart = () => {
-                timestart = Date.now()
-            }
-            xhr.ontimeout = () => {
-                let spendtime = 100000
-                serverDB.serverList[index].maxGetTime = spendtime
-                serverDB.serverList[index].averageTime = (avnernum * serverDB.serverList[index].averageTime + spendtime) / (avnernum + 1) // 加权平均
-                serverDB.serverList[index].errnum++
-                serverDB.serverList[index].status = 1 // 已测试
-                checkEnd()
-            }
-            xhr.onerror = () => {
-                let spendtime = 100000
-                serverDB.serverList[index].maxGetTime = spendtime
-                serverDB.serverList[index].averageTime = (avnernum * serverDB.serverList[index].averageTime + spendtime) / (avnernum + 1) // 加权平均
-                serverDB.serverList[index].errnum++
-                serverDB.serverList[index].status = 1 // 已测试
-                checkEnd()
-            }
-            xhr.onload = () => {
-                let spendtime = Date.now() - timestart
-                if (spendtime > serverDB.serverList[index].maxGetTime) {
-                    serverDB.serverList[index].maxGetTime = spendtime
-                }
-                if (serverDB.serverList[index].minGetTime == 0) {
-                    serverDB.serverList[index].minGetTime = spendtime
-                } else if (spendtime < serverDB.serverList[index].minGetTime) {
-                    serverDB.serverList[index].minGetTime = spendtime
-                }
-                if (serverDB.serverList[index].maxGetTime * 0.99 > serverDB.serverList[index].minGetTime * 1.01) {
-                    serverDB.serverList[index].maxGetTime *= 0.99
-                    serverDB.serverList[index].minGetTime *= 1.01
-                }
-                serverDB.serverList[index].averageTime = (avnernum * serverDB.serverList[index].averageTime + spendtime) / (avnernum + 1) // 加权平均
-                serverDB.serverList[index].status = 1 // 已测试
-                checkEnd()
-            }
-            xhr.open("GET", serverDB.serverList[index].url + "/checked", true);
-            xhr.send();
-        }
-        let checknum = 0
-        let timer = setInterval(() => {
-            if (checknum == serverDB.serverList.length) {
-                clearInterval(timer)
-                return
-            }
-            checkOne(checknum, serverDB)
+            returnList.stable = ob[0]
+            data.callback && data.callback(returnList, checknum, isserver)
             checknum++
-        }, 100)
-        // for (let i = 0; i < serverDB.serverList.length; i++) {
-        //     checkOne(i, serverDB)
-        // }
+            for (let k = 0; k < returnList.serverList.length; k++) {
+                if (returnList.serverList[k].status == 0) {
+                    // console.log("没测试完一轮", returnList.serverList)
+                    this.sendrequestStableUrlLine(returnList, checknum, callback, isserver)
+                    return // 有线路没有测完
+                }
+            }
+            for (let k = 0; k < returnList.serverList.length; k++) {
+                returnList.serverList[k].status = 0
+            }
+            checknum = 0;
+            if (isserver) {
+                isserver = !isserver
+                this.sendrequestStableUrlLine(data.hotserverList, checknum, callback, isserver)
+            } else {
+                isserver = !isserver
+                this.sendrequestStableUrlLine(data.storageList, checknum, callback, isserver)
+            }
+        }
+        this.sendrequestStableUrlLine(data.storageList, checknum, callback, true)
     },
-
+    sendrequestStableUrlLine(data, checknum, callback, isserver) {
+        // console.log("线路检测开始", data.serverList)
+        // console.log("线路检测开始", checknum, isserver, data.serverList[checknum].url)
+        let xhr = new XMLHttpRequest()
+        xhr.timeout = 1000
+        data.serverList[checknum].testnum++
+        let avnernum = data.serverList[checknum].testnum
+        if (data.serverList[checknum].testnum >= 100) {
+            data.serverList[checknum].errnum = data.serverList[checknum].errnum - 0.01 > 0 ? data.serverList[checknum].errnum - 0.01 : data.serverList[checknum].errnum
+            avnernum = 99
+        }
+        let timestart
+        xhr.onloadstart = () => {
+            timestart = Date.now()
+        }
+        xhr.ontimeout = () => {
+            xhr.abort()
+            let spendtime = 100000
+            data.serverList[checknum].maxGetTime = spendtime
+            data.serverList[checknum].averageTime = (avnernum * data.serverList[checknum].averageTime + spendtime) / (avnernum + 1)
+            data.serverList[checknum].errnum++
+            data.serverList[checknum].status = 1
+            callback(data, data.serverList[checknum].url, isserver)
+        }
+        xhr.onerror = () => {
+            xhr.abort()
+            let spendtime = 100000
+            data.serverList[checknum].maxGetTime = spendtime
+            data.serverList[checknum].averageTime = (avnernum * data.serverList[checknum].averageTime + spendtime) / (avnernum + 1)
+            data.serverList[checknum].errnum++
+            data.serverList[checknum].status = 1
+            callback(data, data.serverList[checknum].url, isserver)
+        }
+        xhr.onload = () => {
+            let spendtime = Date.now() - timestart
+            if (spendtime > data.serverList[checknum].maxGetTime) {
+                data.serverList[checknum].maxGetTime = spendtime
+            }
+            if (data.serverList[checknum].minGetTime == 0) {
+                data.serverList[checknum].minGetTime = spendtime
+            } else if (spendtime < data.serverList[checknum].minGetTime) {
+                data.serverList[checknum].minGetTime = spendtime
+            }
+            if (data.serverList[checknum].maxGetTime * 0.99 > data.serverList[checknum].minGetTime * 1.01) {
+                data.serverList[checknum].maxGetTime *= 0.99
+                data.serverList[checknum].minGetTime *= 1.01
+            }
+            data.serverList[checknum].averageTime = (avnernum * data.serverList[checknum].averageTime + spendtime) / (avnernum + 1)
+            data.serverList[checknum].status = 1
+            xhr.abort()
+            callback(data, data.serverList[checknum].url, isserver)
+        }
+        if (isserver) {
+            xhr.open("GET", data.serverList[checknum].url + "/checked", true);
+        } else {
+            xhr.open("GET", data.serverList[checknum].url + "/" + appGlobal.hotupdatePath + "/" + 'version.json?' + Math.floor(Math.random() * 10000), true);
+        }
+        xhr.send();
+    }
 }
 
 module.exports = hqqHttp;
