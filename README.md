@@ -5,7 +5,7 @@ all hqq native combined-game project
 基本把所有代码都放出来了，只要线路选择这块的代码被删除了  
 修改当前的开发环境， common/app/appGlobal 中的 huanjin 字段，dev，pre两个环境，任选其一  
 另外必须修改 deviceID 字段，必须是唯一，不与其他人的设备id冲突，推荐使用自己开发的gameid，再额外加几位数字    
-比如抢庄牛牛 5b1f3a3cb76a591e7f251714 + 123456789 = 5b1f3a3cb76a591e7f251714123456789
+比如抢庄牛牛 '5b1f3a3cb76a591e7f251714 + 123456789 = 5b1f3a3cb76a591e7f251714123456789'
 
 # 合并master分支建议：
 Git merge 会有很多冲突，可以采用直接删除本地大厅文件夹，从工程文件夹内直接拖至cocos引擎资源管理器替换原有文件夹    
