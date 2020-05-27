@@ -175,7 +175,7 @@ let appGlobal = {
             if (gHandler.gameGlobal.isdev) {
                 if (this.huanjin == 'dev') {
                     this.server = 'http://center.539316.com'
-                    this.canHotServer = this.hotServer = 'https://upgrade.tampk.club'
+                    this.canHotServer = this.hotServer = 'http://upgrade.539316.com'
                 } else if (this.huanjin == 'pre') {
                     this.server = 'https://center.lymrmfyp.com'
                     this.canHotServer = this.hotServer = 'https://upgrade.lymrmfyp.com'
