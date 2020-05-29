@@ -12,25 +12,28 @@ all hqq native combined-game project
 
 # 合并master分支建议：
 Git merge 会有很多冲突，可以采用直接删除本地大厅文件夹，从工程文件夹内直接拖至cocos引擎资源管理器替换原有文件夹    
-<u>(注意：大厅代码只删除了一个登陆模块)</u>
+
+# 打印组件打开方法：
+进入个人信息界面（点击头像弹出的界面），连续点击音乐和音效文字，各10次以上，可以激活日志打印组件  
+可以比较方便的查看js的打印信息  
 
 # 个人头像:
-头像图片资源修改，由原来的20个，改为10个，根据头像图片取10余数，获取对应头像  
+头像图片资源修改，由原来的20个，改为10个，根据头像图片取10余数，获取对应头像    
 点击头像显示界面调用示例 gHandler.eventMgr.dispatch(gHandler.eventMgr.showPerson, null) // 显示个人设置界面
 
 # 登陆接口改变：
-原有的账号密码登陆方式，只在本地开发上使用
-发布使用id + token的方式登陆子游戏
-* 账号密码方式
-账号：gHandler.gameGlobal.player.account_name // number类型
-密码：gHandler.gameGlobal.player.account_pass // string类型
-* id+token方式
-id:gHandler.gameGlobal.player.id // number类型
-token:gHandler.gameGlobal.token // string类型
+原有的账号密码登陆方式，只在本地开发上使用  
+发布使用id + token的方式登陆子游戏  
+* 账号密码方式  
+账号：gHandler.gameGlobal.player.account_name // number类型  
+密码：gHandler.gameGlobal.player.account_pass // string类型  
+* id+token方式  
+id:gHandler.gameGlobal.player.id // number类型  
+token:gHandler.gameGlobal.token // string类型  
 
 # 滚动公告：
-common/hall/scene/hall 场景的 Main Camera/toppanel/noticepanel/sp_trumppet_bg节点
-可直接复制此滚动公告节点到需要的场景上，即可实现滚动公告功能
+common/hall/scene/hall 场景的 Main Camera/toppanel/noticepanel/sp_trumppet_bg节点  
+可直接复制此滚动公告节点到需要的场景上，即可实现滚动公告功能  
 
 # 注意：
 一个子游戏有两个文件夹路径，一个是resources下新建的子游戏的动态资源目录，
@@ -121,6 +124,35 @@ ts的命名空间（namesapace）命名请不要冲突，一定加上自己的�
 <u>(注意：大厅分支subgame文件夹已删除，合并分支时请一定注意)</u>
 
 # 常用接口示例：
+
+## 加载头像资源到指定精灵上
+```js
+gHandler.commonTools.loadHeadRes(headid, headsprite)
+```
+
+## 时差打印
+对应脚本 hqqLogMgr.js
+```js
+gHandler.logMgr.time('唯一的记录键值') // 开始计时
+gHandler.logMgr.timeEnd('唯一的记录键值', '额外打印') // 计时结束并打印
+```
+
+## 发送至日志服务器的打印
+此接口打印的内容将会发送到日志服务器，需要追踪信息的可以使用此接口
+```js
+gHandler.logMgr.log('字符串1','字符串2'...)
+```
+<u>(注意：请不要滥用)</u>
+
+## 本地保存
+对应脚本 hqqLocalStorage.js
+```js
+gHandler.localStorage.set("子模块名字", "键值", "可JSON.stringify数据") // 保存
+gHandler.localStorage.has("子模块名字", "键值") // 是否存有
+gHandler.localStorage.get("子模块名字", "键值") // 获取保存数据
+gHandler.localStorage.remove("子模块名字", "键值") // 移除数据
+```
+
 ## 同步账号切换
 ```javascript
 gHandler.eventMgr.register(gHandler.eventMgr.refreshPlayerinfo,'自己的类名或唯一标识',this.setPlayerInfo.bind(this)); // 进入时注册监听
@@ -135,6 +167,7 @@ gHandler.eventMgr.unregister(gHandler.eventMgr.refreshPlayerinfo,'自己的类�
 ```
 
 ## 浮动提示
+从屏幕中间向上浮动，到中间悬停，然后再向上浮动消失的提示
 ```javascript
 gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "需要显示的字符串")
 ```
@@ -192,5 +225,3 @@ gHanler.gameGlobal.player.name
 gHandler.Reflect.setOrientation("portrait", 640, 1136)  // 竖屏 宽 高
 gHandler.Reflect.setOrientation("landscape", 1334, 750) // 横屏 宽 高
 ```
-
-
