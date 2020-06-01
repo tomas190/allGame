@@ -7,6 +7,9 @@ let appGlobal = {
     huanjin: "dev", // dev pre 
     // huanjin: "pre", // pre 
 
+    // account_name: 账号,
+    // account_pass: 密码,
+
     deviceID: "", // 必须单独设置
     os: "android", // 平台 android ios
 
@@ -171,7 +174,7 @@ let appGlobal = {
         }
         if (CC_DEBUG) {
             this.isRelease = false
-            // this.deviceID = "123456789" // burt
+            this.deviceID = "123456789123456789" // burt
             if (gHandler.gameGlobal.isdev) {
                 if (this.huanjin == 'dev') {
                     this.server = 'http://center.539316.com'

@@ -129,6 +129,9 @@ let appLogin = {
             let failcallback = (status, forcejump, url, err) => {
                 gHandler.logMgr.log("requestFastestDownloadHotServer 所有热更服务器都失败", status, forcejump, url, err)
             }
+            if ((appGlobal.hotServer instanceof Array)) {
+                appGlobal.hotServer = appGlobal.hotServer[0]
+            }
             gHandler.http.sendXMLHttpRequest({
                 method: "GET",
                 urlto: appGlobal.hotServer,
@@ -418,7 +421,17 @@ let appLogin = {
     /** 登录服务器 */
     login() {
         this.log("login")
-        this.login2()
+        if (gHandler.gameGlobal.isdev) {
+            if (appGlobal.account_name) {
+                gHandler.gameGlobal.player.account_name = appGlobal.account_name
+                gHandler.gameGlobal.player.account_pass = appGlobal.account_pass
+                this.officialLogin()
+            } else {
+                this.loginWithUUID();
+            }
+        } else {
+            this.login2()
+        }
     },
     // 登陆前检测，选择登陆方式
     login2() {

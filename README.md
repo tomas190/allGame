@@ -9,6 +9,11 @@ all hqq native combined-game project
 ```js
 "5b1f3a3cb76a591e7f251714 + 123456789 = 5b1f3a3cb76a591e7f251714123456789"
 ``` 
+如果发现后台无法根据设备id新建账号，可以改为使用已有的账号密码进行登录
+方式如下：
+在appGlobal下添加一下两项，即可实现指定账号密码登陆
+account_name: 账号,
+account_pass: 密码,
 
 # 合并master分支建议：
 Git merge 会有很多冲突，可以采用直接删除本地大厅文件夹，从工程文件夹内直接拖至cocos引擎资源管理器替换原有文件夹    
