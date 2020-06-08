@@ -27,6 +27,7 @@ cc.Class({
         this.subGameBtnMap = {};
         this.subGameBtnArr = [];
         this.sgjsubload = false
+        gHandler.audioMgr.setButtonEffect(true);
         this.getNotice();
         this.scheduleOnce(() => {
             this.startInit();
@@ -39,29 +40,6 @@ cc.Class({
         //     let btn2 = cc.find('Canvas/Main Camera/toppanel/btnpanel/btn_iosweb')
         //     btn2.active = true;
         // }
-    },
-    setButtonEffect(b) {
-        if (b) {
-            cc.Button.prototype.tocheEndClose = cc.Button.prototype._onTouchEnded
-            cc.Button.prototype._soundon = true;
-            cc.Button.prototype.setSoundEffect = function (on) {
-                if (typeof on == 'undefined') {
-                    this._soundon = true
-                } else {
-                    this._soundon = on
-                }
-            }
-            cc.Button.prototype._onTouchEnded = function (event) {
-                if (this.interactable && this.enabledInHierarchy && this._pressed && this._soundon) {
-                    gHandler.audioMgr.playEffect("hallclick");
-                }
-                this.tocheEndClose(event);
-            }
-        } else {
-            if (cc.Button.prototype.tocheEndClose) {
-                cc.Button.prototype._onTouchEnded = cc.Button.prototype.tocheEndClose
-            }
-        }
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },
@@ -87,7 +65,6 @@ cc.Class({
         gHandler.eventMgr.register(gHandler.eventMgr.hotWait, "hallScene", this.setSubGameBtnUpWait.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.refreshPlayerinfo, "hallScene", this.setPlayerInfo.bind(this))
         gHandler.eventMgr.register(gHandler.eventMgr.onReceiveBroadcast, "hallScene", this.onReceiveBroadcast.bind(this))
-        this.setButtonEffect(true);
         gHandler.audioMgr.playBg("hallbg");
         this.huodonghongdian = cc.find('Canvas/Main Camera/toppanel/btnpanel/btn_huodong/redpoint')
         this.huodonghongdian && !gHandler.hallactivitybtn && (this.huodonghongdian.active = true);
@@ -1355,7 +1332,7 @@ cc.Class({
     /** 调用了 destroy() 时回调，当帧结束统一回收组件 */
     onDestroy() {
         // console.log("hall onDestroy")
-        this.setButtonEffect(false);
+        gHandler.audioMgr.setButtonEffect(false);
         this.unschedule(this.adPageRun, this)
         this.unschedule(this.getSgjPool, this)
         this.unschedule(this.getHbslPool, this)

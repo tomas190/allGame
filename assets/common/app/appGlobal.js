@@ -174,7 +174,7 @@ let appGlobal = {
         }
         if (CC_DEBUG) {
             this.isRelease = false
-            // this.deviceID = "123456789123456789" // burt
+            // this.deviceID = "123456789" // burt
             if (gHandler.gameGlobal.isdev) {
                 if (this.huanjin == 'dev') {
                     this.server = 'http://center.539316.com'

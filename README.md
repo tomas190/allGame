@@ -1,6 +1,17 @@
 
 all hqq native combined-game project
 
+# 关于新增的按钮音效接口
+大厅的按钮音效是通过直接修改按钮组件的源码进行播放的，具体代码详见 hqqAudioMgr.js   
+这个接口的好处就是一次修改，期间所有的按钮音效全部都是这个音效，不需要每次按钮点击的时候都特意调用播放点击音效  
+这个接口也是有生命周期的，需要进入场景 onload 函数中开启，离开场景时 ondestroy 销毁
+开启的参数为（true，'/hall/audio/Click'），ture表示启用，后面紧跟的是按钮点击音效的路径
+销毁的参数为（false），如果不做销毁，可能会影响其他未使用此接口的游戏
+```js
+gHandler.audioMgr.setButtonEffect(true，'/hall/audio/Click');
+gHandler.audioMgr.setButtonEffect(false);
+```
+
 # 合并须知：
 基本把所有代码都放出来了，只要线路选择这块的代码被删除了  
 修改当前的开发环境， common/app/appGlobal 中的 huanjin 字段，dev，pre两个环境，任选其一  

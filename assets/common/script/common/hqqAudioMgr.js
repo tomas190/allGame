@@ -26,6 +26,41 @@ let audioMgr = {
         }
         return this;
     },
+    /**
+     * @Description: 
+     * audiopath 只能是resource目录下的动态动态加载资源
+     */
+    setButtonEffect(b, audiopath) {
+        let self = this
+        if (b) {
+            audiopath = audiopath || this.nameToMusicPath['hallclick']
+            if (this.nameToMusicPath.btnclick && audiopath != this.nameToMusicPath.btnclick) {
+                this.unregister('btnclick')
+            }
+            this.register('btnclick', audiopath)
+            if (!cc.Button.prototype.tocheEndClose) {
+                cc.Button.prototype.tocheEndClose = cc.Button.prototype._onTouchEnded
+            }
+            cc.Button.prototype._soundon = true;
+            cc.Button.prototype.setSoundEffect = function (on) {
+                if (typeof on == 'undefined') {
+                    this._soundon = true
+                } else {
+                    this._soundon = on
+                }
+            }
+            cc.Button.prototype._onTouchEnded = function (event) {
+                if (this.interactable && this.enabledInHierarchy && this._pressed && this._soundon) {
+                    self.playEffect("btnclick");
+                }
+                this.tocheEndClose(event);
+            }
+        } else {
+            if (cc.Button.prototype.tocheEndClose) {
+                cc.Button.prototype._onTouchEnded = cc.Button.prototype.tocheEndClose
+            }
+        }
+    },
     getBgVolume() {
         return this.bgVolume
     },
