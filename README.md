@@ -1,6 +1,13 @@
 
 all hqq native combined-game project
 
+# 新增的作为其他游戏平台嵌入的判断
+gHandler.isOtherGame 只能在loading场景进行修改，需要测试的话需要在loading.js文件中修改其值 gHandler.isOtherGame = true    
+```js
+gHandler.isOtherGame // true 表示是作为其他平台的第三方游戏平台，false 表示是我们自己的平台
+```
+作为第三方平台，不需要显示个人信息界面的按钮，充值界面的按钮，返回大厅的按钮等  
+
 # 关于新增的按钮音效接口
 大厅的按钮音效是通过直接修改按钮组件的源码进行播放的，具体代码详见 hqqAudioMgr.js   
 这个接口的好处就是一次修改，期间所有的按钮音效全部都是这个音效，不需要每次按钮点击的时候都特意调用播放点击音效  

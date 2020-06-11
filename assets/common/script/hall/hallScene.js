@@ -40,6 +40,7 @@ cc.Class({
         //     let btn2 = cc.find('Canvas/Main Camera/toppanel/btnpanel/btn_iosweb')
         //     btn2.active = true;
         // }
+        gHandler.isOtherGame = true
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },

@@ -5,6 +5,19 @@ let gHandler = {
     hqqisShowNotice: false, // 首次从登陆进入
     hqqisShowFree: false, // 首次从登陆进入
 }
+Object.defineProperty(gHandler, 'isOtherGame', {
+    _isOtherGame: false, // 是否是嵌入其他游戏平台
+    get: function () {
+        return this._isOtherGame;
+    },
+    set: function (value) {
+        if (cc.director.getScene().name == "loading") {
+            this._isOtherGame = !!value;
+        } else {
+            console.log("禁止修改")
+        }
+    },
+})
 let gameGlobal = {
     isdev: true, // 是否开发状态
     gameNow: "hall", // 当前游戏的名字
