@@ -126,28 +126,6 @@ let commonTools = {
                 node.parent = cc.director.getScene();
                 node.runAction(spawn);
 
-                // var fixtype = function (type) {
-                //     type = type.toLocaleLowerCase().replace(/jpg/i, 'jpeg');
-                //     var r = type.match(/png|jpeg|bmp|gif/)[0];
-                //     return 'image/' + r;
-                // };
-                // dataURL = dataURL.replace(fixtype("png"), 'image/octet-stream');
-
-                // var save_link = document.createElementNS('http://localhost:7456/', 'a');
-                // save_link.href = dataURL;
-                // save_link.download = fileName;
-                // var event = document.createEvent('MouseEvents');
-                // event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-                // save_link.dispatchEvent(event);
-
-                // var html = `<a id = "saveImg" href = ${ dataURL}></a>`
-                // var body = document.getElementsByTagName("body")[0];
-                // var divBox = document.createElement("div");
-                // divBox.innerHTML = html
-                // body.appendChild(divBox);
-                // var imgDom = document.getElementById("saveImg");
-                // imgDom.click()
-
                 var iframe = "<iframe width='100%' height='100%' src='" + dataURL + "'></iframe>"
                 var x = window.open();
                 x.document.open();
@@ -354,47 +332,8 @@ let commonTools = {
         return Array(len > n ? len - n + 1 || 0 : 0).join("0") + num;
     },
     /**
-     * @Description: 获取本地ip 网络代码
+     * @Description: 互换数组中的两个元素
      */
-    getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
-        //compatibility for firefox and chrome
-        if (window || window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection) {
-            var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-            var pc = new myPeerConnection({
-                iceServers: []
-            }),
-                noop = function () { },
-                localIPs = {},
-                ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
-                key;
-
-            function iterateIP(ip) {
-                if (!localIPs[ip]) onNewIP(ip);
-                localIPs[ip] = true;
-            }
-
-            //create a bogus data channel
-            pc.createDataChannel("");
-
-            // create offer and set local description
-            pc.createOffer().then(function (sdp) {
-                sdp.sdp.split('\n').forEach(function (line) {
-                    if (line.indexOf('candidate') < 0) return;
-                    line.match(ipRegex).forEach(iterateIP);
-                });
-
-                pc.setLocalDescription(sdp, noop, noop);
-            }).catch(function (reason) {
-                // An error occurred, so handle the failure to connect
-            });
-
-            //sten for candidate events
-            pc.onicecandidate = function (ice) {
-                if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-                ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-            };
-        }
-    },
     swapItem(arr, fromIndex, toIndex) {
         arr[toIndex] = arr.splice(fromIndex, 1, arr[toIndex])[0];
         return arr;

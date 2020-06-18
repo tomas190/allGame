@@ -26,7 +26,8 @@ let gameGlobal = {
     tokenKey: "tokenKey",
     token: "", // 通信token
     huanjin: "", // dev pre online
-    subGameType: 0, // number类型 真人视讯子游戏类型
+    GameType: 0, // number类型 真人视讯子游戏类型
+    loginHistory: [], // 子游戏最近一周登陆历史sub
     player: { // 玩家信息
         gold: "", // 金币
         nick: "", // 昵称
@@ -115,6 +116,8 @@ let gameConfig = {
             hallid: 0,
             resid: 13,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "zjh": {
             zhname: "扎金花", // 中文游戏名
@@ -128,6 +131,8 @@ let gameConfig = {
             hallid: 1,
             resid: 17,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "zrsx2": {
             zhname: "真人视讯-龙虎斗", // 中文游戏名
@@ -141,6 +146,8 @@ let gameConfig = {
             hallid: 2,
             resid: 18,
             isDown: false,
+            gameType: 2, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "sgj": {
             zhname: "水果机", // 中文游戏名
@@ -154,6 +161,8 @@ let gameConfig = {
             hallid: 3,
             resid: 14,
             isDown: false,
+            gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "bcbm": {
             zhname: "奔驰宝马", // 中文游戏名
@@ -168,6 +177,8 @@ let gameConfig = {
             hallid: 4,
             resid: 2,
             isDown: false,
+            gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "hh": {
             zhname: "新红黑大战", // 中文游戏名
@@ -181,6 +192,8 @@ let gameConfig = {
             hallid: 5,
             resid: 8,
             isDown: false,
+            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "hwby": {
             zhname: "海王捕鱼", // 中文游戏名
@@ -194,6 +207,8 @@ let gameConfig = {
             hallid: 6,
             resid: 5,
             isDown: false,
+            gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "brnn": {
             zhname: "新百人牛牛", // 中文游戏名
@@ -207,6 +222,8 @@ let gameConfig = {
             hallid: 7,
             resid: 4,
             isDown: false,
+            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "ebg": {
             zhname: "新二八杠", // 中文游戏名
@@ -220,6 +237,8 @@ let gameConfig = {
             hallid: 8,
             resid: 0,
             isDown: false,
+            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "lp": {
             zhname: "轮盘游戏", // 中文游戏名
@@ -233,6 +252,8 @@ let gameConfig = {
             hallid: 9,
             resid: 11,
             isDown: false,
+            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "bjl": {
             zhname: "百家乐", // 中文游戏名
@@ -246,6 +267,8 @@ let gameConfig = {
             hallid: 10,
             resid: 3,
             isDown: false,
+            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "lhd": {
             zhname: "龙虎斗", // 中文游戏名
@@ -259,6 +282,8 @@ let gameConfig = {
             hallid: 11,
             resid: 10,
             isDown: false,
+            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "ddz": {
             zhname: "斗地主", // 中文游戏名
@@ -272,6 +297,8 @@ let gameConfig = {
             hallid: 12,
             resid: 6,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "sss": {
             zhname: "十三水", // 中文游戏名
@@ -285,6 +312,8 @@ let gameConfig = {
             hallid: 13,
             resid: 15,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "hbsl": {
             zhname: "新红包扫雷", // 中文游戏名
@@ -298,6 +327,8 @@ let gameConfig = {
             hallid: 14,
             resid: 7,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "zrsx1": {
             zhname: "真人视讯-百家乐", // 中文游戏名
@@ -311,6 +342,8 @@ let gameConfig = {
             hallid: 15,
             resid: 16,
             isDown: false,
+            gameType: 2, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "ermj": {
             zhname: "二人麻将", // 中文游戏名
@@ -324,6 +357,8 @@ let gameConfig = {
             hallid: 16,
             resid: 1,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "pdk": {
             zhname: "跑得快", // 中文游戏名
@@ -337,6 +372,8 @@ let gameConfig = {
             hallid: 17,
             resid: 12,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "jbpby": {
             zhname: "聚宝盆", // 中文游戏名
@@ -350,6 +387,8 @@ let gameConfig = {
             hallid: 18,
             resid: 9,
             isDown: false,
+            gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "hbld": {
             zhname: "红包乱斗", // 中文游戏名
@@ -363,6 +402,8 @@ let gameConfig = {
             hallid: 19,
             resid: 19,
             isDown: false,
+            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "pccp": {
             zhname: "派彩", // 中文游戏名
@@ -376,6 +417,8 @@ let gameConfig = {
             hallid: 20,
             resid: 20,
             isDown: false,
+            gameType: 3, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "21d": {
             zhname: "二十一点", // 中文游戏名
@@ -389,6 +432,8 @@ let gameConfig = {
             hallid: 21,
             resid: 21,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
         "dzpk": {
             zhname: "德州扑克", // 中文游戏名
@@ -402,6 +447,38 @@ let gameConfig = {
             hallid: 22,
             resid: 22,
             isDown: false,
+            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
+        },
+        "toubao": {
+            zhname: "骰宝", // 中文游戏名
+            enname: "toubao", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f251724",
+            serverUrl: "", // 游戏服务器地址
+            endUrl: "", // 游戏服务器地址
+            hasAccount: false, // 是否已创建子游戏账号
+            remoteData: null, // 服务端发送过来的游戏数据
+            hallid: 23,
+            resid: 23,
+            isDown: false,
+            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
+        },
+        "szwg": {
+            zhname: "狮子王国", // 中文游戏名
+            enname: "szwg", // 英文游戏名 （子游戏文件路径，更新子路径）
+            lanchscene: "", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f251725",
+            serverUrl: "", // 游戏服务器地址
+            endUrl: "", // 游戏服务器地址
+            hasAccount: false, // 是否已创建子游戏账号
+            remoteData: null, // 服务端发送过来的游戏数据
+            hallid: 24,
+            resid: 24,
+            isDown: false,
+            gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+            loginHistory: [], // 子游戏最近一周登陆历史
         },
     },
     oldGameList: {

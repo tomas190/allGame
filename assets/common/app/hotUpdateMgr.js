@@ -477,13 +477,11 @@ let hotUpdateMgr = {
             if (localmd5 == asset.md5) {
                 return true;
             }
-            console.log("localmd5, asset.md5,", localmd5, asset.md5)
-            console.log("storagePath", storagePath)
+            // console.log("localmd5, asset.md5,", localmd5, asset.md5)
+            // console.log("storagePath", storagePath)
             return false
         });
-        if (cc.sys.os === cc.sys.OS_ANDROID) {
-            this._am.setMaxConcurrentTask(2);
-        }
+        this._am.setMaxConcurrentTask(2); // 并发
         this._canRetry = false;
         this._failCount = 0;
         this._progress = 0

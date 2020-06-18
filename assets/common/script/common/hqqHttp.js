@@ -131,6 +131,7 @@ let hqqHttp = {
         }
         xhr.timeout = mydata.timeout ? mydata.timeout : 3000 // 超时 xhr.readyState = 4，调用failcallback
         xhr.send(mydata.param ? str : null); // 发送请求，默认是异步请求，请求发送后立刻返回
+        return xhr
     },
     /**
      * @Description: ip方式get请求
@@ -246,6 +247,7 @@ let hqqHttp = {
      */
     requestStableUrlLine(data) {
         let checknum = 0;
+        let interval = 3000;
         let callback = (returnList, url, isserver) => {
             // console.log("一条线路检测结束", url)
             let choiceob = JSON.parse(JSON.stringify(returnList.serverList))
@@ -274,8 +276,10 @@ let hqqHttp = {
             checknum++
             for (let k = 0; k < returnList.serverList.length; k++) {
                 if (returnList.serverList[k].status == 0) {
-                    // console.log("没测试完一轮", returnList.serverList)
-                    this.sendrequestStableUrlLine(returnList, checknum, callback, isserver)
+                    // console.log("没测试完一轮", new Date().getSeconds())
+                    setTimeout(() => {
+                        this.sendrequestStableUrlLine(returnList, checknum, callback, isserver)
+                    }, interval)
                     return // 有线路没有测完
                 }
             }
@@ -285,17 +289,21 @@ let hqqHttp = {
             checknum = 0;
             if (isserver) {
                 isserver = !isserver
-                this.sendrequestStableUrlLine(data.hotserverList, checknum, callback, isserver)
+                setTimeout(() => {
+                    this.sendrequestStableUrlLine(data.hotserverList, checknum, callback, isserver)
+                }, interval)
             } else {
                 isserver = !isserver
-                this.sendrequestStableUrlLine(data.storageList, checknum, callback, isserver)
+                setTimeout(() => {
+                    this.sendrequestStableUrlLine(data.storageList, checknum, callback, isserver)
+                }, interval)
             }
         }
         this.sendrequestStableUrlLine(data.storageList, checknum, callback, true)
     },
     sendrequestStableUrlLine(data, checknum, callback, isserver) {
         // console.log("线路检测开始", data.serverList)
-        // console.log("线路检测开始", checknum, isserver, data.serverList[checknum].url)
+        // console.log("线路检测开始", checknum, isserver, data.serverList[checknum].url, new Date().getSeconds())
         let xhr = new XMLHttpRequest()
         xhr.timeout = 1000
         data.serverList[checknum].testnum++

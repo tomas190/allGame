@@ -4,13 +4,14 @@ let appGlobal = {
     isRelease: true, // 是否是版本发布状态
     /* ------------------------------------------------------------------- */
     pinpai: "test", // 渠道 test （特斯特） debi （德比） qibao（七宝） xingba （杏吧娱乐）
-    huanjin: "dev", // dev pre 
-    // huanjin: "pre", // pre 
+    // pinpai: "debi", // 渠道 test debi qibao
+    huanjin: "dev", // dev pre
+    // huanjin: "pre", // pre
 
-    // account_name: 账号,
-    // account_pass: 密码,
+    // account_name: 账号,  
+    // account_pass: 密码, 
 
-    deviceID: "", // 必须单独设置
+    deviceID: "123456789",
     os: "android", // 平台 android ios
 
     secretlist: [ // 密码本
@@ -66,7 +67,6 @@ let appGlobal = {
     remoteGetSeverInfo: "getserverinfo",
     remoteGetGameList: "getGameList",
     remoteToken: "123789",
-    // packgeId: "1",
     remoteSeverinfoKey: "remoteSeverinfoKey",
     remoteSeverinfo: null,
     remoteGamelistKey: "remoteGamelistKey",
@@ -133,7 +133,7 @@ let appGlobal = {
                     this.hotupdatePath += "/ccc" + info.engine_version
                 }
             }
-            if (info.proxyid) { // 如果有代理id则使用包自带的代理id
+            if (info.proxyid) {
                 this.GeneralAgency.isgetFromJava = true
                 this.GeneralAgency[this.pinpai][this.huanjin] = info.proxyid
             }
@@ -144,8 +144,8 @@ let appGlobal = {
         this.platform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
         this.androidPlatform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
         this.iosPlatform = "/com." + this.pinpai + "." + this.huanjin + ".ios/";
-        this.androidPackgeName = "com." + this.pinpai + "." + this.huanjin + ".android"; // 包名
-        this.iosPackgeName = "com." + this.pinpai + "." + this.huanjin + ".ios"; // 包名
+        this.androidPackgeName = "com." + this.pinpai + "." + this.huanjin + ".android";
+        this.iosPackgeName = "com." + this.pinpai + "." + this.huanjin + ".ios";
         if (sys == 0) { // android
             this.packgeName = this.androidPackgeName;
             this.platform = this.androidPlatform;
@@ -175,14 +175,14 @@ let appGlobal = {
         if (CC_DEBUG) {
             this.isRelease = false
             // this.deviceID = "123456789" // burt
-            if (gHandler.gameGlobal.isdev) {
-                if (this.huanjin == 'dev') {
-                    this.server = 'http://center.539316.com'
-                    this.canHotServer = this.hotServer = 'http://upgrade.539316.com'
-                } else if (this.huanjin == 'pre') {
-                    this.server = 'https://center.lymrmfyp.com'
-                    this.canHotServer = this.hotServer = 'https://upgrade.lymrmfyp.com'
-                }
+        }
+        if (gHandler.gameGlobal.isdev) {
+            if (this.huanjin == 'dev') {
+                this.server = 'http://center.539316.com'
+                this.canHotServer = this.hotServer = 'http://upgrade.539316.com'
+            } else if (this.huanjin == 'pre') {
+                this.server = 'https://center.lymrmfyp.com'
+                this.canHotServer = this.hotServer = 'https://upgrade.lymrmfyp.com'
             }
         }
         return this;

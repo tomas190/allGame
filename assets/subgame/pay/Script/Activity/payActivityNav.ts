@@ -125,7 +125,8 @@ export default class NewClass extends cc.Component {
             this.addNewPlayerGift('月入百万')
         }
         else if(this.name == "每周佣金奖励") {
-            this.addNewPlayerGift('每周佣金奖励')
+            this.app.showLoading();
+            this.addContent('每周佣金奖励',JSON.parse(this.data.info),this.id);
         }
         else if(this.name == "15天送58元") {
             this.addNewPlayerGift('15天送58元')
@@ -160,6 +161,11 @@ export default class NewClass extends cc.Component {
             content.removeAllChildren();
             node.getComponent('payDailyActivity').setIdInfo(id,info);
             content.addChild(node);
+        }else if(data == '每周佣金奖励'){
+            var node = cc.instantiate(this.OnceWeekGift);
+            content.removeAllChildren();
+            node.getComponent('payOnceWeekGift').setIdInfo(id,info);
+            content.addChild(node);
         }
     }
     addContentFirstRechargeSendGold(){
@@ -174,8 +180,6 @@ export default class NewClass extends cc.Component {
             var node = cc.instantiate(this.NewPlayerGift)
         }else if(name == "月入百万"){
             var node = cc.instantiate(this.OneMonthMillion)
-        }else if (name == "每周佣金奖励") {
-            var node = cc.instantiate(this.OnceWeekGift)
         }else if (name == "15天送58元") {
             var node = cc.instantiate(this.HalfMonthGift)
         }else if (name == "充值返利") {

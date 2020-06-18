@@ -64,16 +64,19 @@ cc.Class({
             this.test.active = true
             this.debi.active = false
             this.xbyl.active = false
+            this.webback.active = false
         } else if (gHandler.appGlobal.pinpai == 'debi') {
             this.debistartAni.setCompleteListener(this.completeListener.bind(this))
             this.debistartAni.setAnimation(0, 'animation', false)
             this.test.active = false
             this.debi.active = true
             this.xbyl.active = false
+            this.webback.active = false
         } else if (gHandler.appGlobal.pinpai == 'xingba') {
             this.test.active = false
             this.debi.active = false
             this.xbyl.active = true
+            this.webback.active = false
         } else {
             this.test.active = false
             this.debi.active = false
@@ -107,8 +110,10 @@ cc.Class({
         this.layer.active = true;
         if (cc.sys.platform == cc.sys.MOBILE_BROWSER || cc.sys.platform == cc.sys.DESKTOP_BROWSER) {
             this.cocosWebOrientationChange()
+            this.downapklabel.active = false
             let url = window.location.search;
             if (url.includes("params=")) { // 第三方加密链接
+                gHandler.isOtherGame = true
                 this.getPrivateKey()
             } else { // 本地生成的简单链接
                 if (url.includes("?")) {
@@ -132,7 +137,6 @@ cc.Class({
             }
         } else {
             this.runApplogin()
-            // this.systemDeal()
         }
     },
     runApplogin() {
@@ -413,9 +417,11 @@ cc.Class({
                     gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 8 })
                 } else {
                     if (gHandler.appGlobal.pinpai == "test") {
-                        cc.sys.openURL("https://temp.7kpi3g.cn?p=1&u=442619406")
+                        cc.sys.openURL("https://temp.wepic666.com?p=1&u=442619406")
                     } else if (gHandler.appGlobal.pinpai == "debi") {
-                        cc.sys.openURL("https://temp.7kpi3g.cn?p=2&u=770256905")
+                        cc.sys.openURL("https://temp.wepic666.com?p=2&u=770256905")
+                    } else if (gHandler.appGlobal.pinpai == "xingba") {
+                        cc.sys.openURL("https://temp.wepic666.com?p=3&u=811425071")
                     }
                     // gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "下载链接错误")
                 }

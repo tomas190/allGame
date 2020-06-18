@@ -132,7 +132,15 @@ cc.Class({
         if (gHandler.appDownUrl) {
             cc.sys.openURL(gHandler.appDownUrl)
         } else {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "下载链接错误")
+            if (gHandler.appGlobal.pinpai == "test") {
+                cc.sys.openURL("https://temp.wepic666.com?p=1&u=442619406")
+            } else if (gHandler.appGlobal.pinpai == "debi") {
+                cc.sys.openURL("https://temp.wepic666.com?p=2&u=770256905")
+            } else if (gHandler.appGlobal.pinpai == "xingba") {
+                cc.sys.openURL("https://temp.wepic666.com?p=3&u=811425071")
+            } else {
+                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "下载链接错误")
+            }
         }
     },
     nologinCallback() {

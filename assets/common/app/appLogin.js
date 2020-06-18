@@ -347,8 +347,6 @@ let appLogin = {
                 if (appGlobal.server) {
                     this.requestGameSeverInfo(appGlobal.server)
                 }
-            } else if (appGlobal.version != data.version.hall) {
-                this.hallUpdataCheck(data.version.hall);
             } else {
                 this.isupdataCallback(false);
             }

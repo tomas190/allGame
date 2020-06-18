@@ -231,12 +231,12 @@ cc.Class({
 									.setContentSize(996, contentHeight);
 								res.msg.forEach((element, index) => {
 									ids.push(element.id);
-									let { regin_time, proxy_nick } = element;
+									let { regin_time, id } = element;
 									var d = new Date(regin_time * 1000);
 									gridArray.push({
 										id     : element.id,
 										label1 : formatDate(d),
-										label2 : proxy_nick,
+										label2 : id,
 										label3 : 0,
 										label4 : 0,
 									});

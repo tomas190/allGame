@@ -109,29 +109,6 @@ let myReflect = {
             }
         }
     },
-    webSetCanvas(orientation) {
-        console.log('webSetCanvas')
-        let Cocos2dGameContainer = document.getElementById('Cocos2dGameContainer')
-        let GameCanvas = document.getElementById('GameCanvas')
-        if (this.Cocos2dGameContainer_style == "") {
-            this.Cocos2dGameContainer_style = Cocos2dGameContainer.getAttribute("style")
-            this.GameCanvas_style = GameCanvas.getAttribute("style")
-        }
-
-        if (orientation == "portrait") {
-            console.log("修改为竖屏")
-            Cocos2dGameContainer.setAttribute("style", "transform: rotate(90deg); width: " + this.framesise.height + "px; height: " + this.framesise.width + "px; margin: 0px 0px 0px " + this.framesise.width + "px; padding: 0px; display: block; transform-origin: 0px 0px 0px;")
-            GameCanvas.setAttribute("style", "width: " + this.framesise.height + "px; height: " + this.framesise.width + "px;")
-        } else {
-            Cocos2dGameContainer.setAttribute("style", this.Cocos2dGameContainer_style)
-            GameCanvas.setAttribute("style", this.GameCanvas_style)
-        }
-        // setAttribute
-        let gs1 = Cocos2dGameContainer.getAttribute("style")
-        console.log("gs1", gs1)
-        let gs2 = GameCanvas.getAttribute("style")
-        console.log("gs2", gs2)
-    },
     /**
      * @Description: 保存base64图片
      */

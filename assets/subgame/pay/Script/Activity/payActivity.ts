@@ -105,7 +105,7 @@ export default class NewClass extends cc.Component {
         }else if(this.arr[0].name =='月入百万'){
             node.getComponent('payActivityNav').addNewPlayerGift('月入百万');
         }else if(this.arr[0].name =='每周佣金奖励'){
-            node.getComponent('payActivityNav').addNewPlayerGift('每周佣金奖励');
+            node.getComponent('payActivityNav').addContent('每周佣金奖励',JSON.parse(this.arr[0].info),this.arr[0].id);
         }else if(this.arr[0].name =='15天送58元'){
             node.getComponent('payActivityNav').addNewPlayerGift('15天送58元');
         }else if(this.arr[0].name =='充值返利'){

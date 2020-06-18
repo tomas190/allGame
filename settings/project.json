@@ -17,15 +17,7 @@
   ],
   "design-resolution-height": 750,
   "design-resolution-width": 1334,
-  "excluded-modules": [
-    "MotionStreak",
-    "VideoPlayer",
-    "StudioComponent",
-    "Native Socket",
-    "Geom Utils",
-    "3D",
-    "3D Primitive"
-  ],
+  "excluded-modules": [],
   "facebook": {
     "appID": "",
     "audience": {
@@ -43,7 +35,7 @@
     "Bullet",
     "Fish"
   ],
-  "last-module-event-record-time": 1590412055187,
+  "last-module-event-record-time": 1592476019368,
   "simulator-orientation": false,
   "simulator-resolution": {
     "height": 640,
