@@ -26,7 +26,22 @@ let hqqViewCtr = {
                     return
                 }
                 let node = cc.instantiate(prefab)
-                cc.director.getScene().addChild(node, zindex)
+                if (data && data.position) {
+                    node.setPosition(data.position)
+                }
+                if (data && data.scale) {
+                    node.scaleX = data.scale
+                    node.scaleY = data.scale
+                } else if (cc.view._orientation == cc.macro.ORIENTATION_PORTRAIT) {
+                    let scale = 750 / cc.winSize.width
+                    node.scaleX = scale
+                    node.scaleY = scale
+                }
+                if (data && data.parent) {
+                    data.parent.addChild(node, zindex)
+                } else {
+                    cc.director.getScene().addChild(node, zindex)
+                }
                 node.getComponent(script).init(data)
                 if (ispersist) {
                     cc.game.addPersistRootNode(node);

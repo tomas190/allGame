@@ -41,6 +41,8 @@ cc.Class({
         //     let btn2 = cc.find('Canvas/Main Camera/toppanel/btnpanel/btn_iosweb')
         //     btn2.active = true;
         // }
+        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 10, scale: 0.5, hideexitbtn: true })
+
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },

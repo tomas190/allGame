@@ -110,6 +110,15 @@ cc.Class({
                 }
                 break;
         }
+        if (data.hideexitbtn) {
+            this.exitbtn.active = false
+        }
+        if (data.exitfunc) {
+            this.onClickExit = () => {
+                data.exitfunc()
+                this.node.removeFromParent(true)
+            }
+        }
     },
 
     // 清除本地缓存及可读写路径
