@@ -1,7 +1,7 @@
 {
   "ver": "1.0.1",
   "uuid": "9289b720-a43e-44dd-85c2-2504525a5ad0",
-  "isSubpackage": false,
-  "subpackageName": "",
+  "isSubpackage": true,
+  "subpackageName": "hall",
   "subMetas": {}
 }

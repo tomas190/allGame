@@ -1,13 +1,20 @@
+var gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
 
     properties: {
         skip: 5,
+        promptBox: cc.Node
     },
-    onLoad: function() {
+    onLoad: function () {
         this._gameView = this.node.getComponent("ImHallview");
+        //"IMRconnect" cc.gg.global.eventMgr.IMRconnect
+        if (cc.gg.global.eventMgr) {
+            cc.gg.global.eventMgr.register("IMRconnect", "IMHallSence", this.netWorkBreakDown.bind(this))
+            cc.gg.global.eventMgr.register("IMConnectSuccess", "IMHallSence", this.netConnectSuccess.bind(this));
+        }
     },
-    start: function() {
+    start: function () {
         //this.onEvenHandle();
         this.initSence();
         this.initData();
@@ -17,12 +24,12 @@ cc.Class({
             return
         }
     },
-    initSence: function() {
+    initSence: function () {
         //this._gameView._centerPancel.InitViewList();
         this.onEvenHandle();
 
     },
-    resetSence: function() {
+    resetSence: function () {
         this.onEvenHandle();
         cc.gg.global.sessionData = [];
         cc.gg.global.uploadMsgCount = 0;
@@ -30,10 +37,10 @@ cc.Class({
         this._gameView._centerPancel.isUploadCenter = false;
         this.PushHistorySession(0, 5);
     },
-    initData: function() {
-
+    initData: function () {
+        this.reconnectTimes = 0;
     },
-    onEvenHandle: function() {
+    onEvenHandle: function () {
         var listenArr = ['ChatRespBody', "PushHistorySession", "ReadMsg",
             "PullSubList", "GetUser", "GetSub", "MoreHistorySession",
             "UserChildrenListResp", "ErrorResp", "DelConversion", "Login",
@@ -41,14 +48,14 @@ cc.Class({
         ];
         //RN键盘监听事件
         var listenInputArr = ["__oninput", "__oninputing", "__oninputend"]
-            // for (var i = 0; i < listenInputArr.length; i++) {
-            //     cc.gg.client.addEventListener(listenInputArr[i], this.listenInputEvent.bind(this))
-            // }
+        // for (var i = 0; i < listenInputArr.length; i++) {
+        //     cc.gg.client.addEventListener(listenInputArr[i], this.listenInputEvent.bind(this))
+        // }
         for (var i = 0; i < listenArr.length; i++) {
             cc.gg.protoBuf.addHandler(listenArr[i], this.listenEvent.bind(this))
         }
     },
-    listenInputEvent: function(instructionsName, data) {
+    listenInputEvent: function (instructionsName, data) {
         var datas = data.data;
         if (instructionsName == "__oninput") {
             console.log("调起了键盘")
@@ -60,7 +67,7 @@ cc.Class({
             console.log("键盘结束")
         }
     },
-    onDestroy: function() {
+    onDestroy: function () {
         cc.gg.utils.ccLog('我的场景被销毁啦');
         //this._gameView.switchLoading();
         //停止本场景所有监听事件
@@ -68,8 +75,12 @@ cc.Class({
         cc.gg.protoBuf.removeAllHandler();
         cc.gg.protoBuf.close();
         cc.gg.protoBuf.ISclose = true;
+        if (cc.gg.global.eventMgr) {
+            cc.gg.global.eventMgr.unregister("IMRconnect", "IMHallSence");
+            cc.gg.global.eventMgr.unregister("IMConnectSuccess", "IMHallSence");
+        }
     },
-    listenEvent: function(instructionsName, data) {
+    listenEvent: function (instructionsName, data) {
         var data = imProto.msg.Resp.deserializeBinary(data);
         var result = data.getResult();
         var resultMessage = data.getResultmessage();
@@ -106,13 +117,15 @@ cc.Class({
                 this._gameView._rightPancel.subInitView("", resultMessage)
             } else if (instructionsName == "PullSubList") {
                 this._gameView._rightPancel.subInitView("", resultMessage)
+            } else if (instructionsName == "isGoDirectlyMsg") {
+                this.resetSence();
             }
             console.log(datas, "datas 的内容")
         }
 
     },
     //搜索用户返回
-    manageGetUser: function(data) {
+    manageGetUser: function (data) {
         if (!data) {
             return
         }
@@ -121,13 +134,13 @@ cc.Class({
         this._gameView._rightPancel.subInitView(datas);
     },
     //登陆异常
-    manageLogin: function(data) {
+    manageLogin: function (data) {
         console.log("manageLoginRsp", data);
         var datas = JSON.parse(data);
         cc.gg.protoBuf.authKey = datas.auth_key
     },
     //搜索下级返回
-    manageGetSub: function(data) {
+    manageGetSub: function (data) {
         if (!data) {
             return
         }
@@ -136,14 +149,14 @@ cc.Class({
         this._gameView._rightPancel.subInitView(datas);
     },
     //删除未读
-    manageReadMsg: function(data) {
+    manageReadMsg: function (data) {
         if (!data) {
             return
         }
         var datas = JSON.parse(data)
         console.log(datas);
     },
-    managePushHistorySession: function(data) {
+    managePushHistorySession: function (data) {
         this._gameView._centerPancel.isUploadCenter = false;
         if (!data || data == "null") {
             // this._gameView._centerPancel.InitViewList()
@@ -155,7 +168,7 @@ cc.Class({
         if (datas.length < 5) {
             if (cc.gg.global.uploadMsgCount == 1) {
                 this._gameView._centerPancel.InitViewList(datas)
-                    //this._gameView._centerPancel.addViewList(data)
+                //this._gameView._centerPancel.addViewList(data)
             } else {
                 this._gameView._centerPancel.addViewList(datas)
             }
@@ -185,7 +198,7 @@ cc.Class({
         }
     },
 
-    manageDelConversion: function(data) {
+    manageDelConversion: function (data) {
 
         //删除成功  从userData里删除这个人  并刷新视图
         for (var i = 0; i < cc.gg.global.sessionData.length; i++) {
@@ -198,17 +211,17 @@ cc.Class({
 
         this._gameView._topPancel.runAlert("删除成功")
     },
-    manageErrorResp: function(data) {
+    manageErrorResp: function (data) {
         cc.gg.protoBuf.ISclose = true;
         alert("你已被挤下线");
         //cc.director.loadScene("appStart");
     },
     //拉取下级
-    managePullSubList: function(data) {
+    managePullSubList: function (data) {
         var datas = JSON.parse(data);
         this._gameView._rightPancel.pullView(datas);
     },
-    manageUserChildrenListResp: function(data) {
+    manageUserChildrenListResp: function (data) {
         var UserChildrenListResp = imProto.msg.UserChildrenListResp.deserializeBinary(data);
         cc.gg.utils.ccLog("UserChildrenListResp", UserChildrenListResp);
         var datas = UserChildrenListResp.getData();
@@ -216,7 +229,7 @@ cc.Class({
         this._gameView._rightPancel.pullView(datas);
     },
 
-    manageIsSubData: function(data) {
+    manageIsSubData: function (data) {
         var isSub = imProto.msg.IsSubData.deserializeBinary(data);
         isSub = isSub.getData()
         isSub = JSON.parse(isSub);
@@ -231,7 +244,7 @@ cc.Class({
         }
         this._gameView._rightPancel.subInitView(obj);
     },
-    manageChatRespBody: function(data) {
+    manageChatRespBody: function (data) {
         cc.gg.audioMgr.playMusic("chat")
         this._gameView.backHallFun()
     },
@@ -239,7 +252,7 @@ cc.Class({
 
 
     //发送拉取下级协议 7 
-    pullSubList: function(data) {
+    pullSubList: function (data) {
         var datas = {
             "user_id": cc.gg.global.userInfo.userID, // 用户id
             "skip": data.skip,
@@ -248,7 +261,7 @@ cc.Class({
         cc.gg.protoBuf.send("pullSubList", 2, datas);
     },
     //发送是否是自身下级协议 8
-    getSub: function(data) {
+    getSub: function (data) {
         var datas = {
             "user_id": cc.gg.global.userInfo.userID, // 当前登录Id
             "find_id": data, // 查找的下级用户id
@@ -257,7 +270,7 @@ cc.Class({
         cc.gg.protoBuf.send("GetSub", 2, datas);
     },
     //发送搜索
-    getUser: function(data) {
+    getUser: function (data) {
         var datas = {
             "user_id": cc.gg.global.userInfo.userID, // 当前登录Id
             "find_id": data, // 查找的下级用户id
@@ -266,7 +279,7 @@ cc.Class({
         cc.gg.protoBuf.send("GetUser", 2, datas);
     },
     //发送查询会话的指令
-    PushHistorySession: function(skip, limit) {
+    PushHistorySession: function (skip, limit) {
         var data = {
             "account_id": cc.gg.global.userInfo.userID,
             "skip": skip,
@@ -275,7 +288,7 @@ cc.Class({
         cc.gg.protoBuf.send("PushHistorySession", 2, data)
     },
     //发送查询下级
-    sendUserChildrenList: function(data) {
+    sendUserChildrenList: function (data) {
         // var userID = cc.gg.global.userInfo.userID + "";
         // var skip = data.skip + "";
         // var UserChildrenList = new imProto.msg.UserChildrenList()
@@ -295,7 +308,7 @@ cc.Class({
         cc.gg.protoBuf.send("PullSubList", 2, datas);
     },
     //删除会话
-    sendDelConversion: function(data) {
+    sendDelConversion: function (data) {
 
         var data = {
             user_id: cc.gg.global.userInfo.userID,
@@ -305,7 +318,7 @@ cc.Class({
         cc.gg.protoBuf.send("DelConversion", 2, data)
     },
     //发送查询会话的指令
-    PushHistorySession: function(skip, limit) {
+    PushHistorySession: function (skip, limit) {
         var data = {
             "account_id": cc.gg.global.userInfo.userID,
             "skip": skip,
@@ -313,4 +326,25 @@ cc.Class({
         }
         cc.gg.protoBuf.send("PushHistorySession", 2, data)
     },
+    confirmBtnAction(param) {
+        gHandler.Reflect && gHandler.Reflect.setOrientation("landscape", 1334, 750);
+        cc.director.loadScene("hall");
+        this.promptBox.active = false;
+    },
+    netWorkBreakDown(data) {
+        let reConnectTimes = data.reConnectTimes;
+        this.reconnectTimes = reConnectTimes;
+        console.log("netWorkBreakDown Times111: ", this.reconnectTimes);
+        if (this.reconnectTimes >= 30) {
+            this.promptBox.active = true;
+            return;
+        }
+        if (gHandler.eventMgr) {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络断开，正在努力连接中");
+        }
+    },
+    netConnectSuccess(data) {
+        this.reconnectTimes = 0;
+        console.log(data, this.reconnectTimes);
+    }
 });

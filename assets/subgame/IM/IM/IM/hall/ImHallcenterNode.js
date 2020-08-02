@@ -41,7 +41,7 @@ cc.Class({
             var more = userList.getChildByName("more")
             cc.gg.utils.addClickEventEND(userList, this.msg.bind(this));
             cc.gg.utils.addClickEventEND(more, this.more.bind(this));
-            console.log(userList);
+            // console.log(userList);
             this.content.addChild(userList);
             //这里渲染一下对话
 
@@ -58,7 +58,7 @@ cc.Class({
             var more = userList.getChildByName("more")
             cc.gg.utils.addClickEventEND(userList, this.msg.bind(this));
             cc.gg.utils.addClickEventEND(more, this.more.bind(this));
-            console.log(userList);
+            // console.log(userList);
             this.content.addChild(userList);
             //这里渲染一下对话
         }

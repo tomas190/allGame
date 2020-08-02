@@ -37,7 +37,7 @@ cc.Class({
                 if (header == "http") {
                     socketHeader = "ws://"
                 } else if (header == "https") {
-                    socketHeader = "wss://"
+                    socketHeader = "ws://"
                 }
                 cc.gg.utils.ccLog(socket);
                 this.socket = socketHeader + socket;

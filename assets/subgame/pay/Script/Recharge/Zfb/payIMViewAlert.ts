@@ -1,5 +1,4 @@
 //支付宝webview
-
 import gHandler = require("../../../../../common/script/common/gHandler");
 const {ccclass, property} = cc._decorator;
 
@@ -11,8 +10,8 @@ export default class NewClass extends cc.Component {
 
     init(data){
         this.ZfbView.url = data.url;
+        
     }
-
     onLoad(){
         var global = cc.find("payGlobal").getComponent("payGlobal")
         this.ZfbView.url = global.imWebViewUrl;

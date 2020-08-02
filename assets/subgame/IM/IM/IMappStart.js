@@ -1,10 +1,12 @@
 var gHandler = require("gHandler");
 
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
         skip: 5,
+        promptBox: cc.Node
     },
     onLoad: function () {
         this.camera = this.node.getChildByName("Main Camera");
@@ -23,7 +25,7 @@ cc.Class({
         // this.lantern = this.camera.getChildByName("lantern");
 
         this.progressValue = 0;
-
+        this.reconnectTimes = 0;
         //灯动作
         // this.lanternAction();
         this.progressBarCode();
@@ -36,7 +38,10 @@ cc.Class({
         this.addEvenListener()
         //消息事件监听
         this.onEvenHandle();
-
+        if(cc.gg.global.eventMgr) {
+            cc.gg.global.eventMgr.register("IMRconnect", "IMappStart", this.netWorkBreakDown.bind(this));
+            cc.gg.global.eventMgr.register("IMConnectSuccess", "IMappStart", this.netConnectSuccess.bind(this));
+        }
     },
 
     initView: function () {
@@ -143,6 +148,11 @@ cc.Class({
 
         var Global = require('IMGlobal');
         cc.gg.global = new Global;
+
+        let IMEvent = require("IMEvent");
+        cc.gg.global.eventMgr = IMEvent.init();
+
+
         if (!cc.gg.global.isH5) {
             //id + token的登陆
             if (gHandler.gameGlobal.player.id && gHandler.gameGlobal.token) {
@@ -153,8 +163,9 @@ cc.Class({
             // else {
             //     //本地测试  DEV：167736290 ， 444263347 PRE：156402027，906435472 OL：804149125
             //     //online 251119282
+            //     //294236481-123456 代提账号
             //     let data = window.location.href.split("?")[1];
-            //     let userObj = { userId: '502439823', password: '123456' };
+            //     let userObj = { userId: '167736290', password: '123456' };
             //     if (data) {
             //         let userInfoArr = data.split('&');
             //         for (let i = 0; i < userInfoArr.length; i++) {
@@ -180,18 +191,31 @@ cc.Class({
             cc.gg.global.os = "desktop"
             //Pre: ws://18.176.74.76:12352 Dev: im.539316.com
             //online : http://im1.whhclsb.com  或者  http://im2.ncpxnjh.com/
+            //wss://im.kangchetosh.com im-ghe3.tiaocaigroup.com
 
-            // cc.gg.global.socket = "ws://im.539316.com"
+            // cc.gg.global.socket = "ws://im.539316.com";
+            // cc.gg.global.file = "http://im.539316.com/upload";
         }
         var ProtoBuf = require('IMProtobuf');
         cc.gg.protoBuf = new ProtoBuf();
         //子游戏登陆子游戏服务器地址，需要用大厅提供的服务器地址
         if (gHandler.gameGlobal.im_host) {
             cc.gg.global.file = gHandler.gameGlobal.im_host + "/upload";
-            cc.gg.global.socket = gHandler.gameGlobal.im_host.replace("http", 'ws');
+            let socket = gHandler.gameGlobal.im_host.split("://")[1];
+            let header = gHandler.gameGlobal.im_host.split("://")[0];
+            let socketHeader = "";
+            if (header == "http") {
+                socketHeader = "ws://"
+            } else if (header == "https") {
+                socketHeader = "ws://"
+            }
+            cc.gg.global.socket = socketHeader + socket;
         }
 
-        cc.gg.protoBuf.connect(cc.gg.global.socket, false)
+        this.alert.getComponent(cc.Label).string = "连接服务器中";
+
+        console.log("IM服务器 == ", cc.gg.global.socket);
+        cc.gg.protoBuf.connect(cc.gg.global.socket, false);
 
         var Client = require("IMClient");
         //cc.gg.client = new Client();
@@ -245,6 +269,9 @@ cc.Class({
                 cc.gg.protoBuf.ISclose = true
             }
             if (this.alert) {
+                if (resultMessage == "...") {
+                    return;
+                }
                 this.alert.getComponent(cc.Label).string = resultMessage;
             }
         }
@@ -255,6 +282,7 @@ cc.Class({
      * @param {*} data                      
      */
     managePushHistorySession: function (data) {
+        this.alert.getComponent(cc.Label).string = "跳转中";
         if (!data || data == "null") {
             cc.director.loadScene("IMhallMain");
             return
@@ -302,6 +330,7 @@ cc.Class({
             userHeadImg: obj.head_img,
             userNick: obj.nick_name,
         }
+        this.alert.getComponent(cc.Label).string = "登录中";
         cc.gg.protoBuf.authKey = obj.auth_key;
     },
     //发送查询会话的指令
@@ -319,5 +348,34 @@ cc.Class({
         cc.gg.protoBuf.removeAllHandler();
         cc.loader.onProgress = null;
         clearTimeout(this.times);
+        if (cc.gg.global.eventMgr) {
+            cc.gg.global.eventMgr.unregister("IMRconnect", "IMappStart");
+            cc.gg.global.eventMgr.unregister("IMConnectSuccess", "IMappStart");
+        }
+    },
+
+    returnBackToHall: function () {
+        gHandler.Reflect.setOrientation("landscape", 1334, 750);
+        cc.director.loadScene("hall");
+    },
+    confirmBtnAction(param) {
+        gHandler.Reflect && gHandler.Reflect.setOrientation("landscape", 1334, 750);
+        cc.director.loadScene("hall");
+        this.promptBox.active = false;
+    },
+    netWorkBreakDown(data) {
+        let reConnectTimes = data.reConnectTimes;
+        this.reconnectTimes = reConnectTimes;
+        if (this.reconnectTimes >= 30) {
+            this.promptBox.active = true;
+            return;
+        }
+        if (gHandler.eventMgr) {
+            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络断开，正在努力连接中");
+        }
+    },
+    netConnectSuccess(data) {
+        this.reconnectTimes = 0;
+        console.log(data);
     }
 });

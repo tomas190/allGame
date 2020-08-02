@@ -34,6 +34,8 @@ cc.Class({
         this.headerRight = this.node.getChildByName("headerRight");
         this.headerTop = this.node.getChildByName("headerTop");
 
+        this.headerTop.active = false;
+
         this.userBg = this.headerMask.getChildByName("userBg"); //用戶頭像
         this.userP = this.headerMask.getChildByName("userP"); //用戶頭像背景色調
         this.SP = this.userP.getChildByName("SP"); //用戶首拼
@@ -98,11 +100,16 @@ cc.Class({
         cc.gg.global.chatObj = null;
     },
     runAlert: function (title, data) {
+        this.headerTop.active = true;
+
         var height = this.headerTop.height;
         var actionOne = cc.moveTo(0.1, cc.v2(0, 0));
         var actionTwo = cc.moveTo(0.2, cc.v2(0, height + 20));
         var o = cc.sequence(actionOne, cc.delayTime(1.5), actionTwo)
         this.headerTopText.getComponent(cc.Label).string = title;
-        this.headerTop.runAction(o)
+        this.headerTop.runAction(o);
+        this.scheduleOnce(() => {
+            this.headerTop.active = false;
+        },1.5);
     }
 });

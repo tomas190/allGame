@@ -94,6 +94,10 @@ cc.Class({
     },
     backMsgFun: function() {
         //销毁此场景监听的所有事件
+        console.log("cc.gg.protoBuf.canSendMsg == ", cc.gg.protoBuf.canSendMsg);
+        if(!cc.gg.protoBuf.canSendMsg) {
+            return;
+        }
         cc.gg.protoBuf.removeAllHandler();
         var self = this;
         if (!this.backMsgLock) {
@@ -117,6 +121,10 @@ cc.Class({
         cc.gg.global.isGoDirectlyMsg = false;
         if (!this.backHallLock) {
             return
+        }
+
+        if(!cc.gg.protoBuf.canSendMsg) {
+            return;
         }
 
         self.backHallLock = false;

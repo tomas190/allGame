@@ -72,6 +72,7 @@ cc.Class({
                         i.onmessage("onerror")
                 },
                 i.pong || (i.pong = setInterval(function () {
+                    console.log("断线重连00===========");
                     i.cbPonging < 2 ? (i.socket.send("@"), i.cbPonging++) : (i.onmessage("onclose"),
                         cc.gg.utils.ccLog("用户断线！！！"),
                         clearInterval(i.pong),
@@ -89,8 +90,8 @@ cc.Class({
                                     ) : i.connect(data.socket)
                                 })
                             ), i.onmessage("onfail"))
-                        }, 500))
-                }.bind(this), 2e3)), i.onmessage("onopen")
+                        }, 5000))
+                }.bind(this), 6000)), i.onmessage("onopen")
         }
     },
     send: function (e) {

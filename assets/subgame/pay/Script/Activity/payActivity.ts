@@ -37,7 +37,6 @@ export default class NewClass extends cc.Component {
         nav.scaleY = scalex;
 
         this.getNotice() 
-        
     }
 
     public exitBtnClick(){
@@ -73,11 +72,11 @@ export default class NewClass extends cc.Component {
             if(e.is_close == 2 && (e.name =='流水闯关活动' || e.name == '救济金活动' || 
             e.name == "首充送金活动"||e.name == "每日任务"||e.name == "新人大礼包"||
             e.name == "月入百万"||e.name == "每周佣金奖励"||e.name == "15天送58元" ||
-            e.name == "充值返利" || e.name == "推荐好友")){
+            e.name == "充值返利" || e.name == "推荐好友"|| e.name == "首充赠金1" ||
+            e.name == "开业注册送1" || e.name == "次日存送1"|| e.name == "充值返利1")){
                 this.arr.push(e);
             }
         });
-
     }
 
     public addNavToggle(){
@@ -92,8 +91,6 @@ export default class NewClass extends cc.Component {
         
         if(this.arr[0].name == '流水闯关活动'){
             node.getComponent('payActivityNav').addContent('ChuangGuan',JSON.parse(this.arr[0].info),this.arr[0].id);
-        }else if(this.arr[0].name =='存送活动'){
-            node.getComponent('payActivityNav').addContent('HuoDong',JSON.parse(this.arr[0].info),this.arr[0].id);
         }else if(this.arr[0].name =='救济金活动'){
             node.getComponent('payActivityNav').addContent('FreeGold',JSON.parse(this.arr[0].info),this.arr[0].id);
         }else if(this.arr[0].name =='首充送金活动'){
@@ -112,6 +109,14 @@ export default class NewClass extends cc.Component {
             node.getComponent('payActivityNav').addNewPlayerGift('充值返利');
         }else if(this.arr[0].name =='推荐好友'){
             node.getComponent('payActivityNav').addNewPlayerGift('推荐好友');
+        }else if(this.arr[0].name =='首充赠金1'){
+            node.getComponent('payActivityNav').addNewPlayerGift('首充赠金1');
+        }if(this.arr[0].name =='开业注册送1'){
+            node.getComponent('payActivityNav').addNewPlayerGift('开业注册送1');
+        }if(this.arr[0].name =='次日存送1'){
+            node.getComponent('payActivityNav').addNewPlayerGift('次日存送1');
+        }if(this.arr[0].name =='充值返利1'){
+            node.getComponent('payActivityNav').addNewPlayerGift('充值返利1');
         }
     }
     

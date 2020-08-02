@@ -238,9 +238,14 @@ export default class NewClass extends cc.Component {
      * @param h 高
      */
     public loadIcon(url,node,w,h){
-        cc.loader.loadRes(`/pay/${url}`,cc.SpriteFrame,(err, spriteFrame)=>{
+        cc.loader.loadRes(`pay/${url}`,cc.SpriteFrame,(err, spriteFrame)=>{
             node.width = w;
             node.height = h;
+            node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        })
+    }
+    public loadTitle(url,node){
+        cc.loader.loadRes(`pay/${url}`,cc.SpriteFrame,(err, spriteFrame)=>{
             node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         })
     }
@@ -291,7 +296,7 @@ export default class NewClass extends cc.Component {
         switch(num){
             case 0 : path ='Button_Click';break;
         }
-        cc.loader.loadRes(`/pay/sounds/${path}`, cc.AudioClip, function(err, clip) {
+        cc.loader.loadRes(`pay/sounds/${path}`, cc.AudioClip, function(err, clip) {
             if (err) {
                 console.log(err);
                 return

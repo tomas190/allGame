@@ -196,9 +196,11 @@ export default class NewClass extends cc.Component {
         }else{
             if(this.channel == 'bankcard_transfer'){
                 this.fetchOrder();
-            }else if(this.channel == 'im_pay'){
-                this.showPayIM()
-            }else{
+            }
+            // else if(this.channel == 'im_pay'){
+            //     this.showPayIM()
+            // }
+            else{
                 var url = `${this.app.UrlData.host}/api/payment/payment?user_id=${this.app.UrlData.user_id}&user_name=${decodeURI(this.app.UrlData.user_name)}&payment_amount=${this.amountLabel.string}&channel_type=${this.current.channel_id}&channel_name=${this.current.name}&pay_name=${this.current.nick_name}&pay_type=${this.current.pay_type}&client=${this.app.UrlData.client}&proxy_user_id=${this.app.UrlData.proxy_user_id}&proxy_name=${decodeURI(this.app.UrlData.proxy_name)}&package_id=${this.app.UrlData.package_id}&token=${this.app.token}&version=${this.app.version}`;
                 cc.sys.openURL(encodeURI(url))
                 cc.log(encodeURI(url))

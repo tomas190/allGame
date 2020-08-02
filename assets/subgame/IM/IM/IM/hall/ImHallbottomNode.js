@@ -23,6 +23,7 @@ cc.Class({
         this.bottom_top = this.node.getChildByName("bottom-top");
         this.deleteSession = this.bottom_top.getChildByName("deleteSession");
         this.cancelS = this.bottom_top.getChildByName("cancelS");
+        this.bottom_top.active = false;
     },
     resetView: function () {
         this.bottom_top.setPosition(0, -105);
@@ -51,13 +52,22 @@ cc.Class({
         var actionOne = cc.moveTo(0.1, cc.v2(0, -105));
         var actionTwo = cc.moveTo(0.1, cc.v2(0, -75 + height));
         var pos = this.bottom_top.getPosition();
-        if (pos.y > -105) {
+        // console.log("bottomAnimate pos: ", pos.y);
+        let postionY = parseInt(pos.y);
+        // console.log("bottomAnimate pos: ", postionY);
+
+        if (postionY > -104) {
             //落下状态
+            this.bottom_top.active = true;
             this.bottom_top.runAction(actionOne);
             coverNode.active = false;
+            this.scheduleOnce(() => {
+                this.bottom_top.active = false;
+            },0.2);
 
         } else {
             //弹起状态
+            this.bottom_top.active = true;
             this.bottom_top.runAction(actionTwo);
             coverNode.active = true;
         }

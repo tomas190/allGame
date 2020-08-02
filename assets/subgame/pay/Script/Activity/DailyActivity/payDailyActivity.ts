@@ -38,7 +38,7 @@ export default class NewClass extends cc.Component {
     onLoad() {
         
         this.app = cc.find('Canvas/Main').getComponent('payMain');
-        this.resizeView()
+        // this.resizeView()
         this.setGameProxyRecharge()
         this.setLevelInfo()
         this.fetchByDayTaskDetail()
@@ -54,20 +54,25 @@ export default class NewClass extends cc.Component {
         this.ScrollView.height = Number(this.ScrollView.height)/scalex
     }
     private setGameProxyRecharge(){
-        cc.log("info",this.info)
+        console.log("info",this.info)
+        
         for (var k in this.info){
-            this.info[k].forEach(e => {
-                if (k == "game"|| k =='proxy' || k== 'recharge'){
-                    var node = cc.instantiate(this.Item)
-                    node.getComponent("payDailyActivityItem").init(k,e)
-                    this.Content.addChild(node)
-                }else if(k == "bylevel") {
-                    this.bylevel = this.info[k]
-                }
-            });
+            if (Array.isArray(this.info[k])) {
+                this.info[k].forEach(e => {
+                    if (k == "game"|| k =='proxy' || k== 'recharge'){
+                        var node = cc.instantiate(this.Item)
+                        node.getComponent("payDailyActivityItem").init(k,e)
+                        this.Content.addChild(node)
+                    }else if(k == "bylevel") {
+                        this.bylevel = this.info[k]
+                    }
+                });
+            }
         }
+        
     }
     private setLevelInfo(){
+        console.log(this.bylevel)
         this.tishiLabel.string = `积分达到${this.bylevel[0].integral}, 额外再奖${this.bylevel[0].gold}金币, 积分达到${this.bylevel[1].integral}, 额外再奖${this.bylevel[1].gold}金币`
         this.goldGroup.forEach((e,i)=>{
             let item  = this.bylevel[i]

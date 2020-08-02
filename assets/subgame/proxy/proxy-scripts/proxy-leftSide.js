@@ -10,7 +10,7 @@ cc.Class({
     this.node.getChildByName(`btn${num}_active`).active = true;
     cc.find("Canvas/baseView/home/page2/detailTable").removeAllChildren();
     cc.find("Canvas/baseView/home/page2/basePage").active = true;
-    cc.find("Canvas/baseView/home/page2").getComponent("proxy-page2").count = 0;
+    cc.find("Canvas/baseView/home/page1").getComponent("proxy-page1").count = 0;
     this.node
       .getParent()
       .getChildByName("home")

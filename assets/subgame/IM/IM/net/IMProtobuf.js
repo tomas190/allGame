@@ -1,4 +1,6 @@
 // var imProto = require("bundle")
+var gHandler = require("gHandler");
+
 cc.Class({
     extends: cc.Component,
     ctor: function () {
@@ -10,12 +12,13 @@ cc.Class({
         this.cbPongCount = 0; //单个心跳包间网络延时次数
         this.timer = null;
         this.handlers = {};
-        this.pongTime = 5000;
+        this.pongTime = 1000;
         this.socket = null;
         this.events = {};
-        this.reconnectCount = 0; //重连次数
         this.ISclose = false; //是否关闭连接
         this.authKey = "9iT0YQjGWpPEtQp4";
+        this.canSendMsg = false; //是否可以发送消息
+        this.reConnectTimeOut = null;
     },
     removeAllEvent: function () {
         this.events = {};
@@ -29,6 +32,7 @@ cc.Class({
     addHandler: function (e, t) {
         this.handlers[e] ? cc.gg.utils.ccLog("该事件已经监听") : this.handlers[e] = t;
     },
+    //自定义onMessage
     onmessage: function (id, data, isCustom) {
         if (this.ISclose) {
             return;
@@ -49,14 +53,22 @@ cc.Class({
             var instructionsName = imProto.msg.Resp.deserializeBinary(data);
             var operationId = instructionsName.getOperationid();
             var name = cc.gg.global.instructions[operationId];
-            // console.log(name + "指令名")
+            // console.log(name + "指令名" + operationId)
+            if (operationId == 101) {
+                if (this.reConnectTimeOut) {
+                    clearTimeout(this.reConnectTimeOut);
+                }
+                this.cbPongCount = 0;
+            }
             if (operationId == 102) {
                 this.cbPongCount = 0;
                 return;
+                //501 旧链接，被新链接挤下线
             } else if (operationId == 501) {
                 this.ISclose = true;
                 this.close()
-                alert("您已被挤下线")
+                // alert("您已被挤下线,将返回大厅");
+                cc.gg.global.eventMgr && cc.gg.global.eventMgr.dispatch("IMRconnect", {reConnectTimes: 30});
             } else {
                 var t = this.handlers[name];
                 //cc.gg.utils.ccLog(t);
@@ -67,13 +79,29 @@ cc.Class({
                     cc.gg.utils.ccLog("我没进来？")
                 }
             }
-            //return
+            //return 500服务器的错误消息
         } else if (id == 500) {
             if (this.ISclose) {
                 return;
             }
-            this.reConnect();
+
+            this.reConnectTimeOut = setTimeout(() => {
+                if (this.cbPongCount > 30) {
+                    this.ISclose = true;
+                    clearTimeout(this.reConnectTimeOut);
+                    return;
+                }
+                // console.log("this.reconnectTime: ", this.cbPongCount);
+                cc.gg.global.eventMgr && cc.gg.global.eventMgr.dispatch("IMRconnect", {reConnectTimes: this.cbPongCount});
+                this.reConnect();
+            }, 1000);
         }
+    },
+    returnBackToHall: function () {
+        if (gHandler.Reflect) {
+            gHandler.Reflect.setOrientation("landscape", 1334, 750);
+        }
+        cc.director.loadScene("hall");
     },
     reConnect: function () {
         this.connect(this.ip, false);
@@ -87,8 +115,6 @@ cc.Class({
         var self = this;
         if (self.socket && self.socket.readStart != 1 && self.socket.readStart != 0) {
             self.socket.close();
-            this.cbPongCount = 0;
-            this.reconnectCount = 0;
         }
 
 
@@ -104,22 +130,14 @@ cc.Class({
         }
 
         self.socket.onopen = function () {
-            self.reconnectCount = 0;
+            cc.gg.global.eventMgr && cc.gg.global.eventMgr.dispatch("IMConnectSuccess", "连接成功");
+
+            self.canSendMsg = true;
             if (self.timer) {
                 clearInterval(self.timer);
                 self.timer = false;
             };
-            self.socket.onmessage = function (data) {
-                self.parseProtoBufId(data);
-            }
-            self.socket.onclose = function (err) {
-                cc.gg.utils.ccLog("onclose webSocket断开连接", err);
-                self.onmessage("500", err);
-            }
-            self.socket.onerror = function (err) {
-                cc.gg.utils.ccLog("onerror webSocket断开连接", err)
-                self.onmessage("500", err);
-            }
+
             if (cc.gg.global.isH5) {
                 var urlData = cc.gg.utils.urlParse(window.location.href);
                 cc.gg.utils.ccLog(urlData);
@@ -158,15 +176,19 @@ cc.Class({
                 if (self.ISclose) {
                     return;
                 }
-                if (self.cbPongCount < 2) {
+                self.cbPongCount++;
+                console.log("self.cbPongCount == ", self.cbPongCount);
+                if (self.cbPongCount <= 1) {
                     self.send('Pong', 1, {
                         ping: 100
                     })
-                    self.cbPongCount++;
-
                 } else {
+                    self.canSendMsg = false;
+                    if (self.cbPongCount > 30) {
+                        return;
+                    }
                     self.onmessage(500, {
-                        cbPongCount: 2
+                        cbPongCount: self.cbPongCount
                     });
                     cc.gg.utils.ccLog("用户断线");
                     //clearInterval(self.pong)
@@ -174,10 +196,30 @@ cc.Class({
             }, self.pongTime)
             //这里最好发送一下登录
         }
+
+        self.socket.onmessage = function (data) {
+            self.parseProtoBufId(data);
+        }
+
+        self.socket.onclose = function (err) {
+            self.canSendMsg = false;
+            if (self.cbPongCount > 30) {
+                cc.gg.utils.ccLog("onclose webSocket断开连接", err);
+                self.onmessage("500", err);
+            }
+        }
+        self.socket.onerror = function (err) {
+            self.canSendMsg = false;
+            cc.gg.utils.ccLog("onerror webSocke错误回调", err)
+            // self.onmessage("500", err);
+        }
     },
 
     send: function (instructName, instructType, data) {
         var self = this;
+        if (!self.canSendMsg) {
+            return;
+        }
         if (self.socket) {
             //1 代表发送  0 代表接收
             var operationId = cc.gg.global.instructions[instructName]
@@ -200,7 +242,9 @@ cc.Class({
     },
     close: function () {
         if (this.socket) {
-            this.socket.close();
+            if (this.canSendMsg) {
+                this.socket.close();
+            }
         }
     },
     //把数据解析成ID 和 data

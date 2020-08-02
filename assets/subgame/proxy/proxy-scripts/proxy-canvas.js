@@ -10,6 +10,7 @@ cc.Class({
   },
   onLoad() {
     commonVal.account_name = gHandler.gameGlobal.player.account_name
+    
     commonVal.package_id = gHandler.gameGlobal.proxy.package_id
   },
   onMessagePrefabNeeded: function(e, string) {

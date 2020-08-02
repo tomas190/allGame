@@ -47,9 +47,9 @@ export default class NewClass extends cc.Component {
         this.fetchIndex();
         this.HistoryScroll.on('scroll-to-bottom',this.historyScrollToBottom);
 
-        let scalex = cc.winSize.width / 1334;
-        this.Middle.scaleX = scalex;
-        this.Middle.scaleY = scalex;
+        // let scalex = cc.winSize.width / 1334;
+        // this.Middle.scaleX = scalex;
+        // this.Middle.scaleY = scalex;
     }
 
     fetchIndex(){
