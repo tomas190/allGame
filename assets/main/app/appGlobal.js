@@ -201,7 +201,7 @@ let appGlobal = {
                 this.server = 'http://center.539316.com'
                 this.canHotServer = 'http://upgrade.539316.com'
             } else if (this.huanjin == 'pre') {
-                this.server = 'https://center.lymrmfyp.com '
+                this.server = 'https://center.lymrmfyp.com'
                 this.canHotServer = 'https://upgrade.lymrmfyp.com'
             }
         }
