@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "bb17fbe4-e313-4113-b403-3cbf1c1ff79c",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 41,
+  "height": 36,
   "platformSettings": {},
   "subMetas": {
     "sp_trumpet": {

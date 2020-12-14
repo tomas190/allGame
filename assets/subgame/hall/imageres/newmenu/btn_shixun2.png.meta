@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "00360acb-ceb8-4fca-afb7-55d5320e4d47",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 240,
+  "height": 67,
   "platformSettings": {},
   "subMetas": {
     "btn_shixun2": {

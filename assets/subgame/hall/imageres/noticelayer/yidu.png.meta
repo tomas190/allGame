@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "1496fab9-ca66-49aa-bb78-57f4efdff293",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 124,
+  "height": 45,
   "platformSettings": {},
   "subMetas": {
     "yidu": {

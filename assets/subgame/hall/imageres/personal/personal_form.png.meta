@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "0e904d6a-fb25-41f7-9072-390c7902c777",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 425,
+  "height": 436,
   "platformSettings": {},
   "subMetas": {
     "personal_form": {

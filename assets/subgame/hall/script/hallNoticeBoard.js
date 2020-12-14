@@ -1,5 +1,4 @@
 
-let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
 
@@ -11,17 +10,24 @@ cc.Class({
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
         this.isRoll = false
-        gHandler.eventMgr.register(gHandler.eventMgr.addSliderNotice, "hallNoticeBoard", this.addSliderNotice.bind(this))
+        this.className = 'temp'
+        hqq.eventMgr.register(hqq.eventMgr.addSliderNotice, "hallNoticeBoard", this.addSliderNotice.bind(this))
     },
     /** enabled和active属性从false变为true时 */
     onEnable() {
-        if (gHandler.gameGlobal.slideNoticeList.length > 0) {
-            this.addSliderNotice(gHandler.gameGlobal.slideNoticeList)
+        if (hqq.gameGlobal.slideNoticeList.length > 0) {
+            this.addSliderNotice(hqq.gameGlobal.slideNoticeList)
         }
     },
     /** 通常用于初始化中间状态操作 */
     start() {
 
+    },
+    // 可以同场景多个节点应用
+    changeRegister(className) {
+        this.className = className
+        hqq.eventMgr.unregister(hqq.eventMgr.addSliderNotice, "hallNoticeBoard")
+        hqq.eventMgr.register(hqq.eventMgr.addSliderNotice, className, this.addSliderNotice.bind(this))
     },
     addSliderNotice(msg) {
         // cc.log("addSliderNotice", this.isRoll, msg.length, msg)
@@ -83,6 +89,7 @@ cc.Class({
     // lateUpdate() { },
     /** 调用了 destroy() 时回调，当帧结束统一回收组件 */
     onDestroy() {
-        gHandler.eventMgr.unregister(gHandler.eventMgr.addSliderNotice, "hallNoticeBoard")
+        hqq.eventMgr.unregister(hqq.eventMgr.addSliderNotice, "hallNoticeBoard")
+        hqq.eventMgr.unregister(hqq.eventMgr.addSliderNotice, this.className)
     },
 });

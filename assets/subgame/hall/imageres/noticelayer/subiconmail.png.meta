@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "0d5bdc2f-1c75-46e6-b71e-7bb52be9b46b",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 127,
+  "height": 50,
   "platformSettings": {},
   "subMetas": {
     "subiconmail": {

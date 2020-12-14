@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2019-10-31 14:45:56
  * @LastEditors: burt
- * @LastEditTime: 2020-05-23 17:58:33
+ * @LastEditTime: 2020-10-27 16:36:57
  * @Description:
  */
 /****************************************************************************
@@ -108,13 +108,6 @@ import java.net.InetAddress;
 import java.util.Enumeration;
 import android.view.View;
 
-import com.mob.MobSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.Platform.ShareParams;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-
 public class AppActivity extends Cocos2dxActivity {
     private static AppActivity mApp;
     private static Cocos2dxWebView mWebView;
@@ -161,7 +154,6 @@ public class AppActivity extends Cocos2dxActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION;
         decorView.setSystemUiVisibility(uiOptions);
 
-        MobSDK.init(this);
     }
 
     @Override
@@ -238,7 +230,6 @@ public class AppActivity extends Cocos2dxActivity {
                                 cursor.moveToFirst();
 
                                 img_src = cursor.getString(column_index);//??????
-//                                imageToBase64();
                                 String targetPath = FileUtils.getThumbDir()+"compressPic.png";
                                 //调用压缩图片的方法，返回压缩后的path
                                 final String compressImg = PictureUtil.compressImage(img_src,targetPath,30);
@@ -484,7 +475,7 @@ public class AppActivity extends Cocos2dxActivity {
      * @Description: 获取安装包固定信息
      */
     public static String getHqqPackageInfo() {  
-        return "{\"pinpai\":\"test\",\"huanjin\":\"dev\",\"system\":\"android\",\"version\":\"1.0.8\",\"proxyid\":\"351027469\",\"engine_version\":\"2.2.2\"}";
+        return "{\"pinpai\":\"test\",\"huanjin\":\"dev\",\"system\":\"android\",\"version\":\"1.0.9\",\"proxyid\":\"351027469\",\"language\":\"CN\",\"country\":\"china\",\"currency\":\"rmb\",\"engine_version\":\"2.4.3\"}";
     }
 
     // 获取app版本号
@@ -588,83 +579,4 @@ public class AppActivity extends Cocos2dxActivity {
         }  
         return null;
     }
-    /**
-    * @Description: mob全平台分享
-    */ 
-    public static void showAllShare(String platform) {
-        final OnekeyShare oks = new OnekeyShare();
-        //指定分享的平台，如果为空，还是会调用九宫格的平台列表界面
-        if (platform != null) {
-            oks.setPlatform(platform);
-        }
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle("标题");
-        // titleUrl是标题的网络链接，仅在Linked-in,QQ和QQ空间使用
-        oks.setTitleUrl("http://sharesdk.cn");
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
-        // imagePath是图片的本地路径，确保SDcard下面存在此张图片
-        oks.setImagePath("/sdcard/test.jpg");
-        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl("http://sharesdk.cn");
-        //启动分享
-        oks.show(mApp);
-    }
-    /**
-    * @Description: mob单平台分享
-    */ 
-    public static void showShare(String platform) {
-        ShareParams sp = new ShareParams();
-        sp.setTitle("测试分享的标题");
-        sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
-        sp.setText("测试分享的文本");
-        sp.setImagePath("/mnt/sdcard/测试分享的图片.jpg");
-        sp.setImageUrl("http://www.someserver.com/测试图片网络地址.jpg");
-        sp.setSite("发布分享的网站名称");
-        sp.setSiteUrl("发布分享网站的地址");
-        if (platform == null) {
-            return;
-        }
-        Platform tw = ShareSDK.getPlatform(platform);
-        tw.setPlatformActionListener(new PlatformActionListener() {
-            public void onError(Platform arg0, int arg1, Throwable arg2) {
-                //失败的回调，arg:平台对象，arg1:表示当前的动作，arg2:异常信息
-            }
-            public void onComplete(Platform arg0, int arg1, HashMap arg2) {
-                //分享成功的回调
-            }
-            public void onCancel(Platform arg0, int arg1) {
-                //取消分享的回调
-            }
-        }); // 设置分享事件回调
-        tw.share(sp); // 执行图文分享
-    }
-    /**
-    * @Description: mob三方登陆
-    */ 
-    public static void Login() {
-        Platform plat = ShareSDK.getPlatform("");
-        //移除授权状态和本地缓存，下次授权会重新授权
-        plat.removeAccount(true); 
-        //SSO授权，传false默认是客户端授权
-        plat.SSOSetting(false); 
-        //授权回调监听，监听oncomplete，onerror，oncancel三种状态
-        plat.setPlatformActionListener(new PlatformActionListener() {
-            public void onError(Platform arg0, int arg1, Throwable arg2) {
-                //失败的回调，arg:平台对象，arg1:表示当前的动作，arg2:异常信息
-            }
-            public void onComplete(Platform arg0, int arg1, HashMap arg2) {
-                //分享成功的回调
-            }
-            public void onCancel(Platform arg0, int arg1) {
-                //取消分享的回调
-            }
-        });
-        //抖音登录适配安卓9.0
-        ShareSDK.setActivity(mApp);
-        //要数据不要功能，主要体现在不会重复出现授权界面
-        plat.showUser(null);
-    } 
 }

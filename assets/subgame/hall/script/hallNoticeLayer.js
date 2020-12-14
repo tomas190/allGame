@@ -1,4 +1,3 @@
-let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
 
@@ -32,8 +31,8 @@ cc.Class({
     onLoad() {
         this.subData = null
 
-        // this.noticedata = gHandler.commonTools.jsonCopy(gHandler.gameGlobal.noticeList)
-        this.noticedata = gHandler.gameGlobal.noticeList
+        // this.noticedata = hqq.commonTools.jsonCopy(hqq.gameGlobal.noticeList)
+        this.noticedata = hqq.gameGlobal.noticeList
         this.emaildata = []
 
         this.noticeItemList = []
@@ -68,7 +67,7 @@ cc.Class({
             email.active = false
             let title = notice.getChildByName("title").getComponent(cc.Label)
             title.string = this.noticedata[i].title
-            this.noticedata[i].strtime = gHandler.commonTools.formatDateToStr(this.noticedata[i].create_time)
+            this.noticedata[i].strtime = hqq.commonTools.formatDateToStr(this.noticedata[i].create_time)
             time.string = this.noticedata[i].strtime
             var clickEventHandler = new cc.Component.EventHandler();
             clickEventHandler.target = this.node;
@@ -99,7 +98,7 @@ cc.Class({
             email.active = true
             let title = email.getChildByName("title").getComponent(cc.Label)
             title.string = this.emaildata[i].title
-            this.emaildata[i].strtime = gHandler.commonTools.formatDateToStr(this.emaildata[i].create_time)
+            this.emaildata[i].strtime = hqq.commonTools.formatDateToStr(this.emaildata[i].create_time)
             time.string = this.emaildata[i].strtime
             var clickEventHandler = new cc.Component.EventHandler();
             clickEventHandler.target = this.node;
@@ -151,7 +150,7 @@ cc.Class({
         this.sublayer.active = true
         this.initSubLayer(custom)
         this.checkIsAllRead()
-        // let noticehistory = gHandler.localStorage.getGlobal().noticeKey
+        // let noticehistory = hqq.localStorage.getGlobal().noticeKey
         // if (!noticehistory) {
         //     noticehistory = []
         // }
@@ -159,7 +158,7 @@ cc.Class({
         // if (noticehistory.length > 200) {
         //     noticehistory.splice(0, 150)
         // }
-        // gHandler.localStorage.globalSet('noticeKey', noticehistory)
+        // hqq.localStorage.globalSet('noticeKey', noticehistory)
     },
 
     checkIsAllRead() {
@@ -168,7 +167,7 @@ cc.Class({
                 return
             }
         }
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.refreshHallTips, { hidenoticetip: true })
+        hqq.eventMgr.dispatch(hqq.eventMgr.refreshHallTips, { hidenoticetip: true })
     },
 
     onClieckDeleteHasRead() {
@@ -182,7 +181,7 @@ cc.Class({
 
     onClickDelete() {
         if (this.subData.type == 2) {
-            let deleteNotice = gHandler.localStorage.getGlobal().noticeDeleteKey
+            let deleteNotice = hqq.localStorage.getGlobal().noticeDeleteKey
             if (!deleteNotice) {
                 deleteNotice = []
             }
@@ -190,7 +189,7 @@ cc.Class({
             if (deleteNotice.length > 200) {
                 deleteNotice.splice(0, 150)
             }
-            gHandler.localStorage.globalSet('noticeDeleteKey', deleteNotice)
+            hqq.localStorage.globalSet('noticeDeleteKey', deleteNotice)
             for (let i = 0; i < this.noticedata.length; i++) {
                 if (this.noticedata[i].key == this.subData.key) {
                     this.noticedata.splice(i, 1)

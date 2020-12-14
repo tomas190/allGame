@@ -1,5 +1,4 @@
 
-let gHandler = require("gHandler");
 
 let hqqWebSocket = function () { }
 hqqWebSocket.prototype = {
@@ -45,7 +44,7 @@ hqqWebSocket.prototype = {
     },
     connect(param) {
         this.registerAll()
-        let url = gHandler.appGlobal.server;
+        let url = hqq.app.server;
         if (url.indexOf("://") == -1) {
             url = "ws://" + url;
         } else {
@@ -128,7 +127,7 @@ hqqWebSocket.prototype = {
     },
     onReceiveNologin(data) { // 账号掉线
         // cc.log(" onReceiveNologin", data)
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 6 })
+        hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 6 })
     },
     onReceiveBroadcast(data, msg) {
         // cc.log(" onReceiveBroadcast", msg)
@@ -137,80 +136,81 @@ hqqWebSocket.prototype = {
         let title = msg.send_user.game_nick;
         let mtype = msg.type;
         if (mtype == 1000) { // im 消息
-            gHandler.gameGlobal.imReceive = 1
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveBroadcast, mtype)
+            hqq.gameGlobal.imReceive = 1
+            hqq.eventMgr.dispatch(hqq.eventMgr.onReceiveBroadcast, mtype)
             let data = message.replace(/\s+/g, "")
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showDownTip, { msg: data, nick: title })
+            hqq.eventMgr.dispatch(hqq.eventMgr.showDownTip, { msg: data, nick: title })
         } else if (mtype == 2000) { // 跑马灯
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.addSliderNotice, [{
+            hqq.eventMgr.dispatch(hqq.eventMgr.addSliderNotice, [{
                 time: 1,
                 rollforver: false,
                 notice: message.replace(/\s+/g, "")
             }])
         } else if (mtype == 2001) { // 下拉框
             let data = message.replace(/\s+/g, "")
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showDownTip, { msg: data, nick: title })
+            hqq.eventMgr.dispatch(hqq.eventMgr.showDownTip, { msg: data, nick: title })
         } else if (mtype == 2002) { // 下拉框 + 跑马灯
             let data = message.replace(/\s+/g, "")
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.addSliderNotice, [{
+            hqq.eventMgr.dispatch(hqq.eventMgr.addSliderNotice, [{
                 time: 1,
                 rollforver: false,
                 notice: data
             }])
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showDownTip, { msg: data, nick: title })
+            hqq.eventMgr.dispatch(hqq.eventMgr.showDownTip, { msg: data, nick: title })
         }
     },
     /** 登陆成功回调 */
     onReceiveLogin(data) {
         // cc.log(" onReceiveLogin", data)
-        // gHandler.eventMgr.dispatch(gHandler.eventMgr.onReceiveLogin, data)
+        // hqq.eventMgr.dispatch(hqq.eventMgr.onReceiveLogin, data)
     },
     onReceiveNotice(data) {
         cc.log(" onReceiveNotice", data, data.msg)
     },
     moveBalanceToGame(data, msg) {
         // if (!msg.balance || !msg.game_gold) return;
-        let changegold = data.game_gold - gHandler.gameGlobal.player.gold
+        let changegold = data.game_gold - hqq.gameGlobal.player.gold
         if (changegold > 0) {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showCongratulation, gHandler.commonTools.formatGold(changegold))
+            hqq.eventMgr.dispatch(hqq.eventMgr.showCongratulation, hqq.commonTools.formatGold(changegold))
         }
-        gHandler.setPlayerinfo({
+        hqq.setPlayerinfo({
             game_gold: data.game_gold,
             balance: data.balance,
         })
     },
     onReceivebankerWinSettlement(data) {
         // cc.log(" onReceivebankerWinSettlement", data)
-        // gHandler.setGameInfo(data.game_user)
+        // hqq.app.setGameInfo(data.game_user)
     },
     onReceivebankerLoseSettlement(data) {
         // cc.log(" onReceivebankerLoseSettlement", data)
-        // gHandler.setGameInfo(data.game_user)
+        // hqq.app.setGameInfo(data.game_user)
     },
     onReceivewinSettlement(data) {
         // cc.log(" onReceivewinSettlement", data)
-        // gHandler.setGameInfo(data.game_user)
+        // hqq.app.setGameInfo(data.game_user)
     },
     onReceiveloseSettlement(data) {
         // cc.log(" onReceiveloseSettlement", data)
-        // gHandler.setGameInfo(data.game_user)
+        // hqq.app.setGameInfo(data.game_user)
     },
     onReceiveLoginSubGame(data) {
         // cc.log(" onReceiveLoginSubGame", data)
-        gHandler.setGameInfo(data.game_user)
+        hqq.app.setGameInfo(data.game_user)
     },
     onReceiveLoginout(data) {
         // cc.log(" onReceiveLoginout", data)
-        gHandler.setGameInfo(data.game_user)
+        hqq.app.setGameInfo(data.game_user)
     },
     onReceiveChangeBanlance(data) {
         // cc.log(" onReceiveChangeBanlance", JSON.stringify(data))
         if (!data.game_user) return;
-        gHandler.setGameInfo(data.game_user)
+        hqq.app.setGameInfo(data.game_user)
         if (!data.final_pay) return;
         let changegold = data.final_pay;
         if (changegold > 0) {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showCongratulation, gHandler.commonTools.formatGold(changegold))
+            hqq.gameGlobal.ipCheck = true
+            hqq.eventMgr.dispatch(hqq.eventMgr.showCongratulation, hqq.commonTools.formatGold(changegold))
         }
     },
 
@@ -222,15 +222,15 @@ hqqWebSocket.prototype = {
         if (this.isReconnect) {
             this.isReconnect = false
             if (cc.director.getScene().name == "hall") {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "连接成功")
+                hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "连接成功")
             }
         }
-        if (!gHandler.gameGlobal.isdev) {
+        if (!hqq.isDebug) {
             let msg = {
                 "event": "/Game/Login/login",
                 "data": {
-                    id: gHandler.gameGlobal.player.account_name,
-                    token: gHandler.gameGlobal.token
+                    id: hqq.gameGlobal.player.account_name,
+                    token: hqq.gameGlobal.token
                 }
             }
             // cc.log("发送登陆", msg)
@@ -239,7 +239,9 @@ hqqWebSocket.prototype = {
     },
     m_onmessage(msg) {
         let data = JSON.parse(msg.data)
-        console.log("data --- ", JSON.stringify(data))
+        if (!CC_DEBUG) {
+            console.log("data --- ", JSON.stringify(data))
+        }
         let datamsg = null
         if (data.data && data.data.msg) {
             datamsg = data.data.msg
@@ -247,7 +249,9 @@ hqqWebSocket.prototype = {
         this.m_EmitMsg(data.event, datamsg, data)
     },
     m_EmitMsg(event, data, msg) {
-        console.log("--------大厅收到消息--------", event)
+        if (!CC_DEBUG) {
+            console.log("--------大厅收到消息--------", event)
+        }
         if (this.handlers[event]) {
             for (let className in this.handlers[event]) {
                 this.handlers[event][className] && this.handlers[event][className](data, msg);
@@ -258,7 +262,7 @@ hqqWebSocket.prototype = {
     },
     m_onerror(e) {
         this.isConected = false;
-        gHandler.logMgr.logerror(e);
+        hqq.logMgr.logerror(e);
         this.m_stopPingPong();
     },
     m_onclose() {
@@ -267,18 +271,18 @@ hqqWebSocket.prototype = {
         if (this.needRecon) {
             this.isReconnect = true
             if (cc.director.getScene().name == "hall" && this.reConnectTime == 0) {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络断开，正在努力连接中")
+                hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "网络断开，正在努力连接中")
             }
             setTimeout(() => {
                 this.reConnectTime++;
                 if (this.reConnectTime <= 30) {
                     this.connect();
                 } else {
-                    gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "抱歉，网络无法连接成功，请检查网络后重新进入")
+                    hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "抱歉，网络无法连接成功，请检查网络后重新进入")
                 }
             }, 1000)
         } else {
-            // gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "网络断开")
+            // hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "网络断开")
         }
     },
     m_stopPingPong() {

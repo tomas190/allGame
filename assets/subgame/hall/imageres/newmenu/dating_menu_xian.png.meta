@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "a1ac849e-a1f1-407d-8242-23e0ca49ee21",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 242,
+  "height": 4,
   "platformSettings": {},
   "subMetas": {
     "dating_menu_xian": {

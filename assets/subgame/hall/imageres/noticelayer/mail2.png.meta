@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "4a104dca-4e35-4a93-b670-bc6b1d14cca6",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 242,
+  "height": 86,
   "platformSettings": {},
   "subMetas": {
     "mail2": {

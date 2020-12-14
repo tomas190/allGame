@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "21abd8d4-066f-4358-ab56-7443412f8697",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 240,
+  "height": 73,
   "platformSettings": {},
   "subMetas": {
     "btn_touzhu": {

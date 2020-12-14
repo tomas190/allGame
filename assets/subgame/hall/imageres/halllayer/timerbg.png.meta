@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "e8c37dd8-f1ec-40de-adfa-0975a39c3cf3",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 108,
+  "height": 108,
   "platformSettings": {},
   "subMetas": {
     "timerbg": {

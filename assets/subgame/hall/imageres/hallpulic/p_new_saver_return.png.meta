@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "6b7235f5-056d-4aed-b15f-950707d2e3c4",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 136,
+  "height": 67,
   "platformSettings": {},
   "subMetas": {
     "p_new_saver_return": {

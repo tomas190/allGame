@@ -1,13 +1,11 @@
 
-let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
     properties: {
-        hbslnum: cc.LabelAtlas,
-        spineAnimation: {
-            default: [],
-            type: [sp.SkeletonData],
-        },
+        // spineAnimation: {
+        //     default: [],
+        //     type: [sp.SkeletonData],
+        // },
         hallBtnName: {
             default: [],
             type: [cc.SpriteFrame],
@@ -15,7 +13,7 @@ cc.Class({
     },
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
     onLoad() {
-        gHandler.hallResManager = this;
+        hqq.hallResManager = this;
     },
     /** enabled和active属性从false变为true时 */
     // onEnable() { },

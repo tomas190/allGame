@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "4ba6003d-032a-495c-923c-84ab076ae51d",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 277,
+  "height": 51,
   "platformSettings": {},
   "subMetas": {
     "title_bdbankcard": {

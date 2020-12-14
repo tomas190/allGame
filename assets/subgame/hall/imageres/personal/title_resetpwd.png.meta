@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "db7747c2-7df5-4a62-aa46-b0470f0b34ce",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 219,
+  "height": 51,
   "platformSettings": {},
   "subMetas": {
     "title_resetpwd": {

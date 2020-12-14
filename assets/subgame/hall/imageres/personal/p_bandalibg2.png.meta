@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "b2ccd8bf-11ee-4465-9dbc-3e84d1d60958",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 927,
+  "height": 615,
   "platformSettings": {},
   "subMetas": {
     "p_bandalibg2": {

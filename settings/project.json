@@ -1,23 +1,33 @@
 {
-  "assets-sort-type": "name",
   "collision-matrix": [
     [
       true
-    ],
-    [
-      false,
-      false,
-      true
-    ],
-    [
-      false,
-      true,
-      false
     ]
   ],
-  "design-resolution-height": 750,
-  "design-resolution-width": 1334,
-  "excluded-modules": [],
+  "excluded-modules": [
+    "3D",
+    "3D Primitive",
+    "3D Physics/cannon.js",
+    "3D Physics/Builtin",
+    "3D Particle"
+  ],
+  "group-list": [
+    "default"
+  ],
+  "start-scene": "cde9ef7f-c993-4fd1-b7a0-fa5b4d7019b4",
+  "design-resolution-width": 1136,
+  "design-resolution-height": 960,
+  "fit-width": false,
+  "fit-height": true,
+  "use-project-simulator-setting": false,
+  "simulator-orientation": false,
+  "use-customize-simulator": true,
+  "simulator-resolution": {
+    "height": 640,
+    "width": 960
+  },
+  "preview-port": 7456,
+  "clear-simulator-cache": true,
   "facebook": {
     "appID": "",
     "audience": {
@@ -28,20 +38,5 @@
       "enable": false
     }
   },
-  "fit-height": true,
-  "fit-width": false,
-  "group-list": [
-    "default",
-    "Bullet",
-    "Fish"
-  ],
-  "last-module-event-record-time": 1592476019368,
-  "simulator-orientation": false,
-  "simulator-resolution": {
-    "height": 640,
-    "width": 960
-  },
-  "start-scene": "cde9ef7f-c993-4fd1-b7a0-fa5b4d7019b4",
-  "use-customize-simulator": true,
-  "use-project-simulator-setting": false
+  "last-module-event-record-time": 1604565628206
 }

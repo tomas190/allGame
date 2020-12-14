@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "ed0c32f9-0db8-4e8a-8698-f7679ead3622",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 240,
+  "height": 73,
   "platformSettings": {},
   "subMetas": {
     "btn_zuqiu": {

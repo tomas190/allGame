@@ -1,6 +1,5 @@
 
 
-let gHandler = require("gHandler");
 cc.Class({
     extends: cc.Component,
 
@@ -27,9 +26,21 @@ cc.Class({
     onLoad() {
         this.num0 = 0
         this.num1 = 0
-        let str = "版本：" + (gHandler.localStorage.getGlobal().versionKey || "1.0.0")
-        if (cc.sys.isNative && cc.sys.os != "Windows") {
-            str += "剪切板：" + gHandler.Reflect.getClipboard()
+        let str = "版本m:" + (hqq.localStorage.getGlobal().versionKey || "1.0.0")
+        if (cc.sys.isNative && cc.sys.os != "Windows" && hqq.reflect.getClipboard()) {
+            str += "\n剪切板：" + hqq.reflect.getClipboard()
+        }
+        if (hqq.app.reginIpData) {
+            str += "\n注册ip-api:" + hqq.app.reginIpData.query + ",地址:" + hqq.app.reginIpData.regionName
+        }
+        if (hqq.app.reginIpData2) {
+            str += "\n注册ipinfo:" + hqq.app.reginIpData2.ip + "地址:" + hqq.app.reginIpData2.region
+        }
+        if (hqq.gameGlobal.ipapiData) {
+            str += "\n登陆ip-api:" + hqq.gameGlobal.ipapiData.query + ",地址" + hqq.gameGlobal.ipapiData.regionName
+        }
+        if (hqq.gameGlobal.ipinfoData) {
+            str += "\n登陆ipinfo:" + hqq.gameGlobal.ipinfoData.ip + ",地址" + hqq.gameGlobal.ipinfoData.region
         }
         this.versionlabel.string = str
         if (cc.Button.prototype.setSoundEffect) {
@@ -43,8 +54,8 @@ cc.Class({
     },
 
     init(data) {
-        let player = gHandler.gameGlobal.player
-        gHandler.commonTools.loadHeadRes(player.headurl, this.headimg)
+        let player = hqq.gameGlobal.player
+        hqq.commonTools.loadHeadRes(player.headurl, this.headimg)
         this.goldlabel.string = player.gold.toString().replace(".", "/")
         this.nicklabel.string = player.nick
         this.idlabel.string = player.id
@@ -64,16 +75,16 @@ cc.Class({
             this.yinghangkalabel.node.color = new cc.Color(225, 225, 225)
             this.yinhangkabindbtn.active = false
         }
-        gHandler.audioMgr && gHandler.audioMgr.bgIsOpen ? this.musictoggle.check() : this.musictoggle.uncheck()
-        gHandler.audioMgr && gHandler.audioMgr.effectIsOpen ? this.audiotoggle.check() : this.audiotoggle.uncheck()
-        gHandler.eventMgr.register(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer", this.setPlayerInfo.bind(this))
-        gHandler.eventMgr.register(gHandler.eventMgr.getPayInfo, "hallPersonLayer", this.getPayInfo.bind(this))
+        hqq.audioMgr && hqq.audioMgr.bgIsOpen ? this.musictoggle.check() : this.musictoggle.uncheck()
+        hqq.audioMgr && hqq.audioMgr.effectIsOpen ? this.audiotoggle.check() : this.audiotoggle.uncheck()
+        hqq.eventMgr.register(hqq.eventMgr.refreshPlayerinfo, "hallPersonLayer", this.setPlayerInfo.bind(this))
+        hqq.eventMgr.register(hqq.eventMgr.getPayInfo, "hallPersonLayer", this.getPayInfo.bind(this))
         this.getPayInfo(); // 存在解绑的情况，所以每次进来都重新拉取一次支付宝和银行卡信息
     },
 
     getPayInfo() {
-        let endurl = "/api/with_draw/index?user_id=" + gHandler.gameGlobal.pay.user_id
-        endurl += "&token=e40f01afbb1b9ae3dd6747ced5bca532&package_id=" + gHandler.gameGlobal.pay.package_id
+        let endurl = "/api/with_draw/index?user_id=" + hqq.gameGlobal.pay.user_id
+        endurl += "&token=e40f01afbb1b9ae3dd6747ced5bca532&package_id=" + hqq.gameGlobal.pay.package_id
         endurl += "&version=1"
         let callback = (data) => {
             if (data && data.status == 0) {
@@ -82,15 +93,15 @@ cc.Class({
                 let isNotyinhang = true
                 for (let i = 0; i < list.length; i++) {
                     if (list[i].type == "3") {
-                        gHandler.gameGlobal.player.yinhangka = JSON.parse(list[i].info).card_num
-                        let kahaostr = gHandler.gameGlobal.player.yinhangka.toString()
+                        hqq.gameGlobal.player.yinhangka = JSON.parse(list[i].info).card_num
+                        let kahaostr = hqq.gameGlobal.player.yinhangka.toString()
                         this.yinghangkalabel.string = kahaostr.substring(0, 3) + "* **** **** " + kahaostr.substring(kahaostr.length - 4, kahaostr.length)
                         this.yinghangkalabel.node.color = new cc.Color(225, 225, 225)
                         this.yinhangkabindbtn.active = false
                         isNotyinhang = false
                     } else if (list[i].type == "2") {
-                        gHandler.gameGlobal.player.alipay = JSON.parse(list[i].info).account_card
-                        let alistr = gHandler.gameGlobal.player.alipay
+                        hqq.gameGlobal.player.alipay = JSON.parse(list[i].info).account_card
+                        let alistr = hqq.gameGlobal.player.alipay
                         this.alipaylabel.string = alistr.substring(0, 2) + "** **** **" + alistr.substring(alistr.length - 2, alistr.length)
                         this.alipaylabel.node.color = new cc.Color(225, 225, 225)
                         // this.alipaybindbtn.active = false
@@ -107,17 +118,19 @@ cc.Class({
                     this.yinghangkalabel.node.color = new cc.Color(152, 152, 152)
                     this.yinhangkabindbtn.active = true
                 }
+            } else {
+                hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "修改失败:" + data.msg)
             }
         }
-        let failcallback = (status) => {
-            cc.log('获取个人信息失败', status)
+        let failcallback = (status, forcejump, url, err, readyState) => {
+            hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "请求失败：" + status + ",err:" + err, forcejump, readyState)
         }
-        if (gHandler.gameGlobal.pay.pay_host == "") {
-            gHandler.logMgr.time("最快的pay地址")
+        if (hqq.gameGlobal.pay.pay_host == "") {
+            hqq.logMgr.time("最快的pay地址")
             let qcallback = (data, url) => {
-                gHandler.logMgr.timeEnd("最快的pay地址", url)
-                gHandler.gameGlobal.pay.pay_host = url;
-                gHandler.http.sendXMLHttpRequest({
+                hqq.logMgr.timeEnd("最快的pay地址", url)
+                hqq.gameGlobal.pay.pay_host = url;
+                hqq.http.sendXMLHttpRequest({
                     method: "GET",
                     urlto: url,
                     endurl: endurl,
@@ -126,16 +139,16 @@ cc.Class({
                     needJsonParse: true,
                 });
             }
-            gHandler.http.requestFastestUrlLine({
-                urllist: gHandler.appGlobal.remoteSeverinfo.pay_host,
+            hqq.http.requestFastestUrlLine({
+                urllist: hqq.app.remoteSeverinfo.pay_host,
                 endurl: "/checked",
                 callback: qcallback,
                 needJsonParse: false,
             })
         } else {
-            gHandler.http.sendXMLHttpRequest({
+            hqq.http.sendXMLHttpRequest({
                 method: "GET",
-                urlto: gHandler.gameGlobal.pay.pay_host,
+                urlto: hqq.gameGlobal.pay.pay_host,
                 endurl: endurl,
                 callback: callback,
                 failcallback: failcallback,
@@ -152,7 +165,7 @@ cc.Class({
             this.goldlabel.string = msg.game_gold.toString().replace(".", "/")
         }
         if (msg.game_img) {
-            gHandler.commonTools.loadHeadRes(msg.game_img, this.headimg)
+            hqq.commonTools.loadHeadRes(msg.game_img, this.headimg)
         }
         if (msg.phone_number) {
             this.phonelabel.string = msg.phone_number
@@ -187,79 +200,79 @@ cc.Class({
     },
 
     onClickChangeHeadImg() {
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 1 })
+        hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 1 })
     },
 
     onClickNick() {
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 3 })
+        hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 3 })
     },
 
     onClickCopy() {
-        if (gHandler.Reflect) {
-            if (gHandler.Reflect.setClipboard(this.idlabel.string)) {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制id成功")
+        if (hqq.reflect) {
+            if (hqq.reflect.setClipboard(this.idlabel.string)) {
+                hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "复制id成功")
             } else {
-                gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "复制id失败")
+                hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "复制id失败")
             }
         }
     },
 
     obnClickPhoneBind() {
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showBiglayer, 3)
+        hqq.eventMgr.dispatch(hqq.eventMgr.showBiglayer, 3)
     },
 
     onClickAlipayBind() {
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 2 })
+        hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 2 })
     },
 
     onClickYinHangKaBind() {
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showBiglayer, 2)
+        hqq.eventMgr.dispatch(hqq.eventMgr.showBiglayer, 2)
     },
 
     onClickChangeAccount() {
-        gHandler.eventMgr.dispatch(gHandler.eventMgr.showSamlllayer, { type: 4 })
+        hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 4 })
     },
 
     onClickMusic(event) {
-        gHandler.audioMgr && gHandler.audioMgr.setBgState(event.isChecked)
+        hqq.audioMgr && hqq.audioMgr.setBgState(event.isChecked)
     },
 
     onClickAudio(event) {
-        gHandler.audioMgr && gHandler.audioMgr.setEffectState(event.isChecked)
+        hqq.audioMgr && hqq.audioMgr.setEffectState(event.isChecked)
     },
 
     onClicktxt_se() {
         this.num0++
         if (this.num0 > 10 && this.num1 > 10) {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showConsole, null)
+            hqq.eventMgr.dispatch(hqq.eventMgr.showConsole, null)
         }
     },
     onClicktxt_bgm() {
         this.num1++
         if (this.num0 > 10 && this.num1 > 10) {
-            gHandler.eventMgr.dispatch(gHandler.eventMgr.showConsole, null)
+            hqq.eventMgr.dispatch(hqq.eventMgr.showConsole, null)
         }
     },
 
     onclickDownApk() {
-        gHandler.appGlobal.idDownApk = true
+        hqq.app.idDownApk = true
         cc.director.loadScene('loading')
     },
 
     // update (dt) {},
 
     onEnable() {
-        gHandler.eventMgr.register(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer", this.setPlayerInfo.bind(this))
-        gHandler.eventMgr.register(gHandler.eventMgr.getPayInfo, "hallPersonLayer", this.getPayInfo.bind(this))
+        hqq.eventMgr.register(hqq.eventMgr.refreshPlayerinfo, "hallPersonLayer", this.setPlayerInfo.bind(this))
+        hqq.eventMgr.register(hqq.eventMgr.getPayInfo, "hallPersonLayer", this.getPayInfo.bind(this))
     },
 
     onDisable() {
-        gHandler.eventMgr.unregister(gHandler.eventMgr.getPayInfo, "hallPersonLayer")
-        gHandler.eventMgr.unregister(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer")
+        hqq.eventMgr.unregister(hqq.eventMgr.getPayInfo, "hallPersonLayer")
+        hqq.eventMgr.unregister(hqq.eventMgr.refreshPlayerinfo, "hallPersonLayer")
     },
 
     onDestroy() {
-        gHandler.eventMgr.unregister(gHandler.eventMgr.getPayInfo, "hallPersonLayer")
-        gHandler.eventMgr.unregister(gHandler.eventMgr.refreshPlayerinfo, "hallPersonLayer")
+        hqq.eventMgr.unregister(hqq.eventMgr.getPayInfo, "hallPersonLayer")
+        hqq.eventMgr.unregister(hqq.eventMgr.refreshPlayerinfo, "hallPersonLayer")
     },
 });

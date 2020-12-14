@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.3",
+  "ver": "2.3.5",
   "uuid": "746e4480-5cdd-47bb-96ed-6bba6e16f62c",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,6 +7,8 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
+  "width": 71,
+  "height": 76,
   "platformSettings": {},
   "subMetas": {
     "icon_gonggao": {

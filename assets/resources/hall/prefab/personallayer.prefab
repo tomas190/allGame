@@ -4528,19 +4528,19 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 0,
-      "height": 50.4
+      "height": 27.72
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 1,
-      "y": 0.5
+      "y": 0
     },
     "_trs": {
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        623.454,
-        -328.17,
+        620.292,
+        -355.457,
         0,
         0,
         0,
@@ -4581,14 +4581,14 @@
     "_string": "",
     "_N$string": "",
     "_fontSize": 20,
-    "_lineHeight": 40,
+    "_lineHeight": 22,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
     "_batchAsBitmap": false,
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
+    "_N$horizontalAlign": 2,
+    "_N$verticalAlign": 2,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
     "_N$cacheMode": 0,
@@ -4606,7 +4606,7 @@
     "_target": null,
     "_alignFlags": 32,
     "_left": 0,
-    "_right": 43.54600000000005,
+    "_right": 46.70799999999997,
     "_top": 0,
     "_bottom": 0,
     "_verticalCenter": 0,
@@ -4810,7 +4810,7 @@
     "asset": {
       "__uuid__": "34bf7da8-cd3c-4c1c-b4ba-3f70f44722c1"
     },
-    "fileId": "8cKO/+ddFKyIhNFlO1g4GR",
+    "fileId": "58F+vlWJBCj4B7SVbhb5gn",
     "sync": false
   },
   {
