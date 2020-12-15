@@ -6641,7 +6641,7 @@
     "_groupIndex": 0,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "ebepCpFcxESp9qTPuUR5bA"
+    "_id": "90B7D3Mw5DSJCF7kYhxXAM"
   },
   {
     "__type__": "cc.Graphics",
@@ -6674,7 +6674,7 @@
       "a": 255
     },
     "_miterLimit": 10,
-    "_id": "dfyTvNl6ZK6bb1dw01EuWe"
+    "_id": "b1+dLzZBpL1YDexcktv31c"
   },
   {
     "__type__": "cc.Node",
@@ -7379,7 +7379,7 @@
       }
     ],
     "paused": false,
-    "defaultSkin": "",
+    "defaultSkin": "default",
     "defaultAnimation": "Animation1",
     "_preCacheMode": 0,
     "_cacheMode": 0,

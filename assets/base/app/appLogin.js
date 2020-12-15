@@ -228,9 +228,6 @@ let appLogin = {
                         hqq.app.hotServer.push(murllist[i]);
                     }
                 }
-                if (hqq.app.huanjin == "dev" && hqq.app.hotServer.length == 0) {
-                    hqq.app.hotServer = ["http://upgrade.539316.com"]
-                }
                 hqq.localStorage.globalSet(hqq.app.hotServerKey, hqq.app.hotServer)
                 hqq.localStorage.globalSet(hqq.app.serverListKey, hqq.app.serverList);
                 this.requestStableServerUrl();

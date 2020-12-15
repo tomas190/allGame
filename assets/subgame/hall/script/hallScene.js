@@ -691,20 +691,23 @@ cc.Class({
     },
     // 加载子游戏的子包 包含静态子包和动态子包
     loadBundle(subname) {
-        cc.assetManager.loadBundle(subname, function (err) {
-            if (err) {
-                console.log("此游戏不存在bundle，可在gHandler文件中注释子游戏")
-                return console.error(err);
-            }
-            console.log('load subpackage script successfully.', subname);
-        });
-        cc.assetManager.loadBundle(subname + "Res", function (err) {
-            if (err) {
-                return console.error(err);
-            }
-            hqq[subname + 'Res'] = cc.assetManager.getBundle(subname + "Res");
-            console.log('load subpackage script successfully.', subname + 'Res', subname + "Res");
-        });
+        if (!cc.assetManager.getBundle(subname)) {
+            cc.assetManager.loadBundle(subname, function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+                console.log('load subpackage script successfully.', subname);
+            });
+        }
+        if (!cc.assetManager.getBundle(subname + "Res")) {
+            cc.assetManager.loadBundle(subname + "Res", function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+                hqq[subname + 'Res'] = cc.assetManager.getBundle(subname + "Res");
+                console.log('load subpackage script successfully.', subname + 'Res', subname + "Res");
+            });
+        }
     },
     /** 判断子游戏是否下载更新等 */
     checkSubGameDownload(enname) {
@@ -1261,7 +1264,7 @@ cc.Class({
     },
     // 获取红包雨活动信息
     getHBYConfig() {
-        if (hqq.isDebug || CC_DEBUG) {
+        if (hqq.isDebug) {
             return
         }
         if (hqq.HBYinfo) {
@@ -1318,7 +1321,7 @@ cc.Class({
             }
             hqq.http.sendXMLHttpRequest({
                 method: 'GET',
-                urlto: hqq.gameGlobal.pay.pay_host + "/api/activity_config/activityConfig?package_id=1&token=e40f01afbb1b9ae3dd6747ced5bca532",
+                urlto: hqq.gameGlobal.pay.pay_host + "/api/activity_config/activityConfig?package_id=" + hqq.app.remoteSeverinfo.id + "&token=e40f01afbb1b9ae3dd6747ced5bca532",
                 callback: callback,
                 needJsonParse: true,
                 failcallback: failcallback,
