@@ -25,6 +25,7 @@ let hqqViewCtr = {
         iostiplayer: { path: "base/prefab/iostiplayer", scriptName: "iostiplayer" },
         netpanel: { path: "base/prefab/netpanel", scriptName: "hqqNetPanel" },
         netnode: { path: "base/prefab/netnode", scriptName: "hqqNetNode" },
+        hby: { path: "hall/prefab/hbylayer", scriptName: "hallHBY" },
     },
     setParentNode(node) {
         this.parentNode = node;
@@ -86,6 +87,7 @@ let hqqViewCtr = {
         hqq.eventMgr.register(hqq.eventMgr.showIosTipLayer, "hqqViewCtr", this.showIosTipLayer.bind(this))
         hqq.eventMgr.register(hqq.eventMgr.showLineChoiceLayer, "hqqViewCtr", this.showLineChoiceLayer.bind(this))
         hqq.eventMgr.register(hqq.eventMgr.showNetStateNode, "hqqViewCtr", this.showNetStateNode.bind(this))
+        hqq.eventMgr.register(hqq.eventMgr.showHBYLayer, "hqqViewCtr", this.showHBYLayer.bind(this))
         return this
     },
     showSmallsublayer(data) {
@@ -184,6 +186,11 @@ let hqqViewCtr = {
     showNetStateNode(data) {
         let path = this.config.netnode.path
         let scriptname = this.config.netnode.scriptName
+        this.showLayer(path, scriptname, data, this.netpanelIndex)
+    },
+    showHBYLayer(data) {
+        let path = this.config.hby.path
+        let scriptname = this.config.hby.scriptName
         this.showLayer(path, scriptname, data, this.netpanelIndex)
     },
 }

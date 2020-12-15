@@ -132,10 +132,14 @@ let appGlobal = {
     proxyUserID: 0, // 代理id
     packageID: 0, // 包体id
     netState: { // 网络状态分级
-        outstanding: 100,
-        good: 200,
-        kind: 500,
-        bad: 3000,
+        // outstanding: 100,
+        // good: 200,
+        // kind: 500,
+        // bad: 3000,
+        outstanding: 500,
+        good: 1000,
+        kind: 3000,
+        bad: 10000,
     },
     downloadUrl: '', // app下载地址
     packageInfo: null, // 包体内嵌的游戏信息
@@ -167,7 +171,7 @@ let appGlobal = {
             }
         } else {
             this.hotupdatePath = "com.test." + this.huanjin + ".android";
-            this.hotupdatePath += "/ccc2.4.3"
+            // this.hotupdatePath += "/ccc2.4.3"
         }
         this.platform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
         this.androidPlatform = "/com." + this.pinpai + "." + this.huanjin + ".android/";

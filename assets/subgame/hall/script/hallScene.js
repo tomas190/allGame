@@ -27,9 +27,13 @@ cc.Class({
         duihuanbtn: cc.Node, // 兑换按钮
         chongzhibtn: cc.Node, // 充值按钮
 
+        HBYbtn: cc.Node, // 红包雨按钮
+        JFCJbtn: cc.Node, // 积分抽奖按钮
+
         itembtn: cc.Node, // 子游戏按钮
         subgameview: cc.ScrollView, // 子游戏按钮缓动面板
         web: cc.WebView, // 网页
+        anilayer: cc.Node, // 红包雨页面
     },
 
     /** 脚本组件初始化，可以操作this.node // use this for initialization */
@@ -46,6 +50,28 @@ cc.Class({
         this.isSubBtnClicked = false
         hqq.audioMgr.setButtonEffect(true);
         !hqq.isDebug && this.getNotice();
+        if ((hqq.app.huanjin == 'online' && hqq.app.pinpai == 'debi') ||
+            (hqq.app.huanjin == 'pre' && hqq.app.pinpai == 'test') ||
+            (hqq.app.huanjin == 'dev' && hqq.app.pinpai == 'test')) {
+            this.HBYbtn.active = false
+            this.JFCJbtn.active = false
+            this.HBYTimeLabel = this.HBYbtn.getChildByName('timelabel').getComponent(cc.Label)
+            this.HBYTimeLabel.string = ""
+            if (!hqq.HBYTick) {
+                hqq.HBYTick = {
+                    startDate: [0, 0, 0],
+                    endDate: [0, 0, 0],
+                    hour: 0,
+                    mintute: 0,
+                    second: 0,
+                    isInOpen: false,
+                    isGet: false,
+                }
+            }
+        } else {
+            this.HBYbtn.active = false
+            this.JFCJbtn.active = false
+        }
         //网页版问题都处理完成前先屏蔽
         // if (cc.sys.os === cc.sys.OS_IOS) { // hqq.app.huanjin == 'dev' ||
         //     if (!hqq.localStorage.globalGet("isShowIosTip")) {
@@ -139,6 +165,30 @@ cc.Class({
             }
         }
         this.scheduleOnce(() => {
+            this.initWebSoketAndHttp();
+        }, 0)
+    },
+    initWebSoketAndHttp() {
+        if (!hqq.isDebug && !hqq.hallWebSocket) {
+            hqq.hallWebSocket = new hallWebSocket();
+            hqq.hallWebSocket.init();
+            let url = hqq.app.server;
+            if (url.indexOf("://") == -1) {
+                url = "ws://" + url;
+            } else {
+                var socket = url.split("://")[1];
+                var header = url.split("://")[0];
+                var socketHeader = '';
+                if (header == "http") {
+                    socketHeader = "ws://"
+                } else if (header == "https") {
+                    socketHeader = "ws://"
+                }
+                url = socketHeader + socket;
+            }
+            hqq.hallWebSocket.connect(url);
+        }
+        this.scheduleOnce(() => {
             this.initSubGameBtn();
         }, 0)
     },
@@ -221,36 +271,13 @@ cc.Class({
             }
         }
         this.scheduleOnce(() => {
-            this.initWebSoketAndHttp();
+            !hqq.isDebug && this.sgjConnect()
+            !hqq.isDebug && this.hbslConnect()
+            !hqq.isDebug && this.hbldConnect()
+            this.getHBYConfig();
         }, 0)
     },
-    initWebSoketAndHttp() {
-        if (!hqq.isDebug && !hqq.hallWebSocket) {
-            hqq.hallWebSocket = new hallWebSocket();
-            hqq.hallWebSocket.init();
-            let url = hqq.app.server;
-            if (url.indexOf("://") == -1) {
-                url = "ws://" + url;
-            } else {
-                var socket = url.split("://")[1];
-                var header = url.split("://")[0];
-                var socketHeader = '';
-                if (header == "http") {
-                    socketHeader = "ws://"
-                } else if (header == "https") {
-                    socketHeader = "ws://"
-                }
-                url = socketHeader + socket;
-            }
-            hqq.hallWebSocket.connect(url);
-        }
-        !hqq.isDebug && this.sgjConnect()
-        !hqq.isDebug && this.hbslConnect()
-        !hqq.isDebug && this.hbldConnect()
-        // this.scheduleOnce(() => {
-        //     this.subGameBtnEffect()
-        // }, 0)
-    },
+
     // 对左侧菜单按钮初始化
     initMenuBtn() {
         if (hqq.app.pinpai == "yuyu") {
@@ -615,6 +642,9 @@ cc.Class({
                         hqq.eventMgr.register(hqq.eventMgr.refreshHallTips, "hallScene", this.setNoticeReadState.bind(this))
                         if (hqq.needShowNotice) {
                             hqq.needShowNotice = false
+                            if (CC_DEBUG) {
+                                return
+                            }
                             hqq.eventMgr.dispatch(hqq.eventMgr.showNotice, null)
                         }
                     }
@@ -661,9 +691,9 @@ cc.Class({
     },
     // 加载子游戏的子包 包含静态子包和动态子包
     loadBundle(subname) {
-        console.log(" 加载子游戏的子包 包含静态子包和动态子包")
         cc.assetManager.loadBundle(subname, function (err) {
             if (err) {
+                console.log("此游戏不存在bundle，可在gHandler文件中注释子游戏")
                 return console.error(err);
             }
             console.log('load subpackage script successfully.', subname);
@@ -678,7 +708,6 @@ cc.Class({
     },
     /** 判断子游戏是否下载更新等 */
     checkSubGameDownload(enname) {
-        console.log("判断子游戏是否下载更新等")
         let subdata = this.getRemoteSubgame(hqq.subGameList[enname].game_id)
         if (subdata.open == 0) {
             this.setSubGameBtnState(enname, this.subGameBtnState.noOpen)
@@ -1141,7 +1170,7 @@ cc.Class({
         console.log("公告")
         // this._creatSubAccount()
         // return
-        // hqq.eventMgr.dispatch(hqq.eventMgr.showNotice, null)
+        hqq.eventMgr.dispatch(hqq.eventMgr.showNotice, null)
     },
     preloadSceneOnProgress(completedCount, totalCount, item) {
 
@@ -1161,14 +1190,14 @@ cc.Class({
     /** 全民代理  */
     onClickQMDL(event) {
         console.log("全民代理", event.target.getComponent(cc.Button).interactable)
-        // this.clickDelay(event)
-        // if (hqq.subModel.proxy.lanchscene != "") {
-        //     cc.director.preloadScene(hqq.subModel.proxy.lanchscene, this.preloadSceneOnProgress.bind(this), () => {
-        //         cc.director.loadScene(hqq.subModel.proxy.lanchscene);
-        //     })
-        // } else {
-        //     console.log("请配置全民代理场景")
-        // }
+        this.clickDelay(event)
+        if (hqq.subModel.proxy.lanchscene != "") {
+            cc.director.preloadScene(hqq.subModel.proxy.lanchscene, this.preloadSceneOnProgress.bind(this), () => {
+                cc.director.loadScene(hqq.subModel.proxy.lanchscene);
+            })
+        } else {
+            console.log("请配置全民代理场景")
+        }
     },
     /** 聊天 */
     onClickChatBtn(event) {
@@ -1201,8 +1230,8 @@ cc.Class({
         this.clickDelay(event)
         hqq.eventMgr.dispatch(hqq.eventMgr.showPayScene, "hall")
     },
+    // 免费金币
     onClickFreeGold(event) {
-        console.log("免费金币", event)
         this.clickDelay(event)
         if (hqq.gameGlobal.player.phonenum != "") {
             if (hqq.subModel.payActivity.lanchscene != "") {
@@ -1230,8 +1259,304 @@ cc.Class({
             cc.sys.openURL('http://game.539316.com/' + endurl)
         }
     },
-    enterSubWeb(custom) {
-
+    // 获取红包雨活动信息
+    getHBYConfig() {
+        if (hqq.isDebug || CC_DEBUG) {
+            return
+        }
+        if (hqq.HBYinfo) {
+            if (hqq.JFCJinfo.is_close == 1) { // 活动关闭
+                this.JFCJbtn.active = false
+            } else {
+                this.JFCJbtn.active = true
+            }
+            if (hqq.HBYinfo.is_close == 1) { // 活动关闭
+                this.HBYbtn.active = false
+            } else {
+                this.HBYbtn.active = true
+                if (!hqq.HBYTick.isGet) {
+                    this.getHBYFlag()
+                } else {
+                    this.dealHBYConfig()
+                }
+            }
+        } else {
+            let callback = (data, url) => {
+                // console.log(data)
+                for (let k in data.data) {
+                    if (data.data[k].name == "四季发财红包雨2") {
+                        let info = JSON.parse(data.data[k].info)
+                        // console.log(info)
+                        hqq.HBYinfo = info
+                        hqq.HBYinfo.is_close = data.data[k].is_close
+                        hqq.HBYinfo.activity_id = data.data[k].id
+                        if (hqq.HBYinfo.is_close == 1) { // 活动关闭
+                            this.HBYbtn.active = false
+                        } else {
+                            this.HBYbtn.active = true
+                            if (!hqq.HBYTick.isGet) {
+                                this.getHBYFlag()
+                            } else {
+                                this.dealHBYConfig()
+                            }
+                        }
+                    } else if (data.data[k].name == "幸运轮盘2") {
+                        let info = JSON.parse(data.data[k].info)
+                        hqq.JFCJinfo = info
+                        hqq.JFCJinfo.is_close = data.data[k].is_close
+                        hqq.JFCJinfo.activity_id = data.data[k].id
+                        if (hqq.JFCJinfo.is_close == 1) { // 活动关闭
+                            this.JFCJbtn.active = false
+                        } else {
+                            this.JFCJbtn.active = true
+                        }
+                    }
+                }
+            }
+            let failcallback = (status, forcejump, url, err, readyState) => {
+                console.log("获取红包雨活动信息", status, forcejump, url, err, readyState)
+            }
+            hqq.http.sendXMLHttpRequest({
+                method: 'GET',
+                urlto: hqq.gameGlobal.pay.pay_host + "/api/activity_config/activityConfig?package_id=1&token=e40f01afbb1b9ae3dd6747ced5bca532",
+                callback: callback,
+                needJsonParse: true,
+                failcallback: failcallback,
+            })
+        }
+    },
+    // 红包雨是否领取
+    getHBYFlag() {
+        let callback = (data, url) => {
+            if (data.data.received_packet == 1) { // 已领取
+                hqq.HBYTick.isGet = true
+            } else {
+                hqq.HBYTick.isGet = false
+            }
+            this.dealHBYConfig()
+        }
+        let failcallback = (status, forcejump, url, err, readyState) => {
+            console.log("获取红包雨活动信息", status, forcejump, url, err, readyState)
+        }
+        hqq.http.sendXMLHttpRequest({
+            method: 'GET',
+            urlto: hqq.gameGlobal.pay.pay_host + "/api/activity/getUserPacketFlag?token=e40f01afbb1b9ae3dd6747ced5bca532&user_id=" + hqq.gameGlobal.player.id,
+            callback: callback,
+            needJsonParse: true,
+            failcallback: failcallback,
+        })
+    },
+    // 分析处理红包雨配置，并修改倒计时
+    dealHBYConfig() {
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+        hqq.HBYTick.startDate = hqq.HBYinfo.start_date.split("-")
+        for (let i = 0; i < hqq.HBYTick.startDate.length; i++) {
+            hqq.HBYTick.startDate[i] = parseInt(hqq.HBYTick.startDate[i])
+        }
+        hqq.HBYTick.endDate = hqq.HBYinfo.end_date.split("-")
+        for (let i = 0; i < hqq.HBYTick.endDate.length; i++) {
+            hqq.HBYTick.endDate[i] = parseInt(hqq.HBYTick.endDate[i])
+        }
+        if (year < hqq.HBYTick.startDate[0] &&
+            month < hqq.HBYTick.startDate[1] &&
+            day < hqq.HBYTick.startDate[2]) {
+            this.HBYTimeLabel.string = "活动未开始"
+            return
+        }
+        if (year > hqq.HBYTick.endDate[0] &&
+            month > hqq.HBYTick.endDate[1] &&
+            day > hqq.HBYTick.endDate[2]) {
+            this.HBYTimeLabel.string = "活动结束"
+            return
+        }
+        hqq.HBYTick.mintute = 59 - minute
+        hqq.HBYTick.second = 59 - second
+        if (!cc.director.getScheduler().isScheduled(this.timeTickHBY, this)) {
+            this.schedule(this.timeTickHBY, 1)
+        }
+        for (let i = 0; i < hqq.HBYinfo.packetList.length; i++) {
+            if (hour < hqq.HBYinfo.packetList[i].start) { // 倒计时
+                hqq.HBYTick.isInOpen = false
+                hqq.HBYinfo.curPacket = hqq.HBYinfo.packetList[i]
+                hqq.HBYinfo.nextPacketIndex = (i + 1) == hqq.HBYinfo.packetList.length ? 0 : (i + 1)
+                hqq.HBYTick.hour = hqq.HBYinfo.packetList[i].start - hour - 1
+                return
+            } else if (hour == hqq.HBYinfo.packetList[i].start && minute < hqq.HBYinfo.packetList[i].mintute) { // 开抢中
+                hqq.HBYTick.isInOpen = true
+                hqq.HBYinfo.curPacket = hqq.HBYinfo.packetList[i]
+                hqq.HBYinfo.nextPacketIndex = (i + 1) == hqq.HBYinfo.packetList.length ? 0 : (i + 1)
+                return
+            }
+        }
+        if (year > hqq.HBYTick.endDate[0] &&
+            month > hqq.HBYTick.endDate[1] &&
+            (day + 1) > hqq.HBYTick.endDate[2]) {
+            this.HBYTimeLabel.string = "活动结束"
+            return
+        }
+        hqq.HBYTick.hour = hqq.HBYinfo.packetList[0].start + 23 - hour
+        hqq.HBYTick.isInOpen = false
+        hqq.HBYinfo.curPacket = hqq.HBYinfo.packetList[0]
+    },
+    // 红包雨倒计时及判断
+    timeTickHBY() {
+        if (hqq.HBYTick.isInOpen) {
+            this.HBYTimeLabel.string = "发放中"
+            let minute = new Date().getMinutes();
+            if (minute >= hqq.HBYinfo.curPacket.mintute) { // 此次红包雨结束，开始下一轮
+                hqq.HBYTick.isInOpen = false
+                hqq.HBYTick.isGet = false
+                this.dealHBYConfig()
+            }
+            if (!hqq.HBYTick.isGet && hqq.HBYTick.isInOpen) {
+                this.showHBYAni()
+            }
+            return
+        }
+        if (hqq.HBYTick.second == 0) {
+            if (hqq.HBYTick.mintute == 0) {
+                if (hqq.HBYTick.hour == 0) { // 时机已到，开奖中
+                    hqq.HBYTick.isInOpen = true
+                    this.HBYTimeLabel.string = "发放中"
+                    let minute = new Date().getMinutes();
+                    if (minute >= hqq.HBYinfo.curPacket.mintute) { // 此次红包雨结束，开始下一轮
+                        hqq.HBYTick.isInOpen = false
+                        hqq.HBYTick.isGet = false
+                        this.dealHBYConfig()
+                    }
+                    if (!hqq.HBYTick.isGet && hqq.HBYTick.isInOpen) {
+                        this.showHBYAni()
+                    }
+                    return
+                } else {
+                    hqq.HBYTick.hour -= 1
+                    hqq.HBYTick.mintute = 59
+                    hqq.HBYTick.second = 59
+                }
+            } else {
+                hqq.HBYTick.mintute -= 1
+                hqq.HBYTick.second = 59
+            }
+        } else {
+            hqq.HBYTick.second -= 1
+        }
+        let tempstr = "" + hqq.HBYTick.hour
+        if (hqq.HBYTick.hour < 10) {
+            tempstr = "0" + hqq.HBYTick.hour
+        }
+        if (hqq.HBYTick.mintute < 10) {
+            tempstr += ":0" + hqq.HBYTick.mintute
+        } else {
+            tempstr += ":" + hqq.HBYTick.mintute
+        }
+        if (hqq.HBYTick.second < 10) {
+            tempstr += ":0" + hqq.HBYTick.second
+        } else {
+            tempstr += ":" + hqq.HBYTick.second
+        }
+        this.HBYTimeLabel.string = tempstr
+    },
+    // 点击红包雨按钮
+    onClickHBY(event) {
+        if (hqq.HBYTick.isGet) {
+            hqq.eventMgr.dispatch(hqq.eventMgr.showHBYLayer, {
+                start_date: hqq.HBYinfo.start_date,
+                end_date: hqq.HBYinfo.end_date,
+                start: hqq.HBYinfo.packetList[hqq.HBYinfo.nextPacketIndex].start,
+                total: hqq.HBYinfo.packetList[hqq.HBYinfo.nextPacketIndex].total,
+            })
+        } else if (hqq.HBYTick.isInOpen) {
+            this.showHBYAni()
+        } else {
+            hqq.eventMgr.dispatch(hqq.eventMgr.showHBYLayer, {
+                start_date: hqq.HBYinfo.start_date,
+                end_date: hqq.HBYinfo.end_date,
+                start: hqq.HBYinfo.curPacket.start,
+                total: hqq.HBYinfo.curPacket.total,
+            })
+        }
+    },
+    // 显示红包雨特效
+    showHBYAni() {
+        if (this.anilayer.active) {
+            return
+        }
+        this.anilayer.active = true
+        this.anilayer.getChildByName('rain').getComponent(sp.Skeleton).setAnimation(0, 'hb_rain', true)
+        let ani2node = this.anilayer.getChildByName('clickopen')
+        let z1 = ani2node.getChildByName('z1')
+        let btn_close = ani2node.getChildByName('btn_close')
+        let numlabel = ani2node.getChildByName('numlabel').getComponent(cc.Label)
+        numlabel.string = ""
+        let ani2 = ani2node.getComponent(sp.Skeleton)
+        let clicknode = this.anilayer.getChildByName('clicknode')
+        btn_close.active = false
+        z1.active = false
+        ani2.setAnimation(0, "hb_click", true)
+        let hasclick = false
+        let callback = (gold) => {
+            hasclick = true
+            btn_close.active = true
+            z1.active = true
+            btn_close.on(cc.Node.EventType.TOUCH_END, (event) => {
+                this.anilayer.active = false
+            })
+            numlabel.string = gold
+            ani2node.setScale(0.2)
+            let act1 = cc.scaleTo(0.2, 1, 1.1)
+            let act2 = cc.scaleTo(0.2, 1, 1)
+            ani2node.runAction(cc.sequence(act1, act2))
+            ani2.setAnimation(0, 'hb_open', true)
+        }
+        clicknode.on(cc.Node.EventType.TOUCH_END, (event) => {
+            if (hasclick) {
+                console.log("已经点击过  四季发财红包雨")
+                return
+            }
+            this.requestHBY(callback)
+        })
+    },
+    // 拆红包
+    requestHBY(mcallback) {
+        let callback = (data, url) => {
+            console.log("拆红包", data, url)
+            hqq.HBYTick.isGet = true
+            if (data.status == -1) {
+                console.log("拆红包失败", data.msg)
+                this.anilayer.active = false
+                hqq.eventMgr.dispatch(hqq.eventMgr.showTip, data.msg)
+            } else {
+                mcallback(data.data.packet)
+            }
+        }
+        let failcallback = (status, forcejump, url, err, readyState) => {
+            console.log("failcallback 拆红包失败", status, forcejump, url, err, readyState)
+        }
+        hqq.http.sendXMLHttpRequest({
+            method: 'POST',
+            urlto: hqq.gameGlobal.pay.pay_host + "/api/activity/getPacket",
+            param: "token=e40f01afbb1b9ae3dd6747ced5bca532&user_id=" + hqq.gameGlobal.player.id + "&activity_id=" + hqq.HBYinfo.activity_id + "&package_id=" + hqq.app.remoteSeverinfo.id,
+            callback: callback,
+            needJsonParse: true,
+            failcallback: failcallback,
+        })
+    },
+    // 积分抽奖
+    onClickJFCJ(event) {
+        if (hqq.subModel.payActivity.lanchscene != "") {
+            cc.director.preloadScene(hqq.subModel.payActivity.lanchscene, () => {
+                hqq.isJFCJ = true
+                cc.director.loadScene(hqq.subModel.payActivity.lanchscene);
+            })
+        } else {
+            console.log("请配置精彩活动场景")
+        }
     },
     onReceiveBroadcast(mtype) {
         if (mtype == 1000) {

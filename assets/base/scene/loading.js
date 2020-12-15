@@ -22,7 +22,7 @@ cc.Class({
     // _global.cc = _global.cc || {};
     /** 脚本组件初始化，可以操作this.node // use this for initialization */ // " 开始游戏代码，loading界面加载 D/jswrapper"
     onLoad() {
-        console.log("开始游戏代码，loading界面加载 1.0.0")
+        console.log("开始游戏代码，loading界面加载")
         this.initHQQ()
         if (cc.sys.isBrowser) {
         } else if (hqq.app.pinpai == "debi") {

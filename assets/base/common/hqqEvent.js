@@ -32,6 +32,7 @@ let hqqEvent = {
     showIosTipLayer: 32,  // 显示ios添加网页版提示界面
     showLineChoiceLayer: 33, // 显示线路测试界面
     showNetStateNode: 34, // 显示当前线路状态节点
+    showHBYLayer: 35, // 显示红包雨界面
 
     onReceiveNologin: 40, // 
     onReceiveBroadcast: 41, // 

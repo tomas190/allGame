@@ -2,14 +2,10 @@ let appLogin = {
     init: function (data) {
         hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, "开始登陆")
         this.errinfo = ""
-        if (CC_JSB) {
-            this.isRealTimeLog = true;
+        if (hqq.isDebug) {
+            this.isRealTimeLog = false;
         } else {
-            if (cc.sys.isBrowser) {
-                this.isRealTimeLog = true;
-            } else {
-                this.isRealTimeLog = true;
-            }
+            this.isRealTimeLog = true;
         }
         let hotUpdateMgr = require("hotUpdateMgr");
         hqq.hotUpdateMgr = hotUpdateMgr;
@@ -28,7 +24,7 @@ let appLogin = {
                 hqq.app.deviceID = hqq.reflect.getDeviceId()
                 hqq.app.clipboard = hqq.reflect.getClipboard()
                 let nettype = jsb.Device.getNetworkType()            // 0 网络不通  1 通过无线或者有线本地网络连接因特网  2 通过蜂窝移动网络连接因特网
-                hqq.logMgr.log(templog + ",Clipboard:" + hqq.app.clipboard
+                !hqq.isDebug && hqq.logMgr.log(templog + ",Clipboard:" + hqq.app.clipboard
                     + ",NetworkType:" + (nettype != 0 ? nettype == 1 ? "通过无线或者有线本地网络连网" : "通过蜂窝移动网络连网" : "网络不通")
                     + ",getBatteryLevel:" + jsb.Device.getBatteryLevel()
                     + ",DeviceModel:" + jsb.Device.getDeviceModel()
@@ -36,7 +32,7 @@ let appLogin = {
                     + ',getAppPackageName:' + hqq.reflect.getAppPackageName())
             }
         } else {
-            hqq.logMgr.log(templog + ",browserType:" + cc.sys.browserType + ",browserVersion:" + cc.sys.browserVersion);
+            !hqq.isDebug && hqq.logMgr.log(templog + ",browserType:" + cc.sys.browserType + ",browserVersion:" + cc.sys.browserVersion);
         }
         this.localInit();
         this.getLocalIp(3)
@@ -179,7 +175,7 @@ let appLogin = {
             this.checkApkUpdata(response)
             let pn = cc.find('Canvas/Main Camera/layer/netnodepos')
             hqq.eventMgr.dispatch(hqq.eventMgr.showNetStateNode, { parent: pn, position: { x: 0, y: 0 } })
-            if (cc.sys.isNative) {
+            if (cc.sys.isNative && !hqq.isDebug) {
                 this.getBrandRes()
             }
         }
@@ -194,7 +190,7 @@ let appLogin = {
             failcallback: failcallback,
             needJsonParse: true,
         })
-        this.refreshServerList()
+        !hqq.isDebug && this.refreshServerList()
     },
     showChoiceLimeLayer() {
         let data = {
@@ -231,6 +227,9 @@ let appLogin = {
                     } else if (murllist[i].match("upgrade")) {
                         hqq.app.hotServer.push(murllist[i]);
                     }
+                }
+                if (hqq.app.huanjin == "dev" && hqq.app.hotServer.length == 0) {
+                    hqq.app.hotServer = ["http://upgrade.539316.com"]
                 }
                 hqq.localStorage.globalSet(hqq.app.hotServerKey, hqq.app.hotServer)
                 hqq.localStorage.globalSet(hqq.app.serverListKey, hqq.app.serverList);
@@ -503,7 +502,7 @@ let appLogin = {
                 data.temp_host[hqq.app.huanjin] = hqq.commonTools.swapItem(data.temp_host[hqq.app.huanjin], hqq.app.tempServerIndex, 0);
             }
             let callback = (response, url, checknum) => {
-                hqq.logMgr.timeEnd("最快的temp_host地址", url, response)
+                !hqq.isDebug && hqq.logMgr.timeEnd("最快的temp_host地址", url, response)
                 hqq.gameGlobal.proxy.temp_host = url;
                 hqq.app.downloadUrl = url + "?p=" + hqq.app.packageID + "&u=" + hqq.gameGlobal.player.account_name + "&m=" + hqq.app.huanjin;
                 hqq.app.tempServerIndex = checknum;
@@ -554,6 +553,7 @@ let appLogin = {
                 hqq.gameGlobal.player.account_pass = hqq.app.account_pass
                 this.officialLogin()
             } else {
+                console.log("请在appGlobal文件中配置自己的账号密码进行登录")
                 this.loginWithUUID();
             }
         } else {
@@ -1436,7 +1436,7 @@ let appLogin = {
     },
     getBrandRes() {
         let reslist = hqq.app.versionJson[hqq.app.pinpai].brandRes;
-        if (!reslist) {
+        if (!reslist && !hqq.isDebug) {
             console.log("云端未配置品牌资源信息")
             return
         }
@@ -1476,7 +1476,7 @@ let appLogin = {
     setBrandRes() {
         if (cc.director.getScene().name == "loading") {
             let reslist = hqq.app.versionJson[hqq.app.pinpai].brandRes;
-            if (!reslist) {
+            if (!reslist && !hqq.isDebug) {
                 console.log("云端未配置品牌资源信息")
                 return
             }

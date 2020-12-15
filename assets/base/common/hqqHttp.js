@@ -361,14 +361,15 @@ let hqqHttp = {
     stopTestLint() {
         this.canTest = false
     },
-    testLine(urllist, callback, maxTask) {
+    testLine(urllist, callback, maxTask, maxTime) {
         this.canTest = true
         maxTask = maxTask || 1
+        maxTime = maxTime || 3000
         let testindex = 0
         let mycallback = (url, index, spendtime, err) => {
             callback(url, index, spendtime, err)
             if (testindex < urllist.length && this.canTest) {
-                this._testLine(urllist[testindex], testindex, mycallback)
+                this._testLine(urllist[testindex], testindex, mycallback, maxTime)
                 testindex++
             } else {
                 // 结束
@@ -376,18 +377,15 @@ let hqqHttp = {
         }
         for (let i = 0; i < maxTask; i++) {
             if (testindex < urllist.length && this.canTest) {
-                this._testLine(urllist[testindex], testindex, mycallback)
+                this._testLine(urllist[testindex], testindex, mycallback, maxTime)
                 testindex++
             }
         }
     },
-    _testLine(url, testindex, callback) {
+    _testLine(url, testindex, callback, maxTime) {
         let xhr = new XMLHttpRequest()
-        xhr.timeout = 3000
-        let timestart
-        xhr.onloadstart = () => {
-            timestart = Date.now()
-        }
+        xhr.timeout = maxTime
+        let timestart = Date.now()
         xhr.ontimeout = () => {
             let spendtime = Date.now() - timestart
             callback(url, testindex, spendtime, "ontimeout")
