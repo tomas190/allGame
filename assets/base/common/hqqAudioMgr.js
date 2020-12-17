@@ -114,7 +114,7 @@ let audioMgr = {
         }
         delete this.nameToMusicPath[name]
     },
-    playAudio(name, type) {
+    playAudio(name, type, subbundle) {
         if (this.resMap[name]) {
             if (type == 'bg') {
                 if (this.bgIsOpen) {
@@ -128,23 +128,43 @@ let audioMgr = {
             }
         } else {
             if (this.nameToMusicPath[name]) {
-                cc.resources.load(this.nameToMusicPath[name], cc.AudioClip, (err, t) => {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        this.resMap[name] = t
-                        if (type == 'bg') {
-                            if (this.bgIsOpen) {
-                                this.bgchip = this.resMap[name]
-                                this.bgId = cc.audioEngine.playMusic(this.resMap[name], true, this.bgVolume);
-                            }
+                if (subbundle) {
+                    subbundle.load(this.nameToMusicPath[name], cc.AudioClip, (err, t) => {
+                        if (err) {
+                            console.log(err)
                         } else {
-                            if (this.effectIsOpen) {
-                                cc.audioEngine.playEffect(this.resMap[name], false, this.effectVolume);
+                            this.resMap[name] = t
+                            if (type == 'bg') {
+                                if (this.bgIsOpen) {
+                                    this.bgchip = this.resMap[name]
+                                    this.bgId = cc.audioEngine.playMusic(this.resMap[name], true, this.bgVolume);
+                                }
+                            } else {
+                                if (this.effectIsOpen) {
+                                    cc.audioEngine.playEffect(this.resMap[name], false, this.effectVolume);
+                                }
                             }
                         }
-                    }
-                })
+                    })
+                } else {
+                    cc.resources.load(this.nameToMusicPath[name], cc.AudioClip, (err, t) => {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            this.resMap[name] = t
+                            if (type == 'bg') {
+                                if (this.bgIsOpen) {
+                                    this.bgchip = this.resMap[name]
+                                    this.bgId = cc.audioEngine.playMusic(this.resMap[name], true, this.bgVolume);
+                                }
+                            } else {
+                                if (this.effectIsOpen) {
+                                    cc.audioEngine.playEffect(this.resMap[name], false, this.effectVolume);
+                                }
+                            }
+                        }
+                    })
+                }
             } else {
                 console.log('没有这个音效')
             }
@@ -163,8 +183,8 @@ let audioMgr = {
             hqq.localStorage.globalSet("effectVolumeKey", this.effectVolume);
         }
     },
-    playBg(name = "hallbg") {
-        this.playAudio(name, 'bg');
+    playBg(name = "hallbg", subbundle) {
+        this.playAudio(name, 'bg', subbundle);
     },
     pauseBg() {
         if (this.bgId || (this.bgId === 0)) {
@@ -181,8 +201,8 @@ let audioMgr = {
             cc.audioEngine.stopMusic()
         }
     },
-    playEffect(name) {
-        this.playAudio(name, 'effect');
+    playEffect(name, subbundle) {
+        this.playAudio(name, 'effect', subbundle);
     },
 }
 

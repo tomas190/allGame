@@ -1,4 +1,5 @@
 let gHandler = {
+    isOtherGame: false, // 是否是接入的第三方
     needShowNotice: false, // 是否需要显示公告界面
     language: "CN", // 语言种类   汉语 CN 英语 EN 越南语 VI 泰语 TH
     isDebug: true, // 是否是子游戏开发调试状态

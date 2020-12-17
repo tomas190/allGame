@@ -47,7 +47,7 @@ cc.Class({
     },
 
     onClickExit() {
-        cc.director.loadScene(hqq.hallconfig.lanchscene)
+        cc.director.loadScene(hqq.hallConfig.lanchscene)
     },
 
     // update (dt) {},

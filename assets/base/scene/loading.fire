@@ -184,7 +184,7 @@
       "array": [
         0,
         0,
-        243.35313846342729,
+        242.48711305964284,
         0,
         0,
         0,
@@ -649,7 +649,7 @@
     "_groupIndex": 0,
     "groupIndex": 0,
     "showInEditor": false,
-    "_id": "1cxpVL7SZJ85Wdt9/5v7kd"
+    "_id": "01ypSvzt5Gvb5x+99fGFyb"
   },
   {
     "__type__": "cc.Graphics",
@@ -682,7 +682,7 @@
       "a": 255
     },
     "_miterLimit": 10,
-    "_id": "074eA96r1CbIbcBPImWlyJ"
+    "_id": "90vzXj84ZJurm3cnHrPNjP"
   },
   {
     "__type__": "sp.Skeleton",

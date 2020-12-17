@@ -4,7 +4,8 @@
  */
 var headerPanel = require("QZNNRoomTopPanel");
 var centerPanel = require("QZNNRoomCenterPanel");
-var cmd = require("QZNNCMD")
+var cmd = require("QZNNCMD");
+const gHandler = require("../../../../../base/common/gHandler");
 cc.Class({
     extends: cc.Component,
 
@@ -22,6 +23,10 @@ cc.Class({
             type: cc.Node
         },
         loadBtn: {
+            default: null,
+            type: cc.Node
+        },
+        testBtn: {
             default: null,
             type: cc.Node
         },
@@ -43,7 +48,12 @@ cc.Class({
         this._scene = this.node.getComponent("QZNNRoomScene");
         cc.gg.audioMgr.pauseAll();
         let on_off = hqq.audioMgr.getBgState();
-        on_off && cc.gg.audioMgr.playBGM("language/CN/nnMusic/roomBG")
+        // on_off && cc.gg.audioMgr.playBGM("language/CN/nnMusic/roomBG")
+        hqq.audioMgr.register("test", "language/CN/nnMusic/qznn_lose2")
+    },
+
+    onClieckTest() {
+        hqq.audioMgr.playEffect("test", hqq.qznnRes)
     },
 
     start: function () {
