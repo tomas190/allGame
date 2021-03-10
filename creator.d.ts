@@ -6303,6 +6303,7 @@ declare namespace cc {
 		/** !#en Indicates whether its native object should be preloaded from native url.
 		!#zh 禁止预加载原生对象。 */
 		static preventPreloadNativeObject: boolean;
+        getSpriteFrame: SpriteFrame;
 		/**
 		!#en
 		Returns the asset's url.

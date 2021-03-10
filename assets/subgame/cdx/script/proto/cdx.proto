@@ -1,0 +1,250 @@
+syntax = "proto3";
+
+package msg;
+
+// 消息ID
+enum MessageID {
+    MSG_Ping = 0;
+    MSG_Pong = 1;
+    MSG_Login_C2S = 2;
+    MSG_Login_S2C = 3;
+    MSG_Logout_C2S = 4;
+    MSG_Logout_S2C = 5;
+    MSG_JoinRoom_C2S = 6;
+    MSG_JoinRoom_S2C = 7;
+    MSG_EnterRoom_S2C = 8;
+    MSG_LeaveRoom_C2S = 9;
+    MSG_LeaveRoom_S2C = 10;
+    MSG_ActionTime_S2C = 11;
+    MSG_PlayerAction_C2S = 12;
+    MSG_PlayerAction_S2C = 13;
+    MSG_PotChangeMoney_S2C = 14;
+    MSG_UptPlayerList_S2C = 15;
+    MSG_ResultData_S2C = 16;
+    MSG_BankerData_C2S = 17;
+    MSG_BankerData_S2C = 18;
+    MSG_EmojiChat_C2S = 19;
+    MSG_EmojiChat_S2C = 20;
+    MSG_SendActTime_S2C = 21;
+}
+
+// 游戏阶段
+enum GameStep {
+    XX_Step = 0;
+    Banker = 1;
+    Banker2 = 2;
+    DownBet = 3;
+    Settle = 4;
+}
+
+enum PlayerStatus {
+    XX_Status = 0;
+    PlayGame = 1; // 游戏状态
+    WatchGame = 2; // 观战状态
+}
+
+enum BankerStatus {
+    BankerNot = 0;
+    BankerUp = 1;
+    BankerDown = 2;
+}
+
+//注池类型
+enum PotType {
+    XX_Pot = 0;
+    BigPot = 1;
+    SmallPot = 2;
+    SinglePot = 3;
+    DoublePot = 4;
+    PairPot = 5;
+    StraightPot = 6;
+    LeopardPot = 7;
+}
+
+//卡牌类型
+enum CardsType {
+    XX_Card = 0;
+    Pair = 1; // 对子
+    Straight = 2; // 顺子
+    Leopard = 3; // 豹子
+}
+
+message Ping {
+}
+
+message Pong {
+    int64 serverTime = 1; // 服务器时间戳
+}
+
+message PlayerInfo {
+    string Id = 1;
+    string nickName = 2;
+    string headImg = 3;
+    double account = 4;
+}
+
+message Login_C2S {
+    string Id = 1;
+    string PassWord = 2;
+    string Token = 3;
+}
+
+message Login_S2C {
+    PlayerInfo playerInfo = 1;
+    bool backroom = 2;
+    int32 PlayerNum = 3;
+}
+
+message Logout_C2S {
+}
+
+message Logout_S2C {
+}
+
+//玩家各注池下注的金额
+message DownBetMoney {
+    int32 BigDownBet = 1;
+    int32 SmallDownBet = 2;
+    int32 SingleDownBet = 3;
+    int32 DoubleDownBet = 4;
+    int32 PairDownBet = 5;
+    int32 StraightDownBet = 6;
+    int32 LeopardDownBet = 7;
+}
+
+message PotWinList {
+    int32 resultNum = 1; // 开奖结果
+    int32 bigSmall = 2; // 大小列表 1小,2大
+    int32 sinDouble = 3; // 单双列列表 1单,2双
+    CardsType cardType = 4; // 比牌类型 1对,2顺,3豹
+}
+
+message PlayerData {
+    PlayerInfo playerInfo = 1;
+    DownBetMoney downBetMoney = 2; //玩家各注池下注的金额
+    PlayerStatus status = 3; // 玩家状态
+    double bankerMoney = 4; // 庄家金额
+    int32 bankerCount = 5; // 连庄次数
+    int32 totalDownBet = 6; // 玩家房间总下注
+    int32 winTotalCount = 7; // 玩家房间Win总次数
+    double resultMoney = 8; // 本局结算金额
+    repeated PotWinList potWinList = 9; // 游戏记录开奖列表
+    repeated DownBetHistory downBetHistory = 10; // 下注记录
+    bool IsAction = 11; // 玩家是否行动
+    bool IsBanker = 12; // 玩家是否庄家
+    bool IsRobot = 13; // 玩家是否机器人
+}
+
+message DownBetHistory {
+    string timeFmt = 1;
+    repeated int32 resNum = 2;
+    int32 result = 3;
+    int32 sinDouble = 4;
+    int32 bigSmall = 5;
+    CardsType cardType = 6; // 比牌类型 1对,2顺,3豹
+    DownBetMoney downBetMoney = 7;
+
+}
+
+message HistoryData {
+    string timeFmt = 1;
+    repeated int32 resNum = 2;
+    int32 result = 3;
+    int32 sinDouble = 4;
+    int32 bigSmall = 5;
+    CardsType cardType = 6; // 比牌类型 1对,2顺,3豹
+}
+
+message RoomData {
+    string roomId = 1;
+    repeated PlayerData playerData = 2;
+    int32 gameTime = 3; // 游戏时间
+    GameStep gameStep = 4; // 当前游戏阶段状态
+    repeated int32 resultInt = 5; // 结算数据
+    DownBetMoney potMoneyCount = 6; // 注池金额集合
+    repeated PotWinList potWinList = 7; // 游戏记录开奖列表
+    repeated HistoryData historyData = 8; // 历史记录数据
+    repeated PlayerData tablePlayer = 9; // 桌面玩家
+}
+
+message JoinRoom_C2S {
+    string roomId = 1;
+}
+
+message JoinRoom_S2C {
+    RoomData roomData = 1;
+}
+
+message EnterRoom_S2C {
+    RoomData roomData = 1;
+}
+
+message LeaveRoom_C2S {
+}
+
+message LeaveRoom_S2C {
+    PlayerInfo playerInfo = 1;
+}
+
+message ActionTime_S2C {
+    GameStep gameStep = 1; // 当前状态
+    RoomData roomData = 2; // 房间数据
+}
+
+message PlayerAction_C2S {
+    int32 downBet = 1; // 下注金额
+    PotType downPot = 2; // 下注注池类型
+    bool IsAction = 3; // 玩家是否行动
+}
+
+message PlayerAction_S2C {
+    string Id = 1;
+    int32 downBet = 2; // 下注金额
+    PotType downPot = 3; // 下注注池类型
+    bool IsAction = 4; // 玩家是否行动
+    double account = 5; // 玩家的最新金额
+}
+
+// 广播注池金额变化
+message PotChangeMoney_S2C {
+    DownBetMoney potMoneyCount = 1; //房间注池金额总数量集合
+}
+
+// 更新房间用户列表
+message UptPlayerList_S2C {
+    repeated PlayerData playerList = 1;
+}
+
+message ResultData_S2C {
+    RoomData roomData = 1;
+}
+
+message BankerData_C2S {
+    BankerStatus status = 1;
+    int32 takeMoney = 2;
+}
+
+message BankerData_S2C {
+    PlayerData banker = 1;
+    int32 takeMoney = 2;
+}
+
+// 表情发送
+message EmojiChat_C2S {
+    int32 actNum = 1;
+    string goalId = 2;
+}
+
+// 表情发送
+message EmojiChat_S2C {
+    int32 actNum = 1;
+    string actId = 2;
+    string goalId = 3;
+}
+
+// 发送时间
+message SendActTime_S2C {
+    int32 startTime = 1;
+    int32 gameTime = 2;
+    GameStep gameStep = 3; // 当前状态
+}

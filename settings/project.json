@@ -14,10 +14,10 @@
   "group-list": [
     "default"
   ],
-  "start-scene": "cde9ef7f-c993-4fd1-b7a0-fa5b4d7019b4",
-  "design-resolution-width": 1136,
-  "design-resolution-height": 960,
-  "fit-width": false,
+  "start-scene": "8b856e9f-fb72-4824-91dd-09695ad33f9f",
+  "design-resolution-width": 1334,
+  "design-resolution-height": 750,
+  "fit-width": true,
   "fit-height": true,
   "use-project-simulator-setting": false,
   "simulator-orientation": false,

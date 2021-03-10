@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "1887eedb-6a37-43bf-8396-f50cddfe552d",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 436,
+  "height": 339,
+  "platformSettings": {},
+  "subMetas": {
+    "cdxLogo": {
+      "ver": "1.0.4",
+      "uuid": "dc6ff569-e38c-40ba-b833-e95086084d97",
+      "rawTextureUuid": "1887eedb-6a37-43bf-8396-f50cddfe552d",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 436,
+      "height": 339,
+      "rawWidth": 436,
+      "rawHeight": 339,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

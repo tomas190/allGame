@@ -1,0 +1,122 @@
+{
+"skeleton": { "hash": "hGNdKq6tP8okTQDNLoqjRuKpbgQ", "spine": "3.6.53", "width": 288, "height": 441 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "bg", "parent": "root" },
+	{ "name": "roomlistBG", "parent": "bg" },
+	{ "name": "cm1", "parent": "roomlistBG", "x": -43.5, "y": -85 },
+	{ "name": "dcm1", "parent": "roomlistBG", "x": 39.5, "y": -50.5 },
+	{ "name": "q", "parent": "roomlistBG", "x": 7, "y": -126 },
+	{ "name": "trophy1", "parent": "roomlistBG", "x": -37.38, "y": -1.94 }
+],
+"slots": [
+	{ "name": "bg", "bone": "bg" },
+	{ "name": "roomlistBG", "bone": "roomlistBG", "attachment": "roomlistBG" },
+	{ "name": "trophy1", "bone": "trophy1", "attachment": "c" },
+	{ "name": "cm1", "bone": "cm1", "attachment": "cm" },
+	{ "name": "dcm1", "bone": "dcm1", "attachment": "dcm" },
+	{ "name": "q", "bone": "q", "attachment": "q" }
+],
+"skins": {
+	"default": {
+		"cm1": {
+			"cm": { "width": 55, "height": 59 }
+		},
+		"dcm1": {
+			"dcm": { "width": 169, "height": 168 }
+		},
+		"q": {
+			"q": { "width": 168, "height": 83 }
+		},
+		"roomlistBG": {
+			"roomlistBG": { "width": 288, "height": 441 }
+		},
+		"trophy1": {
+			"c": { "x": -6.12, "y": -32.06, "width": 169, "height": 187 }
+		}
+	}
+},
+"animations": {
+	"cdx_room1": {
+		"bones": {
+			"root": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 2.6667, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 2.6667, "x": 0, "y": 0 }
+				]
+			},
+			"bg": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 2.6667, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 2.6667, "x": 0, "y": 0 }
+				]
+			},
+			"cm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 2.6667, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 1.3333, "x": 0, "y": 7 },
+					{ "time": 2.6667, "x": 0, "y": 0 }
+				]
+			},
+			"dcm1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.5, "angle": -8.72 },
+					{ "time": 2.6667, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 1.5, "x": 0, "y": 10 },
+					{ "time": 2.6667, "x": 0, "y": 0 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 },
+					{ "time": 1.5, "x": 1.05, "y": 1.02 },
+					{ "time": 2.6667, "x": 1, "y": 1 }
+				],
+				"shear": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 1.5, "x": 0, "y": -2.24 },
+					{ "time": 2.6667, "x": 0, "y": 0 }
+				]
+			},
+			"trophy1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 0.5667, "angle": 3, "curve": "stepped" },
+					{ "time": 0.7, "angle": 3 },
+					{ "time": 2, "angle": -1 },
+					{ "time": 2.6667, "angle": 0 }
+				],
+				"translate": [
+					{
+						"time": 0,
+						"x": 0,
+						"y": 0,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{
+						"time": 1.6667,
+						"x": 0,
+						"y": 5,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 2.6667, "x": 0, "y": 0 }
+				]
+			}
+		}
+	}
+}
+}

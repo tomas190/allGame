@@ -1,0 +1,34 @@
+
+cdx_loading.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+di
+  rotate: false
+  xy: 2, 153
+  size: 435, 323
+  orig: 437, 325
+  offset: 1, 1
+  index: -1
+guang
+  rotate: false
+  xy: 2, 2
+  size: 149, 149
+  orig: 151, 151
+  offset: 1, 1
+  index: -1
+light
+  rotate: false
+  xy: 439, 329
+  size: 25, 25
+  orig: 27, 27
+  offset: 1, 1
+  index: -1
+title2
+  rotate: false
+  xy: 439, 356
+  size: 486, 120
+  orig: 488, 122
+  offset: 1, 1
+  index: -1

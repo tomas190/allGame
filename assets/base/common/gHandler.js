@@ -360,8 +360,8 @@ let gHandler = {
         "qznn": {
             zhname: "抢庄牛牛", // 中文游戏名
             enname: "qznn", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "NNGame", // 跳转场景名
-            game_id: "5b1f3a3cb76a591e7f251714",
+            lanchscene: "cdx_load", // 跳转场景名
+            game_id: "5b1f3a3cb76a591e7f251734",
             serverUrl: "/qznn", // 游戏服务器地址
             endUrl: "/qznn", // 游戏服务器地址
             hasAccount: false, // 是否已创建子游戏账号

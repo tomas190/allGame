@@ -1,0 +1,48 @@
+
+tt_tou_xiaoguo.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+coin
+  rotate: false
+  xy: 427, 196
+  size: 27, 30
+  orig: 27, 30
+  offset: 0, 0
+  index: -1
+guang1
+  rotate: false
+  xy: 2, 57
+  size: 164, 169
+  orig: 164, 169
+  offset: 0, 0
+  index: -1
+guang2
+  rotate: false
+  xy: 168, 68
+  size: 158, 158
+  orig: 158, 158
+  offset: 0, 0
+  index: -1
+light01
+  rotate: false
+  xy: 2, 2
+  size: 49, 53
+  orig: 51, 55
+  offset: 1, 1
+  index: -1
+light02
+  rotate: false
+  xy: 328, 76
+  size: 49, 53
+  orig: 51, 55
+  offset: 1, 1
+  index: -1
+light05
+  rotate: false
+  xy: 328, 131
+  size: 97, 95
+  orig: 97, 97
+  offset: 0, 1
+  index: -1
