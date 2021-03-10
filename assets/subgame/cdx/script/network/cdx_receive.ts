@@ -5,9 +5,9 @@
  * @LastEditors  : Palos
  * @LastEditTime : 2019-12-31 14:31:36
  */
-import { ISendDelegate, IReceiveDelegate } from "./transmit";
-import { initSender } from "./sendMsg";
-import { initReceiver } from "./handle";
+import { ISendDelegate, IReceiveDelegate } from "./cdx_transmit";
+import { initSender } from "./cdx_sendMsg";
+import { initReceiver } from "./cdx_handle";
 import { app } from "../conf/config";
 import { msg } from "../proto/proto_cdx_msg";
 import { events, EventKind } from "../conf/event";

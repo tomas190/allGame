@@ -1,4 +1,4 @@
-import { initWebSocket, initio } from "./network/receive";
+import { initWebSocket, initio } from "./network/cdx_receive";
 import { events, EventKind } from "./conf/event";
 import { msg } from "./proto/proto_cdx_msg";
 import Storage from "./cdx_Storage";
@@ -16,6 +16,7 @@ export default class NewClass extends cc.Component {
         this.RegisterEvent()
         // 显示加载
         this.ShowJiaZai()
+
         // cc.assetManager.loadBundle("cdxRes", function (err) {
         //     if (err) {
         //         return console.error(err);

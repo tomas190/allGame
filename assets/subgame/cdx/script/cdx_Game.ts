@@ -48,7 +48,7 @@ export default class NewClass extends cc.Component {
     private player4: cc.Node = null;       // 桌面player4
     private player5: cc.Node = null;       // 桌面player5
     private player6: cc.Node = null;       // 桌面player6
-    private bankerInfo: cc.Node = null;    // 庄家 
+    private bankerInfo: cc.Node = null;    // 庄家信息
     private bankerList: cc.Node = null;    // 庄家列表
     private downBanker: cc.Node = null;    // 庄家下庄
     private notBanker: cc.Node = null;     // 不抢庄
@@ -154,6 +154,11 @@ export default class NewClass extends cc.Component {
     }
     
     update(dt) {
+        if (this.backTime - dt >= 0) {
+            this.backTime -= dt;
+        } else {
+            this.backTime = 0;
+        }
         if (this.emojTime - dt >= 0) {
             this.emojTime -= dt;
         } else {
@@ -210,9 +215,17 @@ export default class NewClass extends cc.Component {
             this.UpdateTablePlayer() 
             bankerStep.active = true
             this.IsClickBanker = false
+            // 判断玩家如果是庄家就关闭下注按钮
+            if (Storage.PlayerData.IsBanker == true) {
+                this.CloseChipsButton()
+            }
         }else if (data.gameStep == msg.GameStep.Banker2) { // 连庄阶段
             // 更新显示桌面玩家
             this.UpdateTablePlayer() 
+            // 判断玩家如果是庄家就关闭下注按钮
+            if (Storage.PlayerData.IsBanker == true) {
+                this.CloseChipsButton()
+            }
             // 显示庄家阶段
             let bankerLian = cc.find("Canvas/roomScens/gameStep/bankerLian")
             bankerLian.active = true
@@ -251,264 +264,6 @@ export default class NewClass extends cc.Component {
             this.downBetFont.active = false
             this.ActionNum.active = false
         }
-    }
-
-    ClearTableData() {
-        // 清空桌面缓存数据
-        Storage.RoomData = null
-        // 清除奖池框动画
-        let potsBox = cc.find("Canvas/roomScens/cdx_table/potsBox")
-        potsBox.getChildByName("singleBox").active = false
-        potsBox.getChildByName("doubleBox").active = false
-        potsBox.getChildByName("bigBox").active = false
-        potsBox.getChildByName("smallBox").active = false
-        potsBox.getChildByName("pairBox").active = false
-        potsBox.getChildByName("straightBox").active = false
-        potsBox.getChildByName("leopardBox").active = false
-        // 清除结算数字动画
-        let res01 = cc.find("Canvas/roomScens/resultNum/res01")
-        res01.active = false
-        res01.getChildByName("sinDouble").getChildByName("single").active = false
-        res01.getChildByName("sinDouble").getChildByName("double").active = false
-        res01.getChildByName("smallBig").getChildByName("big").active = false
-        res01.getChildByName("smallBig").getChildByName("small").active = false
-        let res01Num = res01.getChildByName("number")
-        this.ClearResNumber(res01Num) 
-
-        let res02 = cc.find("Canvas/roomScens/resultNum/res02")
-        res02.active = false
-        let res02Num01 = res02.getChildByName("number01")
-        let res02Num02 = res02.getChildByName("number02")
-        let res02Num03 = res02.getChildByName("number03")
-        let res02Num04 = res02.getChildByName("number04")
-        this.ClearResNumber(res02Num01) 
-        this.ClearResNumber(res02Num02) 
-        this.ClearResNumber(res02Num03) 
-        this.ClearResNumber(res02Num04) 
-
-        let res03 = cc.find("Canvas/roomScens/resultNum/res03")
-        res03.active = false
-        let res03Num01 = res03.getChildByName("number01")
-        let res03Num02 = res03.getChildByName("number02")
-        let res03Num03 = res03.getChildByName("number03")
-        let res03Num04 = res03.getChildByName("number04")
-        this.ClearResNumber(res03Num01) 
-        this.ClearResNumber(res03Num02) 
-        this.ClearResNumber(res03Num03) 
-        this.ClearResNumber(res03Num04) 
-        res03Num04.getChildByName("sk").active = false
-
-        // 庄家下庄显示
-        this.downBanker.active = false
-
-        // 清空庄家数据
-        this.ClearBankerInfo()
-
-        // 清空桌面筹码
-        this.ClearTableChips()
-    }
-
-    // 清空庄家数据
-    ClearBankerInfo() {
-        this.bankerInfo.getChildByName("goldBox").getChildByName("money").active = false
-        this.bankerInfo.getChildByName("name").active = false
-        this.bankerInfo.getChildByName("image").active = false
-        this.bankerInfo.getChildByName("bankerLable").active = false
-    }
-
-    // 清除结算数字动画
-    ClearResNumber(numNode) {
-        numNode.getChildByName("s0").active = false
-        numNode.getChildByName("s1").active = false
-        numNode.getChildByName("s2").active = false
-        numNode.getChildByName("s3").active = false
-        numNode.getChildByName("s4").active = false
-        numNode.getChildByName("s5").active = false
-        numNode.getChildByName("s6").active = false
-        numNode.getChildByName("s7").active = false
-        numNode.getChildByName("s8").active = false
-        numNode.getChildByName("s9").active = false
-    }
-
-    // 清除num_arrPot桌面筹码
-    ClearNumArrChips() {
-        if (this.num_arrPot1.length > 0) {
-            for (let i = 0; i < this.num_arrPot1.length; i++) {
-                if (cc.isValid(this.num_arrPot1[i])) {
-                    this.num_arrPot1[i].destroy();
-                }
-            }
-        }
-        if (this.num_arrPot2.length > 0) {
-            for (let i = 0; i < this.num_arrPot2.length; i++) {
-                if (cc.isValid(this.num_arrPot2[i])) {
-                    this.num_arrPot2[i].destroy();
-                }
-            }
-        }
-        if (this.num_arrPot3.length > 0) {
-            for (let i = 0; i < this.num_arrPot3.length; i++) {
-                if (cc.isValid(this.num_arrPot3[i])) {
-                    this.num_arrPot3[i].destroy();
-                }
-            }
-        }
-        if (this.num_arrPot4.length > 0) {
-            for (let i = 0; i < this.num_arrPot4.length; i++) {
-                if (cc.isValid(this.num_arrPot4[i])) {
-                    this.num_arrPot4[i].destroy();
-                }
-            }
-        }
-        if (this.num_arrPot5.length > 0) {
-            for (let i = 0; i < this.num_arrPot5.length; i++) {
-                if (cc.isValid(this.num_arrPot5[i])) {
-                    this.num_arrPot5[i].destroy();
-                }
-            }
-        }
-        if (this.num_arrPot6.length > 0) {
-            for (let i = 0; i < this.num_arrPot6.length; i++) {
-                if (cc.isValid(this.num_arrPot6[i])) {
-                    this.num_arrPot6[i].destroy();
-                }
-            }
-        }
-        if (this.num_arrPot7.length > 0) {
-            for (let i = 0; i < this.num_arrPot7.length; i++) {
-                if (cc.isValid(this.num_arrPot7[i])) {
-                    this.num_arrPot7[i].destroy();
-                }
-            }
-        }
-    }
-
-    // 清除banker_arrPot桌面筹码
-    ClearBankerArrChips() {
-        if (this.banker1_arrPot.length > 0) {
-            for (let i = 0; i < this.banker1_arrPot.length; i++) {
-                if (cc.isValid(this.banker1_arrPot[i])) {
-                    this.banker1_arrPot[i].destroy();
-                }
-            }
-        }
-        if (this.banker2_arrPot.length > 0) {
-            for (let i = 0; i < this.banker2_arrPot.length; i++) {
-                if (cc.isValid(this.banker2_arrPot[i])) {
-                    this.banker2_arrPot[i].destroy();
-                }
-            }
-        }
-        if (this.banker3_arrPot.length > 0) {
-            for (let i = 0; i < this.banker3_arrPot.length; i++) {
-                if (cc.isValid(this.banker3_arrPot[i])) {
-                    this.banker3_arrPot[i].destroy();
-                }
-            }
-        }
-        if (this.banker4_arrPot.length > 0) {
-            for (let i = 0; i < this.banker4_arrPot.length; i++) {
-                if (cc.isValid(this.banker4_arrPot[i])) {
-                    this.banker4_arrPot[i].destroy();
-                }
-            }
-        }
-        if (this.banker5_arrPot.length > 0) {
-            for (let i = 0; i < this.banker5_arrPot.length; i++) {
-                if (cc.isValid(this.banker5_arrPot[i])) {
-                    this.banker5_arrPot[i].destroy();
-                }
-            }
-        }
-        if (this.banker6_arrPot.length > 0) {
-            for (let i = 0; i < this.banker6_arrPot.length; i++) {
-                if (cc.isValid(this.banker6_arrPot[i])) {
-                    this.banker6_arrPot[i].destroy();
-                }
-            }
-        }
-        if (this.banker7_arrPot.length > 0) {
-            for (let i = 0; i < this.banker7_arrPot.length; i++) {
-                if (cc.isValid(this.banker7_arrPot[i])) {
-                    this.banker7_arrPot[i].destroy();
-                }
-            }
-        }
-    }
-
-    // 清除桌面筹码
-    ClearTableChips() {
-        // 清除num_arrPot桌面筹码
-        this.ClearNumArrChips()
-        // 清除banker_arrPot桌面筹码
-        this.ClearBankerArrChips()
-    }
-
-    UpdateTablePlayer() {
-            let player1 = Storage.RoomData.tablePlayer[0]
-            let player2 = Storage.RoomData.tablePlayer[1]
-            let player3 = Storage.RoomData.tablePlayer[2]
-            let player4 = Storage.RoomData.tablePlayer[3]
-            let player5 = Storage.RoomData.tablePlayer[4]
-            let player6 = Storage.RoomData.tablePlayer[5]
-            this.player1.getChildByName("name").getComponent(cc.Label).string = player1.playerInfo.nickName
-            this.player1.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player1.playerInfo.account)
-            let node1 = this.player1.getChildByName("image")
-            let url1 = Storage.GetPlayerHead(player1.playerInfo.headImg) 
-            Storage.loadSpriteAtlas(node1, url1)
-            this.player2.getChildByName("name").getComponent(cc.Label).string = player2.playerInfo.nickName
-            this.player2.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player2.playerInfo.account)
-            let node2 = this.player2.getChildByName("image")
-            let url2 = Storage.GetPlayerHead(player2.playerInfo.headImg) 
-            Storage.loadSpriteAtlas(node2, url2)
-            this.player3.getChildByName("name").getComponent(cc.Label).string = player3.playerInfo.nickName
-            this.player3.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player3.playerInfo.account)
-            let node3 = this.player3.getChildByName("image")
-            let url3 = Storage.GetPlayerHead(player3.playerInfo.headImg) 
-            Storage.loadSpriteAtlas(node3, url3)
-            this.player4.getChildByName("name").getComponent(cc.Label).string = player4.playerInfo.nickName
-            this.player4.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player4.playerInfo.account)
-            let node4 = this.player4.getChildByName("image")
-            let url4 = Storage.GetPlayerHead(player4.playerInfo.headImg) 
-            Storage.loadSpriteAtlas(node4, url4)
-            this.player5.getChildByName("name").getComponent(cc.Label).string = player5.playerInfo.nickName
-            this.player5.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player5.playerInfo.account)
-            let node5 = this.player5.getChildByName("image")
-            let url5 = Storage.GetPlayerHead(player5.playerInfo.headImg) 
-            Storage.loadSpriteAtlas(node5, url5)
-            this.player6.getChildByName("name").getComponent(cc.Label).string = player6.playerInfo.nickName
-            this.player6.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player6.playerInfo.account)
-            let node6 = this.player6.getChildByName("image")
-            let url6 = Storage.GetPlayerHead(player6.playerInfo.headImg) 
-            Storage.loadSpriteAtlas(node6, url6)
-            this.playerAnimaLeft(this.player1.getChildByName("image"))
-            this.playerAnimaLeft(this.player2.getChildByName("image"))
-            this.playerAnimaLeft(this.player3.getChildByName("image"))
-            this.playerAnimaLeft(this.player4.getChildByName("image"))
-            this.playerAnimaLeft(this.player5.getChildByName("image"))
-            this.playerAnimaLeft(this.player6.getChildByName("image"))
-    }
-
-    playerAnimaLeft(player: cc.Node) {  // 主要处理桌面纸牌
-        let time: number;
-        time = 0.13
-
-        let scale = player.getScale(cc.v2());
-        if (scale.x != 1 || scale.y != 1) {
-            scale.x = 1
-            scale.y = 1
-        }
-        let s2 = cc.scaleTo(time, 0, scale.y) 
-        let sk2 = cc.skewTo(time, 0, -5)
-        let spawn1 = cc.spawn(s2, sk2)
-        let _s2 = cc.scaleTo(time, scale.x, scale.y);
-        let _sk2 = cc.skewTo(time, 0, 0)
-        let spawn2 = cc.spawn(_s2, _sk2)
-        let call = cc.callFunc(() => {
-            // card.getComponent('hh_pocker').backVisible(false);
-        })
-        let seq = cc.sequence(spawn1, call, spawn2)
-        player.runAction(seq);
     }
 
     // 玩家行动
@@ -684,6 +439,7 @@ export default class NewClass extends cc.Component {
         let node1 = banker.getChildByName("image")
         let url1 = Storage.GetPlayerHead(data.banker.playerInfo.headImg) 
         Storage.loadSpriteAtlas(node1, url1)
+        
         // 显示庄家
         this.ShowBankerInfo(data.banker)
     }
@@ -772,7 +528,6 @@ export default class NewClass extends cc.Component {
         }
     }
 
-    
     // 阶段时间更新
     private SendActTime(data: msg.ISendActTime_S2C) {
         if (data == null) {
@@ -824,7 +579,7 @@ export default class NewClass extends cc.Component {
             this.ActionNum.active = true
             this.ActionNum.getComponent(cc.Label).string = (data.gameTime - data.startTime) + ''
             // 显示下注筹码按钮
-            this.CloseChipsButton2(Storage.PlayerData.playerInfo.account)
+            this.ShowChipsButton(Storage.PlayerData.playerInfo.account)
         }
         if (data.gameStep == msg.GameStep.Settle) {
             // 关闭下注筹码
@@ -1136,6 +891,264 @@ export default class NewClass extends cc.Component {
             }
         }
     }
+
+    ClearTableData() {
+        // 清空桌面缓存数据
+        Storage.RoomData = null
+        // 清除奖池框动画
+        let potsBox = cc.find("Canvas/roomScens/cdx_table/potsBox")
+        potsBox.getChildByName("singleBox").active = false
+        potsBox.getChildByName("doubleBox").active = false
+        potsBox.getChildByName("bigBox").active = false
+        potsBox.getChildByName("smallBox").active = false
+        potsBox.getChildByName("pairBox").active = false
+        potsBox.getChildByName("straightBox").active = false
+        potsBox.getChildByName("leopardBox").active = false
+        // 清除结算数字动画
+        let res01 = cc.find("Canvas/roomScens/resultNum/res01")
+        res01.active = false
+        res01.getChildByName("sinDouble").getChildByName("single").active = false
+        res01.getChildByName("sinDouble").getChildByName("double").active = false
+        res01.getChildByName("smallBig").getChildByName("big").active = false
+        res01.getChildByName("smallBig").getChildByName("small").active = false
+        let res01Num = res01.getChildByName("number")
+        this.ClearResNumber(res01Num) 
+
+        let res02 = cc.find("Canvas/roomScens/resultNum/res02")
+        res02.active = false
+        let res02Num01 = res02.getChildByName("number01")
+        let res02Num02 = res02.getChildByName("number02")
+        let res02Num03 = res02.getChildByName("number03")
+        let res02Num04 = res02.getChildByName("number04")
+        this.ClearResNumber(res02Num01) 
+        this.ClearResNumber(res02Num02) 
+        this.ClearResNumber(res02Num03) 
+        this.ClearResNumber(res02Num04) 
+
+        let res03 = cc.find("Canvas/roomScens/resultNum/res03")
+        res03.active = false
+        let res03Num01 = res03.getChildByName("number01")
+        let res03Num02 = res03.getChildByName("number02")
+        let res03Num03 = res03.getChildByName("number03")
+        let res03Num04 = res03.getChildByName("number04")
+        this.ClearResNumber(res03Num01) 
+        this.ClearResNumber(res03Num02) 
+        this.ClearResNumber(res03Num03) 
+        this.ClearResNumber(res03Num04) 
+        res03Num04.getChildByName("sk").active = false
+
+        // 庄家下庄显示
+        this.downBanker.active = false
+
+        // 清空庄家数据
+        this.ClearBankerInfo()
+
+        // 清空桌面筹码
+        this.ClearTableChips()
+    }
+
+    // 清空庄家数据
+    ClearBankerInfo() {
+        this.bankerInfo.getChildByName("goldBox").getChildByName("money").active = false
+        this.bankerInfo.getChildByName("name").active = false
+        this.bankerInfo.getChildByName("image").active = false
+        this.bankerInfo.getChildByName("bankerLable").active = false
+    }
+
+    // 清除结算数字动画
+    ClearResNumber(numNode) {
+        numNode.getChildByName("s0").active = false
+        numNode.getChildByName("s1").active = false
+        numNode.getChildByName("s2").active = false
+        numNode.getChildByName("s3").active = false
+        numNode.getChildByName("s4").active = false
+        numNode.getChildByName("s5").active = false
+        numNode.getChildByName("s6").active = false
+        numNode.getChildByName("s7").active = false
+        numNode.getChildByName("s8").active = false
+        numNode.getChildByName("s9").active = false
+    }
+
+    // 清除num_arrPot桌面筹码
+    ClearNumArrChips() {
+        if (this.num_arrPot1.length > 0) {
+            for (let i = 0; i < this.num_arrPot1.length; i++) {
+                if (cc.isValid(this.num_arrPot1[i])) {
+                    this.num_arrPot1[i].destroy();
+                }
+            }
+        }
+        if (this.num_arrPot2.length > 0) {
+            for (let i = 0; i < this.num_arrPot2.length; i++) {
+                if (cc.isValid(this.num_arrPot2[i])) {
+                    this.num_arrPot2[i].destroy();
+                }
+            }
+        }
+        if (this.num_arrPot3.length > 0) {
+            for (let i = 0; i < this.num_arrPot3.length; i++) {
+                if (cc.isValid(this.num_arrPot3[i])) {
+                    this.num_arrPot3[i].destroy();
+                }
+            }
+        }
+        if (this.num_arrPot4.length > 0) {
+            for (let i = 0; i < this.num_arrPot4.length; i++) {
+                if (cc.isValid(this.num_arrPot4[i])) {
+                    this.num_arrPot4[i].destroy();
+                }
+            }
+        }
+        if (this.num_arrPot5.length > 0) {
+            for (let i = 0; i < this.num_arrPot5.length; i++) {
+                if (cc.isValid(this.num_arrPot5[i])) {
+                    this.num_arrPot5[i].destroy();
+                }
+            }
+        }
+        if (this.num_arrPot6.length > 0) {
+            for (let i = 0; i < this.num_arrPot6.length; i++) {
+                if (cc.isValid(this.num_arrPot6[i])) {
+                    this.num_arrPot6[i].destroy();
+                }
+            }
+        }
+        if (this.num_arrPot7.length > 0) {
+            for (let i = 0; i < this.num_arrPot7.length; i++) {
+                if (cc.isValid(this.num_arrPot7[i])) {
+                    this.num_arrPot7[i].destroy();
+                }
+            }
+        }
+    }
+
+    // 清除banker_arrPot桌面筹码
+    ClearBankerArrChips() {
+        if (this.banker1_arrPot.length > 0) {
+            for (let i = 0; i < this.banker1_arrPot.length; i++) {
+                if (cc.isValid(this.banker1_arrPot[i])) {
+                    this.banker1_arrPot[i].destroy();
+                }
+            }
+        }
+        if (this.banker2_arrPot.length > 0) {
+            for (let i = 0; i < this.banker2_arrPot.length; i++) {
+                if (cc.isValid(this.banker2_arrPot[i])) {
+                    this.banker2_arrPot[i].destroy();
+                }
+            }
+        }
+        if (this.banker3_arrPot.length > 0) {
+            for (let i = 0; i < this.banker3_arrPot.length; i++) {
+                if (cc.isValid(this.banker3_arrPot[i])) {
+                    this.banker3_arrPot[i].destroy();
+                }
+            }
+        }
+        if (this.banker4_arrPot.length > 0) {
+            for (let i = 0; i < this.banker4_arrPot.length; i++) {
+                if (cc.isValid(this.banker4_arrPot[i])) {
+                    this.banker4_arrPot[i].destroy();
+                }
+            }
+        }
+        if (this.banker5_arrPot.length > 0) {
+            for (let i = 0; i < this.banker5_arrPot.length; i++) {
+                if (cc.isValid(this.banker5_arrPot[i])) {
+                    this.banker5_arrPot[i].destroy();
+                }
+            }
+        }
+        if (this.banker6_arrPot.length > 0) {
+            for (let i = 0; i < this.banker6_arrPot.length; i++) {
+                if (cc.isValid(this.banker6_arrPot[i])) {
+                    this.banker6_arrPot[i].destroy();
+                }
+            }
+        }
+        if (this.banker7_arrPot.length > 0) {
+            for (let i = 0; i < this.banker7_arrPot.length; i++) {
+                if (cc.isValid(this.banker7_arrPot[i])) {
+                    this.banker7_arrPot[i].destroy();
+                }
+            }
+        }
+    }
+
+    // 清除桌面筹码
+    ClearTableChips() {
+        // 清除num_arrPot桌面筹码
+        this.ClearNumArrChips()
+        // 清除banker_arrPot桌面筹码
+        this.ClearBankerArrChips()
+    }
+
+    UpdateTablePlayer() {
+            let player1 = Storage.RoomData.tablePlayer[0]
+            let player2 = Storage.RoomData.tablePlayer[1]
+            let player3 = Storage.RoomData.tablePlayer[2]
+            let player4 = Storage.RoomData.tablePlayer[3]
+            let player5 = Storage.RoomData.tablePlayer[4]
+            let player6 = Storage.RoomData.tablePlayer[5]
+            this.player1.getChildByName("name").getComponent(cc.Label).string = player1.playerInfo.nickName
+            this.player1.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player1.playerInfo.account)
+            let node1 = this.player1.getChildByName("image")
+            let url1 = Storage.GetPlayerHead(player1.playerInfo.headImg) 
+            Storage.loadSpriteAtlas(node1, url1)
+            this.player2.getChildByName("name").getComponent(cc.Label).string = player2.playerInfo.nickName
+            this.player2.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player2.playerInfo.account)
+            let node2 = this.player2.getChildByName("image")
+            let url2 = Storage.GetPlayerHead(player2.playerInfo.headImg) 
+            Storage.loadSpriteAtlas(node2, url2)
+            this.player3.getChildByName("name").getComponent(cc.Label).string = player3.playerInfo.nickName
+            this.player3.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player3.playerInfo.account)
+            let node3 = this.player3.getChildByName("image")
+            let url3 = Storage.GetPlayerHead(player3.playerInfo.headImg) 
+            Storage.loadSpriteAtlas(node3, url3)
+            this.player4.getChildByName("name").getComponent(cc.Label).string = player4.playerInfo.nickName
+            this.player4.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player4.playerInfo.account)
+            let node4 = this.player4.getChildByName("image")
+            let url4 = Storage.GetPlayerHead(player4.playerInfo.headImg) 
+            Storage.loadSpriteAtlas(node4, url4)
+            this.player5.getChildByName("name").getComponent(cc.Label).string = player5.playerInfo.nickName
+            this.player5.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player5.playerInfo.account)
+            let node5 = this.player5.getChildByName("image")
+            let url5 = Storage.GetPlayerHead(player5.playerInfo.headImg) 
+            Storage.loadSpriteAtlas(node5, url5)
+            this.player6.getChildByName("name").getComponent(cc.Label).string = player6.playerInfo.nickName
+            this.player6.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player6.playerInfo.account)
+            let node6 = this.player6.getChildByName("image")
+            let url6 = Storage.GetPlayerHead(player6.playerInfo.headImg) 
+            Storage.loadSpriteAtlas(node6, url6)
+            this.playerAnimaLeft(this.player1.getChildByName("image"))
+            this.playerAnimaLeft(this.player2.getChildByName("image"))
+            this.playerAnimaLeft(this.player3.getChildByName("image"))
+            this.playerAnimaLeft(this.player4.getChildByName("image"))
+            this.playerAnimaLeft(this.player5.getChildByName("image"))
+            this.playerAnimaLeft(this.player6.getChildByName("image"))
+    }
+
+    playerAnimaLeft(player: cc.Node) {  // 主要处理桌面纸牌
+        let time: number;
+        time = 0.13
+
+        let scale = player.getScale(cc.v2());
+        if (scale.x != 1 || scale.y != 1) {
+            scale.x = 1
+            scale.y = 1
+        }
+        let s2 = cc.scaleTo(time, 0, scale.y) 
+        let sk2 = cc.skewTo(time, 0, -5)
+        let spawn1 = cc.spawn(s2, sk2)
+        let _s2 = cc.scaleTo(time, scale.x, scale.y);
+        let _sk2 = cc.skewTo(time, 0, 0)
+        let spawn2 = cc.spawn(_s2, _sk2)
+        let call = cc.callFunc(() => {
+            // card.getComponent('hh_pocker').backVisible(false);
+        })
+        let seq = cc.sequence(spawn1, call, spawn2)
+        player.runAction(seq);
+    }
     
     // 显示玩家赢钱输钱金额
     ShowPlayerMoney(player: msg.IPlayerData, playerNode, IsWinAni) {
@@ -1222,7 +1235,7 @@ export default class NewClass extends cc.Component {
     }
 
     // 显示庄家信息
-    ShowBankerInfo(player) {
+    ShowBankerInfo(player: msg.IPlayerData) {
         this.bankerInfo.getChildByName("goldBox").getChildByName("money").active = true
         this.bankerInfo.getChildByName("goldBox").getChildByName("money").getComponent(cc.Label).string = Storage.ShowMoney(player.bankerMoney)
         this.bankerInfo.getChildByName("name").active = true
@@ -1518,9 +1531,11 @@ export default class NewClass extends cc.Component {
         Storage.loadSpriteAtlas(node6, url6)
 
         // 显示庄家阶段
+        console.log("进来了 11111111111111111");
         for (let i = 0; i < Storage.RoomData.playerData.length; i++) {
             if (Storage.RoomData.playerData[i] != null && Storage.RoomData.playerData[i].IsBanker == true) {
                 let player = Storage.RoomData.playerData[i]
+                console.log("进来了 222222222222222222222222");
                 // 显示庄家
                 this.ShowBankerInfo(player)
             }
@@ -1546,7 +1561,13 @@ export default class NewClass extends cc.Component {
     ShowTableChips(money: number) {
         // 判断当前阶段显示对应筹码
         if (Storage.RoomData.gameStep == msg.GameStep.DownBet) {
-            this.CloseChipsButton2(money)
+            if (Storage.PlayerData.IsBanker == true) {
+                // 关闭下注筹码
+                this.CloseChipsButton()
+            }else {
+                // 显示下注按钮
+                this.ShowChipsButton(money)
+            }
         }else {
             // 关闭下注筹码
             this.CloseChipsButton()
@@ -1739,7 +1760,7 @@ export default class NewClass extends cc.Component {
         }
         if (num == 1) { // 不抢
             this.IsClickBanker = true
-            this.closeBankerButton()
+            this.CloseBankerButton()
         }
         if (num == 2) { // 抢庄2000
             let data : msg.IBankerData_C2S = {
@@ -1748,7 +1769,7 @@ export default class NewClass extends cc.Component {
             }
             events.dispatch(EventKind.C2S_BankerData, data);
             this.IsClickBanker = true
-            this.closeBankerButton()
+            this.CloseBankerButton()
         }
         if (num == 3) { // 抢庄5000
             let data : msg.IBankerData_C2S = {
@@ -1757,7 +1778,7 @@ export default class NewClass extends cc.Component {
             }
             events.dispatch(EventKind.C2S_BankerData, data);
             this.IsClickBanker = true
-            this.closeBankerButton()
+            this.CloseBankerButton()
         }
         if (num == 4) { // 抢庄10000
             let data : msg.IBankerData_C2S = {
@@ -1766,7 +1787,7 @@ export default class NewClass extends cc.Component {
             }
             events.dispatch(EventKind.C2S_BankerData, data);
             this.IsClickBanker = true
-            this.closeBankerButton()
+            this.CloseBankerButton()
         }
         if (num == 5) { // 抢庄20000
             let data : msg.IBankerData_C2S = {
@@ -1775,7 +1796,7 @@ export default class NewClass extends cc.Component {
             }
             events.dispatch(EventKind.C2S_BankerData, data);
             this.IsClickBanker = true
-            this.closeBankerButton()
+            this.CloseBankerButton()
         }
         if (num == 6) {
             bankerTip.active = false
@@ -1802,7 +1823,7 @@ export default class NewClass extends cc.Component {
         }
     }
     // 关闭庄家按钮
-    closeBankerButton() {
+    CloseBankerButton() {
         this.bankerList.active = false
         this.notBanker.active = false
         this.banker2000.active = false
@@ -2251,7 +2272,7 @@ export default class NewClass extends cc.Component {
         this.chips1000Back.active = true
     }
 
-    CloseChipsButton2(money) {
+    ShowChipsButton(money) {
         this.chips1.active = false
         this.chips1Back.active = false
         this.chips5.active = false

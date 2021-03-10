@@ -5,7 +5,7 @@
  * @LastEditors: Palos
  * @LastEditTime: 2019-11-26 13:13:46
  */
-import { ISendDelegate } from "./transmit";
+import { ISendDelegate } from "./cdx_transmit";
 import { events, EventKind } from "../conf/event";
 import { msg } from "../proto/proto_cdx_msg";
 

@@ -1,4 +1,4 @@
-import { initWebSocket, initio } from "./network/receive";
+import { initWebSocket, initio } from "./network/cdx_receive";
 import { events, EventKind } from "./conf/event";
 import { msg } from "./proto/proto_cdx_msg";
 import Sound from "./cdx_Sound";

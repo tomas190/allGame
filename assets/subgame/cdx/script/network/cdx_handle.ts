@@ -1,4 +1,4 @@
-import { IReceiveDelegate } from "./transmit";
+import { IReceiveDelegate } from "./cdx_transmit";
 import { msg } from "../proto/proto_cdx_msg";
 import { events, EventKind } from "../conf/event";
 
