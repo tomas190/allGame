@@ -56,12 +56,12 @@ class Client implements ISendDelegate, IReceiveDelegate {
 
     private connectNum: number = 0;
     private initSocket() {
-        app.ServerURL = "ws://game.539316.com/caidaxiao"
+        // app.ServerURL = "ws://game.539316.com/caidaxiao"
         // app.ServerURL = "ws://game.tampk.club/caidaxiao"
-        // --------------------------------------------------- 
-        // if (gHandler.subGameList['dzpk'].serverUrl) { 
-        //     app.ServerURL = gHandler.subGameList['dzpk'].serverUrl;
-        // } 
+        
+        if (gHandler.subGameList['cdx'].serverUrl) { 
+            app.ServerURL = gHandler.subGameList['cdx'].serverUrl;
+        } 
         if (cc.sys.platform === cc.sys.ANDROID || cc.sys.os === cc.sys.OS_ANDROID) {
             //在浏览器调试中，cc.sys.os === cc.sys.OS_ANDROID 是true
             if (app.ServerURL.indexOf('wss') == -1) {
@@ -137,15 +137,15 @@ class Client implements ISendDelegate, IReceiveDelegate {
         // 处理大厅事件
         let num: number = Stoarge.random(app.UserID.length, 0)
         let Id = gHandler.gameGlobal.player.id;
-        // if (Id == 0) {
-        //     let data: msg.ILogin_C2S = {Id: app.UserID[num] + "", PassWord: app.Password}
-        //     events.dispatch(EventKind.C2S_Login, data)
-        // } else {
-        //     let data: msg.ILogin_C2S = {Id: '' + gHandler.gameGlobal.player.id, Token: gHandler.gameGlobal.token}
-        //     events.dispatch(EventKind.C2S_Login, data)
-        // }
-        let data: msg.ILogin_C2S = {Id: app.UserID[num] + "", PassWord: app.Password}
-        events.dispatch(EventKind.C2S_Login, data)
+        if (Id == 0) {
+            let data: msg.ILogin_C2S = {Id: app.UserID[num] + "", PassWord: app.Password}
+            events.dispatch(EventKind.C2S_Login, data)
+        } else {
+            let data: msg.ILogin_C2S = {Id: '' + gHandler.gameGlobal.player.id, Token: gHandler.gameGlobal.token}
+            events.dispatch(EventKind.C2S_Login, data)
+        }
+        // let data: msg.ILogin_C2S = {Id: app.UserID[num] + "", PassWord: app.Password}
+        // events.dispatch(EventKind.C2S_Login, data)
     }
 
     // 接收服务器传送的协议

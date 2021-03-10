@@ -16,13 +16,13 @@ export default class NewClass extends cc.Component {
         this.RegisterEvent()
         // 显示加载
         this.ShowJiaZai()
-        cc.assetManager.loadBundle("cdxRes", function (err) {
-            if (err) {
-                return console.error(err);
-            }
-            let cdxRes = cc.assetManager.getBundle("cdxRes");
-            console.log('load subpackage script successfully.', "cdxRes");
-        });
+        // cc.assetManager.loadBundle("cdxRes", function (err) {
+        //     if (err) {
+        //         return console.error(err);
+        //     }
+        //     let cdxRes = cc.assetManager.getBundle("cdxRes");
+        //     console.log('load subpackage script successfully.', "cdxRes");
+        // });
     }
 
     start () {
@@ -76,15 +76,14 @@ export default class NewClass extends cc.Component {
         }
     }
 
-    cancelEvents() {
-        console.log("cdx_Load 取消监听事件~")
-        events.unregister(EventKind.S2C_Login, "cdx_Load");
-    }
-
     onDestroy() {
         // 取消监听事件
         this.cancelEvents()
     }
 
+    cancelEvents() {
+        console.log("cdx_Load 取消监听事件~")
+        events.unregister(EventKind.S2C_Login, "cdx_Load");
+    }
     // update (dt) {}
 }
