@@ -1,6 +1,6 @@
 import { IReceiveDelegate } from "./cdx_transmit";
 import { msg } from "../proto/proto_cdx_msg";
-import { events, EventKind } from "../conf/event";
+import { events, EventKind } from "../conf/cdx_event";
 
 const { ccclass } = cc._decorator;
 

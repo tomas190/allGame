@@ -1,5 +1,5 @@
 
-import { events, EventKind } from "./conf/event";
+import { events, EventKind } from "./conf/cdx_event";
 import { msg } from "./proto/proto_cdx_msg";
 import Sound from "./cdx_Sound";
 import Storage from "./cdx_Storage";

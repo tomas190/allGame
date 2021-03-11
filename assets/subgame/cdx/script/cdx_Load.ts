@@ -1,5 +1,5 @@
 import { initWebSocket, initio } from "./network/cdx_receive";
-import { events, EventKind } from "./conf/event";
+import { events, EventKind } from "./conf/cdx_event";
 import { msg } from "./proto/proto_cdx_msg";
 import Storage from "./cdx_Storage";
 

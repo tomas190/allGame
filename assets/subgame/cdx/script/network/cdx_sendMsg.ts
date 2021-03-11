@@ -6,7 +6,7 @@
  * @LastEditTime: 2019-11-26 13:13:46
  */
 import { ISendDelegate } from "./cdx_transmit";
-import { events, EventKind } from "../conf/event";
+import { events, EventKind } from "../conf/cdx_event";
 import { msg } from "../proto/proto_cdx_msg";
 
 const { ccclass } = cc._decorator;
@@ -27,13 +27,13 @@ class Sender {
 
     public init(dg: ISendDelegate): void {
         this._delegate = dg;
-        events.register(EventKind.C2S_Login, "sendMsg", this.Login.bind(this));
-        events.register(EventKind.C2S_Logout, "sendMsg", this.Logout.bind(this));
-        events.register(EventKind.C2S_JoinRoom, "sendMsg", this.JoinRoom.bind(this));
-        events.register(EventKind.C2S_LeaveRoom, "sendMsg", this.LeaveRoom.bind(this));
-        events.register(EventKind.C2S_PlayerAction, "sendMsg", this.PlayerAction.bind(this));
-        events.register(EventKind.C2S_BankerData, "sendMsg", this.BankerData.bind(this));
-        events.register(EventKind.C2S_EmojiChat, "sendMsg", this.EmojiChat.bind(this));
+        events.register(EventKind.C2S_Login, "cdx_sendMsg", this.Login.bind(this));
+        events.register(EventKind.C2S_Logout, "cdx_sendMsg", this.Logout.bind(this));
+        events.register(EventKind.C2S_JoinRoom, "cdx_sendMsg", this.JoinRoom.bind(this));
+        events.register(EventKind.C2S_LeaveRoom, "cdx_sendMsg", this.LeaveRoom.bind(this));
+        events.register(EventKind.C2S_PlayerAction, "cdx_sendMsg", this.PlayerAction.bind(this));
+        events.register(EventKind.C2S_BankerData, "cdx_sendMsg", this.BankerData.bind(this));
+        events.register(EventKind.C2S_EmojiChat, "cdx_sendMsg", this.EmojiChat.bind(this));
     }
 
     // 发送登陆

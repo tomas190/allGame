@@ -8,9 +8,9 @@
 import { ISendDelegate, IReceiveDelegate } from "./cdx_transmit";
 import { initSender } from "./cdx_sendMsg";
 import { initReceiver } from "./cdx_handle";
-import { app } from "../conf/config";
+import { app } from "../conf/cdx_config";
 import { msg } from "../proto/proto_cdx_msg";
-import { events, EventKind } from "../conf/event";
+import { events, EventKind } from "../conf/cdx_event";
 import Stoarge from "../cdx_Storage";
 import gHandler = require("../../../../base/common/gHandler")
 
