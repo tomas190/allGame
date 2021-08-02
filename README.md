@@ -21,6 +21,7 @@ let pn = cc.find('你ui上的一个节点位置')
 gHandler.eventMgr.dispatch(gHandler.eventMgr.showNetStateNode, { parent: pn, position: { x: 0, y: 0 } })
 
 # 项目目录结构：
+```javascript
 ├──main  主包目录
 |	|──app  登陆更新模块
 |	|──common  公用的脚本
@@ -50,6 +51,7 @@ gHandler.eventMgr.dispatch(gHandler.eventMgr.showNetStateNode, { parent: pn, pos
 |	|──proxy 全民代理资源
 |	|──IM    IM资源
 	└──子游戏目录...
+```
 
 # 合并须知
 基本把所有代码都放出来了，只要线路选择这块的代码被删除了
