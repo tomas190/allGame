@@ -2174,8 +2174,8 @@ cc.Class({
                         subgamern = "jdb"
                         this.loadBundle(subgamern)
                     }
-                    else if(hqq.game2to1[enname]){
-                        subgamern = hqq.game2to1[enname];
+                    else if(hqq.game2to1[tempdata.enname]){
+                        subgamern = hqq.game2to1[tempdata.enname];
                         this.loadBundle(subgamern);
                     }
                     else {

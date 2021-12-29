@@ -3,7 +3,7 @@ let gHandler = {
     needShowNotice: false, // 是否需要显示公告界面
     needShowBubble: false, // 是否显示公告泡泡提示讯息
     language: "CN", // 语言种类   汉语 CN 英语 EN 越南语 VI 泰语 TH
-    isDebug: false, // 是否是子游戏开发调试状态
+    isDebug: true, // 是否是子游戏开发调试状态
     gameGlobal: {
         gameNow: "hall", // 当前游戏的名字
         iconPath: "", // 头像地址前缀
