@@ -1,0 +1,486 @@
+{
+"skeleton": { "hash": "sCcnye4Dh/eb8hVbbNfP5Y2AZeg", "spine": "3.6.53", "width": 288, "height": 223.5 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "ren", "parent": "root", "length": 136.84, "rotation": 83.15, "x": -3.71, "y": -99.47 },
+	{ "name": "arm", "parent": "ren", "length": 80.17, "rotation": 36.69, "x": 23.27, "y": 40.72 },
+	{ "name": "arm2", "parent": "arm", "length": 42.81, "rotation": 52.79, "x": 80.17 },
+	{ "name": "champagne", "parent": "arm2", "length": 31.85, "rotation": -68.54, "x": 36.29, "y": 3.83 },
+	{ "name": "chip1", "parent": "root", "x": -108.89, "y": -81.97 },
+	{ "name": "chip2", "parent": "root", "x": -103.08, "y": 84.32 },
+	{ "name": "chip3", "parent": "root", "x": 102.18, "y": 10.56 },
+	{ "name": "chip4", "parent": "root", "x": 116.84, "y": -40.39 },
+	{ "name": "chip5", "parent": "root", "x": -75.37, "y": 19.95 },
+	{ "name": "chip6", "parent": "root", "x": -60.17, "y": 66.44 },
+	{ "name": "d1", "parent": "root", "x": 86.89, "y": 71.36 },
+	{ "name": "d2", "parent": "root", "x": -32.39, "y": 85.62 },
+	{ "name": "d3", "parent": "root", "x": -105.76, "y": -19.83 },
+	{ "name": "d_light", "parent": "d1", "x": -10.91, "y": 2.06 },
+	{ "name": "light", "parent": "root", "x": -40.88, "y": 68.64 },
+	{ "name": "liquid", "parent": "champagne", "x": 15.53, "y": 0.75 },
+	{ "name": "liquid3", "parent": "liquid", "x": 12.34, "y": -1.08 }
+],
+"slots": [
+	{ "name": "di", "bone": "root", "attachment": "di" },
+	{ "name": "cut", "bone": "root", "attachment": "cut" },
+	{ "name": "di2", "bone": "root", "attachment": "di2", "blend": "screen" },
+	{ "name": "backlight", "bone": "root", "attachment": "backlight" },
+	{ "name": "dream-of-macau_logo_cn", "bone": "root", "attachment": "dream-of-macau_logo_cn" },
+	{
+		"name": "dream-of-macau_logo_cn2",
+		"bone": "root",
+		"color": "ffffff00",
+		"attachment": "dream-of-macau_logo_cn",
+		"blend": "additive"
+	},
+	{ "name": "arm", "bone": "arm", "attachment": "arm" },
+	{ "name": "champagne", "bone": "champagne", "attachment": "champagne" },
+	{ "name": "liquid", "bone": "liquid3", "attachment": "liquid" },
+	{ "name": "champagne_c", "bone": "champagne", "attachment": "champagne_c" },
+	{ "name": "hand", "bone": "arm2", "attachment": "hand" },
+	{ "name": "ren", "bone": "ren", "attachment": "ren" },
+	{ "name": "chip6", "bone": "chip6", "attachment": "chip6" },
+	{ "name": "chip1", "bone": "chip1", "attachment": "chip1" },
+	{ "name": "d3", "bone": "d3", "attachment": "d3" },
+	{ "name": "d5", "bone": "d3", "color": "ffffff00", "attachment": "d3", "blend": "additive" },
+	{ "name": "chip2", "bone": "chip2", "attachment": "chip2" },
+	{ "name": "chip5", "bone": "chip5", "attachment": "chip5" },
+	{ "name": "d2", "bone": "d2", "attachment": "d2" },
+	{ "name": "chip4", "bone": "chip4", "attachment": "chip4" },
+	{ "name": "d1", "bone": "d1", "attachment": "d1" },
+	{ "name": "d4", "bone": "d1", "color": "ffffff00", "attachment": "d1", "blend": "additive" },
+	{ "name": "chip3", "bone": "chip3", "attachment": "chip3" },
+	{ "name": "light", "bone": "light", "attachment": "light", "blend": "screen" },
+	{ "name": "d_light", "bone": "d_light", "attachment": "d_light", "blend": "additive" }
+],
+"skins": {
+	"default": {
+		"arm": {
+			"arm": {
+				"type": "mesh",
+				"uvs": [ 0.46896, 0.30057, 0.14685, 0.29391, 0.03137, 0.16072, 0.02833, 0.07081, 0.23193, 0.17737, 0.29575, 0.16738, 0.15596, 0.06083, 0.18331, 0.00422, 0.25928, 0.02753, 0.36564, 0.0808, 0.53582, 0.12076, 0.71511, 0.10078, 0.87617, 0.61357, 1, 0.80004, 0.96125, 0.99649, 0.85186, 0.98651, 0.76677, 0.86996, 0.56013, 0.42044, 0.47808, 0.48038 ],
+				"triangles": [ 0, 1, 5, 1, 4, 5, 5, 9, 0, 0, 9, 10, 1, 2, 4, 5, 6, 8, 6, 7, 8, 5, 8, 9, 4, 2, 3, 14, 15, 13, 15, 16, 13, 12, 16, 17, 16, 12, 13, 17, 11, 12, 18, 0, 17, 17, 0, 11, 11, 0, 10 ],
+				"vertices": [ 2, 2, 76.2, 9.71, 0.50248, 3, 5.33, 9.04, 0.49752, 1, 3, 38.31, 12.67, 1, 1, 3, 51.71, 1.78, 1, 1, 3, 53.11, -6.56, 1, 1, 3, 31.03, 0.68, 1, 1, 3, 24.63, -1.09, 1, 1, 3, 40.19, -9.18, 1, 1, 3, 38.08, -14.82, 1, 1, 3, 30.04, -13.65, 1, 1, 3, 18.53, -10.09, 1, 1, 3, 0.67, -8.61, 1, 2, 2, 79.87, -21.63, 0.99808, 3, -17.41, -12.84, 0.00192, 1, 2, 29.81, -12.03, 1, 1, 2, 8.25, -14.37, 1, 1, 2, -5.78, -1.72, 1, 1, 2, 0.64, 7.58, 1, 1, 2, 14.51, 9.74, 1, 2, 2, 61.75, 7.17, 0.99816, 3, -5.43, 19.01, 0.00184, 1, 2, 61.07, 17.3, 1 ],
+				"hull": 19
+			}
+		},
+		"backlight": {
+			"backlight": { "x": -4, "y": 3.5, "width": 278, "height": 211 }
+		},
+		"champagne": {
+			"champagne": { "x": 0.18, "y": -1.83, "rotation": -104.1, "width": 44, "height": 95 }
+		},
+		"champagne_c": {
+			"champagne_c": { "x": 31.59, "y": 0.08, "rotation": -104.1, "width": 21, "height": 35 }
+		},
+		"chip1": {
+			"chip1": { "x": -0.11, "y": -0.53, "width": 40, "height": 21 }
+		},
+		"chip2": {
+			"chip2": { "x": 0.08, "y": 0.18, "width": 24, "height": 17 }
+		},
+		"chip3": {
+			"chip3": { "x": -0.18, "y": -1.56, "width": 48, "height": 30 }
+		},
+		"chip4": {
+			"chip4": { "x": -0.34, "y": -0.61, "width": 31, "height": 22 }
+		},
+		"chip5": {
+			"chip5": { "x": -1.63, "y": -1.95, "width": 32, "height": 20 }
+		},
+		"chip6": {
+			"chip6": { "x": -0.83, "y": -1.44, "width": 32, "height": 32 }
+		},
+		"cut": {
+			"cut": {
+				"type": "clipping",
+				"end": "cut",
+				"vertexCount": 8,
+				"vertices": [ -134.77, 108.17, 127.5, 108.52, 135.27, 102.52, 134.92, -92.69, 128.21, -100.81, -132.3, -101.51, -141.83, -95.16, -141.83, 101.46 ]
+			}
+		},
+		"d1": {
+			"d1": { "x": 0.61, "y": 1.14, "width": 31, "height": 25 }
+		},
+		"d2": {
+			"d2": { "x": 1.39, "y": 0.88, "width": 16, "height": 13 }
+		},
+		"d3": {
+			"d3": { "x": 0.26, "y": -0.17, "width": 21, "height": 20 }
+		},
+		"d4": {
+			"d1": { "x": 0.61, "y": 1.14, "width": 31, "height": 25 }
+		},
+		"d5": {
+			"d3": { "x": 0.26, "y": -0.17, "width": 21, "height": 20 }
+		},
+		"d_light": {
+			"d_light": { "x": 1.09, "y": -3.29, "width": 70, "height": 71 }
+		},
+		"di": {
+			"di": { "width": 287, "height": 220 }
+		},
+		"di2": {
+			"di2": { "width": 287, "height": 220 }
+		},
+		"dream-of-macau_logo_cn": {
+			"dream-of-macau_logo_cn": { "x": -4, "y": 57, "width": 278, "height": 104 }
+		},
+		"dream-of-macau_logo_cn2": {
+			"dream-of-macau_logo_cn": { "x": -4, "y": 57, "width": 278, "height": 104 }
+		},
+		"hand": {
+			"hand": { "x": 22.97, "y": 7.53, "rotation": -172.63, "width": 58, "height": 25 }
+		},
+		"light": {
+			"light": { "x": -1.12, "y": -14.64, "width": 144, "height": 110 }
+		},
+		"liquid": {
+			"liquid": {
+				"type": "mesh",
+				"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0, 0.04112, 0.14697, 0.2276, 0.20068, 0.43184, 0.20068, 0.60056, 0.18636, 0.76483, 0.15414, 0.88915, 0.07894, 0.0944, 0.07178, 0.32528, 0.02523, 0.66272, 0.02165, 0.16324, 0.48361, 0.29296, 0.793, 0.442, 0.92877, 0.76768, 0.97551, 0.94707, 0.75516, 0.93327, 0.3879 ],
+				"triangles": [ 13, 4, 5, 8, 9, 18, 9, 12, 3, 11, 2, 12, 10, 2, 11, 8, 12, 9, 12, 6, 11, 7, 12, 8, 7, 6, 12, 5, 10, 11, 5, 11, 6, 4, 10, 5, 6, 13, 5, 7, 14, 6, 4, 2, 10, 1, 13, 14, 1, 14, 15, 0, 17, 18, 16, 17, 0, 1, 15, 16, 12, 2, 3, 18, 9, 3, 0, 18, 3, 4, 1, 2, 1, 4, 13, 1, 16, 0, 14, 17, 15, 17, 14, 18, 16, 15, 17, 14, 13, 6, 7, 8, 18, 18, 14, 7 ],
+				"vertices": [ 1, 16, -18.27, -8.04, 1, 1, 16, -12.18, 16.21, 1, 1, 16, 17.89, 8.66, 1, 1, 16, 11.8, -15.59, 1, 2, 16, 13.22, 8.77, 0.192, 17, 0.87, 9.85, 0.808, 2, 16, 10.47, 4.66, 0.21188, 17, -1.88, 5.74, 0.78812, 2, 16, 9.22, -0.3, 0.21041, 17, -3.12, 0.78, 0.78959, 2, 16, 8.63, -4.5, 0.26323, 17, -3.72, -3.42, 0.73677, 2, 16, 8.59, -8.72, 0.29853, 17, -3.75, -7.64, 0.70147, 2, 16, 10.1, -12.3, 0.024, 17, -2.25, -11.22, 0.976, 2, 16, 15.15, 6.91, 0.06408, 17, 2.81, 7.99, 0.93592, 2, 16, 15.15, 0.96, 0.0018, 17, 2.8, 2.04, 0.9982, 2, 16, 13.2, -7.25, 0.11374, 17, 0.86, -6.17, 0.88626, 1, 16, 2.35, 8.35, 1, 1, 16, -7.74, 7.54, 1, 1, 16, -12.73, 4.95, 1, 1, 16, -16.12, -2.59, 1, 1, 16, -10.59, -8.6, 1, 1, 16, 0.54, -11.04, 1 ],
+				"hull": 4
+			}
+		},
+		"ren": {
+			"ren": { "x": 102.8, "y": 7.61, "rotation": -83.15, "width": 287, "height": 220 }
+		}
+	}
+},
+"animations": {
+	"animation": {
+		"slots": {
+			"backlight": {
+				"attachment": [
+					{ "time": 2.3, "name": "backlight" }
+				]
+			},
+			"cut": {
+				"attachment": [
+					{ "time": 0, "name": "cut" },
+					{ "time": 3, "name": "cut" }
+				]
+			},
+			"d4": {
+				"color": [
+					{ "time": 0, "color": "ffffff00" },
+					{ "time": 1.2667, "color": "ffffff4c" },
+					{ "time": 3, "color": "ffffff00" }
+				]
+			},
+			"d5": {
+				"color": [
+					{ "time": 0, "color": "ffffff00" },
+					{ "time": 0.5667, "color": "ffffff2e" },
+					{ "time": 0.9333, "color": "ffffff00" },
+					{ "time": 1.3, "color": "ffffff1a" },
+					{ "time": 2.8333, "color": "ffffff00" }
+				]
+			},
+			"d_light": {
+				"color": [
+					{ "time": 0, "color": "ffffff00" },
+					{ "time": 1.5333, "color": "ffffffff" },
+					{ "time": 3, "color": "ffffff00" }
+				]
+			},
+			"dream-of-macau_logo_cn2": {
+				"color": [
+					{ "time": 0, "color": "ffffff00" },
+					{ "time": 0.7667, "color": "ffffff29" },
+					{ "time": 1.5, "color": "ffffff00" },
+					{ "time": 2.2667, "color": "ffffff29" },
+					{ "time": 3, "color": "ffffff00" }
+				]
+			},
+			"light": {
+				"color": [
+					{ "time": 0, "color": "ffffffff" },
+					{ "time": 1.5667, "color": "ffffff57" },
+					{ "time": 3, "color": "ffffffff" }
+				]
+			}
+		},
+		"bones": {
+			"ren": {
+				"rotate": [
+					{
+						"time": 0,
+						"angle": -2,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{
+						"time": 1.5,
+						"angle": -0.32,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 3, "angle": -2 }
+				],
+				"translate": [
+					{
+						"time": 0,
+						"x": 0,
+						"y": 0,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{
+						"time": 1.5,
+						"x": 0,
+						"y": -3,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 3, "x": 0, "y": 0 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1, "y": 1 },
+					{ "time": 1.5, "x": 1.02, "y": 1.02 },
+					{ "time": 3, "x": 1, "y": 1 }
+				]
+			},
+			"light": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 3, "angle": 0 }
+				],
+				"scale": [
+					{ "time": 0, "x": 1.2, "y": 1.2 },
+					{ "time": 1.5667, "x": 1, "y": 1 },
+					{ "time": 3, "x": 1.2, "y": 1.2 }
+				]
+			},
+			"d3": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.6, "angle": -17.23 },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 1.6, "x": 5, "y": -8 },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"d2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.4, "angle": -25.72 },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 1.4, "x": -1, "y": 6 },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"d1": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.4333, "angle": -20.94 },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 1.4333, "x": -6.46, "y": -4.7 },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"chip6": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.7667, "angle": 10.62 },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -0.98, "y": -0.49 },
+					{ "time": 1.7667, "x": 1.41, "y": -6.87 },
+					{ "time": 3, "x": -0.98, "y": -0.49 }
+				]
+			},
+			"chip5": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.5, "angle": -4.82 },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -0.98, "y": -0.49 },
+					{ "time": 1.5, "x": -4.57, "y": 3.9 },
+					{ "time": 3, "x": -0.98, "y": -0.49 }
+				]
+			},
+			"chip4": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.6, "angle": -28.23 },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -0.98, "y": -0.49 },
+					{ "time": 1.6, "x": -11.36, "y": -9.67 },
+					{ "time": 3, "x": -0.98, "y": -0.49 }
+				],
+				"shear": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 1.6, "x": 0, "y": -25.74 },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"chip3": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.5667, "angle": 24.75 },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -0.98, "y": -0.49 },
+					{ "time": 1.5667, "x": -0.49, "y": 13.26 },
+					{ "time": 3, "x": -0.98, "y": -0.49 }
+				],
+				"shear": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 1.5667, "x": 0, "y": 15.01 },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"chip2": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.5, "angle": -8.39 },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -0.98, "y": -0.49 },
+					{ "time": 1.5, "x": -7.98, "y": -0.49 },
+					{ "time": 3, "x": -0.98, "y": -0.49 }
+				]
+			},
+			"chip1": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": -0.98, "y": -0.49, "curve": "stepped" },
+					{ "time": 3, "x": -0.98, "y": -0.49 }
+				]
+			},
+			"arm": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"liquid3": {
+				"rotate": [
+					{
+						"time": 0,
+						"angle": 0,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{
+						"time": 1.7,
+						"angle": 35.48,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{
+						"time": 0,
+						"x": 0,
+						"y": 0,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{
+						"time": 1.7,
+						"x": 2.4,
+						"y": 1.21,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"liquid": {
+				"rotate": [
+					{ "time": 0, "angle": 0, "curve": "stepped" },
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"champagne": {
+				"rotate": [
+					{
+						"time": 0,
+						"angle": 0,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{
+						"time": 1.5667,
+						"angle": 7.56,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"arm2": {
+				"rotate": [
+					{
+						"time": 0,
+						"angle": 0,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{
+						"time": 1.5,
+						"angle": 10.14,
+						"curve": [ 0.25, 0, 0.75, 1 ]
+					},
+					{ "time": 3, "angle": 0 }
+				],
+				"translate": [
+					{ "time": 0, "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 3, "x": 0, "y": 0 }
+				]
+			},
+			"d_light": {
+				"rotate": [
+					{ "time": 0, "angle": 0 },
+					{ "time": 1.5333, "angle": -70.55 },
+					{ "time": 3, "angle": 180 }
+				]
+			}
+		},
+		"deform": {
+			"default": {
+				"liquid": {
+					"liquid": [
+						{
+							"time": 0,
+							"curve": [ 0.25, 0, 0.75, 1 ]
+						},
+						{
+							"time": 1.7,
+							"offset": 12,
+							"vertices": [ -1.7193, 0.18407, -1.29335, 1.14786, -1.7193, 0.18407, -1.29335, 1.14786, -1.7193, 0.18407, -1.29335, 1.14786, 0, 0, 0, 0, 0.70097, 1.35336, 1.35591, 0.69523, 0, 0, 0, 0, 0.66121, -0.07071, 0.49739, -0.44135, 2.36243, -4.30145, -0.57369, -4.87377 ],
+							"curve": [ 0.25, 0, 0.75, 1 ]
+						},
+						{ "time": 3 }
+					]
+				}
+			}
+		}
+	}
+}
+}

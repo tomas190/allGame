@@ -12,7 +12,7 @@ Editor.Panel.extend({
     bcbm: '#bcbm',
     bjl: '#bjl',
     brnn: '#brnn',
-    cbcb: '#cbcb',
+    cbzb: '#cbzb',
     cyqp: '#cyqp',
     ddz: '#ddz',
     dzpk: '#dzpk',
@@ -40,7 +40,7 @@ Editor.Panel.extend({
     bcbmVersion: "#bcbmversion",
     bjlVersion: "#bjlversion",
     brnnVersion: "#brnnversion",
-    cbcbVersion: "#cbcbversion",
+    cbzbVersion: "#cbzbversion",
     cyqpVersion: "#cyqpversion",
     ddzVersion: "#ddzversion",
     dzpkVersion: "#dzpkversion",
@@ -67,6 +67,7 @@ Editor.Panel.extend({
     language: '#language',
     country: '#country',
     currency: '#currency',
+    gitPath: '#gitPath',
   },
   // method executed when template and styles are successfully loaded and initialized
   ready() {
@@ -98,7 +99,7 @@ Editor.Panel.extend({
     this.$bcbmVersion.innerText = '(' + this.versionjson.version["bcbm"] + ')'
     this.$bjlVersion.innerText = '(' + this.versionjson.version["bjl"] + ')'
     this.$brnnVersion.innerText = '(' + this.versionjson.version["brnn"] + ')'
-    this.$cbcbVersion.innerText = '(' + this.versionjson.version["cbcb"] + ')'
+    this.$cbzbVersion.innerText = '(' + this.versionjson.version["cbzb"] + ')'
     this.$cyqpVersion.innerText = '(' + this.versionjson.version["cyqp"] + ')'
     this.$ddzVersion.innerText = '(' + this.versionjson.version["ddz"] + ')'
     this.$dzpkVersion.innerText = '(' + this.versionjson.version["dzpk"] + ')'
@@ -134,6 +135,10 @@ Editor.Panel.extend({
     })
     this.$currency.addEventListener('confirm', () => {
       Editor.Ipc.sendToMain('hqq:changeCurrency', this.$currency.value, () => {
+      });
+    })
+    this.$gitPath.addEventListener('confirm', () => {
+      Editor.Ipc.sendToMain('hqq:changeGitPath', this.$gitPath.value, () => {
       });
     })
     this.$btn.addEventListener('confirm', () => {
@@ -185,11 +190,11 @@ Editor.Panel.extend({
       }
       this.initVersion()
     })
-    this.$cbcb.addEventListener('confirm', () => {
-      if (this.$cbcb.checked) {
-        this.versionList["cbcb"] += 1
+    this.$cbzb.addEventListener('confirm', () => {
+      if (this.$cbzb.checked) {
+        this.versionList["cbzb"] += 1
       } else {
-        this.versionList["cbcb"] -= 1
+        this.versionList["cbzb"] -= 1
       }
       this.initVersion()
     })
@@ -367,7 +372,6 @@ Editor.Panel.extend({
       } else {
         this.versionList["zrsx"] -= 1
       }
-      Editor.log("zrsx")
     })
   },
   // register your ipc messages here

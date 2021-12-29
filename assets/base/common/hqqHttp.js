@@ -197,7 +197,7 @@ let hqqHttp = {
         let str = '';
         xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded')
         for (const key in param) {
-            str += `${key}=${param[key]}&`
+            str += `${key}=${encodeURIComponent(param[key])}&`
         }
         str = str.slice(0, -1)
         xhr.timeout = 7000
@@ -212,7 +212,7 @@ let hqqHttp = {
      */
     requestFastestUrlLine(data) {
         if (!data.urllist) {
-            return console.log("请配置http列表地址")
+            return cc.log("请配置http列表地址")
         }
         let checknum = 0;
         let hasreceive = false;
@@ -224,7 +224,7 @@ let hqqHttp = {
         }
         let needJsonParse = data.needJsonParse
         let errcallback = (status, forcejump, url, err) => {
-            // console.log("请求失败", checknum, data.urllist.length, data.urllist[checknum])
+            // cc.log("请求失败", checknum, data.urllist.length, data.urllist[checknum])
             checknum++
             if (data.tipcallback) {
                 data.tipcallback(checknum)
@@ -316,46 +316,71 @@ let hqqHttp = {
     sendrequestStableUrlLine(data, checknum, callback, isserver) {
         let xhr = new XMLHttpRequest()
         xhr.timeout = 3000
-        data.serverList[checknum].testnum++
-        let timestart
-        xhr.onloadstart = () => {
-            timestart = Date.now()
-        }
-        xhr.ontimeout = () => {
-            xhr.abort()
-            let spendtime = 3000
-            data.serverList[checknum].averageTime += spendtime
-            if (data.serverList[checknum].averageTime > 10000) {
-                data.serverList[checknum].averageTime = 10000
+        if(data.serverList[checknum]){
+            data.serverList[checknum].testnum++
+            let timestart
+            let info = ""
+            xhr.onloadstart = () => {
+                info += "xhr.onloadstart  xhr.readyState =" + xhr.readyState + " xhr.status =" + xhr.status
+                timestart = Date.now()
             }
-            data.serverList[checknum].status = 1
-            callback(data, data.serverList[checknum].url, isserver)
-        }
-        xhr.onerror = () => {
-            xhr.abort()
-            let spendtime = 3000
-            data.serverList[checknum].averageTime += spendtime
-            if (data.serverList[checknum].averageTime > 10000) {
-                data.serverList[checknum].averageTime = 10000
+            xhr.ontimeout = () => {
+                info += "xhr.ontimeout  xhr.readyState =" + xhr.readyState + " xhr.status =" + xhr.status
+                let spendtime = 3000
+                data.serverList[checknum].averageTime += spendtime
+                if (data.serverList[checknum].averageTime > 10000) {
+                    data.serverList[checknum].averageTime = 10000
+                }
+                data.serverList[checknum].status = 1
+                data.serverList[checknum].lastTime = spendtime
+                data.serverList[checknum].info = info
+                xhr.abort()
+                callback(data, data.serverList[checknum].url, isserver)
             }
-            data.serverList[checknum].status = 1
-            callback(data, data.serverList[checknum].url, isserver)
+            xhr.onerror = () => {
+                info += "xhr.onerror  xhr.readyState =" + xhr.readyState + " xhr.status =" + xhr.status
+                let spendtime = 3000
+                data.serverList[checknum].averageTime += spendtime
+                if (data.serverList[checknum].averageTime > 10000) {
+                    data.serverList[checknum].averageTime = 10000
+                }
+                data.serverList[checknum].status = 1
+                data.serverList[checknum].lastTime = spendtime
+                data.serverList[checknum].info = info
+                xhr.abort()
+                callback(data, data.serverList[checknum].url, isserver)
+            }
+            xhr.onload = () => {
+                info += "xhr.onload  xhr.readyState =" + xhr.readyState + " xhr.status =" + xhr.status
+                let spendtime = Date.now() - timestart
+                let at = data.serverList[checknum].averageTime
+                // data.serverList[checknum].averageTime = at > spendtime ? (0.6 * at) : spendtime
+                if (spendtime < at && spendtime < (0.6 * at)) {
+                    data.serverList[checknum].averageTime = (0.6 * at);
+                } else {
+                    data.serverList[checknum].averageTime = spendtime;
+                }
+                data.serverList[checknum].status = 1
+                data.serverList[checknum].lastTime = spendtime
+                data.serverList[checknum].info = info
+                xhr.abort()
+                callback(data, data.serverList[checknum].url, isserver)
+            }
+            let randnum = Math.floor(Math.random() * 1000000)
+            if (isserver) {
+                let url = data.serverList[checknum].url + "/checked?" + randnum
+                // console.log("url", url)
+                // xhr.open("GET", url, true);
+                // xhr.send();
+                xhr.open("POST", url, true);
+                xhr.send("key=" + randnum);
+            } else {
+                let url = data.serverList[checknum].url + "/" + hqq.app.hotupdatePath + "/" + 'version.json?' + randnum
+                // console.log("url", url)
+                xhr.open("GET", url, true);
+                xhr.send();
+            }
         }
-        xhr.onload = () => {
-            let spendtime = Date.now() - timestart
-            let at = data.serverList[checknum].averageTime
-            data.serverList[checknum].averageTime = at > spendtime ? (0.99 * at) : spendtime
-            data.serverList[checknum].status = 1
-            xhr.abort()
-            callback(data, data.serverList[checknum].url, isserver)
-        }
-        if (isserver) {
-            xhr.open("GET", data.serverList[checknum].url + "/checked?" + Math.floor(Math.random() * 1000000), true);
-        } else {
-            let url = data.serverList[checknum].url + "/" + hqq.app.hotupdatePath + "/" + 'version.json?' + Math.floor(Math.random() * 1000000)
-            xhr.open("GET", url, true);
-        }
-        xhr.send();
     },
     canTest: true,
     stopTestLint() {
@@ -381,6 +406,36 @@ let hqqHttp = {
                 testindex++
             }
         }
+    },
+    _fetchTestList(url, testindex, callback, maxTime) {
+        let timestart = Date.now()
+        let controller = new AbortController();
+        let signal = controller.signal;
+        let timeoutPromise = (timeout) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(new Response("timeout", { status: 504, statusText: "timeout " }));
+                    controller.abort();
+                }, timeout);
+            });
+        }
+        let requestPromise = (url) => {
+            return fetch(url, {
+                signal: signal
+            });
+        };
+        Promise.race([timeoutPromise(maxTime), requestPromise(url)])
+            .then(resp => {
+                return resp.json()
+            })
+            .then(resp => {
+                let spendtime = Date.now() - timestart
+                callback(url, testindex, spendtime)
+            })
+            .catch(error => {
+                // cc.log("error", error);
+                callback(url, testindex, maxTime, error)
+            });
     },
     _testLine(url, testindex, callback, maxTime) {
         let xhr = new XMLHttpRequest()

@@ -2,20 +2,31 @@
 let appGlobal = {
     isRelease: true, // 是否是版本发布状态
     /* ------------------------------------------------------------------- */
-    pinpai: "test", // 渠道 test （特斯特） debi （德比） qibao（七宝） xingba （杏吧娱乐） yuyu （渔鱼游戏）
-    // pinpai: "debi", // 渠道 test debi qibao
-    huanjin: "dev", // dev pre online
-    // huanjin: "pre", // pre online
+    pinpai: "test", // 渠道 test （特斯特） fuxin(富鑫) xingui (新贵) debi （德比） qibao （七宝） xingba （杏吧娱乐） yuyu （渔鱼游戏） nineone （91游戏） xinsheng （新盛更名为大喜发） xinhao (新豪) xinlong(新隆) huangshi(皇室游戏) juding(聚鼎娱乐) huaxing(华兴娱乐) ninetwo(92游戏) tianqi(天启) chaofan(超凡娱乐) wansheng(万盛娱乐)
+    // huanjin: "dev", // dev pre online
+    huanjin: "pre", // pre online
     // huanjin: "online", // pre online
 
-    // account_name: "443602268", // 账号,  
+    // account_name: "341499998", // 账号,  
     // account_pass: "123456", //密码, 
 
     deviceID: "",
     os: "android", // 平台 android ios
 
     secretlist: [ // 密码本
-
+        "https://upgrade.whjfxly66.com/data_q.json",
+        "https://upgrade.xiaoxiaozhileng.com/data_q.json",
+        "https://upgrade.shuibajiameng.com/data_q.json",
+        "https://upgrade.andychenyun.com/data_q.json",
+        "https://upgrade.sdyz86.com/data_q.json",
+        "https://upgrade.shuyahome.com/data_q.json",
+        "https://code.aliyun.com/purchasing04/qcode/raw/master/data_q.json",
+        "https://lgroup110.coding.net/p/coding-code-guide/d/qcode/git/raw/master/data_q.json",
+        "https://gitee.com/lgroup111/lobbygame/raw/master/data_q.json",
+        "https://lgroup000.gitlab.io/meta/data_q.json",
+        "https://vvv56789.github.io/lobbygame/data_q.json",
+        "https://bitbucket.org/lgroup110/qcode/raw/master/data_q.json",
+        // "https://bitbucket.org/lgroup110/qcode/raw/0055477a86b0249c06757b92c3e485dadeeda298/data_q.json", //不能用这种方式，更新后内容不改变
     ],
 
     apkVersionKey: "apkVersionKey",
@@ -25,7 +36,7 @@ let appGlobal = {
     version: "1.0.0",
 
     // hallVersionKey: "hallVersionKey",
-    // hallVersion: "1.0.0",
+    hallVersion: "2.0.37",
 
     secretBookKey: "secretBookKey", // 密码本
     secretBook: "", // 密码本
@@ -72,6 +83,9 @@ let appGlobal = {
     noticeKey: "noticeKey", // 公告已读
     noticeDeleteKey: "noticeDeleteKey", // 公道删除
 
+    emailKey: "emailKey", // 邮件已读
+    emailDeleteKey: "emailDeleteKey", // 邮件删除
+
     reginIpDataKey: "reginIpDataKey", // 注册ip信息
     reginIpData: null,
 
@@ -98,6 +112,7 @@ let appGlobal = {
         debi: "https://temp.jsksafe.com?p=2&u=770256905",
         xingba: "https://temp.jsksafe.com?p=3&u=811425071",
         yuyu: "https://temp.wepic666.com?p=6&u=541999022",
+        xinsheng: "https://temp.sxbocai.com/temp/?p=8&u=638756984",
     },
     GeneralAgency: { // 总代
         isgetFromJava: false, // 是否从java代码中获得代理信息
@@ -125,17 +140,78 @@ let appGlobal = {
             dev: 566283153,
             pre: 671627403,
             online: 541999022
-        }
+        },
+        xinsheng: {
+            dev: 566844838,
+            pre: 799197169,
+            online: 779681851
+        },
+        xingui: {
+            dev: 731471820,
+            pre: 887927706,
+            online: 800242589
+        },
+        fuxin: {
+            dev: 635264021,
+            pre: 818123207,
+            online: 250188151
+        },
+        xinhao: {
+            dev: 882790162,
+            pre: 927284006,
+            online: 341292395
+        },
+        xinlong: {
+            dev: 741405471,
+            pre: 405485074,
+            online: 736282263
+        },
+        "nineone": {
+            dev: 566283153,
+            pre: 671627403,
+            online: 541999022
+        },
+        huangshi:{
+            dev: 936509381,
+            pre: 372584699,
+            online: 409277743
+        },
+        juding:{
+            dev: 702585103,
+            pre: 649506476,
+            online: 855395847
+        },
+        huaxing:{
+            dev: 808461639,
+            pre: 401194253,
+            online: 657592379
+        },
+        ninetwo:{
+            dev: 498917599,
+            pre: 841667955,
+            online: 186959995
+        },
+        tianqi:{
+            dev: 455263995,
+            pre: 372584699,
+            online: 552856005
+        },
+        chaofan:{
+            dev: 351527366,
+            pre: 239796950,
+            online: 201340147
+        },
+        wansheng:{
+            dev: 968702313,
+            pre: 162354480,
+            online: 712529050
+        },
     },
     versionJson: {}, // version.json
     subGameVersion: {}, // version.json 中的version部分
     proxyUserID: 0, // 代理id
     packageID: 0, // 包体id
     netState: { // 网络状态分级
-        // outstanding: 100,
-        // good: 200,
-        // kind: 500,
-        // bad: 3000,
         outstanding: 500,
         good: 1000,
         kind: 3000,
@@ -163,15 +239,21 @@ let appGlobal = {
                 }
             }
             if (info.proxyid) {
-                this.GeneralAgency.isgetFromJava = true
-                this.GeneralAgency[this.pinpai][this.huanjin] = info.proxyid
+                if( this.GeneralAgency[this.pinpai] )
+                {
+                    if( this.GeneralAgency[this.pinpai][this.huanjin] )
+                    {
+                        this.GeneralAgency.isgetFromJava = true
+                        this.GeneralAgency[this.pinpai][this.huanjin] = info.proxyid
+                    }
+                }
             }
             if (info.language) {
                 hqq.language = info.language
             }
         } else {
             this.hotupdatePath = "com.test." + this.huanjin + ".android";
-            // this.hotupdatePath += "/ccc2.4.3"
+            this.hotupdatePath += "/ccc2.4.3"
         }
         this.platform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
         this.androidPlatform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
@@ -203,12 +285,38 @@ let appGlobal = {
             if (this.huanjin == "dev") {
                 this.packageID = 5
             }
-        } else if (this.pinpai == "yuyu") {
+        } else if (this.pinpai == "nineone" && (this.huanjin=="pre"||this.huanjin=="online")) {
+            this.packageID = 6
+        } else if (this.pinpai == "nineone" && this.huanjin=="dev" ) {
             this.packageID = 7
+        } else if (this.pinpai == "xinsheng") {
+            this.packageID = 8
+        } else if (this.pinpai == "xingui") {
+            this.packageID = 9
+        } else if (this.pinpai == "fuxin") {
+            this.packageID = 10
+        } else if (this.pinpai == "xinhao") {
+            this.packageID = 11
+        } else if (this.pinpai == "xinlong") {
+            this.packageID = 12
+        } else if (this.pinpai == "huangshi") {
+            this.packageID = 13
+        } else if (this.pinpai == "juding") {
+            this.packageID = 15
+        } else if (this.pinpai == "huaxing") {
+            this.packageID = 18
+        } else if (this.pinpai == "ninetwo") {
+            this.packageID = 16
+        } else if (this.pinpai == "tianqi") {
+            this.packageID = 21
+        } else if (this.pinpai == "chaofan") {
+            this.packageID = 19
+        } else if (this.pinpai == "wansheng") {
+            this.packageID = 20
         }
         if (hqq.isDebug) {
             if (!this.deviceID) {
-                this.deviceID = "123456789"
+                this.deviceID = "0123456789"
             }
             if (this.huanjin == 'dev') {
                 this.server = 'http://center.539316.com'
@@ -218,9 +326,9 @@ let appGlobal = {
                 this.canHotServer = 'https://upgrade.lymrmfyp.com'
             }
         }
-        if (CC_DEBUG) {
+        else if (CC_DEBUG) {
             // this.isRelease = false
-            this.deviceID = "123456789" // burt
+            this.deviceID = "bbg2345" // burt
         }
         return this;
     },
@@ -270,6 +378,13 @@ let appGlobal = {
         endurl += "&token=" + hqq.gameGlobal.token;
         return endurl
     },
+    // GetGameAccountsInfo 获取所有子游戏资金接口
+    GetGameAccountsInfo() {
+        // /Game/User/GetGameAccountsInfo
+        // id game_id(可选)
+        // /Game/login / GetGameAccountsInfo
+    },
+
     // 获取向中心服post的接口
     getIpPostEndUrl(gettype) {
         let endurl = ""
@@ -306,7 +421,11 @@ let appGlobal = {
     },
     // 获取总代号
     getGeneralAgency() {
-        return this.GeneralAgency[this.pinpai][this.huanjin]
+        if (this.GeneralAgency[this.pinpai] && this.GeneralAgency[this.pinpai][this.huanjin]) {
+            return this.GeneralAgency[this.pinpai][this.huanjin]
+        } else {
+            return 779681851
+        }
     },
     // 根据热更version.json设置本地总代
     setGeneralAgency(data) {
@@ -348,11 +467,13 @@ let appGlobal = {
         data.ischangeAccount = false
         if (game_user) {
             for (let k in game_user) {
-                hqq.gameUser[k] = hqq.gameUser[k] || game_user[k]
+                hqq.gameUser[k] = (hqq.gameUser && hqq.gameUser[k]) || game_user[k]
             }
             if (game_user.id) {
                 if (hqq.gameGlobal.player.id != "" && hqq.gameGlobal.player.id != game_user.id) {
                     data.ischangeAccount = true
+                    hqq.gameGlobal.player.usdtaddr = ""
+                    hqq.gameGlobal.player.yinhangka = ""
                 }
                 hqq.gameGlobal.player.account_name = game_user.id;
                 hqq.gameGlobal.pay.user_id = game_user.id;
@@ -402,7 +523,6 @@ let appGlobal = {
     },
     // 设置玩家数据
     setPlayerinfo(info) {
-        console.log("设置玩家数据 是否已经弃用？")
         let data = {}
         if (info.game_gold || info.game_gold == 0) {
             let gold = info.game_gold

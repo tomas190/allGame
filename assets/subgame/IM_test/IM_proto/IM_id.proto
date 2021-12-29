@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package mproto;
+
+// 消息ID
+enum MessageID {
+
+  // BREATH
+  REQ_PING = 0; // C-S 发送PING  1
+  RESP_PONG = 1; // S-C 发送 PONG 1
+
+  //  ------ REQ AND RESP ------
+  REQ_LOGIN = 100; // C-S 登录 1
+  RESP_LOGIN_RESP = 200; // S-C 登录返回 1
+
+  // CONVERSION
+  REQ_CONVERSION_LIST = 101; // C-S 获取会话列表
+  RESP_CONVERSION_LIST = 201; // S-C 获取会话列表返回
+
+  // MSG HISTORY
+  REQ_CHAT_MSG_LIST = 102 ; // C-S 获取消息记录列表
+  RESP_CHAT_MSG_LIST = 202 ; //  S-C 消息列表返回
+
+  //  CHAT
+  REQ_SEND_CHAT_MSG = 103; // C-S 发送聊天消息
+  RESP_SEND_CHAT_MSG = 203; //  S-C 发送聊天消息返回
+
+  PUSH_RECEIVE_CHAT_MSG = 303 ; // S-C 收到聊天消息
+
+  // MSG OPERATION
+  REQ_READ_MSG = 104 ; // C-S 消息已读请求
+  RESP_READ_MSG = 204; // S-C 消息已读返回
+
+  REQ_GET_UNREAD_NUM = 105 ;// C-S 获取此会话的未读条数
+  RESP_GET_UNREAD_NUM = 205; // C-S 获取此会话的未读条数返回
+
+  // after
+
+  REQ_DELETE_MSG = 106 ; // C-S 删除一条消息
+  RESP_DELETE_MSG = 206 ; // S-C 删除一条消息返回
+
+  REQ_DELETE_CONVERSION = 107 ;// C-S 删除一条会话
+  RESP_DELETE_CONVERSION = 207;//S-C 删除一条会话返回
+
+  // add
+
+  REQ_EDIT_MSG = 108 ; // C-S 编辑一条消息
+  RESP_EDIT_MSG = 208 ;// s-c 编辑一条消息返回
+
+  REQ_SEARCH_USER = 109;// c-s 搜索用户
+  RESP_SEARCH_USER = 209; //s-c 搜索用户返回
+
+  REQ_SEARCH_SUB_USER = 110 ;//C-S 查找下级
+  RESP_SEARCH_SUB_USER = 210;//s-c 查找下级返回
+
+  REQ_GET_SUB_USER_LIST = 111 ;//c-s 获取下级列表
+  RESP_GET_SUB_USER_LIST = 211;// s-c 获取下级列表返回
+
+  REQ_MATCH_SERVICE = 112; // c-s 匹配客服
+
+  REQ_GET_QUICK_REPLY = 113; // c-s 获取快捷回去列表
+  RESP_GET_QUICK_REPLY = 213; // s-c 获取快捷回去列表返回
+
+
+  PUSH_AUTO_ENTER_CONVERSION = 304; // 推送自动进入聊天对话
+
+  /* SERVER PUSH ERROR MSG - FROM 500 */
+  MSG_CLOSE_CONN_PUSH = 500; // s-c 服务器主动断开
+  MSG_ERR_MSG_PUSH = 501; // s-c 错误信息推送
+}
+
+

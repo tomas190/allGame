@@ -1,0 +1,216 @@
+
+91game_logo.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+01
+  rotate: true
+  xy: 169, 5
+  size: 93, 112
+  orig: 93, 112
+  offset: 0, 0
+  index: -1
+02
+  rotate: true
+  xy: 821, 235
+  size: 102, 115
+  orig: 102, 115
+  offset: 0, 0
+  index: -1
+03
+  rotate: true
+  xy: 385, 102
+  size: 103, 154
+  orig: 103, 154
+  offset: 0, 0
+  index: -1
+04
+  rotate: true
+  xy: 841, 476
+  size: 103, 139
+  orig: 103, 141
+  offset: 0, 1
+  index: -1
+05
+  rotate: true
+  xy: 662, 397
+  size: 121, 135
+  orig: 121, 136
+  offset: 0, 0
+  index: -1
+06
+  rotate: false
+  xy: 821, 339
+  size: 130, 135
+  orig: 131, 135
+  offset: 1, 0
+  index: -1
+07
+  rotate: false
+  xy: 698, 520
+  size: 141, 151
+  orig: 142, 151
+  offset: 1, 0
+  index: -1
+08
+  rotate: true
+  xy: 499, 389
+  size: 150, 161
+  orig: 150, 161
+  offset: 0, 0
+  index: -1
+09
+  rotate: false
+  xy: 226, 207
+  size: 159, 171
+  orig: 160, 171
+  offset: 1, 0
+  index: -1
+1
+  rotate: false
+  xy: 2, 130
+  size: 222, 248
+  orig: 222, 248
+  offset: 0, 0
+  index: -1
+10
+  rotate: false
+  xy: 387, 207
+  size: 158, 171
+  orig: 158, 171
+  offset: 0, 0
+  index: -1
+11
+  rotate: false
+  xy: 838, 726
+  size: 159, 171
+  orig: 159, 171
+  offset: 0, 0
+  index: -1
+12
+  rotate: false
+  xy: 841, 581
+  size: 148, 143
+  orig: 149, 143
+  offset: 1, 0
+  index: -1
+13
+  rotate: false
+  xy: 683, 252
+  size: 136, 143
+  orig: 137, 144
+  offset: 0, 0
+  index: -1
+14
+  rotate: true
+  xy: 531, 541
+  size: 130, 165
+  orig: 131, 165
+  offset: 0, 0
+  index: -1
+15
+  rotate: false
+  xy: 547, 223
+  size: 134, 164
+  orig: 135, 165
+  offset: 0, 1
+  index: -1
+16
+  rotate: true
+  xy: 2, 2
+  size: 126, 165
+  orig: 127, 165
+  offset: 0, 0
+  index: -1
+17
+  rotate: true
+  xy: 226, 100
+  size: 105, 157
+  orig: 105, 157
+  offset: 0, 0
+  index: -1
+18
+  rotate: false
+  xy: 936, 951
+  size: 65, 68
+  orig: 65, 68
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 953, 384
+  size: 43, 42
+  orig: 43, 42
+  offset: 0, 0
+  index: -1
+36
+  rotate: false
+  xy: 499, 564
+  size: 30, 29
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+circle
+  rotate: false
+  xy: 2, 899
+  size: 932, 120
+  orig: 932, 120
+  offset: 0, 0
+  index: -1
+dice2
+  rotate: true
+  xy: 993, 924
+  size: 25, 29
+  orig: 25, 29
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 2, 595
+  size: 527, 302
+  orig: 527, 302
+  offset: 0, 0
+  index: -1
+light2
+  rotate: true
+  xy: 531, 673
+  size: 224, 305
+  orig: 224, 305
+  offset: 0, 0
+  index: -1
+poker1
+  rotate: false
+  xy: 936, 899
+  size: 55, 50
+  orig: 55, 50
+  offset: 0, 0
+  index: -1
+poker2
+  rotate: true
+  xy: 799, 476
+  size: 42, 27
+  orig: 43, 27
+  offset: 1, 0
+  index: -1
+poker3
+  rotate: false
+  xy: 283, 37
+  size: 71, 61
+  orig: 72, 61
+  offset: 0, 0
+  index: -1
+star002
+  rotate: true
+  xy: 953, 428
+  size: 46, 43
+  orig: 46, 43
+  offset: 0, 0
+  index: -1
+zi
+  rotate: false
+  xy: 2, 380
+  size: 495, 213
+  orig: 495, 213
+  offset: 0, 0
+  index: -1

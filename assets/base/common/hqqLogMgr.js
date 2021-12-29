@@ -3,7 +3,7 @@
 let hqqHttp = require("hqqHttp");
 let logManager = {
     isRealTimeLog: true, // 是否在控制台实时打印
-    logMaxLine: 100, // 最大的打印行数
+    logMaxLine: 150, // 最大的打印行数
     depth: 0,
     parentSizes: [0],
     currentResult: '',
@@ -15,36 +15,37 @@ let logManager = {
     logpath: "",
     _times: {},
     canSend: true, // 是否可以发送日志
-    waitTime: 10000, // 10秒
+    waitTime: 3000, // 3秒
     sendfailtag: 0,
     /**
      * 初始化
      */
     init: function () {
-        this.output = JSON.parse(cc.sys.localStorage.getItem('log'))
-        this.eoutput = JSON.parse(cc.sys.localStorage.getItem('elog'))
+        this.output = JSON.parse(cc.sys.localStorage.getItem('log')) || ""
+        this.eoutput = JSON.parse(cc.sys.localStorage.getItem('elog')) || ""
         cc.sys.localStorage.setItem("log", JSON.stringify(""))
         cc.sys.localStorage.setItem("elog", JSON.stringify(""))
 
         window.addEventListener('error', (e) => {
-            // console.log("error")
+            // cc.log("error")
             this.logerror(e);
         })
         window.addEventListener('unhandledrejection', (e) => {
-            // console.log("unhandledrejection")
+            // cc.log("unhandledrejection")
             this.logerror(e);
         })
         return this;
     },
     // 发送特定的日志 data为字符串
     sendMLog(data) {
-        // console.log("__logMgr__", data);
+        // cc.log("__logMgr__ sendMLog", data);
         this.send(data, true);
     },
-    // 立即发送日志
+    // 立即强制发送日志
     sendLog() {
         let temp = this.output
         this.output = ""
+        this.canSend = true
         this.send(temp, true);
     },
     // 立即发送错误日志
@@ -58,7 +59,11 @@ let logManager = {
         if (!this.canSend) {
             return
         }
-        if (hqq.gameGlobal.token != "") {
+        if (logstr == '') {
+            cc.log("logMgr 发送消息为空，返回")
+            return
+        }
+        if (hqq.gameGlobal.token != "" && hqq.app.server) {
             this.serverUrl = hqq.app.server + "/Game/User/log";
             let data = {
                 token: hqq.gameGlobal.token,
@@ -70,9 +75,10 @@ let logManager = {
             }
             this.serverUrl && hqqHttp.sendRequestLogPost(this.serverUrl, data, null, (bool, filepath, err) => {
                 if (bool) {
+                    cc.log("logMgr 日志发送成功")
                     this.sendfailtag = 0
                 } else {
-                    this.log("日志发送失败", err)
+                    this.log("logMgr 日志发送失败", err)
                     this.setDelaySend()
                     this.sendfailtag++
                     if (islog) {
@@ -89,7 +95,14 @@ let logManager = {
                 }
             });
         } else {
-            console.log("未请求到token")
+            let err = "错误"
+            if (!hqq.gameGlobal.token) {
+                err = "未请求到token"
+                cc.log("logMgr 未请求到token")
+            } else if (!hqq.app.server) {
+                err = "未请求到server"
+                cc.log("logMgr 没有服务器地址")
+            }
             this.setDelaySend()
             this.sendfailtag++
             if (islog) {
@@ -98,10 +111,10 @@ let logManager = {
                 } else {
                     this.output += logstr + this.tag;
                 }
-                this.output += this.getNowTime() + ":未请求到token" + this.tag;
+                this.output += this.getNowTime() + ":send失败," + err + this.tag;
             } else {
                 this.eoutput = logstr + this.tag;
-                this.eoutput += this.getNowTime() + ":未请求到token" + this.tag;
+                this.eoutput += this.getNowTime() + ":send失败," + err + this.tag;
             }
         }
     },
@@ -136,7 +149,7 @@ let logManager = {
         for (let i = 0; i < arguments.length; i++) {
             data += arguments[i] + " "
         }
-        this.isRealTimeLog && console.log("__logMgr__", data);
+        this.isRealTimeLog && cc.log("__logMgr__", data);
         this.output += this.getNowTime() + ":" + data + this.tag;
         this.logCheck();
     },
@@ -146,14 +159,14 @@ let logManager = {
      * @return: 
      */
     logerror: function (data) {
-        this.isRealTimeLog && console.log(data);
+        this.isRealTimeLog && cc.log(data);
         if (data.error && data.error.stack) {
             var err = data.error.stack + this.tag;
             for (let i = 0; i < this.poutput.length; i++) {
                 let out = this.poutput[i]
                 let pre = out.substring(out.indexOf(":") + 1)
                 if (err == pre) {
-                    console.log("重复的错误日志")
+                    cc.log("重复的错误日志")
                     return
                 }
             }

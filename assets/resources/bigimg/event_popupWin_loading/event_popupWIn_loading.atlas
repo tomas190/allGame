@@ -1,0 +1,69 @@
+
+event_popupWIn_loading.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ball
+  rotate: false
+  xy: 743, 149
+  size: 143, 104
+  orig: 143, 104
+  offset: 0, 0
+  index: -1
+crown
+  rotate: false
+  xy: 454, 3
+  size: 93, 48
+  orig: 93, 48
+  offset: 0, 0
+  index: -1
+di
+  rotate: false
+  xy: 2, 10
+  size: 398, 243
+  orig: 400, 245
+  offset: 1, 1
+  index: -1
+guang1
+  rotate: true
+  xy: 402, 2
+  size: 49, 50
+  orig: 51, 52
+  offset: 1, 1
+  index: -1
+star1
+  rotate: false
+  xy: 841, 45
+  size: 96, 79
+  orig: 97, 81
+  offset: 1, 1
+  index: -1
+star2
+  rotate: true
+  xy: 888, 126
+  size: 127, 96
+  orig: 127, 96
+  offset: 0, 0
+  index: -1
+star3
+  rotate: true
+  xy: 743, 20
+  size: 127, 96
+  orig: 127, 96
+  offset: 0, 0
+  index: -1
+star4
+  rotate: true
+  xy: 939, 28
+  size: 96, 79
+  orig: 97, 81
+  offset: 0, 1
+  index: -1
+zi
+  rotate: false
+  xy: 402, 53
+  size: 339, 200
+  orig: 341, 202
+  offset: 1, 1
+  index: -1

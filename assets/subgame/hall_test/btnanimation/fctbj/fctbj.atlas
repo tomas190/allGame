@@ -1,0 +1,97 @@
+
+fctbj.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bonus_anim_b_002_tex_02
+  rotate: false
+  xy: 407, 76
+  size: 85, 120
+  orig: 85, 120
+  offset: 0, 0
+  index: -1
+bonus_anim_b_002_tex_03
+  rotate: false
+  xy: 645, 163
+  size: 87, 82
+  orig: 87, 83
+  offset: 0, 0
+  index: -1
+bonus_anim_b_002_tex_05
+  rotate: false
+  xy: 734, 182
+  size: 91, 63
+  orig: 91, 63
+  offset: 0, 0
+  index: -1
+bonus_anim_b_002_tex_06
+  rotate: false
+  xy: 2, 7
+  size: 67, 27
+  orig: 67, 27
+  offset: 0, 0
+  index: -1
+bonus_anim_b_002_tex_07
+  rotate: false
+  xy: 923, 186
+  size: 71, 59
+  orig: 71, 59
+  offset: 0, 0
+  index: -1
+bonus_anim_b_002_tex_08
+  rotate: true
+  xy: 543, 167
+  size: 78, 100
+  orig: 78, 100
+  offset: 0, 0
+  index: -1
+bonus_anim_b_002_tex_09
+  rotate: false
+  xy: 277, 2
+  size: 66, 61
+  orig: 67, 62
+  offset: 1, 1
+  index: -1
+bonus_anim_b_002_tex_10
+  rotate: true
+  xy: 494, 132
+  size: 64, 24
+  orig: 64, 24
+  offset: 0, 0
+  index: -1
+bonus_anim_b_002_tex_11
+  rotate: false
+  xy: 345, 34
+  size: 44, 29
+  orig: 44, 29
+  offset: 0, 0
+  index: -1
+bonus_anim_b_002_tex_12
+  rotate: false
+  xy: 827, 196
+  size: 94, 49
+  orig: 94, 49
+  offset: 0, 0
+  index: -1
+di
+  rotate: false
+  xy: 2, 36
+  size: 273, 209
+  orig: 273, 209
+  offset: 0, 0
+  index: -1
+di2
+  rotate: false
+  xy: 277, 198
+  size: 264, 47
+  orig: 273, 209
+  offset: 1, 8
+  index: -1
+guang
+  rotate: false
+  xy: 277, 65
+  size: 128, 131
+  orig: 143, 143
+  offset: 8, 6
+  index: -1

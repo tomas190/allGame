@@ -1,0 +1,251 @@
+
+PTGamesNew.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 894, 198
+  size: 106, 56
+  orig: 106, 58
+  offset: 0, 1
+  index: -1
+10
+  rotate: false
+  xy: 630, 58
+  size: 106, 51
+  orig: 106, 52
+  offset: 0, 0
+  index: -1
+11
+  rotate: true
+  xy: 575, 27
+  size: 106, 53
+  orig: 106, 55
+  offset: 0, 1
+  index: -1
+2
+  rotate: false
+  xy: 262, 48
+  size: 106, 56
+  orig: 106, 58
+  offset: 0, 1
+  index: -1
+3
+  rotate: false
+  xy: 370, 48
+  size: 106, 56
+  orig: 106, 58
+  offset: 0, 1
+  index: -1
+4
+  rotate: false
+  xy: 659, 111
+  size: 106, 56
+  orig: 106, 58
+  offset: 0, 1
+  index: -1
+5
+  rotate: false
+  xy: 630, 12
+  size: 106, 44
+  orig: 106, 46
+  offset: 0, 1
+  index: -1
+6
+  rotate: true
+  xy: 738, 3
+  size: 106, 47
+  orig: 106, 48
+  offset: 0, 1
+  index: -1
+7
+  rotate: false
+  xy: 773, 138
+  size: 106, 48
+  orig: 106, 50
+  offset: 0, 1
+  index: -1
+8
+  rotate: true
+  xy: 787, 30
+  size: 106, 49
+  orig: 106, 51
+  offset: 0, 1
+  index: -1
+9
+  rotate: true
+  xy: 838, 30
+  size: 106, 49
+  orig: 106, 50
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 472, 135
+  size: 119, 185
+  orig: 121, 185
+  offset: 1, 0
+  index: -1
+di
+  rotate: false
+  xy: 2, 56
+  size: 258, 198
+  orig: 258, 198
+  offset: 0, 0
+  index: -1
+fire_20
+  rotate: false
+  xy: 1002, 202
+  size: 20, 52
+  orig: 29, 77
+  offset: 5, 4
+  index: -1
+fire_22
+  rotate: false
+  xy: 960, 123
+  size: 19, 54
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_24
+  rotate: false
+  xy: 950, 44
+  size: 18, 55
+  orig: 29, 77
+  offset: 7, 4
+  index: -1
+fire_26
+  rotate: false
+  xy: 940, 101
+  size: 18, 57
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_28
+  rotate: true
+  xy: 963, 179
+  size: 17, 59
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_30
+  rotate: false
+  xy: 930, 34
+  size: 18, 60
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_32
+  rotate: false
+  xy: 910, 33
+  size: 18, 61
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_34
+  rotate: false
+  xy: 889, 31
+  size: 19, 63
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_36
+  rotate: true
+  xy: 146, 14
+  size: 19, 64
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_38
+  rotate: true
+  xy: 881, 160
+  size: 18, 65
+  orig: 29, 77
+  offset: 7, 4
+  index: -1
+fire_40
+  rotate: true
+  xy: 894, 180
+  size: 16, 67
+  orig: 29, 77
+  offset: 9, 4
+  index: -1
+fire_42
+  rotate: true
+  xy: 478, 42
+  size: 17, 68
+  orig: 29, 77
+  offset: 8, 4
+  index: -1
+fire_44
+  rotate: true
+  xy: 75, 2
+  size: 18, 69
+  orig: 29, 77
+  offset: 7, 4
+  index: -1
+fire_46
+  rotate: true
+  xy: 787, 9
+  size: 19, 70
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_48
+  rotate: true
+  xy: 2, 2
+  size: 18, 71
+  orig: 29, 77
+  offset: 6, 4
+  index: -1
+fire_50
+  rotate: true
+  xy: 139, 35
+  size: 19, 71
+  orig: 29, 77
+  offset: 5, 4
+  index: -1
+head_d
+  rotate: true
+  xy: 889, 96
+  size: 62, 49
+  orig: 62, 50
+  offset: 0, 1
+  index: -1
+head_up
+  rotate: false
+  xy: 659, 169
+  size: 112, 85
+  orig: 112, 99
+  offset: 0, 14
+  index: -1
+ptLogo2
+  rotate: false
+  xy: 2, 22
+  size: 135, 32
+  orig: 135, 32
+  offset: 0, 0
+  index: -1
+tail
+  rotate: false
+  xy: 773, 188
+  size: 119, 66
+  orig: 119, 66
+  offset: 0, 0
+  index: -1
+wing_L
+  rotate: true
+  xy: 262, 106
+  size: 148, 208
+  orig: 149, 208
+  offset: 1, 0
+  index: -1
+wing_R
+  rotate: false
+  xy: 478, 61
+  size: 95, 72
+  orig: 95, 72
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,111 @@
+
+chongzhi.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+01_00001
+  rotate: false
+  xy: 2, 2
+  size: 16, 9
+  orig: 132, 58
+  offset: 8, 44
+  index: -1
+01_00002
+  rotate: true
+  xy: 969, 30
+  size: 35, 37
+  orig: 132, 58
+  offset: 7, 21
+  index: -1
+01_00003
+  rotate: false
+  xy: 725, 6
+  size: 61, 57
+  orig: 132, 58
+  offset: 0, 1
+  index: -1
+01_00004
+  rotate: false
+  xy: 848, 68
+  size: 83, 55
+  orig: 132, 58
+  offset: 0, 1
+  index: -1
+01_00005
+  rotate: false
+  xy: 630, 8
+  size: 93, 55
+  orig: 132, 58
+  offset: 9, 1
+  index: -1
+01_00006
+  rotate: false
+  xy: 758, 68
+  size: 88, 55
+  orig: 132, 58
+  offset: 30, 1
+  index: -1
+01_00007
+  rotate: false
+  xy: 933, 67
+  size: 80, 56
+  orig: 132, 58
+  offset: 46, 0
+  index: -1
+01_00008
+  rotate: false
+  xy: 788, 12
+  size: 59, 54
+  orig: 132, 58
+  offset: 67, 0
+  index: -1
+01_00009
+  rotate: false
+  xy: 929, 31
+  size: 38, 34
+  orig: 132, 58
+  offset: 83, 1
+  index: -1
+01_00010
+  rotate: false
+  xy: 907, 15
+  size: 18, 16
+  orig: 132, 58
+  offset: 101, 1
+  index: -1
+guang1
+  rotate: true
+  xy: 849, 11
+  size: 55, 56
+  orig: 57, 58
+  offset: 1, 1
+  index: -1
+jiantou
+  rotate: false
+  xy: 907, 33
+  size: 20, 33
+  orig: 20, 33
+  offset: 0, 0
+  index: -1
+kuaisukaishi-di
+  rotate: false
+  xy: 2, 13
+  size: 369, 110
+  orig: 369, 110
+  offset: 0, 0
+  index: -1
+ptex0102_01
+  rotate: false
+  xy: 373, 5
+  size: 255, 118
+  orig: 255, 255
+  offset: 0, 69
+  index: -1
+shop
+  rotate: false
+  xy: 630, 65
+  size: 126, 58
+  orig: 132, 58
+  offset: 0, 0
+  index: -1

@@ -1,3 +1,4 @@
+const hqqLanguage = require("../common/hqqLanguage");
 
 
 cc.Class({
@@ -9,17 +10,25 @@ cc.Class({
     },
 
     onLoad() {
-        this.data = null
-        // this.node.x = cc.winSize.width / 2
-        // this.node.y = cc.winSize.height / 2
+        this.data = null;
+        this.closeSprite = null;
     },
 
     start() {
 
     },
 
+    UILoad(){
+        if(hqq.app.pinpai === "ninetwo" ){
+            hqq.setSprite(this.bg,{path:"base/ninetwo/img/psomf"});
+            // if(!this.closeSprite){
+            //     this.closeSprite = hqq.addNode(this.bg,{path:"base/ninetwo/img/x"});
+            // }
+        }
+    },
     init(data) {
         this.data = data
+        this.UILoad();
         let msg = data
         if (data && data.msg) {
             msg = data.msg
@@ -55,6 +64,9 @@ cc.Class({
         } else {
             this.node.setPosition(cc.winSize.width / 2, cc.winSize.height / 2 - this.movedis)
         }
+        if(cc.isValid(this.closeSprite)){
+            this.closeSprite.x = -((this.bg.width/2)-24);
+        }
         this.node.opacity = 150
         let m0 = cc.moveBy(this.flytime, cc.v2(0, this.movedis))
         let f0 = cc.fadeTo(this.flytime, 255)
@@ -66,7 +78,7 @@ cc.Class({
                 this.showTip(this.dataList.shift())
             } else {
                 this.isRun = false
-                this.node.removeFromParent(true)
+                this.node.destroy()
             }
         }, this)
         this.node.runAction(cc.sequence(cc.spawn(m0, f0), d0, cc.spawn(m1, f1), ca))

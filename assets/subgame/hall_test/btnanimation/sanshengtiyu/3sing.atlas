@@ -1,0 +1,55 @@
+
+3sing.png
+size: 260,690
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+d2
+  rotate: false
+  xy: 1, 412
+  size: 258, 198
+  orig: 258, 198
+  offset: 0, 0
+  index: -1
+di
+  rotate: false
+  xy: 1, 213
+  size: 258, 198
+  orig: 258, 198
+  offset: 0, 0
+  index: -1
+hua1
+  rotate: false
+  xy: 24, 675
+  size: 16, 14
+  orig: 16, 14
+  offset: 0, 0
+  index: -1
+hua2
+  rotate: false
+  xy: 1, 677
+  size: 22, 12
+  orig: 22, 12
+  offset: 0, 0
+  index: -1
+people1
+  rotate: false
+  xy: 1, 1
+  size: 247, 211
+  orig: 248, 214
+  offset: 0, 2
+  index: -1
+shanguang2
+  rotate: true
+  xy: 105, 611
+  size: 78, 88
+  orig: 108, 113
+  offset: 15, 12
+  index: -1
+soccer
+  rotate: false
+  xy: 41, 626
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: -1

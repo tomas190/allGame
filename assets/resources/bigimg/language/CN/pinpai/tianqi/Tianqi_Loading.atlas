@@ -1,0 +1,222 @@
+
+Tianqi_Loading.png
+size: 1024,902
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: true
+  xy: 96, 847
+  size: 54, 63
+  orig: 55, 65
+  offset: 0, 1
+  index: -1
+10
+  rotate: true
+  xy: 876, 548
+  size: 235, 147
+  orig: 248, 159
+  offset: 1, 0
+  index: -1
+11
+  rotate: false
+  xy: 613, 475
+  size: 254, 161
+  orig: 257, 162
+  offset: 2, 0
+  index: -1
+12
+  rotate: false
+  xy: 445, 306
+  size: 261, 168
+  orig: 263, 169
+  offset: 1, 1
+  index: -1
+13
+  rotate: false
+  xy: 191, 374
+  size: 253, 168
+  orig: 257, 169
+  offset: 1, 1
+  index: -1
+14
+  rotate: false
+  xy: 707, 305
+  size: 251, 169
+  orig: 254, 170
+  offset: 1, 1
+  index: -1
+15
+  rotate: false
+  xy: 1, 204
+  size: 224, 169
+  orig: 226, 170
+  offset: 1, 1
+  index: -1
+16
+  rotate: false
+  xy: 1, 387
+  size: 189, 168
+  orig: 191, 170
+  offset: 1, 1
+  index: -1
+17
+  rotate: true
+  xy: 450, 502
+  size: 156, 162
+  orig: 157, 164
+  offset: 1, 1
+  index: -1
+18
+  rotate: true
+  xy: 559, 801
+  size: 100, 114
+  orig: 101, 119
+  offset: 1, 1
+  index: -1
+19
+  rotate: true
+  xy: 387, 835
+  size: 66, 82
+  orig: 69, 84
+  offset: 3, 1
+  index: -1
+2
+  rotate: false
+  xy: 470, 826
+  size: 88, 75
+  orig: 89, 77
+  offset: 0, 1
+  index: -1
+20
+  rotate: true
+  xy: 1, 865
+  size: 36, 42
+  orig: 37, 43
+  offset: 1, 1
+  index: -1
+3
+  rotate: true
+  xy: 1, 723
+  size: 123, 139
+  orig: 124, 141
+  offset: 0, 1
+  index: -1
+4
+  rotate: true
+  xy: 141, 704
+  size: 139, 141
+  orig: 141, 143
+  offset: 0, 1
+  index: -1
+5
+  rotate: false
+  xy: 283, 693
+  size: 170, 141
+  orig: 183, 143
+  offset: 0, 1
+  index: -1
+6
+  rotate: false
+  xy: 454, 659
+  size: 215, 141
+  orig: 216, 143
+  offset: 0, 1
+  index: -1
+7
+  rotate: false
+  xy: 229, 543
+  size: 220, 149
+  orig: 232, 151
+  offset: 1, 1
+  index: -1
+8
+  rotate: false
+  xy: 670, 637
+  size: 205, 146
+  orig: 207, 147
+  offset: 1, 1
+  index: -1
+9
+  rotate: false
+  xy: 1, 556
+  size: 227, 147
+  orig: 229, 148
+  offset: 1, 1
+  index: -1
+bg1
+  rotate: true
+  xy: 1, 1
+  size: 202, 215
+  orig: 202, 215
+  offset: 0, 0
+  index: -1
+cm1
+  rotate: false
+  xy: 306, 842
+  size: 80, 59
+  orig: 80, 59
+  offset: 0, 0
+  index: -1
+cm2
+  rotate: false
+  xy: 217, 844
+  size: 88, 57
+  orig: 88, 57
+  offset: 0, 0
+  index: -1
+cm3
+  rotate: true
+  xy: 44, 856
+  size: 45, 51
+  orig: 45, 51
+  offset: 0, 0
+  index: -1
+guang
+  rotate: false
+  xy: 226, 196
+  size: 215, 177
+  orig: 216, 215
+  offset: 1, 38
+  index: -1
+light1
+  rotate: true
+  xy: 160, 846
+  size: 55, 56
+  orig: 58, 58
+  offset: 1, 1
+  index: -1
+logo_z
+  rotate: false
+  xy: 442, 109
+  size: 532, 195
+  orig: 539, 201
+  offset: 4, 3
+  index: -1
+logo_z1
+  rotate: false
+  xy: 674, 784
+  size: 267, 117
+  orig: 269, 118
+  offset: 1, 1
+  index: -1
+
+Tianqi_Loading2.png
+size: 679,330
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mid
+  rotate: false
+  xy: 1, 1
+  size: 393, 328
+  orig: 393, 330
+  offset: 0, 1
+  index: -1
+wing_l
+  rotate: true
+  xy: 395, 29
+  size: 300, 283
+  orig: 301, 283
+  offset: 0, 0
+  index: -1

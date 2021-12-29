@@ -1,0 +1,83 @@
+
+tycdx.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+2
+  rotate: false
+  xy: 513, 44
+  size: 223, 209
+  orig: 225, 211
+  offset: 1, 1
+  index: -1
+card1
+  rotate: true
+  xy: 952, 77
+  size: 72, 48
+  orig: 74, 50
+  offset: 1, 1
+  index: -1
+card2
+  rotate: false
+  xy: 952, 27
+  size: 67, 48
+  orig: 69, 50
+  offset: 1, 1
+  index: -1
+dice1
+  rotate: false
+  xy: 738, 50
+  size: 111, 102
+  orig: 113, 104
+  offset: 1, 1
+  index: -1
+gold1
+  rotate: false
+  xy: 977, 219
+  size: 45, 34
+  orig: 47, 36
+  offset: 1, 1
+  index: -1
+guang
+  rotate: false
+  xy: 851, 50
+  size: 99, 99
+  orig: 99, 99
+  offset: 0, 0
+  index: -1
+guang2
+  rotate: false
+  xy: 2, 2
+  size: 81, 29
+  orig: 82, 29
+  offset: 1, 0
+  index: -1
+pan
+  rotate: false
+  xy: 738, 154
+  size: 130, 99
+  orig: 132, 101
+  offset: 1, 1
+  index: -1
+ribbon
+  rotate: false
+  xy: 291, 36
+  size: 220, 217
+  orig: 222, 219
+  offset: 1, 1
+  index: -1
+tao
+  rotate: true
+  xy: 870, 151
+  size: 102, 105
+  orig: 104, 107
+  offset: 1, 1
+  index: -1
+tycdx_di
+  rotate: false
+  xy: 2, 33
+  size: 287, 220
+  orig: 287, 220
+  offset: 0, 0
+  index: -1

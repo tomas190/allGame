@@ -1,0 +1,20 @@
+
+recharge_tabselect.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+btn_light
+  rotate: false
+  xy: 201, 1
+  size: 98, 92
+  orig: 112, 92
+  offset: 9, 0
+  index: -1
+recharge_tabselect
+  rotate: false
+  xy: 1, 43
+  size: 199, 50
+  orig: 199, 50
+  offset: 0, 0
+  index: -1

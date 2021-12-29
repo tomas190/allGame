@@ -1,0 +1,153 @@
+
+fkxw.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 2, 34
+  size: 287, 220
+  orig: 287, 220
+  offset: 0, 0
+  index: -1
+buyu_bubble
+  rotate: true
+  xy: 387, 30
+  size: 37, 33
+  orig: 39, 35
+  offset: 1, 1
+  index: -1
+buyu_cigarette
+  rotate: false
+  xy: 922, 196
+  size: 19, 11
+  orig: 21, 13
+  offset: 1, 1
+  index: -1
+buyu_emmagee1
+  rotate: false
+  xy: 507, 105
+  size: 90, 64
+  orig: 92, 66
+  offset: 1, 1
+  index: -1
+buyu_emmagee2
+  rotate: true
+  xy: 978, 217
+  size: 37, 44
+  orig: 39, 46
+  offset: 1, 1
+  index: -1
+buyu_emmagee_light
+  rotate: false
+  xy: 870, 196
+  size: 50, 58
+  orig: 50, 58
+  offset: 0, 0
+  index: -1
+buyu_fire1
+  rotate: false
+  xy: 2, 2
+  size: 46, 30
+  orig: 48, 32
+  offset: 1, 1
+  index: -1
+buyu_fire2
+  rotate: false
+  xy: 601, 175
+  size: 53, 29
+  orig: 55, 31
+  offset: 1, 1
+  index: -1
+buyu_fire3
+  rotate: false
+  xy: 291, 22
+  size: 53, 45
+  orig: 55, 47
+  offset: 1, 1
+  index: -1
+buyu_fire4
+  rotate: false
+  xy: 922, 209
+  size: 54, 45
+  orig: 56, 47
+  offset: 1, 1
+  index: -1
+buyu_fire5
+  rotate: false
+  xy: 346, 28
+  size: 39, 39
+  orig: 41, 41
+  offset: 1, 1
+  index: -1
+buyu_light1
+  rotate: false
+  xy: 656, 185
+  size: 13, 19
+  orig: 15, 21
+  offset: 1, 1
+  index: -1
+buyu_light2
+  rotate: true
+  xy: 507, 90
+  size: 13, 20
+  orig: 15, 22
+  offset: 1, 1
+  index: -1
+buyu_light3
+  rotate: true
+  xy: 420, 69
+  size: 15, 18
+  orig: 17, 20
+  offset: 1, 1
+  index: -1
+buyu_rocket
+  rotate: false
+  xy: 420, 86
+  size: 85, 83
+  orig: 87, 85
+  offset: 1, 1
+  index: -1
+buyu_rocketShock2
+  rotate: false
+  xy: 420, 171
+  size: 179, 33
+  orig: 179, 33
+  offset: 0, 0
+  index: -1
+buyu_rocketShockBG-slide
+  rotate: false
+  xy: 291, 206
+  size: 285, 48
+  orig: 285, 48
+  offset: 0, 0
+  index: -1
+buyu_rocketShockBG2
+  rotate: false
+  xy: 578, 206
+  size: 199, 48
+  orig: 199, 48
+  offset: 0, 0
+  index: -1
+buyu_shark
+  rotate: false
+  xy: 291, 69
+  size: 127, 135
+  orig: 129, 137
+  offset: 1, 1
+  index: -1
+buyu_shark_light
+  rotate: true
+  xy: 779, 193
+  size: 61, 89
+  orig: 61, 89
+  offset: 0, 0
+  index: -1
+buyu_smoke
+  rotate: false
+  xy: 50, 3
+  size: 29, 29
+  orig: 31, 31
+  offset: 1, 1
+  index: -1

@@ -73,7 +73,7 @@ let myReflect = {
     setOrientation(orientation, width, height) {
         orientation = orientation || 'landscape'
         if (cc.sys.isBrowser) {
-            var bsize = cc.view.getFrameSize();
+            var bsize = cc.view.getVisibleSize();
             if (this.framesise.width < bsize.width) {
                 this.framesise.width = bsize.width
             }
@@ -82,9 +82,9 @@ let myReflect = {
             }
             width = width || this.framesise.width;
             height = height || this.framesise.height;
-            console.log("设置屏幕横竖切换", JSON.stringify(this.framesise))
+            cc.log("设置屏幕横竖切换", JSON.stringify(this.framesise))
             if (orientation == "portrait") {
-                console.log("设置屏幕横竖切换 portrait", width, height)
+                cc.log("设置屏幕横竖切换 portrait", width, height)
                 cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
                 // cc.view.setFrameSize(750 / 1334 * height, height);
             } else {
@@ -92,16 +92,18 @@ let myReflect = {
                 // cc.view.setFrameSize(width, height);
             }
         } else {
-            var size = cc.view.getFrameSize();
-            width = width || size.width;
-            height = height || size.height;
+            var bsize = cc.view.getVisibleSize();
+            if (this.framesise.width < bsize.width) {
+                this.framesise.width = bsize.width
+            }
+            if (this.framesise.height < bsize.height) {
+                this.framesise.height = bsize.height
+            }
+            width = width || this.framesise.width;
+            height = height || this.framesise.height;
             if (orientation == "portrait") {
-                width = 750;
-                height = 1334;
                 cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT)
             } else {
-                width = 1334;
-                height = 750;
                 cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE)
             }
             cc.view.setFrameSize(width, height);
@@ -170,6 +172,7 @@ let myReflect = {
     getPermission() {
         let permission
         if (cc.sys.isBrowser) {
+            permission = true
         } else {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 permission = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "isHasStoragePermission", "()Z");

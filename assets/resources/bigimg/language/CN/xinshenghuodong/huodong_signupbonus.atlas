@@ -1,0 +1,89 @@
+
+huodong_signupbonus.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ce
+  rotate: false
+  xy: 2, 2
+  size: 102, 97
+  orig: 104, 97
+  offset: 0, 0
+  index: -1
+guang
+  rotate: false
+  xy: 2, 288
+  size: 692, 692
+  orig: 692, 692
+  offset: 0, 0
+  index: -1
+guang1
+  rotate: false
+  xy: 500, 232
+  size: 53, 54
+  orig: 57, 58
+  offset: 2, 2
+  index: -1
+guang2
+  rotate: false
+  xy: 2, 101
+  size: 111, 114
+  orig: 111, 114
+  offset: 0, 0
+  index: -1
+jin
+  rotate: false
+  xy: 115, 116
+  size: 95, 99
+  orig: 95, 99
+  offset: 0, 0
+  index: -1
+liji2
+  rotate: true
+  xy: 696, 652
+  size: 328, 74
+  orig: 330, 74
+  offset: 0, 0
+  index: -1
+song
+  rotate: false
+  xy: 772, 876
+  size: 97, 104
+  orig: 97, 104
+  offset: 0, 0
+  index: -1
+zhu
+  rotate: false
+  xy: 772, 774
+  size: 89, 100
+  orig: 89, 100
+  offset: 0, 0
+  index: -1
+zhuce
+  rotate: false
+  xy: 2, 217
+  size: 496, 69
+  orig: 496, 69
+  offset: 0, 0
+  index: -1
+
+huodong_signupbonus2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+feijin
+  rotate: false
+  xy: 2, 335
+  size: 544, 508
+  orig: 544, 508
+  offset: 0, 0
+  index: -1
+renwu
+  rotate: true
+  xy: 2, 2
+  size: 331, 516
+  orig: 335, 522
+  offset: 1, 1
+  index: -1

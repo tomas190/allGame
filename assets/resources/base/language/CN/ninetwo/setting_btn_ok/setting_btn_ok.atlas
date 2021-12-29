@@ -1,0 +1,20 @@
+
+setting_btn_ok.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+btn_OK
+  rotate: false
+  xy: 1, 31
+  size: 216, 62
+  orig: 216, 62
+  offset: 0, 0
+  index: -1
+btn_light
+  rotate: false
+  xy: 218, 1
+  size: 98, 92
+  orig: 112, 92
+  offset: 9, 0
+  index: -1

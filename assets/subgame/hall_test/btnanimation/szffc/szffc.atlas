@@ -1,0 +1,48 @@
+
+szffc.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ball_L
+  rotate: false
+  xy: 359, 8
+  size: 77, 77
+  orig: 77, 77
+  offset: 0, 0
+  index: -1
+ball_M
+  rotate: false
+  xy: 258, 77
+  size: 101, 152
+  orig: 101, 153
+  offset: 0, 0
+  index: -1
+ball_R
+  rotate: false
+  xy: 258, 0
+  size: 77, 77
+  orig: 77, 77
+  offset: 0, 0
+  index: -1
+bingo
+  rotate: false
+  xy: 359, 85
+  size: 138, 144
+  orig: 156, 176
+  offset: 0, 32
+  index: -1
+di
+  rotate: false
+  xy: 0, 31
+  size: 258, 198
+  orig: 258, 198
+  offset: 0, 0
+  index: -1
+guang1
+  rotate: false
+  xy: 436, 36
+  size: 48, 49
+  orig: 48, 49
+  offset: 0, 0
+  index: -1

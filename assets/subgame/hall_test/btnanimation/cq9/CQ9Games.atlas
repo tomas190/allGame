@@ -1,0 +1,222 @@
+
+CQ9Games.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+020001
+  rotate: false
+  xy: 316, 702
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020002
+  rotate: false
+  xy: 2, 500
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020003
+  rotate: false
+  xy: 289, 415
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020004
+  rotate: false
+  xy: 2, 213
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020005
+  rotate: false
+  xy: 576, 415
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020006
+  rotate: false
+  xy: 603, 702
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020007
+  rotate: false
+  xy: 289, 128
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020008
+  rotate: false
+  xy: 576, 28
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+arm_L
+  rotate: false
+  xy: 576, 343
+  size: 84, 70
+  orig: 84, 70
+  offset: 0, 0
+  index: -1
+arm_R
+  rotate: false
+  xy: 890, 853
+  size: 121, 134
+  orig: 121, 134
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 277, 16
+  size: 110, 136
+  orig: 110, 136
+  offset: 0, 0
+  index: -1
+breast
+  rotate: false
+  xy: 725, 315
+  size: 69, 48
+  orig: 69, 48
+  offset: 0, 0
+  index: -1
+circle
+  rotate: false
+  xy: 2, 787
+  size: 312, 200
+  orig: 312, 200
+  offset: 0, 0
+  index: -1
+collar
+  rotate: true
+  xy: 979, 378
+  size: 56, 37
+  orig: 56, 37
+  offset: 0, 0
+  index: -1
+collar_back
+  rotate: true
+  xy: 289, 733
+  size: 52, 22
+  orig: 52, 22
+  offset: 0, 0
+  index: -1
+di
+  rotate: false
+  xy: 2, 2
+  size: 273, 209
+  orig: 273, 209
+  offset: 0, 0
+  index: -1
+face
+  rotate: true
+  xy: 662, 353
+  size: 60, 61
+  orig: 60, 61
+  offset: 0, 0
+  index: -1
+hand_L
+  rotate: true
+  xy: 662, 324
+  size: 27, 28
+  orig: 27, 28
+  offset: 0, 0
+  index: -1
+hat
+  rotate: false
+  xy: 890, 709
+  size: 116, 142
+  orig: 116, 142
+  offset: 0, 0
+  index: -1
+hat_back
+  rotate: false
+  xy: 415, 75
+  size: 70, 51
+  orig: 70, 51
+  offset: 0, 0
+  index: -1
+neck_dec
+  rotate: true
+  xy: 979, 330
+  size: 46, 37
+  orig: 46, 37
+  offset: 0, 0
+  index: -1
+neck_dec2
+  rotate: false
+  xy: 289, 714
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: -1
+qj_L
+  rotate: true
+  xy: 979, 287
+  size: 41, 34
+  orig: 41, 34
+  offset: 0, 0
+  index: -1
+rib
+  rotate: true
+  xy: 725, 365
+  size: 48, 91
+  orig: 48, 91
+  offset: 0, 0
+  index: -1
+shanguang2
+  rotate: false
+  xy: 863, 315
+  size: 114, 119
+  orig: 114, 119
+  offset: 0, 0
+  index: -1
+wand
+  rotate: false
+  xy: 863, 436
+  size: 131, 264
+  orig: 131, 264
+  offset: 0, 0
+  index: -1
+
+CQ9Games2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+020009
+  rotate: false
+  xy: 2, 576
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020010
+  rotate: false
+  xy: 2, 289
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020011
+  rotate: false
+  xy: 289, 576
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1
+020012
+  rotate: false
+  xy: 2, 2
+  size: 285, 285
+  orig: 285, 285
+  offset: 0, 0
+  index: -1

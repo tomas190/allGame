@@ -1,0 +1,384 @@
+
+AGGames.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+di
+  rotate: false
+  xy: 2, 802
+  size: 273, 209
+  orig: 273, 209
+  offset: 0, 0
+  index: -1
+face
+  rotate: false
+  xy: 727, 531
+  size: 85, 81
+  orig: 85, 81
+  offset: 0, 0
+  index: -1
+fire/fire_01
+  rotate: true
+  xy: 2, 2
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_03
+  rotate: true
+  xy: 871, 729
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_05
+  rotate: false
+  xy: 968, 774
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_07
+  rotate: true
+  xy: 86, 2
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_09
+  rotate: true
+  xy: 170, 2
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_11
+  rotate: true
+  xy: 254, 2
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_13
+  rotate: false
+  xy: 493, 30
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_15
+  rotate: false
+  xy: 665, 128
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_17
+  rotate: false
+  xy: 872, 645
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_19
+  rotate: false
+  xy: 904, 645
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_21
+  rotate: false
+  xy: 936, 645
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_23
+  rotate: false
+  xy: 709, 381
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_25
+  rotate: false
+  xy: 709, 297
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_27
+  rotate: false
+  xy: 741, 381
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_29
+  rotate: false
+  xy: 741, 297
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_31
+  rotate: false
+  xy: 773, 381
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_33
+  rotate: false
+  xy: 773, 297
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_35
+  rotate: true
+  xy: 709, 265
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_37
+  rotate: false
+  xy: 805, 381
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_39
+  rotate: false
+  xy: 805, 297
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_41
+  rotate: false
+  xy: 837, 384
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+fire/fire_43
+  rotate: false
+  xy: 837, 300
+  size: 30, 82
+  orig: 30, 82
+  offset: 0, 0
+  index: -1
+hand_L
+  rotate: false
+  xy: 522, 133
+  size: 52, 110
+  orig: 52, 110
+  offset: 0, 0
+  index: -1
+hand_L2
+  rotate: true
+  xy: 578, 212
+  size: 52, 110
+  orig: 52, 110
+  offset: 0, 0
+  index: -1
+hand_R
+  rotate: false
+  xy: 727, 465
+  size: 90, 64
+  orig: 90, 64
+  offset: 0, 0
+  index: -1
+hat
+  rotate: false
+  xy: 853, 858
+  size: 147, 153
+  orig: 147, 153
+  offset: 0, 0
+  index: -1
+hat2
+  rotate: false
+  xy: 578, 474
+  size: 147, 153
+  orig: 147, 153
+  offset: 0, 0
+  index: -1
+hat_back
+  rotate: true
+  xy: 770, 614
+  size: 98, 100
+  orig: 98, 100
+  offset: 0, 0
+  index: -1
+j_L
+  rotate: false
+  xy: 814, 537
+  size: 62, 75
+  orig: 62, 75
+  offset: 0, 0
+  index: -1
+j_R
+  rotate: false
+  xy: 819, 468
+  size: 48, 67
+  orig: 48, 67
+  offset: 0, 0
+  index: -1
+lowerBody
+  rotate: false
+  xy: 386, 114
+  size: 134, 129
+  orig: 134, 129
+  offset: 0, 0
+  index: -1
+magic/ailiya_1
+  rotate: false
+  xy: 2, 610
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_10
+  rotate: false
+  xy: 194, 226
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_11
+  rotate: false
+  xy: 194, 34
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_12
+  rotate: false
+  xy: 386, 629
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_13
+  rotate: false
+  xy: 386, 437
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_14
+  rotate: false
+  xy: 578, 629
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_15
+  rotate: false
+  xy: 386, 245
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_2
+  rotate: false
+  xy: 277, 821
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_3
+  rotate: false
+  xy: 2, 418
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_4
+  rotate: false
+  xy: 469, 821
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_5
+  rotate: false
+  xy: 2, 226
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_6
+  rotate: false
+  xy: 661, 821
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_7
+  rotate: false
+  xy: 2, 34
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_8
+  rotate: false
+  xy: 194, 610
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/ailiya_9
+  rotate: false
+  xy: 194, 418
+  size: 190, 190
+  orig: 190, 190
+  offset: 0, 0
+  index: -1
+magic/老虎机1
+  rotate: false
+  xy: 871, 761
+  size: 95, 95
+  orig: 95, 95
+  offset: 0, 0
+  index: -1
+shoulder_L
+  rotate: true
+  xy: 770, 714
+  size: 105, 99
+  orig: 105, 99
+  offset: 0, 0
+  index: -1
+shoulder_L2
+  rotate: false
+  xy: 386, 13
+  size: 105, 99
+  orig: 105, 99
+  offset: 0, 0
+  index: -1
+shoulder_R
+  rotate: false
+  xy: 576, 128
+  size: 87, 82
+  orig: 87, 82
+  offset: 0, 0
+  index: -1
+upperBody
+  rotate: false
+  xy: 578, 370
+  size: 129, 102
+  orig: 129, 102
+  offset: 0, 0
+  index: -1
+upperBody2
+  rotate: false
+  xy: 578, 266
+  size: 129, 102
+  orig: 129, 102
+  offset: 0, 0
+  index: -1

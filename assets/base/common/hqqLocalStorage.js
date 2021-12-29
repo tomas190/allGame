@@ -36,10 +36,10 @@ let localStorage = {
             cc.sys.localStorage.setItem("bgIsOpenKey", true);
             cc.sys.localStorage.setItem("effectIsOpenKey", true);
         }
-        // console.log("log", JSON.parse(cc.sys.localStorage.getItem('log')))
-        // console.log("elog", JSON.parse(cc.sys.localStorage.getItem('elog')))
-        // console.log("global", JSON.parse(cc.sys.localStorage.getItem('globalKey')))
-        // console.log("subgame", JSON.parse(cc.sys.localStorage.getItem('subgameKey')))
+        // cc.log("log", JSON.parse(cc.sys.localStorage.getItem('log')))
+        // cc.log("elog", JSON.parse(cc.sys.localStorage.getItem('elog')))
+        // cc.log("global", JSON.parse(cc.sys.localStorage.getItem('globalKey')))
+        // cc.log("subgame", JSON.parse(cc.sys.localStorage.getItem('subgameKey')))
         return this;
     },
     set(subgame, key, data) {
@@ -86,6 +86,44 @@ let localStorage = {
     },
     getGlobal() {
         return this.global;
+    },
+
+    getSize(){
+        return ((this.calSzieforobj(this.global)+this.calSzieforobj(this.subdata))/(1024*1024)).toFixed(2) + "MB";
+    },
+
+    calSzieforobj( object ) {
+
+        var objectList = [];
+        var stack = [ object ];
+        var bytes = 0;
+    
+        while ( stack.length ) {
+            var value = stack.pop();
+    
+            if ( typeof value === 'boolean' ) {
+                bytes += 4;
+            }
+            else if ( typeof value === 'string' ) {
+                bytes += value.length * 2;
+            }
+            else if ( typeof value === 'number' ) {
+                bytes += 8;
+            }
+            else if
+            (
+                typeof value === 'object'
+                && objectList.indexOf( value ) === -1
+            )
+            {
+                objectList.push( value );
+    
+                for( var i in value ) {
+                    stack.push( value[ i ] );
+                }
+            }
+        }
+        return bytes;
     },
 }
 module.exports = localStorage;

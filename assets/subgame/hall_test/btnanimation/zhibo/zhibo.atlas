@@ -1,0 +1,83 @@
+
+zhibo.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+baiguang
+  rotate: false
+  xy: 490, 101
+  size: 46, 47
+  orig: 46, 47
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 277, 85
+  size: 169, 211
+  orig: 169, 211
+  offset: 0, 0
+  index: -1
+cm
+  rotate: false
+  xy: 584, 193
+  size: 93, 61
+  orig: 93, 61
+  offset: 0, 0
+  index: -1
+di
+  rotate: false
+  xy: 2, 45
+  size: 273, 209
+  orig: 273, 209
+  offset: 0, 0
+  index: -1
+ears_1
+  rotate: false
+  xy: 679, 223
+  size: 23, 31
+  orig: 24, 31
+  offset: 0, 0
+  index: -1
+ears_2
+  rotate: false
+  xy: 584, 161
+  size: 29, 30
+  orig: 29, 30
+  offset: 0, 0
+  index: -1
+eye
+  rotate: false
+  xy: 132, 28
+  size: 18, 15
+  orig: 20, 17
+  offset: 1, 1
+  index: -1
+hair
+  rotate: true
+  xy: 2, 7
+  size: 36, 92
+  orig: 37, 92
+  offset: 0, 0
+  index: -1
+hand
+  rotate: false
+  xy: 490, 150
+  size: 92, 104
+  orig: 92, 104
+  offset: 0, 0
+  index: -1
+t1
+  rotate: true
+  xy: 96, 2
+  size: 41, 34
+  orig: 41, 34
+  offset: 0, 0
+  index: -1
+t2
+  rotate: false
+  xy: 277, 45
+  size: 29, 38
+  orig: 29, 38
+  offset: 0, 0
+  index: -1

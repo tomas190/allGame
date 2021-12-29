@@ -89,7 +89,7 @@
                 //     str += "sererr "
                 // }
                 // let gHandler = require("gHandler");
-                // console.log("urllist", urllist)
+                // cc.log("urllist", urllist)
                 // gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, str)
             }
         }
@@ -141,7 +141,7 @@
         ]
     }
     getQueryVariable = () => {
-        // console.log("window.location.origin", window.location.origin)
+        // cc.log("window.location.origin", window.location.origin)
         let h = "online"
         if (window.location.origin.match("webgame.539316.com")) {
             h = "dev"
@@ -154,7 +154,7 @@
         return h
     }
     let huanjin = getQueryVariable()
-    console.log("huanjin", huanjin)
+    cc.log("huanjin", huanjin)
 
     //测速后回调
     callsourHosturl = (url) => {

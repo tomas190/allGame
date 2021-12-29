@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "cd70ed15-a4bf-4c29-9bf2-14e06e27545c",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1633,
+  "height": 269,
+  "platformSettings": {},
+  "subMetas": {
+    "QTGames": {
+      "ver": "1.0.4",
+      "uuid": "6b6f8a43-03d7-4c31-9d0a-dae42b0c6916",
+      "rawTextureUuid": "cd70ed15-a4bf-4c29-9bf2-14e06e27545c",
+      "trimType": "custom",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1633,
+      "height": 269,
+      "rawWidth": 1633,
+      "rawHeight": 269,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,5 +1,6 @@
 
 let commonTools = {
+    // 版本对比
     versionCompare(loaclV, remoteV) {
         if (!loaclV || !remoteV) {
             return true;
@@ -20,51 +21,74 @@ let commonTools = {
         return false
     },
     headRes: null, // 头像资源缓存
-    loadHeadRes(headid, headsprite) {
+    loadHeadRes(headid, headsprite, size) {
         if (typeof headid == "string" && headid.includes(".")) {
             headid = headid.substring(0, headid.indexOf("."))
         }
+        
         headid = parseInt(headid) % 10
-        if (this.headRes) {
+        if (hqq.app.pinpai != "xingui"&&hqq.app.pinpai != "ninetwo" && cc.isValid(  this.headRes )) {
             var spriteFrame = this.headRes.getSpriteFrame(`Avatar` + headid)
             if (spriteFrame) {
                 headsprite.spriteFrame = spriteFrame;
             } else {
-                headsprite.spriteFrame = t.getSpriteFrame(`Avatar0`);
+                headsprite.spriteFrame = this.headRes.getSpriteFrame(`Avatar0`);
             }
         } else {
-            cc.resources.load(`/head/im_head`, cc.SpriteAtlas, (err, t) => {
-                this.headRes = t
-                var spriteFrame = t.getSpriteFrame(`Avatar` + headid)
-                if (spriteFrame) {
-                    headsprite.spriteFrame = spriteFrame;
-                } else {
-                    headsprite.spriteFrame = t.getSpriteFrame(`Avatar0`);
+            if (hqq.app.pinpai == "xingui") {
+                hqq["hall_xingui"].load(`/xingui/head/tx` + (headid + 1), cc.SpriteFrame, (err, t) => {
+                    if (t) {
+                        if( cc.isValid( headsprite ) )
+                        {
+                            headsprite.spriteFrame = t;
+                            if (size) {
+                                headsprite.node.width = size
+                                headsprite.node.height = size
+                            }
+                        }
+                    }
+                })
+            } else if (hqq.app.pinpai == "ninetwo"){
+                let headstr = "x"
+                if( size == 101 ){
+                    headstr = "d"
                 }
-            })
+                let headconverid = [ 0,0,0,1,1,1,2,2,3,3]
+                hqq["hall_ninetwo"].load(`ninetwo/head/`+headstr+headconverid[headid], cc.SpriteFrame, (err, t) => {
+                    if( cc.isValid( headsprite ) )
+                    {
+                        cc.log("loadHeadRes headid=",headid," headconverid[i]=",headconverid[headid])
+                        headsprite.spriteFrame = t;
+                        if( size == 101 ){
+                            headsprite.node.width = 101
+                            headsprite.node.height = 155
+                        } else if (size) {
+                            headsprite.node.width = size
+                            headsprite.node.height = size
+                        }
+                    }
+                })
+
+            } else {
+                cc.resources.load(`/head/im_head`, cc.SpriteAtlas, (err, t) => {
+                    if( cc.isValid( headsprite ) )
+                    {
+                        this.headRes = t
+                        var spriteFrame = t.getSpriteFrame(`Avatar` + headid)
+                        if (spriteFrame) {
+                            headsprite.spriteFrame = spriteFrame;
+                        } else {
+                            headsprite.spriteFrame = t.getSpriteFrame(`Avatar0`);
+                        }
+                        if (size) {
+                            headsprite.node.width = size
+                            headsprite.node.height = size
+                        }
+                    }
+                })
+
+            }
         }
-    },
-    loadIconRes(icontarget, name, path) {
-        cc.resources.loadDir(path, sp.SkeletonData, function (err, Data) {
-            if (err) {
-                console.log("加载骨骼动画失败", err)
-                return;
-            }
-            for (let i = 0; i < Data.length; i++) {
-                if (Data[i].__classname__ == "sp.SkeletonData") {
-                    icontarget.skeletonData = Data[i];
-                    icontarget.animation = 'animation';
-                    icontarget._updateSkeletonData();
-                }
-            }
-        });
-        cc.resources.load(path + "/name", cc.SpriteFrame, (err, frame) => {
-            if (err) {
-                console.log("加载图片失败", err)
-                return;
-            }
-            name.spriteFrame = frame;
-        })
     },
     /** 判断是否为数字 */
     isNumber(obj) {
@@ -105,6 +129,7 @@ let commonTools = {
                 jsb.fileUtils.removeFile(fullPath);
             }
             target.scheduleOnce(() => {
+                if(!cc.isValid(node))return;
                 cc.Camera.main.targetTexture = null;
                 let data = render.readPixels();
                 let width = render.width;
@@ -132,6 +157,7 @@ let commonTools = {
             }, 0, 0)
         } else {
             target.scheduleOnce(() => {
+                if(!cc.isValid(node))return;
                 cc.Camera.main.targetTexture = null;
                 if (!this._canvas) {
                     this._canvas = document.createElement('canvas');
@@ -196,7 +222,10 @@ let commonTools = {
             if (err) {
                 return
             }
-            head.spriteFrame = res;
+            if(cc.isValid(head))
+            {
+                head.spriteFrame = res;
+            }
         })
     },
     /**
@@ -348,6 +377,7 @@ let commonTools = {
      */
     fixedFloat(num, len = 2) {
         // return ~~(num * 100) / 100;
+        if(num === 0 )return 0;
         return num.toFixed(len);
     },
     formatGold(num) {
@@ -361,6 +391,20 @@ let commonTools = {
             return str
         }
     },
+    formatGold2(num , len = 4 ) {
+        let str = num.toString()
+        if (str.includes(".")) {
+            str = str.substring(0, str.indexOf(".") + len )
+            while( str.length - 1 > str.indexOf(".") && str[str.length-1] === '0' ){
+                str = str.substring(0,str.length-1);
+            }
+            if(str.length -1 === str.indexOf(".")){
+                str = str.substring(0,str.length-1);
+            }
+        }
+        return str;
+    },
+    
     /**
      * 填充数字，对于长度不足的，自动补零
      * @param num 需要填充的数字
@@ -421,6 +465,7 @@ let commonTools = {
                 }
             }
             cc.Button.prototype.hqqDelay = function (event) {
+                if(!cc.isValid(event.target))return;
                 if (this.interactable && this.enabledInHierarchy && this._hqqDelay) {
                     this.enabledInHierarchy = false // enabledInHierarchy 表示该组件是否被启用并且所在的节点也处于激活状态。
                     setTimeout(() => {
@@ -429,6 +474,7 @@ let commonTools = {
                 }
             }
             cc.Button.prototype._onTouchEnded = function (event) {
+                if(!cc.isValid(event.target))return;
                 if (this._hqqSoundon) {
                     this.hqqEffect()
                 }

@@ -1,0 +1,55 @@
+
+a3.png
+size: 256,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dian
+  rotate: false
+  xy: 56, 28
+  size: 5, 5
+  orig: 5, 5
+  offset: 0, 0
+  index: -1
+guang
+  rotate: false
+  xy: 0, 20
+  size: 54, 13
+  orig: 54, 13
+  offset: 0, 0
+  index: -1
+jia
+  rotate: false
+  xy: 0, 0
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+puke
+  rotate: false
+  xy: 0, 35
+  size: 85, 93
+  orig: 85, 93
+  offset: 0, 0
+  index: -1
+puke1
+  rotate: false
+  xy: 87, 35
+  size: 85, 93
+  orig: 85, 93
+  offset: 0, 0
+  index: -1
+zai
+  rotate: false
+  xy: 174, 109
+  size: 19, 19
+  orig: 19, 19
+  offset: 0, 0
+  index: -1
+zhong
+  rotate: false
+  xy: 20, 0
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: -1

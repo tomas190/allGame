@@ -12,6 +12,7 @@ cc.Class({
     },
 
     onLoad() {
+        this.UILoad()
         this.upTime = 0;
         this.centerTime = 0;
         hqq.eventMgr.register(hqq.eventMgr.refreshNetState, "netnode", this.refreshNetState.bind(this))
@@ -23,27 +24,31 @@ cc.Class({
 
     },
 
+    // UI动态加载
+    UILoad() {
+        if (hqq.app.pinpai == "xinsheng") {
+
+        } else {
+
+        }
+    },
+
     init(data) {
         // this.subdata = data.subdata
         let subdata = {
             upgradeList: hqq.localStorage.globalGet(hqq.app.hotServerKey),
             centerList: hqq.app.serverList,
-            notshowexitbtn: false,
             uptime: this.upTime,
             centertime: this.centerTime,
-        }
-        if (cc.director.getScene().name == "loading") {
-            subdata.restartGame = true
-            subdata.notshowexitbtn = true
         }
         if (data && data.subdata) {
             for (let k in data.subdata) {
                 subdata[k] = data.subdata[k]
             }
         }
-
-        if (cc.director.getScene().name == "loading") {
+        if (cc.director.getScene().name == "loading" || cc.director.getScene().name == "New Node") {
             this.tipnode.active = true
+            subdata.restartGame = true
             this.tipnode.on(cc.Node.EventType.TOUCH_END, (event) => {
                 hqq.eventMgr.dispatch(hqq.eventMgr.showLineChoiceLayer, subdata)
             })
@@ -53,6 +58,7 @@ cc.Class({
         })
     },
     refreshNetState(data) {
+        if(!cc.isValid(this.node))return;
         this.upTime = data.timelist[0] > data.timelist[1] ? data.timelist[0] : data.timelist[1]
         this.centerTime = data.timelist[2]
         this.label.node.color = this.getColor(data.time);
@@ -88,7 +94,7 @@ cc.Class({
                 this.spritenode.runAction(this.blinkaction)
                 this.isOnAction = true
             }
-            this.label.string = "无信号"
+            this.label.string = hqq.getTip("showtip72")
         }
     },
     getColor(time) {

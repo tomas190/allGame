@@ -16,6 +16,8 @@ let hqqEvent = {
     refreshBgState: 14, // 刷新背景音乐状态
     refreshEffectState: 15, // 刷新背景音乐状态
     refreshNetState: 16, // 刷新网络状态
+    refreshPlayerGold: 17, // 刷新玩家金钱余额
+    refreshHallChongFuDenLu:18,//通知子游戏大厅重复登陆
 
     showSamlllayer: 20, // 显示小的设置界面  修改头像 绑定支付宝 修改昵称 切换账号
     showBiglayer: 21, // 显示大的设置界面 重置密码 绑定银行卡 注册正式账号
@@ -33,6 +35,10 @@ let hqqEvent = {
     showLineChoiceLayer: 33, // 显示线路测试界面
     showNetStateNode: 34, // 显示当前线路状态节点
     showHBYLayer: 35, // 显示红包雨界面
+    showAgaLayer: 36, // 显示aga子游戏界面
+    showPayActivityWeb:37,// 显示活动网页
+    showJumpScene:38, // 跳转场景
+    showZhiBoPanel:39, // 显示或关闭直播画面
 
     onReceiveNologin: 40, // 
     onReceiveBroadcast: 41, // 
@@ -45,6 +51,10 @@ let hqqEvent = {
 
     refreshHallTips: 60, // 刷新大厅提示 广告，聊天，收益
     refreshLoading: 61, // 刷新loading显示
+    showPublicAlert:62, // 显示固定提示匡
+    openZhiBoPanel:63, // 开启或关闭直播介面
+    showKeFuPanel:64, // 显示或关闭客服介面
+    showPersonalCenter:65, // 显示或关闭个人中心介面
 
     init() {
         this.mapReciver = {};

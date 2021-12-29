@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "d66092be-7d72-48a5-864a-c4408a5b0848",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1280,
+  "height": 84,
+  "platformSettings": {},
+  "subMetas": {
+    "zhibo_banner_top": {
+      "ver": "1.0.4",
+      "uuid": "461432d0-1f89-4f69-bd7e-9832ba452234",
+      "rawTextureUuid": "d66092be-7d72-48a5-864a-c4408a5b0848",
+      "trimType": "custom",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1280,
+      "height": 84,
+      "rawWidth": 1280,
+      "rawHeight": 84,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,20 @@
+
+setting_btn_login.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+btn_light
+  rotate: false
+  xy: 217, 1
+  size: 98, 92
+  orig: 112, 92
+  offset: 9, 0
+  index: -1
+btn_login
+  rotate: false
+  xy: 1, 33
+  size: 215, 60
+  orig: 215, 60
+  offset: 0, 0
+  index: -1

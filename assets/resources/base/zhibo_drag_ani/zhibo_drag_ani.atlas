@@ -1,0 +1,139 @@
+
+zhibo_drag_ani.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+LIVE
+  rotate: false
+  xy: 452, 435
+  size: 32, 12
+  orig: 32, 12
+  offset: 0, 0
+  index: -1
+arm_L
+  rotate: false
+  xy: 261, 58
+  size: 33, 37
+  orig: 33, 37
+  offset: 0, 0
+  index: -1
+arm_R
+  rotate: false
+  xy: 452, 449
+  size: 34, 32
+  orig: 34, 32
+  offset: 0, 0
+  index: -1
+bg
+  rotate: false
+  xy: 261, 301
+  size: 189, 203
+  orig: 190, 204
+  offset: 0, 1
+  index: -1
+body_lower
+  rotate: false
+  xy: 2, 2
+  size: 85, 44
+  orig: 117, 171
+  offset: 32, 0
+  index: -1
+body_up
+  rotate: false
+  xy: 261, 97
+  size: 103, 128
+  orig: 117, 171
+  offset: 0, 43
+  index: -1
+btf_L
+  rotate: false
+  xy: 504, 463
+  size: 6, 18
+  orig: 8, 18
+  offset: 1, 0
+  index: -1
+btf_R
+  rotate: false
+  xy: 507, 485
+  size: 3, 19
+  orig: 5, 19
+  offset: 1, 0
+  index: -1
+butterfly
+  rotate: true
+  xy: 488, 455
+  size: 26, 14
+  orig: 26, 15
+  offset: 0, 0
+  index: -1
+ceye
+  rotate: false
+  xy: 119, 35
+  size: 35, 11
+  orig: 35, 11
+  offset: 0, 0
+  index: -1
+chair
+  rotate: false
+  xy: 366, 102
+  size: 83, 123
+  orig: 83, 123
+  offset: 0, 0
+  index: -1
+desk
+  rotate: false
+  xy: 261, 227
+  size: 181, 72
+  orig: 181, 72
+  offset: 0, 0
+  index: -1
+dot
+  rotate: false
+  xy: 261, 48
+  size: 8, 8
+  orig: 10, 10
+  offset: 1, 1
+  index: -1
+eyes
+  rotate: false
+  xy: 296, 83
+  size: 37, 12
+  orig: 37, 12
+  offset: 0, 0
+  index: -1
+fj
+  rotate: false
+  xy: 296, 60
+  size: 21, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+frame
+  rotate: false
+  xy: 2, 48
+  size: 257, 456
+  orig: 257, 456
+  offset: 0, 0
+  index: -1
+liveFrame
+  rotate: false
+  xy: 452, 483
+  size: 53, 21
+  orig: 53, 21
+  offset: 0, 0
+  index: -1
+mic
+  rotate: false
+  xy: 89, 7
+  size: 28, 39
+  orig: 28, 39
+  offset: 0, 0
+  index: -1
+mt
+  rotate: false
+  xy: 119, 20
+  size: 24, 13
+  orig: 24, 13
+  offset: 0, 0
+  index: -1

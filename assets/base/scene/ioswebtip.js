@@ -6,14 +6,20 @@ cc.Class({
 
     },
 
-    // onLoad () {},
+    onLoad() {
+        this.UILoad()
+    },
 
     start() {
 
     },
+    // UI动态加载
+    UILoad() {
+        hqq.imgLoad(this.node, "base/language/" + hqq.language + "/img/tips")
+    },
     init(data) { },
     onClickClose() {
-        this.node.removeFromParent(true);
+        this.node.destroy()
         hqq.localStorage.globalSet("noShowIosWebTip", true)
     },
     // update (dt) {},

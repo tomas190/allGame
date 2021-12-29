@@ -1,38 +1,22 @@
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        brandnode: cc.Node,
-        ani: sp.Skeleton,
-        bg: cc.Sprite,
-
-        webback: cc.Node,
-        layer: cc.Node,
-        downapklabel: cc.Node,
-        apkversion: cc.Label,
-        progressnode: cc.ProgressBar,
-        label: cc.Label,
         hallmanifest: {
             type: cc.Asset,
             default: null
         },
     },
 
-    // var _global = typeof window === 'undefined' ? global : window;
-    // _global.cc = _global.cc || {};
-    /** 脚本组件初始化，可以操作this.node // use this for initialization */ // " 开始游戏代码，loading界面加载 D/jswrapper"
     onLoad() {
-        console.log("开始游戏代码，loading界面加载")
         this.initHQQ()
-        if (cc.sys.isBrowser) {
-        } else if (hqq.app.pinpai == "debi") {
-            this.webback.active = false
-        }
+        this.UILoad()
+
         this.tempTime = 0;
         this.state = 0;
-        this.info = "资源加载中";
+        this.info = "";
         this.progress = 0
-        this.progressnode.node.active = false
         if (!cc.isBrowser && (!hqq.app.apkVersion || hqq.app.apkVersion == '1.0.0')) {
             !hqq.isDebug && hqq.logMgr.log('获取安装包固定信息失败')
             let appversionname = hqq.reflect && hqq.reflect.getAppVersion()
@@ -45,24 +29,30 @@ cc.Class({
         } else {
             hqq.logMgr.log('getHqqPackageInfo 从app获得的品牌和环境', hqq.reflect.getHqqPackageInfo())
         }
-        let mainversion = "   V:" + (hqq.localStorage.getGlobal().versionKey || "1.0.0")
+        let mainversion = "   V:" + (hqq.localStorage.globalGet(hqq.app.versionKey) || "1.0.0")
         let os = ""
         if (hqq.app.packageInfo) {
             os = hqq.app.packageInfo.system + ","
         }
-        this.apkversion.string = os + "App:" + hqq.app.apkVersion + mainversion;
+        this.apkversion.getComponent(cc.Label).string = os + "App:" + hqq.app.apkVersion + mainversion;
 
         if (hqq.app.idDownApk) {
-            this.downapklabel.active = false
             this.onclickDownApk()
             return
         }
         this.register()
-        this.layer.active = true;
-
-        if (cc.sys.platform == cc.sys.MOBILE_BROWSER || cc.sys.platform == cc.sys.DESKTOP_BROWSER) {
+        // if (CC_DEBUG) {
+        //     // hqq.subGameList = {
+        //     // }
+        // }
+        // if(hqq.app.pinpai == "ninetwo"){
+        //     this.setPinpaiRes()
+        //     this.layer.active = false;
+        //     return;
+        // }
+        if (cc.sys.platform == cc.sys.MOBILE_BROWSER || cc.sys.platform == cc.sys.DESKTOP_BROWSER) { // 浏览器
             this.cocosWebOrientationChange()
-            this.downapklabel.active = false
+            this.layer.active = true;
             let url = window.location.search;
             if (url.includes("params=")) { // 第三方加密链接
                 hqq.isOtherGame = true
@@ -79,29 +69,42 @@ cc.Class({
                         } else if (strs[i].split("=")[0] == "token") {
                             hqq.webToken = temp;
                         }
-                        console.log(temp)
+                        cc.log(temp)
                     }
                     if (!hqq.localStorage.globalGet("noShowIosWebTip")) {
                         hqq.eventMgr.dispatch(hqq.eventMgr.showIosWebTip, null) // ios 网页提示添加桌面
                     }
                 }
+                this.setPinpaiRes()
                 this.runApplogin()
             }
-        } else {
+        } else if (hqq.app.pinpai != 'debi') {
+            this.setPinpaiRes()
+            this.layer.active = true;
             this.runApplogin()
+        } else {
+            this.setPinpaiRes()
+            this.layer.active = false;
         }
+        // hqq.eventMgr.dispatch(hqq.eventMgr.showLineChoiceLayer, {})
+        // hqq.eventMgr.dispatch(hqq.eventMgr.showPerson, null)
+        // hqq.eventMgr.dispatch(hqq.eventMgr.showNotice, null)
+        // hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 6 })
+        // hqq.eventMgr.dispatch(hqq.eventMgr.showBiglayer, 3)
+        // hqq.eventMgr.dispatch(hqq.eventMgr.showBiglayer, 2)
+        // hqq.eventMgr.dispatch(hqq.eventMgr.showNotice, null)
+        // hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 8, msg: hqq.getTip("showtip68") })
     },
-    /** enabled和active属性从false变为true时 */
-    // onEnable() { },
-    /** 通常用于初始化中间状态操作 */
+
     start() {
 
     },
-    // 初始化全局变量及各个模块
+    // 初始化全局模块
     initHQQ() {
         let _global = typeof window === 'undefined' ? global : window;
         let gHandler = require("gHandler")
         _global.hqq = gHandler;
+        hqq.languageTip = require("hqqLanguage")
         let hqqBase64 = require("hqqBase64");
         hqq.base64 = hqqBase64;
         let myReflect = require("myReflect");
@@ -125,15 +128,125 @@ cc.Class({
         hqq.eventMgr = hqqEvent.init();
         let hqqCommonTools = require("hqqCommonTools");
         hqq.commonTools = hqqCommonTools;
+        let hqqLocalStorage = require("hqqLocalStorage");
+        hqq.localStorage = hqqLocalStorage.init();
         let hqqLogMgr = require("hqqLogMgr");
         hqq.logMgr = hqqLogMgr.init();
         let hqqViewCtr = require("hqqViewCtr")
         hqq.viewCtr = hqqViewCtr.init();
-        let hqqLocalStorage = require("hqqLocalStorage");
-        hqq.localStorage = hqqLocalStorage.init();
         let hqqAudioMgr = require("hqqAudioMgr");
         hqq.audioMgr = hqqAudioMgr.init();
     },
+    UILoad() {
+        if(!cc.isValid(this.node)){
+            console.log("loading UILoad 节点不存在")
+            return;
+        }
+        let background = cc.find("Canvas/background")
+        this.layer = cc.find("Canvas/layer")
+        this.progressnode = cc.find("Canvas/layer/progress")
+        this.progressBar = this.progressnode.getComponent(cc.ProgressBar)
+        this.apkversion = cc.find("Canvas/layer/apkversion")
+        this.label = cc.find("Canvas/layer/layoutnode/infolabel").getComponent(cc.Label)
+        this.bg = cc.find("Canvas/brandnode/bg")
+        this.ani = cc.find("Canvas/brandnode/ani").getComponent(sp.Skeleton)
+        if (hqq.app.pinpai == "xinhao") {
+            hqq.setSprite(background, { path: "bigimg/xinhao/logo_hj" })
+            hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
+        } else if (hqq.app.pinpai == "fuxin" ) {
+            hqq.setSprite(background, { path: "bigimg/fuxin/bg" })
+            hqq.setSprite(this.progressnode, { path: "base/fuxin/img/jd1", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/fuxin/img/jd2" })
+        } else if (hqq.app.pinpai == "xingui") {
+            hqq.setSprite(background, { path: "bigimg/xingui/back" })
+            hqq.addNode(background, { path: "base/language/" + hqq.language + "/xingui/logo", widget: { top: 70, left: 10 } })
+            hqq.setSprite(this.progressnode, { path: "base/xingui/img/progressback", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/xingui/img/progress" })
+        } else if (hqq.app.pinpai == "xinsheng") {
+            hqq.setSprite(background, { path: "bigimg/xinsheng/back" })
+            hqq.setSprite(this.progressnode, { path: "base/xinsheng/img/panel1", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/xinsheng/img/panel" })
+        } else if (hqq.app.pinpai == "xinlong") {
+            hqq.setSprite(background, { path: "bigimg/xinlong/xl_loading3" })
+            hqq.setSprite(this.progressnode, { path: "base/xinsheng/img/panel1", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/xinsheng/img/panel" })
+        } else if (hqq.app.pinpai == "huangshi") {
+            hqq.setSprite(background, { path: "bigimg/huangshi/bg" })
+            hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
+        } else if (hqq.app.pinpai == "juding") {
+            hqq.setSprite(background, { path: "bigimg/juding/loading" })
+            hqq.setSprite(this.progressnode, { path: "base/juding/img/jd1", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/juding/img/jd2" })
+        } else if (hqq.app.pinpai == "huaxing") {
+            hqq.setSprite(background, { path: "bigimg/huaxing/bg" })
+            hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
+        } else if (hqq.app.pinpai == "ninetwo") {
+            hqq.setSprite(background, { path: "bigimg/ninetwo/beijingtu" })
+            hqq.setSprite(this.progressnode, { path: "base/ninetwo/img/loading_bar", active: false , y:-343})
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/ninetwo/img/shang" })
+            this.progressicon = hqq.addNode(this.progressnode, { path: "base/ninetwo/img/touzi", x:-385.5 })
+            
+            let canvas = cc.find("Canvas");
+            let scalex = cc.view.getVisibleSize().width / 1334;
+            let scaley = cc.view.getVisibleSize().height / 690;
+            if(scalex < scaley ){
+                scalex = scaley;
+            }
+            // this.ninetwovideo = cc.find("Canvas/92video").getComponent(cc.WebView);
+            // this.ninetwovideo.node.active = true;
+            // let webviewEventHandler = new cc.Component.EventHandler();
+            // webviewEventHandler.target = this.node;
+            // webviewEventHandler.component = "loading";
+            // webviewEventHandler.handler = "onWebviewEvent";
+            // cc.log("this.ninetwovideo=",this.ninetwovideo)
+            // this.ninetwovideo.webviewEvents.push(webviewEventHandler);
+            // this.ninetwovideo.url = "https://web_static.539316.com/";
+            this.video = hqq.addNode(canvas,{videopath:"base/ninetwo/92mv",width:1334*scalex,height:690*scalex,callback: "videocompleteListener", script: this})
+            this.video.active = false;
+            // this.videotimeout = setTimeout(() => {
+            //     this.videocompleteListener( this.video , cc.VideoPlayer.EventType.CLICKED );
+            // }, 16 * 1000 );
+        } else if (hqq.app.pinpai == "chaofan") {
+            hqq.setSprite(background, { path: "bigimg/chaofan/jiaz" })
+            hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
+        } else if(hqq.app.pinpai == "tianqi") {
+            hqq.setSprite(background, { path: "bigimg/tianqi/loading" })
+            hqq.setSprite(this.progressnode, { path: "base/tianqi/img/ditiao", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/tianqi/img/shangitap" })
+            let barEff = new cc.Node();
+            barEff.name = "tianqi_barEff";
+            let barEff_widget = barEff.addComponent(cc.Widget);
+            this.progressnode.getChildByName('bar').addChild(barEff);
+            hqq.setSprite(barEff, { path: "base/tianqi/img/loading_light"});
+            barEff_widget.target = barEff_widget.node.parent;
+            barEff_widget.isAlignTop = true; 
+            barEff_widget.isAlignRight  = true; 
+            barEff_widget.right = 0;
+            barEff_widget.top = -26;
+            barEff.scalex = 1;
+            barEff.scaley = 0.8;
+            barEff.setPosition(0, 0);
+            barEff.active = false;
+        } else {
+            hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
+            if (hqq.app.pinpai != "debi") {
+                hqq.setSprite(background, { path: "bigimg/language/" + hqq.language + "/web_loading" })
+            }
+        }
+    },
+
+    onWebviewEvent(webview, eventType) {
+        // if (eventType === cc.WebView.EventType.LOADED) {
+        //     console.log("=======尝试播放影片")
+        //     this.ninetwovideo.evaluateJS(`javascript:(function() { var videos = document.getElementsByTagName(‘video’); for(var i=0;i<videos.length;i ){videos[i].play();}})()`);
+        // }
+    },
+
     // 注册事件
     register() {
         hqq.eventMgr.register(hqq.eventMgr.hotCheckup, "loading", this.hotCheckup.bind(this))
@@ -155,6 +268,157 @@ cc.Class({
         } catch (error) {
             hqq.logMgr.logerror(error)
             hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, "error:" + error)
+        }
+    },
+    // 加载设置品牌logo资源
+    setPinpaiRes() {
+        if (hqq.app.pinpai != 'debi') {
+            if (hqq.app.pinpai == "xinhao") {
+
+            } else if (hqq.app.pinpai == "juding") {
+
+            } else if (hqq.app.pinpai == "fuxin" ) {
+                // hqq.setSprite(this.background, { path: "base/fuxin/bg" })
+            } else if (hqq.app.pinpai == "xingui") {
+                // hqq.setSprite(this.background, { path: "base/xingui/back" })
+            } else if (hqq.app.pinpai == "xinsheng") {
+                // hqq.setSprite(this.background, { path: "base/xinsheng/bigimg/back" })
+            } else if (hqq.app.pinpai == 'xingba') {
+                // hqq.setSprite(this.background, { path: "bigimg/language/" + hqq.language + "/web_loading" })
+                hqq.setSprite(this.bg, { path: "bigimg/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai + "/xb_loading_bg" })
+                // cc.resources.load("/base/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai + "/xb_loading_bg", cc.SpriteFrame, (err, frame) => {
+                //     if (err) {
+                //         cc.log(" 加载图片失败", err)
+                //         return;
+                //     }
+                //     this.bg.spriteFrame = frame;
+                // })
+            } else {
+                // hqq.setSprite(this.background, { path: "bigimg/language/" + hqq.language + "/web_loading" })
+                hqq.setSprite(this.bg, { path: "bigimg/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai + "/test_loading_bg" })
+                // cc.resources.load("/base/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai + "/test_loading_bg", cc.SpriteFrame, (err, frame) => {
+                //     if (err) {
+                //         cc.log(" 加载图片失败", err)
+                //         return;
+                //     }
+                //     this.bg.spriteFrame = frame;
+                // })
+            }
+        }
+        if (hqq.app.pinpai == "fuxin" ) {
+            let node = new cc.Node()
+            let sprite = node.addComponent(cc.Sprite)
+            cc.resources.load("base/language/" + hqq.language + "/fuxin/logo", cc.SpriteFrame, (err, frame) => {
+                if (err) {
+                    cc.log(" 加载图片失败", err)
+                    return;
+                }
+                if(cc.isValid(sprite))
+                {
+                    sprite.spriteFrame = frame;
+                }
+            })
+            this.bg.addChild(node)
+        } else if (hqq.app.pinpai == "xinsheng") {
+            // let node = new cc.Node()
+            // let sprite = node.addComponent(cc.Sprite)
+            // cc.resources.load("base/language/" + hqq.language + "/xinsheng/brand", cc.SpriteFrame, (err, frame) => {
+            //     if (err) {
+            //         console.log(" 加载图片失败", err)
+            //         return;
+            //     }
+            //     if(cc.isValid(sprite))
+            //     {
+            //         sprite.spriteFrame = frame;
+            //     }
+            // })
+            // this.bg.addChild(node)
+        } else if (hqq.app.pinpai == "juding") {
+            let node = new cc.Node()
+            let sprite = node.addComponent(cc.Sprite)
+            cc.resources.load("base/language/" + hqq.language + "/juding/judinglogo", cc.SpriteFrame, (err, frame) => {
+                if (err) {
+                    cc.log(" 加载图片失败", err)
+                    return;
+                }
+                if(cc.isValid(sprite))
+                {
+                    sprite.spriteFrame = frame;
+                }
+            })
+            this.bg.addChild(node)
+        } else if (hqq.app.pinpai == "ninetwo"){
+            hqq.addNode(this.bg,{path:"base/ninetwo/img/yuan"})
+        } else if (hqq.app.pinpai == "chaofan"){
+            hqq.addNode(this.bg,{path:"base/chaofan/img/1"})
+        } else if(hqq.app.pinpai == "tianqi") {
+            cc.resources.loadDir("bigimg/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai, sp.SkeletonData, (err, Data) => {
+                if (err) {
+                    cc.log("加载骨骼动画失败", err)
+                    return;
+                }
+                for (let i = 0; i < Data.length; i++) {
+                    if (Data[i].__classname__ == "sp.SkeletonData") {
+                        this.ani.skeletonData = Data[i];
+                        this.ani.setAnimation(0, "ani_enter", false);
+                        this.ani.setCompleteListener(function() {
+                            this.ani.setAnimation(0, "ani_loop", true);
+                        }.bind(this));
+                    }
+                }
+            });
+
+        } else {
+            cc.resources.loadDir("bigimg/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai, sp.SkeletonData, (err, Data) => {
+                if (err) {
+                    cc.log("加载骨骼动画失败", err)
+                    return;
+                }
+                for (let i = 0; i < Data.length; i++) {
+                    if (Data[i].__classname__ == "sp.SkeletonData") {
+                        this.ani.skeletonData = Data[i];
+                        if (hqq.app.pinpai == 'debi') {
+                            this.ani.setCompleteListener(this.completeListener.bind(this))
+                            this.ani.setAnimation(0, "animation", false);
+                        } else {
+                            this.ani.setAnimation(0, "animation", true);
+                        }
+                    }
+                }
+            });
+        }
+    },
+    completeListener() {
+        this.ani.setCompleteListener(null);
+        this.layer.active = true;
+        if (hqq.isDebug) {
+            cc.director.loadScene('hall')
+        } else {
+            this.runApplogin()
+        }
+    },
+    videocompleteListener(videoplayer, eventType, customEventData) {
+        if(!cc.isValid(this.node))return;
+        if(eventType == cc.VideoPlayer.EventType.COMPLETED){
+            if(cc.isValid(this.video)){
+                this.video.destroy();
+            }
+            hqq.loginMgr.videoplayering = false;
+            if(hqq.loginMgr.updatefininshed){
+                hqq.loginMgr.jumpToNextScene();
+            }
+        } else if(eventType == cc.VideoPlayer.EventType.READY_TO_PLAY){
+            if(cc.isValid( this.video ) ){
+                this.video.getComponent(cc.VideoPlayer).play();
+            }
+        } else if(eventType == cc.VideoPlayer.EventType.CLICKED){
+            if(cc.isValid(this.video)){
+                this.video.destroy();
+            }
+            hqq.loginMgr.videoplayering = false;
+            if(hqq.loginMgr.updatefininshed){
+                hqq.loginMgr.jumpToNextScene();
+            }
         }
     },
     /**
@@ -206,22 +470,176 @@ cc.Class({
             }
             return result;
         }
+
+        // cc.view.setResizeCallback(function(){
+
+        //     onRotateView()
+        
+        // })
+
+        // function onRotateView(){
+        //     let w = window.innerWidth
+
+        //     let h = window.innerHeight
+        //     cc.log("w=",w , " h=",h);
+        //     if(h > w){  
+
+        //         cc.game.container.style['-webkit-transform'] = 'rotate(-90deg)';
+
+        //         cc.game.container.style.transform = 'rotate(-90deg)';
+
+        //         setTimeout(function () {
+
+        //             cc.game.container.style['margin'] = cc.view.getFrameSize().width + 'px 0px 0px';
+
+        //         });
+
+        //         cc.view.convertToLocationInView = function (tx, ty, relatedPos) {
+
+        //             let result = cc.v2();
+
+        //             let posLeft = relatedPos.adjustedLeft ? relatedPos.adjustedLeft : relatedPos.left;
+
+        //             let posTop = relatedPos.adjustedTop ? relatedPos.adjustedTop : relatedPos.top;
+
+        //             let x = this._devicePixelRatio * (tx - posLeft);
+
+        //             let y = this._devicePixelRatio * (posTop + relatedPos.height - ty);
+
+        //             if (this._isRotated) {
+
+        //                 result.x = y;
+
+        //                 result.y = cc.view.getViewportRect().height - x;
+
+        //             }
+
+        //             else {
+
+        //                 result.x = x;
+
+        //                 result.y = y;
+
+        //             }
+
+        //             return result;
+
+        //         }
+
+        //     }else{
+
+        //         cc.view.convertToLocationInView = function (tx, ty, relatedPos) {
+
+        //             let result = cc.v2();
+
+        //             let posLeft = relatedPos.adjustedLeft ? relatedPos.adjustedLeft : relatedPos.left;
+
+        //             let posTop = relatedPos.adjustedTop ? relatedPos.adjustedTop : relatedPos.top;
+
+        //             let x = this._devicePixelRatio * (tx - posLeft);
+
+        //             let y = this._devicePixelRatio * (posTop + relatedPos.height - ty);
+
+        //             if (this._isRotated) {
+
+        //                 result.x = cc.game.canvas.width - y;
+
+        //                 result.y = x;
+
+        //             }
+
+        //             else {
+
+        //                 result.x = x;
+
+        //                 result.y = y;
+
+        //             }
+
+        //             return result;
+
+        //         }
+
+        //     }
+        // }
+
+        // onRotateView();
     },
+    // 清除本地缓存及可读写路径
+    clearLocalData() {
+        let islocalstorageClear = false
+        if (hqq.localStorage) {
+            islocalstorageClear = hqq.localStorage.clear()
+            if (hqq.app.huanjin == 'dev') {
+                hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("showtip19"), islocalstorageClear)
+            }
+        }
+        if (cc.sys.isBrowser) {
+            return
+        }
+        let directory = jsb.fileUtils.getWritablePath()
+        let isok = jsb.fileUtils.removeDirectory(directory)
+        return isok
+    },
+    // 下载安装包
+    onclickDownApk() {
+        if (!this.isapkdown) {
+            this.isapkdown = true
+            if (this.clearLocalData()) {
+                if (hqq.gameGlobal.player.account_name && hqq.app.packageID && hqq.gameGlobal.proxy.temp_host) {
+                    hqq.app.downloadUrl = hqq.gameGlobal.proxy.temp_host + "?p=" + hqq.app.packageID + "&u=" + hqq.gameGlobal.player.account_name + "&m=" + hqq.app.huanjin;
+                    cc.sys.openURL(hqq.app.downloadUrl)
+                } else if (hqq.app.packageID && hqq.gameGlobal.proxy.temp_host) {
+                    hqq.app.downloadUrl = hqq.gameGlobal.proxy.temp_host + "?p=" + hqq.app.packageID + "&u=" + hqq.app.getGeneralAgency() + "&m=" + hqq.app.huanjin;
+                    hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 8 })
+                } else {
+                    if (hqq.app.pinpai == "test") {
+                        cc.sys.openURL("https://temp.wepic666.com?p=1&u=442619406")
+                    } else if (hqq.app.pinpai == "debi") {
+                        cc.sys.openURL("https://temp.wepic666.com?p=2&u=770256905")
+                    } else if (hqq.app.pinpai == "xingba") {
+                        cc.sys.openURL("https://temp.wepic666.com?p=3&u=811425071")
+                    } else if (hqq.app.pinpai == "xinsheng") {
+                        cc.sys.openURL("https://temp.wepic666.com?p=8&u=779681851")
+                    } else if (hqq.app.pinpai == "xingui") {
+                        cc.sys.openURL("https://temp.wepic666.com?p=9&u=800242589")
+                    } else if (hqq.app.pinpai == "fuxin" ) {
+                        cc.sys.openURL("https://temp.wepic666.com?p=10&u=250188151")
+                    } else if (hqq.app.pinpai == "xinhao") {
+                        cc.sys.openURL("https://temp.wepic666.com?p=11&u=341292395")
+                    } else if (hqq.app.pinpai == "xinlong") {
+                        cc.sys.openURL("https://temp.wepic666.com?p=12&u=736282263")
+                    } else if (hqq.app.pinpai == "nineone"){
+                        cc.sys.openURL("https://temp.wepic666.com?p=6&u=541999022")
+                    } else if (hqq.app.pinpai == "huangshi"){
+                        cc.sys.openURL("https://temp.wepic666.com?p=13&u=195201705")
+                    } else if (hqq.app.pinpai == "juding"){
+                        cc.sys.openURL("https://temp.wepic666.com?p=15&u=855395847")
+                    } else if (hqq.app.pinpai == "huaxing"){
+                        cc.sys.openURL("https://temp.wepic666.com?p=18&u=657592379")
+                    } else if (hqq.app.pinpai == "ninetwo"){
+                        cc.sys.openURL("https://temp.wepic666.com?p=16&u=186959995")
+                    }
+                }
+            }
+        }
+    },
+    // 获取账号信息
     getAccess(privateKey) {
         let callback = (data) => {
             if (data.code != 200) {
-                console.log('getAccess error', data)
+                cc.log('getAccess error', data)
                 return
             }
             var decrypt = new JSEncrypt();
             decrypt.setPrivateKey(privateKey);
             var uncrypted = decrypt.decrypt(data.data.split('=')[1]);
-            console.log("uncrypted", uncrypted)
+            cc.log("uncrypted", uncrypted)
             uncrypted = JSON.parse(uncrypted)
-            console.log("uncrypted.account", uncrypted.account)
-            console.log("uncrypted.password", uncrypted.password)
-            console.log("uncrypted.device_id", uncrypted.device_id)
-            console.log("uncrypted.superior_agent", uncrypted.superior_agent)
+            cc.log("uncrypted.account", uncrypted.account)
+            cc.log("uncrypted.password", uncrypted.password)
+            cc.log("uncrypted.device_id", uncrypted.device_id)
+            cc.log("uncrypted.superior_agent", uncrypted.superior_agent)
             hqq.webAcconunt = uncrypted.account
             hqq.webAcconuntPass = uncrypted.password
             hqq.webDeviceid = uncrypted.device_id
@@ -231,7 +649,7 @@ cc.Class({
             }
         }
         let failcallback = (status, forcejump, url, err, readyState) => {
-            console.log("getAccess failcallback", status)
+            cc.log("getAccess failcallback", status)
         }
         hqq.http.sendXMLHttpRequest({
             method: "POST",
@@ -249,6 +667,7 @@ cc.Class({
             failtimeout: 7000,
         });
     },
+    // 获取密钥
     getPrivateKey() {
         let hasreceive = false
         let callback = (data) => {
@@ -259,7 +678,7 @@ cc.Class({
             this.browserDeal(data)
         }
         let failcallback = (status, forcejump, url, err, readyState) => {
-            console.log("getPrivateKey failcallback", status)
+            cc.log("getPrivateKey failcallback", status)
         }
         let urllist = ["http://agpe.539316.com"]
         if (hqq.app.huanjin == 'dev') {
@@ -290,12 +709,13 @@ cc.Class({
             });
         }
     },
+    // 获取公钥
     getPublicKey() {
         let callback = (data) => {
-            // console.log("getPubliceKey", data)
+            // cc.log("getPubliceKey", data)
         }
         let failcallback = (status, forcejump, url, err, readyState) => {
-            console.log("getPublicKey failcallback", status)
+            cc.log("getPublicKey failcallback", status)
         }
         let url = "http://agpe.539316.com//b2b/api/agent/getEncryptionKey?token=1001&platform_id=1001"
         if (hqq.app.huanjin == 'dev') {
@@ -316,118 +736,69 @@ cc.Class({
             failtimeout: 7000,
         });
     },
-    /**
-     * @Description: web端需要做的处理
-     */
+    // web端需要做的处理
     browserDeal(privateKey) {
         let url = window.location.search;
         var decrypt = new JSEncrypt();
         decrypt.setPrivateKey(privateKey);
         var uncrypted = decrypt.decrypt(url.split('=')[1]);
         uncrypted = JSON.parse(uncrypted)
-        console.log("uncrypted.account", uncrypted.account)
-        console.log("uncrypted.password", uncrypted.password)
-        console.log("uncrypted.device_id", uncrypted.device_id)
-        console.log("uncrypted.superior_agent", uncrypted.superior_agent)
-        console.log("uncrypted.game_id", uncrypted.game_id)
+        cc.log("uncrypted.account", uncrypted.account)
+        cc.log("uncrypted.password", uncrypted.password)
+        cc.log("uncrypted.device_id", uncrypted.device_id)
+        cc.log("uncrypted.superior_agent", uncrypted.superior_agent)
+        cc.log("uncrypted.game_id", uncrypted.game_id)
         hqq.webAcconunt = uncrypted.account
         hqq.webAcconuntPass = uncrypted.password
         hqq.webDeviceid = uncrypted.device_id
         hqq.webUpAgent = uncrypted.superior_agent
         hqq.webGameID = uncrypted.game_id
+        if(uncrypted.language){
+            hqq.language = uncrypted.language
+        }
         this.runApplogin()
     },
-    completeListener() {
-        this.debistartAni.setCompleteListener(null)
-        this.layer.active = true;
-        if (hqq.isDebug) {
-            cc.director.loadScene('hall')
-        } else {
-            let appLogin = require("appLogin")
-            hqq.loginMgr = appLogin;
-            hqq.loginMgr.init({
-                hallmanifest: this.hallmanifest,
-            })
-        }
-    },
-    // 清除本地缓存及可读写路径
-    clearLocalData() {
-        let islocalstorageClear = false
-        if (hqq.localStorage) {
-            islocalstorageClear = hqq.localStorage.clear()
-            if (hqq.app.huanjin == 'dev') {
-                hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "删除本地缓存", islocalstorageClear)
-            }
-        }
-        if (cc.sys.isBrowser) {
-            return
-        }
-        let directory = jsb.fileUtils.getWritablePath()
-        let isok = jsb.fileUtils.removeDirectory(directory)
-        return isok
-    },
-    onclickDownApk() {
-        if (!this.isapkdown) {
-            this.isapkdown = true
-            if (this.clearLocalData()) {
-                if (hqq.gameGlobal.player.account_name && hqq.app.packageID && hqq.gameGlobal.proxy.temp_host) {
-                    hqq.app.downloadUrl = hqq.gameGlobal.proxy.temp_host + "?p=" + hqq.app.packageID + "&u=" + hqq.gameGlobal.player.account_name + "&m=" + hqq.app.huanjin;
-                    cc.sys.openURL(hqq.app.downloadUrl)
-                } else if (hqq.app.packageID && hqq.gameGlobal.proxy.temp_host) {
-                    hqq.app.downloadUrl = hqq.gameGlobal.proxy.temp_host + "?p=" + hqq.app.packageID + "&u=" + hqq.app.getGeneralAgency() + "&m=" + hqq.app.huanjin;
-                    hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 8 })
-                } else {
-                    if (hqq.app.pinpai == "test") {
-                        cc.sys.openURL("https://temp.wepic666.com?p=1&u=442619406")
-                    } else if (hqq.app.pinpai == "debi") {
-                        cc.sys.openURL("https://temp.wepic666.com?p=2&u=770256905")
-                    } else if (hqq.app.pinpai == "xingba") {
-                        cc.sys.openURL("https://temp.wepic666.com?p=3&u=811425071")
-                    }
-                    // hqq.eventMgr.dispatch(hqq.eventMgr.showTip, "下载链接错误")
-                }
-            }
-        }
-    },
-
-    hotCheckup(bool, enname) {
+    // 更新检查
+    hotCheckup(bool, enname,isfail=false) {
         if (bool) { // 需要更新
-            this.progressnode.node.active = true
+            this.progressnode.active = true
             if (enname == "hall") {
-                this.info = "m更新检测"
+                this.info = hqq.getTip("showtip61")
             } else if (enname == "apk") {
                 this.isapkdown = true
-                this.info = "安装包更新检测"
+                this.info = hqq.getTip("showtip73")
             } else {
-                this.info = enname + "更新检测"
+                this.info = enname + hqq.getTip("showtip74")
             }
             this.label.string = this.info;
         } else {
-            this.info = "更新检测失败"
+            this.info = hqq.getTip("showtip63")
         }
     },
+    // 更新失败
     hotFail(enname) {
         if (enname == 'hall') {
             hqq.logMgr.log("m更新失败");
-            this.info = "更新失败"
+            this.info = hqq.getTip("showtip75")
         } else if (enname == 'apk') {
             hqq.logMgr.log("安装包下载失败");
-            this.info = "下载失败"
+            this.info = hqq.getTip("showtip76")
             this.isapkdown = false
         } else {
             hqq.logMgr.log(enname + "更新失败");
-            this.info = "更新失败"
+            this.info = hqq.getTip("showtip75")
         }
         this.label.string = this.info;
     },
+    // 更新进度
     progressCallback(progress, enname) {
-        if (isNaN(progress)) {
-            progress = 0;
+        if (isNaN(progress) || progress == 0) {
+            return
         }
-        if (!this.progressnode.node.active) {
-            this.progressnode.node.active = true
+        if (!this.progressnode.active) {
+            this.progressnode.active = true
         }
-        this.progressnode.progress = progress
+        this.progressBar.progress = progress
         progress = progress * 100
         progress += ""
         if (progress.includes(".")) {
@@ -435,38 +806,125 @@ cc.Class({
         }
         progress += "%"
         this.progress = progress
+
+        let hallStr = "hall_" + hqq.app.pinpai;
+        for(let i = 0; i < hqq.loginMgr.hallversionList.length;i++){
+            if(hqq.app.pinpai == hqq.loginMgr.hallversionList[i]){
+                hallStr = "hall_test";
+                break;
+            }
+        }
+
+        let proxyStr = "proxy_" + hqq.app.pinpai;
+        for(let i = 0; i < hqq.loginMgr.proxyversionList.length;i++){
+            if(hqq.app.pinpai == hqq.loginMgr.proxyversionList[i]){
+                proxyStr = "proxy_test";
+                break;
+            }
+        }
+        if(hqq.app.pinpai === "debi"){
+            proxyStr = "proxy_xingba";
+        }
+
+        let IMStr = "IM_test";
+        for(let i = 0; i < hqq.loginMgr.IMversionList.length;i++){
+            if(hqq.app.pinpai == hqq.loginMgr.IMversionList[i]){
+                IMStr = "IM_" + hqq.app.pinpai;
+                break;
+            }
+        }
+
+        let payStr = "pay_" + hqq.app.pinpai;
+        for(let i = 0; i < hqq.loginMgr.payversionList.length;i++){
+            if(hqq.app.pinpai == hqq.loginMgr.payversionList[i]){
+                payStr = "pay_test";
+                break;
+            }
+        }
+        if(hqq.app.pinpai === "xinlong"){
+            payStr = "pay_xinsheng";
+        }
+
         if (enname == "hall") {
-            this.info = "m更新(更新过程中请勿退出)"
+            this.info = hqq.getTip("showtip77")
         } else if (enname == "apk") {
-            this.info = "安装包更新"
+            this.info = hqq.getTip("showtip60")
         } else if (enname == "jiazai") {
-            this.info = "游戏加载中..."
+            this.info = hqq.getTip("showtip78")
+        } else if(enname === hallStr ){
+            this.info = hqq.getTip("showtip86")
+        } else if(enname === payStr ){
+            this.info = hqq.getTip("showtip89")
+        } else if(enname === proxyStr ){
+            this.info = hqq.getTip("showtip92")
+        } else if(enname === IMStr ){
+            this.info = hqq.getTip("showtip95")
         } else {
-            this.info = enname + "更新"
+            this.info = enname + hqq.getTip("showtip79")
         }
         this.label.string = this.info + " " + this.progress;
+
+        if(hqq.app.pinpai === "ninetwo" ){
+            // console.log("this.progressBar.progress=",this.progressBar.progress)
+            // this.ninetwovideo.evaluateJS(`setProgressBar(${JSON.stringify(this.progressBar.progress)})`);
+            if(cc.isValid(this.progressicon)){
+                this.progressicon.x = -385.5 + (this.progressBar.progress * this.progressnode.width);
+            }
+        }
+
+        if(hqq.app.pinpai === "tianqi") {
+            if(this.progressnode.getChildByName('bar').getChildByName('tianqi_barEff')) {
+                let barEff_widget = this.progressnode.getChildByName('bar').getChildByName('tianqi_barEff').getComponent(cc.Widget);
+                barEff_widget.updateAlignment();
+                if(progress == 0 || progress == 1) {
+                    barEff_widget.node.active = false;
+                } else {
+                    barEff_widget.node.active = true;
+                }
+            }
+        }
     },
+    // 更新结束
     hotFinish(enname) {
-        this.info = "更新完成"
+        this.info = hqq.getTip("showtip80")
         this.label.string = this.info;
     },
+    // 更新后检查
     hotCheck(enname) {
-        this.info = "更新后文件检测"
+        this.info = hqq.getTip("showtip81")
         this.label.string = this.info;
     },
+    // 显示加载信息
     showLoadingInfo(info) {
+        if(info === "showChoiceLimeLayer" ){
+            if(cc.isValid(this.video)){
+                this.video.setPosition(5000,5000);
+                this.video.getComponent(cc.VideoPlayer).mute = true;
+                this.video.getComponent(cc.VideoPlayer).pause();
+            }
+            return;
+        }else if(info === "closeChoiceLimeLayer" ){
+            if(cc.isValid(this.video)){
+                this.video.active = true;
+                this.video.setPosition(0,0);
+                this.video.getComponent(cc.VideoPlayer).mute = false;
+                if(this.video.getComponent(cc.VideoPlayer).isPlaying()){
+                    this.video.getComponent(cc.VideoPlayer).resume();
+                } else{
+                    this.video.getComponent(cc.VideoPlayer).play();
+                }
+            }
+            return;
+        }
         this.info = info
         this.label.string = this.info;
     },
+    // 刷新ip地址信息
     refreshLoading(info, region, api) {
         this.apkversion.string += "\n" + api + ",ip:" + info + ",addr:" + region
     },
 
-    /** 每帧调用一次 // called every frame */
-    // update(dt) { },
-    /** 所有组件update执行完之后调用 */
-    // lateUpdate() { },
-    /** 调用了 destroy() 时回调，当帧结束统一回收组件 */
+    // update (dt) {},
     onDestroy() {
         hqq.eventMgr.unregister(hqq.eventMgr.showSamlllayer, "loading")
         hqq.eventMgr.unregister(hqq.eventMgr.showTip, "loading")
@@ -479,4 +937,3 @@ cc.Class({
         hqq.eventMgr.unregister(hqq.eventMgr.refreshLoading, "loading")
     },
 });
-

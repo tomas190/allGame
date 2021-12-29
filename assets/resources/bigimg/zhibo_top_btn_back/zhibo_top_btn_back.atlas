@@ -1,0 +1,209 @@
+
+zhibo_top_btn_back.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+YANXUN
+  rotate: true
+  xy: 2, 40
+  size: 69, 242
+  orig: 69, 242
+  offset: 0, 0
+  index: -1
+YANXUN2
+  rotate: true
+  xy: 2, 136
+  size: 115, 504
+  orig: 115, 504
+  offset: 0, 0
+  index: -1
+fanhuijian_an
+  rotate: false
+  xy: 504, 64
+  size: 74, 45
+  orig: 74, 45
+  offset: 0, 0
+  index: -1
+fanhuijian_an_00000
+  rotate: false
+  xy: 687, 161
+  size: 148, 90
+  orig: 148, 90
+  offset: 0, 0
+  index: -1
+fanhuijian_dk
+  rotate: false
+  xy: 508, 158
+  size: 177, 93
+  orig: 178, 93
+  offset: 0, 0
+  index: -1
+hengkuangbian_gaog
+  rotate: false
+  xy: 2, 111
+  size: 577, 23
+  orig: 578, 24
+  offset: 0, 1
+  index: -1
+lizi1
+  rotate: false
+  xy: 1016, 183
+  size: 6, 6
+  orig: 8, 6
+  offset: 1, 0
+  index: -1
+lizi12
+  rotate: false
+  xy: 676, 141
+  size: 6, 5
+  orig: 6, 6
+  offset: 0, 0
+  index: -1
+lizi123
+  rotate: false
+  xy: 1016, 175
+  size: 6, 6
+  orig: 6, 6
+  offset: 0, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00002
+  rotate: false
+  xy: 284, 28
+  size: 42, 8
+  orig: 162, 84
+  offset: 0, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00003
+  rotate: false
+  xy: 184, 2
+  size: 53, 8
+  orig: 162, 84
+  offset: 0, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00004
+  rotate: false
+  xy: 610, 138
+  size: 64, 8
+  orig: 162, 84
+  offset: 0, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00005
+  rotate: false
+  xy: 610, 148
+  size: 76, 8
+  orig: 162, 84
+  offset: 0, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00006
+  rotate: false
+  xy: 422, 48
+  size: 87, 9
+  orig: 162, 84
+  offset: 0, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00007
+  rotate: false
+  xy: 923, 180
+  size: 91, 9
+  orig: 162, 84
+  offset: 8, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00008
+  rotate: false
+  xy: 246, 38
+  size: 96, 8
+  orig: 162, 84
+  offset: 15, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00009
+  rotate: false
+  xy: 923, 191
+  size: 98, 8
+  orig: 162, 84
+  offset: 25, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00010
+  rotate: false
+  xy: 508, 137
+  size: 100, 19
+  orig: 162, 84
+  offset: 35, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00011
+  rotate: false
+  xy: 2, 3
+  size: 101, 35
+  orig: 162, 84
+  offset: 45, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00012
+  rotate: false
+  xy: 923, 201
+  size: 99, 50
+  orig: 162, 84
+  offset: 55, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00013
+  rotate: false
+  xy: 246, 48
+  size: 97, 61
+  orig: 162, 84
+  offset: 65, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00014
+  rotate: false
+  xy: 837, 183
+  size: 84, 68
+  orig: 162, 84
+  offset: 77, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00015
+  rotate: true
+  xy: 345, 42
+  size: 67, 75
+  orig: 162, 84
+  offset: 91, 0
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00016
+  rotate: true
+  xy: 422, 59
+  size: 50, 80
+  orig: 162, 84
+  offset: 108, 1
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00017
+  rotate: true
+  xy: 105, 3
+  size: 35, 77
+  orig: 162, 84
+  offset: 125, 7
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00018
+  rotate: true
+  xy: 837, 150
+  size: 31, 65
+  orig: 162, 84
+  offset: 130, 19
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00019
+  rotate: true
+  xy: 184, 12
+  size: 26, 54
+  orig: 162, 84
+  offset: 135, 30
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00020
+  rotate: true
+  xy: 240, 15
+  size: 21, 42
+  orig: 162, 84
+  offset: 140, 42
+  index: -1
+wailiuguang/fanhuijian_dk_wb_00021
+  rotate: false
+  xy: 904, 157
+  size: 13, 24
+  orig: 162, 84
+  offset: 148, 60
+  index: -1

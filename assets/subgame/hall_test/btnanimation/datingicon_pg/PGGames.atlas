@@ -1,0 +1,97 @@
+
+PGGames.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: true
+  xy: 262, 69
+  size: 158, 200
+  orig: 158, 200
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 748, 97
+  size: 113, 130
+  orig: 113, 132
+  offset: 0, 1
+  index: -1
+3
+  rotate: false
+  xy: 643, 74
+  size: 103, 153
+  orig: 104, 153
+  offset: 1, 0
+  index: -1
+4
+  rotate: false
+  xy: 863, 30
+  size: 107, 100
+  orig: 107, 101
+  offset: 0, 1
+  index: -1
+c1
+  rotate: false
+  xy: 980, 187
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+c2
+  rotate: false
+  xy: 980, 149
+  size: 36, 36
+  orig: 36, 37
+  offset: 0, 0
+  index: -1
+c3
+  rotate: false
+  xy: 300, 36
+  size: 29, 31
+  orig: 29, 31
+  offset: 0, 0
+  index: -1
+c4
+  rotate: false
+  xy: 262, 29
+  size: 36, 38
+  orig: 36, 39
+  offset: 0, 1
+  index: -1
+di
+  rotate: false
+  xy: 2, 29
+  size: 258, 198
+  orig: 258, 198
+  offset: 0, 0
+  index: -1
+glow00
+  rotate: false
+  xy: 464, 58
+  size: 177, 169
+  orig: 179, 171
+  offset: 1, 1
+  index: -1
+glow_00069
+  rotate: false
+  xy: 863, 132
+  size: 115, 95
+  orig: 117, 97
+  offset: 1, 1
+  index: -1
+ne_b
+  rotate: false
+  xy: 643, 58
+  size: 32, 14
+  orig: 32, 16
+  offset: 0, 1
+  index: -1
+ne_f
+  rotate: false
+  xy: 2, 2
+  size: 58, 25
+  orig: 59, 26
+  offset: 0, 1
+  index: -1

@@ -1,0 +1,69 @@
+
+huodong_signupbonus.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dl
+  rotate: false
+  xy: 711, 244
+  size: 218, 100
+  orig: 220, 102
+  offset: 1, 1
+  index: -1
+feijin
+  rotate: false
+  xy: 0, 0
+  size: 711, 284
+  orig: 713, 286
+  offset: 1, 1
+  index: -1
+guang
+  rotate: false
+  xy: 457, 422
+  size: 312, 327
+  orig: 312, 328
+  offset: 0, 0
+  index: -1
+guang1
+  rotate: false
+  xy: 457, 296
+  size: 47, 48
+  orig: 51, 52
+  offset: 2, 2
+  index: -1
+guang2
+  rotate: false
+  xy: 769, 427
+  size: 100, 103
+  orig: 100, 103
+  offset: 0, 0
+  index: -1
+liji5
+  rotate: false
+  xy: 457, 344
+  size: 483, 78
+  orig: 484, 79
+  offset: 0, 1
+  index: -1
+qm
+  rotate: true
+  xy: 769, 530
+  size: 219, 102
+  orig: 221, 104
+  offset: 1, 1
+  index: -1
+renwu2
+  rotate: false
+  xy: 0, 284
+  size: 457, 465
+  orig: 457, 465
+  offset: 0, 0
+  index: -1
+zhuce
+  rotate: true
+  xy: 940, 266
+  size: 483, 78
+  orig: 485, 79
+  offset: 1, 1
+  index: -1
