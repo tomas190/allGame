@@ -1,24 +1,112 @@
 {
   "collision-matrix": [
     [
+      false
+    ],
+    [
+      false,
+      false,
+      true,
+      null,
+      true
+    ],
+    [
+      false,
+      true,
+      false,
+      null,
+      null,
+      null,
+      true
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      true
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      null,
+      null,
+      true
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
       true
     ]
   ],
   "excluded-modules": [
-    "3D",
-    "3D Primitive",
-    "3D Physics/cannon.js",
-    "3D Physics/Builtin",
-    "3D Particle"
+    "3D Physics/Builtin"
   ],
   "group-list": [
-    "default"
+    "default",
+    "Bullet",
+    "Fish",
+    "LockingBullet",
+    "LockedFish",
+    "Top",
+    "wall",
+    "pig",
+    "bonuscoin",
+    "coin"
   ],
-  "start-scene": "8b856e9f-fb72-4824-91dd-09695ad33f9f",
   "design-resolution-width": 1334,
   "design-resolution-height": 750,
   "fit-width": true,
-  "fit-height": true,
+  "fit-height": false,
   "use-project-simulator-setting": false,
   "simulator-orientation": false,
   "use-customize-simulator": true,
@@ -38,5 +126,6 @@
       "enable": false
     }
   },
-  "last-module-event-record-time": 1604565628206
+  "last-module-event-record-time": 1639537035383,
+  "start-scene": "e37ae7d4-b6f8-4a63-871e-1bce0cbe56f0"
 }
