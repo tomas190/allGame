@@ -1,6 +1,52 @@
 
 all hqq native combined-game project
 # 新增修改
+进入全民代理场景改为呼叫这个接口
+hqq.eventMgr.dispatch(hqq.eventMgr.showJumpScene,"proxy");
+
+进入大厅场景改为呼叫这个接口
+hqq.eventMgr.dispatch(hqq.eventMgr.showJumpScene,"hall");
+
+以上均有针对品牌做处理
+
+# 大厅结构有大幅度的修改
+# 改成分品牌更新
+# 项目目录结构：
+```javascript
+├──base 主包目录
+|	|──app  登陆更新模块
+|	|──common  公用的脚本
+|	|   |──gHandler 游戏全局模块管理器
+|	|   |──hqqAudioMgr 音效管理器
+|	|   |──hqqBase64 base64转码
+|	|   |──hqqCommonTool 工具函数
+|	|   |──hqqEvent 事件派发
+|	|   |──hqqHttp XMLHttpRequest
+|	|   |──hqqLocalStorage 本地存储
+|	|   |──hqqLogMgr 日志
+|	|   |──hqqNetNode 信号节点脚本
+|	|   |──hqqNetPanel 信号测试界面脚本
+|	|   └──hqqViewMgr 页面加载
+|	└──scene  主包场景ui 
+|──resource 主包目录
+|	|──base  主包动态资源
+|	|──hall  WSS凭证
+└──subgame 
+|	|──hall_test     大厅特斯特资源
+|	|──hall_chaofan  大厅超凡资源
+|	|   |──scene     大厅Bundle底下scene统一命名为hall
+|	|──pay_test      充提特斯特资源
+|	|──pay_fuxin     充提富鑫资源
+|	|──proxy_test    全民代理特斯特资源
+|	|──proxy_chaofan 全民代理超凡资源
+|	|   |──scene     全民代理Bndle底下场景统一命名为proxy_+加品牌名称例如proxy_chaofan
+|	|──IM_test       IM资源
+|	└──lhd           子游戏目录龙虎斗资源
+|	└──lhd_fuxin     子游戏目录龙虎斗富鑫品牌资源
+|	└──bjl           子游戏目录百家乐资源
+|	└──bjl_fuxin     子游戏目录百家乐富鑫品牌资源
+```    
+# 新增修改
 # 大厅结构有大幅度的修改
 原有的引入大厅的gHandler模块，现在需要修改
 import gHandler = require("../../../common/script/common/gHandler")
@@ -169,7 +215,11 @@ ts的命名空间（namesapace）命名请不要冲突，一定加上自己的�
 
 # 新开项目流程：
 1. 克隆仓库（git clone http://git.0717996.com/burt/allGame ）
-	或者克隆仓库已有分支（git clone -b 分支名 http://git.0717996.com/burt/allGame）  
+	或者克隆仓库已有分支（git clone -b 分支名 http://git.0717996.com/burt/allGame） 
+    如果克隆失败出现error: RPC failed; curl 18 transfer closed with outstanding read data remaining
+    改使用克隆仓库git clone --depth=1 http://git.0717996.com/burt/allGame
+    或者克隆仓库已有分支 git clone --depth=1 http://git.0717996.com/burt/allGame -b 分支名
+    然后移动到克隆目录底下git fetch --unshallow
 2. 查看本地仓库远程分支情况 （git branch -a）  
 3. 如果没有子游戏分支   
     在master分支下新建分支 （git checkout -b 分支名）  
