@@ -1161,7 +1161,11 @@ let appLogin = {
                     } else {
                         hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("showtip5") + data.code + data.msg)
                     }
-                    if( hqq.app.pinpai == "fuxin" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "juding" || hqq.app.pinpai == "nineone" || hqq.app.pinpai == "huaxing" || hqq.app.pinpai == "ninetwo" || hqq.app.pinpai == "huangshi")
+                    if( hqq.app.pinpai == "fuxin" || hqq.app.pinpai == "xingui" ||
+                        hqq.app.pinpai == "juding" || hqq.app.pinpai == "nineone" ||
+                        hqq.app.pinpai == "huaxing" || hqq.app.pinpai == "ninetwo" ||
+                        hqq.app.pinpai == "huangshi" || hqq.app.pinpai == "chaofan" ||
+                        hqq.app.pinpai == "tianqi" )
                     {
                         if(hqq.app.getGeneralAgency() == hqq.app.proxyUserID){
                             hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, {
@@ -1250,7 +1254,10 @@ let appLogin = {
                     hqq.gameGlobal.player.code + ",", hqq.app.deviceID + "," + hqq.app.clipboard)
                 if(hqq.app.getGeneralAgency() == hqq.app.proxyUserID){
                     let hideexitbtn= false;
-                    if(hqq.app.pinpai == "fuxin" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "juding" || hqq.app.pinpai == "nineone" || hqq.app.pinpai == "huaxing" || hqq.app.pinpai == "ninetwo" || hqq.app.pinpai == "huangshi")
+                    if( hqq.app.pinpai == "fuxin" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "juding" ||
+                        hqq.app.pinpai == "nineone" || hqq.app.pinpai == "huaxing" ||
+                        hqq.app.pinpai == "ninetwo" || hqq.app.pinpai == "huangshi" ||
+                        hqq.app.pinpai == "chaofan" || hqq.app.pinpai == "tianqi" )
                     {
                         hideexitbtn = true;
                     }

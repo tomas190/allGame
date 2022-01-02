@@ -62,15 +62,16 @@ export default class NewClass extends cc.Component {
         if(!this.canExit) return
         //按键音效
         this.app.loadMusic(1)
-        let scree = this.app.gHandler.gameGlobal.pay.from_scene;
-        this.app.gHandler.gameGlobal.pay.from_scene = "";
-        if (scree == ""){
-            scree = "hall"
-        }
+        // let scree = this.app.gHandler.gameGlobal.pay.from_scene;
+        // this.app.gHandler.gameGlobal.pay.from_scene = "";
+        // if (scree == ""){
+        //     scree = "hall"
+        // }
         
-        cc.director.preloadScene(scree,()=>{
-            cc.director.loadScene(scree);
-        })
+        // cc.director.preloadScene(scree,()=>{
+        //     cc.director.loadScene(scree);
+        // })
+        this.app.gHandler.eventMgr.dispatch(this.app.gHandler.eventMgr.showJumpScene,"hall")
     }
 
     public historyBtnClick() {

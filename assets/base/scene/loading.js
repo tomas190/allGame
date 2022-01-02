@@ -231,6 +231,12 @@ cc.Class({
             barEff.scaley = 0.8;
             barEff.setPosition(0, 0);
             barEff.active = false;
+        } else if(hqq.app.pinpai == "wansheng") {
+            hqq.setSprite(background, { path: "bigimg/wansheng/loading" })
+            hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
+            this.label.node.color = cc.color("#350058");
+            this.apkversion.color = cc.color("#350058");
         } else {
             hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
             hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
@@ -368,6 +374,8 @@ cc.Class({
                 }
             });
 
+        } else if(hqq.app.pinpai == "wansheng") {
+            hqq.addNode(this.bg,{path:"base/wansheng/wansheng_logo", scale:1.8, widget:{top: 30, right: 30}});
         } else {
             cc.resources.loadDir("bigimg/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai, sp.SkeletonData, (err, Data) => {
                 if (err) {

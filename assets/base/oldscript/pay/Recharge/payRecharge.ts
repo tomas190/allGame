@@ -61,21 +61,19 @@ export default class NewClass extends cc.Component {
         if(!this.canExit) return
         //按键音效
         this.app.loadMusic(1)
-        let scree = this.app.gHandler.gameGlobal.pay.from_scene;
-        this.app.gHandler.gameGlobal.pay.from_scene = "";
-        if (scree == ""){
-            scree = "hall"
-        }
-        if(this.app.gHandler.subGameList['hbsl']&&this.app.gHandler.subGameList['zrsx1']&&this.app.gHandler.subGameList['zrsx1']){
-            if (scree == this.app.gHandler.subGameList['hbsl'].lanchscene
-                || scree == this.app.gHandler.subGameList['zrsx1'].lanchscene
-                || scree == this.app.gHandler.subGameList['pccp'].lanchscene) { //  真人视讯 红包扫雷 派彩 竖屏
-                this.app.gHandler.reflect && this.app.gHandler.reflect.setOrientation("portrait")
-            }
-        }
-        cc.director.preloadScene(scree,()=>{
-            cc.director.loadScene(scree);
-        })
+        // let scree = this.app.gHandler.gameGlobal.pay.from_scene;
+        // this.app.gHandler.gameGlobal.pay.from_scene = "";
+        // if (scree == ""){
+        //     scree = "hall"
+        // }
+        // if(this.app.gHandler.subGameList['hbsl']&&this.app.gHandler.subGameList['zrsx1']&&this.app.gHandler.subGameList['zrsx1']){
+        //     if (scree == this.app.gHandler.subGameList['hbsl'].lanchscene
+        //         || scree == this.app.gHandler.subGameList['zrsx1'].lanchscene
+        //         || scree == this.app.gHandler.subGameList['pccp'].lanchscene) { //  真人视讯 红包扫雷 派彩 竖屏
+        //         this.app.gHandler.reflect && this.app.gHandler.reflect.setOrientation("portrait")
+        //     }
+        // }
+        this.app.gHandler.eventMgr.dispatch(this.app.gHandler.eventMgr.showJumpScene,"hall")
     }
     //充值历史
     public historyBtnClick() {
@@ -366,7 +364,7 @@ export default class NewClass extends cc.Component {
     }
     //银商
     webLinkClick(){
-        let url = "https://www.vfanglife.com/"
+        let url = "https://www.xiniugongzuoshi.vip/"
         cc.sys.openURL(encodeURI(url))
         cc.log(encodeURI(url))
     }

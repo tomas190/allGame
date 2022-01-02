@@ -1287,7 +1287,8 @@ cc.Class({
         let callback = (responsedata) => {
             cc.log("responsedata", responsedata)
             if (this.timer) {
-                clearInterval(this.timer);
+                //不要重设计时器
+                //clearInterval(this.timer);
             }
             if (responsedata.status != 0) {
                 hqq.logMgr.log("officeloginEnsure callback responsedata", JSON.stringify(responsedata)," phonenum=",phonenum , " userid=",hqq.gameGlobal.pay.user_id)
@@ -1297,6 +1298,8 @@ cc.Class({
                 if (hqq.app.pinpai == 'debi') {
                     hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("showtip38"));
                 } else if(hqq.app.pinpai == "ninetwo"){
+                    hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("bindphonesucess"));
+                } else if(hqq.app.pinpai == "tianqi") {
                     hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("bindphonesucess"));
                 } else {
                     hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("showtip39"));

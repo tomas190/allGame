@@ -1365,7 +1365,7 @@ cc.Class({
         // 671627403  91顶级号
         // 649506476  聚鼎顶级号
 
-        // var sendData = `account_name=${622909080}&password=123456`;
+        // var sendData = `account_name=${485148506}&password=123456`;
         //正式 149672574
         var sendData = `account_name=${gHandler.gameGlobal.player.account_name}&token=${gHandler.gameGlobal.token}`
 

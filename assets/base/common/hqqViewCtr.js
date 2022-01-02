@@ -381,28 +381,19 @@ let hqqViewCtr = {
     },
     showJumpScene(data){
         if(data === "hall" ){
-            cc.assetManager.loadBundle("hall_" + hqq.app.pinpai, (err)=>{
+            let hallStr = "hall_" + hqq.app.pinpai;
+            for(let i = 0; i < hqq.loginMgr.hallversionList.length;i++){
+                if(hqq.app.pinpai == hqq.loginMgr.hallversionList[i]){
+                    hallStr = "hall_test";
+                    break;
+                }
+            }
+            cc.assetManager.loadBundle(hallStr, (err)=>{
                 if (err) {
                     cc.log(err);
-                    cc.assetManager.loadBundle("hall_test", (err5)=>{
-                        if(err5){
-                            cc.log(err5);
-                            return;
-                        }
-                        hqq["hall_test"] = cc.assetManager.getBundle("hall_test");
-                        cc.director.preloadScene("hall", (completedCount, totalCount, item)=>{
-                            hqq.eventMgr.dispatch(hqq.eventMgr.hotProgress, completedCount / totalCount, "jiazai")
-                        }, (err7, scene) => {
-                            if (err7) {
-                                cc.log(err7)
-                                return
-                            }
-                            cc.director.loadScene("hall");
-                        })
-                    })
                     return;
                 }
-                hqq["hall_" + hqq.app.pinpai] = cc.assetManager.getBundle("hall_" + hqq.app.pinpai);
+                hqq[hallStr] = cc.assetManager.getBundle(hallStr);
                 
                 for(let i = 0; i < this.oldpinpailist.length; i++ ){
                     if(hqq.app.pinpai === this.oldpinpailist[ i ] ){
@@ -419,7 +410,7 @@ let hqqViewCtr = {
                         return;
                     }
                 }
-                hqq["hall_" + hqq.app.pinpai].preloadScene("hall", (completedCount, totalCount, item)=>{
+                hqq[hallStr].preloadScene("hall", (completedCount, totalCount, item)=>{
                     hqq.eventMgr.dispatch(hqq.eventMgr.hotProgress, completedCount / totalCount, "jiazai")
                 }, (err7, scene) => {
                     if (err7) {
@@ -427,7 +418,7 @@ let hqqViewCtr = {
                         hqq.logMgr.logerror(err7)
                         return
                     }
-                    hqq["hall_" + hqq.app.pinpai].loadScene("hall",(err8,scene)=>{
+                    hqq[hallStr].loadScene("hall",(err8,scene)=>{
                         if(err8){
                             cc.log(err8);
                             return;

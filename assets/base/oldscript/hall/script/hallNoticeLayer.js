@@ -268,7 +268,7 @@ cc.Class({
             hqq.setBtn(email, { Res:hqq["hall_test"],path: hlpath + "mail2", pressed: hlpath + "mail1" })
             hqq.setSprite(titleimg, { Res:hqq["hall_test"],path: hlpath + "subiconmail" })
             hqq.setBtn(delet1, { Res:hqq["hall_test"],path: hlpath + "delet1" })
-            hqq.setBtn(closebtn, { Res:hqq["hall_test"],path: hpath + "p_new_saver_return" })
+            hqq.setBtn(closebtn, { Res:hqq["hall_test"],path: hpath + "p_new_saver_return" ,widget:{top:0,left:0}})
             hqq.setSprite(subclosebtn, { path: "base/img/p_close", position: { x: 400, y: 225 } })
             deletebtn.getComponent(cc.RichText).string = hqq.getTip("deletebtn")
         }

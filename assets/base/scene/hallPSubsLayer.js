@@ -871,8 +871,14 @@ cc.Class({
                 break;
             case 7: // 账号掉线 加自动登录
                 this.login.active = true
-                if (this.login.getChildByName("txt_autologin")) {
-                    this.login.getChildByName("txt_autologin").active = true
+                if(hqq.app.pinpai == "tianqi") {
+                    if (this.login.getChildByName("txt_autologin")) {
+                        this.login.getChildByName("txt_autologin").active = false;
+                    }
+                } else {
+                    if (this.login.getChildByName("txt_autologin")) {
+                        this.login.getChildByName("txt_autologin").active = true
+                    }
                 }
                 if (this.login.getChildByName("txt_forgetpwd")) {
                     this.login.getChildByName("txt_forgetpwd").active = false
