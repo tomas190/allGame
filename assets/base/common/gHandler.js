@@ -2588,7 +2588,9 @@ let gHandler = {
             "bcbm": 8,
         }
         for (let k in duizhan) {
-            this.subGameList[k].duizhan = duizhan[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].duizhan = duizhan[k]
+            }
         }
         let touzhu = {
             "qznn": 0,
@@ -2603,14 +2605,18 @@ let gHandler = {
             // "hbsl": 9
         }
         for (let k in touzhu) {
-            this.subGameList[k].touzhu = touzhu[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].touzhu = touzhu[k]
+            }
         }
         let shixun = {
             "zrsx1": 0,
             "zrsx2": 1,
         }
         for (let k in shixun) {
-            this.subGameList[k].shixun = shixun[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].shixun = shixun[k]
+            }
         }
         let zuqiu = {
             "pccp": 0,
@@ -2618,7 +2624,9 @@ let gHandler = {
             "sbty1": 2
         }
         for (let k in zuqiu) {
-            this.subGameList[k].zuqiu = zuqiu[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].zuqiu = zuqiu[k]
+            }
         }
         let jieji = {
             "aga": 0,
@@ -2637,7 +2645,9 @@ let gHandler = {
             "fctbj": 13,
         }
         for (let k in jieji) {
-            this.subGameList[k].jieji = jieji[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].jieji = jieji[k]
+            }
         }
         let remen = {
             "cdx": 0,
@@ -2657,7 +2667,9 @@ let gHandler = {
             "zhibo":14,
         }
         for (let k in remen) {
-            this.subGameList[k].remen = remen[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].remen = remen[k]
+            }
         }
         let agalist = {
             "duofuduocai": 0,
@@ -2666,7 +2678,9 @@ let gHandler = {
             "ygxb": 3,
         }
         for (let k in this.agaSubGameList) {
-            this.agaSubGameList[k].hallid = agalist[k]
+            if(this.agaSubGameList[k]){
+                this.agaSubGameList[k].hallid = agalist[k]
+            }
         }
     },
     setJudingHallIdType() {
@@ -2754,13 +2768,17 @@ let gHandler = {
             "fctbj":28,
         }
         for (let k in duizhan) {
-            this.subGameList[k].duizhan = duizhan[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].duizhan = duizhan[k]
+            }
         }
         let touzhu = {
             // "pccp": 0,
         }
         for (let k in touzhu) {
-            this.subGameList[k].touzhu = touzhu[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].touzhu = touzhu[k]
+            }
         }
         
         let tiyu = {
@@ -2768,7 +2786,9 @@ let gHandler = {
             // "sbty2": 1,
         }
         for (let k in tiyu) {
-            this.subGameList[k].tiyu = tiyu[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].tiyu = tiyu[k]
+            }
         }
         let dianzi = {
             "pg": 5,
@@ -2781,7 +2801,9 @@ let gHandler = {
             "pt": 7,
         }
         for (let k in dianzi) {
-            this.subGameList[k].dianzi = dianzi[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].dianzi = dianzi[k]
+            }
         }
         let remen = {
             "szffc": 0,
@@ -2804,7 +2826,9 @@ let gHandler = {
             "zhibo":17,
         }
         for (let k in remen) {
-            this.subGameList[k].remen = remen[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].remen = remen[k]
+            }
         }
     },
     // 加载图片 SpriteFrame

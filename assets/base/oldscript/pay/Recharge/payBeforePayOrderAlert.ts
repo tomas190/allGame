@@ -38,7 +38,7 @@ export default class NewClass extends cc.Component {
         label2.string = Language_pay.Lg.ChangeByText('       银行卡收款信息会不定期更换，请玩家不要保存！每次充值请按正常流程获得最新账户资料！若打入非指定账号，损失自重！')
         label3.string = Language_pay.Lg.ChangeByText('1.进行转账的账户名必须和绑定银行卡的账户名一样。')
         label4.string = Language_pay.Lg.ChangeByText('2.转账的金额必须和订单上的收款金额完全一致，包括小数点。')
-        if(this.app.UrlData.package_id != 9 && this.app.UrlData.package_id != 15 && this.app.UrlData.package_id != 18 && this.app.UrlData.package_id != 16 && this.app.UrlData.package_id != 20){
+        if(this.app.UrlData.package_id != 9 && this.app.UrlData.package_id != 15 && this.app.UrlData.package_id != 18 && this.app.UrlData.package_id != 16 && this.app.UrlData.package_id != 20 && this.app.UrlData.package_id != 12 && this.app.UrlData.package_id != 22){
             this.app.loadIconLg(`${src}/btn/surebtn1`,btn1)
         }
     }

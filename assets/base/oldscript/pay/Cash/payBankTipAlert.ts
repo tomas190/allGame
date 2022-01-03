@@ -37,7 +37,7 @@ export default class NewClass extends cc.Component {
 
         if(this.app.UrlData.package_id == 10){
             this.app.loadIconLg(`${src}/font/queding`,btn1.children[0])
-        }else if(this.app.UrlData.package_id == 15|| this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 18 || this.app.UrlData.package_id == 16){
+        }else if(this.app.UrlData.package_id == 15|| this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 18 || this.app.UrlData.package_id == 16 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
         }else{
             this.app.loadIconLg(`${src}/btn/surecg`,btn1)
         }

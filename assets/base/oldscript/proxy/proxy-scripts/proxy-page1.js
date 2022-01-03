@@ -1365,7 +1365,7 @@ cc.Class({
         // 671627403  91顶级号
         // 649506476  聚鼎顶级号
 
-        // var sendData = `account_name=${485148506}&password=123456`;
+        // var sendData = `account_name=${239796950}&password=123456`;
         //正式 149672574
         var sendData = `account_name=${gHandler.gameGlobal.player.account_name}&token=${gHandler.gameGlobal.token}`
 
@@ -1483,7 +1483,7 @@ cc.Class({
                     //   money: balance
                     // });
                     let sendData
-                    if (typeof balances !== 'undefined') {
+                    if (typeof balances !== 'undefined' &&  balances !== 0 ) {
 
                         sendData = `account_name=${commonVal.account_name}&token=${token}&money=${balances}`;
                     } else {

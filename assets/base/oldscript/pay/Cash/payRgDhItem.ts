@@ -54,7 +54,7 @@ export default class NewClass extends cc.Component {
 
    showRgDhAlert(){
         var node = null
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8){
             node = cc.instantiate(this.RgDhAlert_8);
         }else  if(this.app.UrlData.package_id == 9){
             node = cc.instantiate(this.RgDhAlert_9);
@@ -81,7 +81,7 @@ export default class NewClass extends cc.Component {
 
         this.app.loadIconLg(`${src}/btn/guanfrz`,guanfrz)
         this.app.loadIconLg(`${src}/btn/zhuanxkf`,zhuanxkf)
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8){
             bg_fan.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('兑换')
         }else{
             this.app.loadIconLg(`${src}/btn/btn_chongzhi`,bg_fan)

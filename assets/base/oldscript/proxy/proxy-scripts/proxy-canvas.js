@@ -2,6 +2,7 @@ let gHandler = require('gHandler')
 let commonVal = require('./public_script/proxy-http')
 var Database = require("./public_script/Database");
 
+
 cc.Class({
   extends: cc.Component,
   properties: {

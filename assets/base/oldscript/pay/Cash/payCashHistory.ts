@@ -146,7 +146,7 @@ export default class NewClass extends cc.Component {
         
         let titlebg= this.node.getChildByName("Content").getChildByName("titlebg")
 
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id==9 ||this.app.UrlData.package_id == 10 || this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 18 || this.app.UrlData.package_id == 16) {
+        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id==9 ||this.app.UrlData.package_id == 10 || this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 18 || this.app.UrlData.package_id == 16|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22) {
             titlebg.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('类型')
             titlebg.children[1].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('兑换金额')
             titlebg.children[2].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('费率')

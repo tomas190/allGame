@@ -14,13 +14,14 @@ export default class NewClass extends cc.Component {
         //package_id = 9 (xingui)
         //package_id = 10 (fuxin)
         //package_id = 11 (xinhao)
-        //package_id = 12 (xinlong)
+        //package_id = 12 (xinlong)改为lepai
         //package_id = 13 (huangshi)
         //package_id = 15 (juding)
         //package_id = 16 (ninetwo)
         //package_id = 18 (huaxing)
         //package_id = 20 (wansheng)
         //package_id = 21 (tianqi)
+        //package_id = 22 (jiaxing)
         this.app = cc.find('Canvas/Main').getComponent('payMain');
         this.loadBundle(Language_pay.Lg.getBundleName(),"Prefab/Recharge")
     }

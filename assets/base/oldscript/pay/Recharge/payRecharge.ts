@@ -141,6 +141,7 @@ export default class NewClass extends cc.Component {
                 wechat_pay: 7,
                 union_pay: 8,
                 digiccy :9,
+                jisu_recharge:10
             }
         }
         var sortArr = []
@@ -327,6 +328,23 @@ export default class NewClass extends cc.Component {
                         }
                     }
                     break
+                case "jisu_recharge" :
+                    if ( this.zfbResults.data.pq_pay.length > 0  ) {
+                        //先看大渠道是否显示
+                        let show = false
+                        this.zfbResults.data.pq_pay.forEach(e=>{
+                            let package_ids = e.package_ids.split(",")
+                            package_ids.forEach(e=>{
+                                if(Number(e) == this.app.UrlData.package_id){
+                                    show = true
+                                }
+                            })
+                        })
+                        if(show){
+                            arr.push('极速充值')
+                        }
+                    }
+                    break
             }
         });
         for (let i: number = 0; i < arr.length; i++) {
@@ -360,6 +378,8 @@ export default class NewClass extends cc.Component {
             node.getComponent('payNavToggle').addContent('im_pay')
         }else if(arr[0]=='USDT' && this.zfbResults.data.digiccy.length > 0  ){
             node.getComponent('payNavToggle').addContent('digiccy')
+        }else if(arr[0]=='极速充值' && this.zfbResults.data.pq_pay.length > 0  ){
+            node.getComponent('payNavToggle').addJisu()
         }
     }
     //银商
@@ -395,7 +415,7 @@ export default class NewClass extends cc.Component {
         if(this.app.UrlData.package_id == 9)
         {
             chongzhilishi.getComponent(cc.Widget).target = cc.find('Canvas');
-        }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 16 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+        }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 16 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
 
         }else{
             this.app.loadIconLg(`${src}/btn/chongzhilishi`,chongzhilishi);

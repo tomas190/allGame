@@ -37,7 +37,7 @@ export default class NewClass extends cc.Component {
                     this.node.removeFromParent()
                 }
             }
-        }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+        }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22 ){
             if(this.index == 0){
                 this.normalIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "全部"); 
                 this.currentIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "全部"); 

@@ -92,7 +92,7 @@ export default class NewClass extends cc.Component {
                         firstTime : data.created_at,
                         lastTime : data.arrival_at,
                         results:data
-                    })
+                    },this.fetchIndex.bind(this))
                 }
             }else{
                 self.app.showAlert(data.msg);
@@ -157,9 +157,9 @@ export default class NewClass extends cc.Component {
 
         let chongzhiklis= cc.find("Canvas/Recharge/RechargeHistory/header/title/chongzhiklis")
         let titlebg= cc.find("Canvas/Recharge/RechargeHistory/Content/titlebg")
-
+        
         this.app.loadIconLg(`${src}/font/chongzhiklis`,chongzhiklis)
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 9 || this.app.UrlData.package_id == 10 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 15  || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 9 || this.app.UrlData.package_id == 10 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22 || this.app.UrlData.package_id == 15  || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
             titlebg.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('下单金额')
             titlebg.children[1].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('到账金额')
             titlebg.children[2].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('状态')

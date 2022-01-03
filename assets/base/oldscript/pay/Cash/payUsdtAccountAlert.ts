@@ -134,7 +134,7 @@ export default class NewClass extends cc.Component {
         let btn1= cc.find("Canvas/UsdtAccountAlert/Layout/btn1")
         let tishi= cc.find("Canvas/UsdtAccountAlert/Layout/tishi").getComponent(cc.Label)
 
-        if(this.app.UrlData.package_id == 8||this.app.UrlData.package_id == 9 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8||this.app.UrlData.package_id == 9){
             this.app.loadIconLg(`${src}/font/queding`,btn1.children[0])
             this.app.loadIconLg(`${src}/font/txt_qbdz`,popup_usdt_frame.children[0])
             this.app.loadIconLg(`${src}/font/txt_llx`,popup_usdt_frame.children[1])
@@ -144,7 +144,7 @@ export default class NewClass extends cc.Component {
             this.app.loadIconLg(`${src}/font/title_usdt`,titleIcon)
             this.app.loadIconLg(`${src}/font/txt_qbdz`,popup_usdt_frame.children[0])
             this.app.loadIconLg(`${src}/font/txt_llx`,popup_usdt_frame.children[1])
-        }else if(this.app.UrlData.package_id == 15 ||this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 18 || this.app.UrlData.package_id == 16){
+        }else if(this.app.UrlData.package_id == 15 ||this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 18 || this.app.UrlData.package_id == 16|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
            
         }else{
             this.app.loadIconLg(`${src}/form/popup_usdt_frame`,popup_usdt_frame)

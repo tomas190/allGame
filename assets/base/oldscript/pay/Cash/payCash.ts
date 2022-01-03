@@ -156,6 +156,18 @@ export default class NewClass extends cc.Component {
                 })
             }
         }
+        if(this.results.data.withDraw_info){
+            if(this.results.data.withDraw_info.jisu_withdraw.is_close > 0){
+                //分渠道开关
+                let package_ids = this.results.data.withDraw_info.jisu_withdraw.package_ids
+                let package_idsArr = package_ids.split(",")
+                package_idsArr.forEach(e=>{
+                   if( Number(e) == this.app.UrlData.package_id){
+                    arr.push('极速兑换')
+                   }
+                })
+            }
+        }
         if(arr.length>0){
             //有兑换渠道时才显示兑换记录
             if(this.app.UrlData.package_id == 16){
@@ -182,6 +194,8 @@ export default class NewClass extends cc.Component {
             this.ToggleContainer.children[0].getComponent('payDhToggle').addContent('USDT')
         }else if(arr[0] == "兑换记录"){
             this.ToggleContainer.children[0].getComponent('payDhToggle').addContent('DhHistory')
+        }else if(arr[0] == "极速兑换"){
+            this.ToggleContainer.children[0].getComponent('payDhToggle').addContent('极速兑换')
         }
     }
     onDestroy(){

@@ -42,7 +42,9 @@ export default class NewClass extends cc.Component {
                 :(data.type ==4 ? '交易所'
                     :(data.type == 5 ? "赠送"
                         :(data.type == 3 ? "人工兑换"
-                            :( data.type == 6 ?"USDT兑换":''
+                            :( data.type == 6 ?"USDT兑换":
+                                ( data.type == 8 ?"极速兑换":''
+                            )
                             )))));
         this.amountLabel.string = this.app.config.toDecimal(data.amount);
         // 类型=兑换渠道

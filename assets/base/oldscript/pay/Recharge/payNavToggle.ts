@@ -9,6 +9,9 @@ export default class NewClass extends cc.Component {
     Zfb : cc.Prefab = null;
 
     @property(cc.Prefab)
+    Jisu : cc.Prefab = null;
+
+    @property(cc.Prefab)
     RgDc : cc.Prefab = null;
     
     @property(cc.Node)
@@ -35,7 +38,7 @@ export default class NewClass extends cc.Component {
         if(this.text == '支付宝'){
             if(this.app.UrlData.package_id == 9 ){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "支付宝充值");  
-            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "支付宝充值");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "支付宝充值");  
             }else if(this.app.UrlData.package_id == 16){
@@ -59,7 +62,7 @@ export default class NewClass extends cc.Component {
         }else if(this.text == '转账到银行卡'){
             if(this.app.UrlData.package_id == 9 ){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "转账到银行卡");  
-            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "转账到银行卡");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "转账到银行卡");  
             }else if(this.app.UrlData.package_id == 16){
@@ -87,7 +90,7 @@ export default class NewClass extends cc.Component {
         }else if(this.text == '银联扫码'){
             if(this.app.UrlData.package_id == 9){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "银联扫码");  
-            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "银联扫码");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "银联扫码");  
             }else if(this.app.UrlData.package_id == 16){
@@ -112,7 +115,7 @@ export default class NewClass extends cc.Component {
         }else if(this.text == '微信'){
             if(this.app.UrlData.package_id == 9 ){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "微信支付");  
-            }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20){
+            }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "微信支付");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "微信支付");  
             }else if(this.app.UrlData.package_id == 18){
@@ -140,7 +143,7 @@ export default class NewClass extends cc.Component {
         }else if(this.text == '快捷支付'){
             if(this.app.UrlData.package_id == 9 ){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "快捷支付");  
-            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "快捷支付");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "快捷支付");  
             }else if(this.app.UrlData.package_id == 16){
@@ -165,7 +168,7 @@ export default class NewClass extends cc.Component {
         }else if(this.text == '网银支付'){
             if(this.app.UrlData.package_id == 9 ){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "网银支付");  
-            }else if(this.app.UrlData.package_id == 15 ||this.app.UrlData.package_id == 20){
+            }else if(this.app.UrlData.package_id == 15 ||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "网银支付");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "网银支付");  
             }else if(this.app.UrlData.package_id == 18){
@@ -193,7 +196,7 @@ export default class NewClass extends cc.Component {
         }else if(this.text == '人工代充值'){
             if(this.app.UrlData.package_id == 9 ){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "专享快付");  
-            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "人工代充值");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "人工代充值"); 
             }else if(this.app.UrlData.package_id == 16){
@@ -220,7 +223,7 @@ export default class NewClass extends cc.Component {
                 this.app.loadIcon(`${src}/menu/menu_rgpay_2`,this.currentIcon,249,86);
             }else if(this.app.UrlData.package_id == 9 ){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "IM充值");  
-            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20){
+            }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18||this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "IM充值");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "IM充值");  
             }else if(this.app.UrlData.package_id == 16){
@@ -245,7 +248,7 @@ export default class NewClass extends cc.Component {
             let percent = 0
             if(this.app.UrlData.package_id == 9){
                 zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "USDT钱包");  
-            }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20 ){
+            }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
                 this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "USDT钱包");  
                 this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "USDT钱包");  
             }else if(this.app.UrlData.package_id == 18){
@@ -269,10 +272,37 @@ export default class NewClass extends cc.Component {
                 }
             });
             this.setTishiLabel(percent)
+        }else if(this.text == '极速充值'){
+            let percent = 0
+            if(this.app.UrlData.package_id == 9){
+                zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "极速充值");  
+            }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
+                this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "极速充值");  
+                this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "极速充值");  
+            }else if(this.app.UrlData.package_id == 18){
+                this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "极速充值");  
+                this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "极速充值"); 
+            }else if(this.app.UrlData.package_id == 16){
+                this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "极速充值");  
+                this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "极速充值"); 
+                let normalIcon = this.node.getChildByName("Background").getChildByName("icon")
+                let currentIcon = this.node.getChildByName("checkmark").getChildByName("icon")
+                this.app.loadIcon(`${src}/menu/jisu2`,normalIcon,44,44);
+                this.app.loadIcon(`${src}/menu/jisu1`,currentIcon,44,44);
+            }else
+            {
+                this.app.loadIcon(`${src}/menu/menu_jscz_1`,this.normalIcon,207,39);
+                this.app.loadIcon(`${src}/menu/menu_jscz_2`,this.currentIcon,249,86);
+            }
+            discount_rate.usdt.forEach( (e,i) => {
+                if(e.package_id == this.app.UrlData.package_id) {
+                    percent = e.interval[0].percent
+                }
+            });
+            this.setTishiLabel(percent)
         } 
     }
     setTishiLabel(percent) {
-        cc.log("payNavToggle" , this.text);
         this.tishiLabel.string = `${percent * 100} %`;
         if (percent == 0){
             this.tishi.active = false
@@ -326,6 +356,8 @@ export default class NewClass extends cc.Component {
             this.addContent('im_pay')
         }else if(this.text == 'USDT'){
             this.addContent('digiccy')
+        }else if(this.text == '极速充值'){
+            this.addJisu()
         }
     }
 
@@ -344,4 +376,10 @@ export default class NewClass extends cc.Component {
         content.addChild(node);
     }
 
+    addJisu(){
+        var content = cc.find('Canvas/Recharge/Content');
+        var node = cc.instantiate(this.Jisu);
+        content.removeAllChildren();
+        content.addChild(node);
+    }
 }

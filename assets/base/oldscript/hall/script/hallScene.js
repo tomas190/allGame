@@ -77,7 +77,7 @@ cc.Class({
             hqq.eventMgr.dispatch(hqq.eventMgr.showNetStateNode, { parent: pn, position: { x: 0, y: 0 },scale:0.7 })
         } else if (hqq.app.pinpai == "xinlong") {
             let pn = hqq.addNode(this.node, {
-                widget: { left: 260, top: 40 }
+                widget: { left: 750, top: 50 }
             })
             hqq.eventMgr.dispatch(hqq.eventMgr.showNetStateNode, { parent: pn, position: { x: 0, y: 0 },scale:0.7 })
         } else if (hqq.app.pinpai == "xinhao") {
@@ -414,7 +414,7 @@ cc.Class({
                 this.UILoadFinished();
             })
         } else if ( hqq.app.pinpai == "xinlong" ) {
-            hqq["hall_xinlong"].load("prefab/xinsheng", cc.Prefab, (err, prefab)=>{
+            hqq["hall_xinlong"].load("prefab/xinlong", cc.Prefab, (err, prefab)=>{
                 if(err){
                     cc.log(err);
                     return;
@@ -431,47 +431,54 @@ cc.Class({
                 hqq.setSprite(this.shouyipoint, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/redpoint", position: { x: 0, y: 20 }, active: false })
                 hqq.setSprite(this.kefupoint, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/redpoint", position: { x: -5, y: 20 }, active: false })
                 hqq.setSprite(background, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "bigimg/hallback" })
-                background.getChildByName("xinsheng").active = true
+                background.getChildByName("xinlong").active = true
                 hqq.setWidget(subgameview, { left: 250, top: 100, bottom: 100 })
                 hqq.setLabel(this.namelabel, { string: "", widget: { left: -55 }, fontSize: 25 })
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 25 })
-                hqq.setBtn(touxiang, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/touxiang", widget: { top: 10, left: 5 }, callback: "onClickPlayerBtn", script: this })
+                hqq.setBtn(touxiang, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/touxiang", widget: { top: 5, left: 12 }, callback: "onClickPlayerBtn", script: this })
                 mask.getComponent(cc.Mask).spriteFrame = hqq.getSpriteFrame(hpath + "img/headmask",hqq["hall_"+hqq.app.pinpai])
-                hqq.setSprite(namebg, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 75, top: 20 } })
-                hqq.setSprite(goldback, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 310, top: 20 }, size: { width: 200 } })
+                hqq.setSprite(namebg, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 95, top: 10 } })
+                hqq.setSprite(goldback, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/GoldBG", widget: { left: 405, top: 5 }/*, size: { width: 200 }*/ })
                 hqq.setSprite(jinbi, { path: "base/img/sp_coin2", widget: { horizontalCenter: -100 } })
                 //hqq.setBtn(btncopy, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "img/btncopy", widget: { horizontalCenter: 81 }, callback: "onClickPlayerBtn", script: this })
+                btncopy.active = false;
                 hqq.setBtn(btnplus, { normal: "base/img/btn_refresh2", widget: { horizontalCenter: 95 }, callback: "onClickGetGold", script: this ,size: { height: 61, width: 61 } })
 
                 // hqq.setBtn(this.btnhby, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnhby", widget: { top: 15, right: 460 }, callback: "onClickHBY", script: this })
                 // hqq.setBtn(this.btnjfcj, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnjfcj", widget: { top: 15, right: 355 }, callback: "onClickJFCJ", script: this })
-                hqq.setBtn(btnjchd, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnjchd", widget: { top: 15, right: 240 }, callback: "onClickJCHD", script: this })
-                hqq.setBtn(btnqmdl, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnqmdl", widget: { top: 15, right: 115 }, callback: "onClickQMDL", script: this })
-                hqq.setBtn(this.btngonggao, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btngonggao", widget: { top: 15, right: 40 }, callback: "onClickGG", script: this })
+                hqq.setBtn(btnjchd, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnjchd", widget: { top: 8, right: 125 }, callback: "onClickJCHD", script: this })
+                hqq.setBtn(btnqmdl, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnqmdl", widget: { top: 8, right: 230 }, callback: "onClickQMDL", script: this })
+                hqq.setBtn(this.btngonggao, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btngonggao", widget: { isAlignTop: true, isAlignRight: true, isAlignLeft: true, isAlignBottom: true, top: 680, right: 700, left: 495, bottom: 10 }, callback: "onClickGG", script: this })
 
-                hqq.setBtn(this.btnshouyi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnshouyi", widget: { left: 0, bottom: 0 }, callback: "onClickSY", script: this })
-                hqq.setBtn(this.btnkefu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnkefu", widget: { left: 188, bottom: 0 }, callback: "onClickKF", script: this })
-                hqq.setBtn(btnmfjb, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnmfjb", widget: { left: 376, bottom: 0 }, callback: "onClickMFJB", script: this })
-                hqq.setBtn(btnchongzhi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnchongzhi", widget: { right: 0, bottom: 0 }, callback: "onClickCC", script: this })
+                hqq.setBtn(this.btnshouyi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnshouyi", widget: { left: 45, bottom: 10 }, callback: "onClickSY", script: this })
+                hqq.setBtn(this.btnkefu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnkefu", widget: { left: 275, bottom: 5 }, callback: "onClickKF", script: this })
+                hqq.setBtn(btnmfjb, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnmfjb", widget: { left: 690, bottom: 10 }, callback: "onClickMFJB", script: this })
+                hqq.setBtn(btnchongzhi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnchongzhi", widget: { right: 63, bottom: 5 }, callback: "onClickCC", script: this })
 
-                this.menuBtnListNode = cc.find("Canvas/hallback/xinsheng/xinshengmenu")
-                let btn_all = this.menuBtnListNode.getChildByName("btn_all")
-                hqq.setBtn(btn_all, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_all", pressed: hlpath + "btn_all1", custom: this.menuBtnInfoList[0], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE, interactable: false,active:true })
-                let btn_changyong = this.menuBtnListNode.getChildByName("btn_changyong")
-                hqq.setBtn(btn_changyong, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_changyong", pressed: hlpath + "btn_changyong1", custom: this.menuBtnInfoList[1], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_duizhan = this.menuBtnListNode.getChildByName("btn_duizhan")
-                hqq.setBtn(btn_duizhan, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_duizhan", pressed: hlpath + "btn_duizhan1", custom: this.menuBtnInfoList[2], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_touzhu = this.menuBtnListNode.getChildByName("btn_touzhu")
-                hqq.setBtn(btn_touzhu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_touzhu", pressed: hlpath + "btn_touzhu1", custom: this.menuBtnInfoList[3], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_shixun = this.menuBtnListNode.getChildByName("btn_shixun")
-                hqq.setBtn(btn_shixun, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_shixun", pressed: hlpath + "btn_shixun1", custom: this.menuBtnInfoList[4], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_zuqiu = this.menuBtnListNode.getChildByName("btn_zuqiu")
-                hqq.setBtn(btn_zuqiu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_zuqiu", pressed: hlpath + "btn_zuqiu1", custom: this.menuBtnInfoList[5], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_jieji = this.menuBtnListNode.getChildByName("btn_jieji")
-                hqq.setBtn(btn_jieji, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_jieji", pressed: hlpath + "btn_jieji1", custom: this.menuBtnInfoList[6], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let xinshengtitle = cc.find("Canvas/hallback/xinsheng/xinshengtitle");
-                hqq.setSprite(xinshengtitle, { Res:hqq["hall_"+hqq.app.pinpai] , path: hlpath + "xinlongtitle" })
-                hqq.addNode(this.node, { normal: "base/language/"+hqq.language+"/img/vip_diamond", widget:{horizontalCenter:150,bottom:-10} ,callback:"toogleManyCai",script:this});
+                this.menuBtnListNode = cc.find("Canvas/hallback/xinlong/xinlongmenu")
+                // let btn_all = this.menuBtnListNode.getChildByName("btn_all")
+                // hqq.setBtn(btn_all, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_all", pressed: hlpath + "btn_all1", custom: this.menuBtnInfoList[0], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE, interactable: false,active:true })
+                // let btn_changyong = this.menuBtnListNode.getChildByName("btn_changyong")
+                // hqq.setBtn(btn_changyong, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_changyong", pressed: hlpath + "btn_changyong1", custom: this.menuBtnInfoList[1], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_duizhan = this.menuBtnListNode.getChildByName("btn_duizhan")
+                // hqq.setBtn(btn_duizhan, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_duizhan", pressed: hlpath + "btn_duizhan1", custom: this.menuBtnInfoList[2], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_touzhu = this.menuBtnListNode.getChildByName("btn_touzhu")
+                // hqq.setBtn(btn_touzhu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_touzhu", pressed: hlpath + "btn_touzhu1", custom: this.menuBtnInfoList[3], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_shixun = this.menuBtnListNode.getChildByName("btn_shixun")
+                // hqq.setBtn(btn_shixun, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_shixun", pressed: hlpath + "btn_shixun1", custom: this.menuBtnInfoList[4], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_zuqiu = this.menuBtnListNode.getChildByName("btn_zuqiu")
+                // hqq.setBtn(btn_zuqiu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_zuqiu", pressed: hlpath + "btn_zuqiu1", custom: this.menuBtnInfoList[5], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_jieji = this.menuBtnListNode.getChildByName("btn_jieji")
+                // hqq.setBtn(btn_jieji, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_jieji", pressed: hlpath + "btn_jieji1", custom: this.menuBtnInfoList[6], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let xinshengtitle = cc.find("Canvas/hallback/xinsheng/xinshengtitle");
+                // hqq.setSprite(xinshengtitle, { Res:hqq["hall_"+hqq.app.pinpai] , path: hlpath + "xinlongtitle" })
+                this.xinshengad1 = hqq.addNode(cc.find("Canvas/hallback/xinlong/renwu"),{Res:hqq["hall_"+hqq.app.pinpai], path: hlpath + "lbt1"});
+                this.xinshengad2 = hqq.addNode(cc.find("Canvas/hallback/xinlong/renwu"),{Res:hqq["hall_"+hqq.app.pinpai], path: hlpath + "lbt2"});
+                this.xinshengad3 = hqq.addNode(cc.find("Canvas/hallback/xinlong/renwu"),{Res:hqq["hall_"+hqq.app.pinpai], path: hlpath + "lbt3"});
+                this.xinshengad1.active = false;
+                this.xinshengad2.active = false;
+                this.xinshengad3.active = false;
+                hqq.setWidget(subgameview, { left: 380 })
                 this.noticepanel.active = true;
                 this.UILoadFinished();
             })
@@ -1307,6 +1314,8 @@ cc.Class({
             hqq.setBtn(this.btnhby, { Res:hqq["hall_"+hqq.app.pinpai],normal: "language/" + hqq.language + "/xingui/btn_hby", widget: { top: 11, right: 390 }, callback: "onClickHBY", script: this })
         } else if (hqq.app.pinpai == "xinsheng") {
             hqq.setBtn(this.btnhby, { Res:hqq["hall_"+hqq.app.pinpai],normal: "language/" + hqq.language + "/xinsheng/btnhby", widget: { top: 11, right: 350 }, callback: "onClickHBY", script: this })
+        } else if (hqq.app.pinpai == "xinlong") {
+            hqq.setBtn(this.btnhby, { Res:hqq["hall_"+hqq.app.pinpai],normal: "language/" + hqq.language + "/xinlong/btnhby", widget: { top: 8, right: 12 }, callback: "onClickHBY", script: this })
         } else if(hqq.app.pinpai == "xinhao"){
             hqq.setBtn(this.btnhby, { Res:hqq["hall_test"],path: "language/" + hqq.language + "/dating_hby", aniname: "animation", loop: true, widget: { top: -15 , right: 260 }, callback: "onClickHBY", script: this })
         } else if(hqq.app.pinpai == "juding"){
@@ -2221,7 +2230,37 @@ cc.Class({
             this.suggameScrollView.content.x = -this.suggameScrollView.node.width / 2
             this.onscrollEvents(this.suggameScrollView);
 
-            if( cc.isValid( this.xinshengad1 ) && cc.isValid( this.xinshengad2 ) ){
+            if( cc.isValid( this.xinlongad1 ) && cc.isValid( this.xinlongad2 ) && cc.isValid( this.xinlongad3 ) ){
+                cc.tween(this.node)
+                        .repeatForever(
+                            cc.tween()
+                            .call(()=>{
+                                if( cc.isValid( this.xinlongad1 ) && cc.isValid( this.xinlongad2 ) && cc.isValid( this.xinlongad3 ) ){
+                                    this.xinlongad1.active = true;
+                                    this.xinlongad2.active = false;
+                                    this.xinlongad3.active = false;
+                                }
+                            })
+                            .delay(3)
+                            .call(()=>{
+                                if( cc.isValid( this.xinlongad1 ) && cc.isValid( this.xinlongad2 ) && cc.isValid( this.xinlongad3 ) ){
+                                    this.xinlongad1.active = false;
+                                    this.xinlongad2.active = true;
+                                    this.xinlongad3.active = false;
+                                }
+                            })
+                            .delay(3)
+                            .call(()=>{
+                                if( cc.isValid( this.xinlongad1 ) && cc.isValid( this.xinlongad2 ) && cc.isValid( this.xinlongad3 ) ){
+                                    this.xinlongad1.active = false;
+                                    this.xinlongad2.active = false;
+                                    this.xinlongad3.active = true;
+                                }
+                            })
+                            .delay(3)
+                        )
+                        .start(); 
+            } else if( cc.isValid( this.xinshengad1 ) && cc.isValid( this.xinshengad2 ) ){
                 cc.tween(this.node)
                         .repeatForever(
                             cc.tween()

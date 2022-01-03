@@ -129,17 +129,24 @@ cc.Class({
             let xbpath = "xinlong/bigimg/"
             let xpath = "xinlong/img/"
             let xlpath = "language/" + hqq.language + "/xinlong/"
-            hqq.setSprite(back, { Res:hqq["hall_"+hqq.app.pinpai],path: xbpath + "personback" })
-            let hpath = "test/img/"
-            let hlpath = "language/" + hqq.language + "/img/"
-            hqq.setSprite(title_gonggao, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "title_gonggao", widget: { left: 280, top: 15 } })
-            let node = new cc.Node()
-            hqq.setSprite(node, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "gonggao" })
-            notice.addChild(node)
-            hqq.setBtn(notice, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "gongao1" })
-            hqq.setBtn(email, {path: hlpath + "mail2", pressed: hlpath + "mail1" })
-            hqq.setBtn(delet1, {path: hlpath + "delet1" })
-            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "btnclose", widget: { left: 0, top: 0 } })
+            let hpath = "xinlong/img/"
+            let hlpath = "language/" + hqq.language + "/xinlong/"
+            let hbpath = "xinlong/bigimg/";
+
+            hqq.setSprite(back, { Res:hqq["hall_"+hqq.app.pinpai],path: hbpath+"jd_p_main_bg" })
+            hqq.addNode(back, { Res:hqq["hall_"+hqq.app.pinpai],path: hbpath + "jd_p_contain_bg", zIndex: -1, type: cc.Sprite.Type.SLICED })
+            hqq.addNode(back, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_menu_bg", zIndex: -1, type: cc.Sprite.Type.SLICED, widget:{left:0,top:70},width:300})
+            hqq.setBtn(notice, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "jd_p_menu_btn_2" , pressed: hpath + "jd_p_menu_btn_1",transition:cc.Button.Transition.SPRITE})
+            hqq.addNode(notice, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_menu_announce"})
+            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_return", widget: { top: 0, left: 0 } })
+            hqq.setSprite(title_gonggao, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "gonggaobiaoti" ,widget: { top: 15, left: 160 }})
+
+            // let node = new cc.Node()
+            // hqq.setSprite(node, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "gonggao" })
+            // notice.addChild(node)
+            // hqq.setBtn(notice, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "gongao1" })
+            // hqq.setBtn(email, {path: hlpath + "mail2", pressed: hlpath + "mail1" })
+            // hqq.setBtn(delet1, {path: hlpath + "delet1" })
 
             btnline0.active = false
             btnline1.active = false
