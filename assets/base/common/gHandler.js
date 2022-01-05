@@ -158,7 +158,7 @@ let gHandler = {
             hasRes: true,
         },
     },
-    // 子游戏配置列表
+    // // 子游戏配置列表
     subGameList: {
         "ermj": {
             zhname: "二人麻将", // 中文游戏名
@@ -954,312 +954,312 @@ let gHandler = {
             loginHistory: [], // 子游戏最近一周登陆历史
             hasRes: true,
         },
-        "szffc": {
-            zhname: "szffc", // 中文游戏名
-            enname: "szffc", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "szffc_load", // 跳转场景名
-            fuxin_lanchscene: "szffc_load", // 跳转场景名
-            xingui_lanchscene: "szffc_load", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210820",
-            serverUrl: "/szffc", // 游戏服务器地址
-            endUrl: "/szffc", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 44,
-            resPath: "/btnanimation/szffc",
-            isDown: false,
-            gameType: 1, // 游戏类型：棋牌游戏：0，电子游戏：1，真人视讯：2，彩票投注：3，体育赛事：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "mg": {
-            zhname: "MG", // 中文游戏名
-            enname: "mg", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "mg_main", // 跳转场景名
-            fuxin_lanchscene: "mg_main", // 跳转场景名
-            xingui_lanchscene: "mg_main", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210821",
-            serverUrl: "/mg", // 游戏服务器地址
-            endUrl: "/mg", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 45,
-            resPath: "/btnanimation/mg",
-            isDown: false,
-            gameType: 4, // 游戏类型：棋牌游戏：0，电子游戏：1，真人视讯：2，彩票投注：3，体育赛事：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "qt": {
-            zhname: "QT", // 中文游戏名
-            enname: "qt", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "qt_main", // 跳转场景名
-            fuxin_lanchscene: "qt_main", // 跳转场景名
-            xingui_lanchscene: "qt_main", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210822",
-            serverUrl: "/qt", // 游戏服务器地址
-            endUrl: "/qt", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 46,
-            resPath: "/btnanimation/qt",
-            isDown: false,
-            gameType: 4, // 游戏类型：棋牌游戏：0，电子游戏：1，真人视讯：2，彩票投注：3，体育赛事：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "lhd2": {
-            zhname: "龙虎斗", // 中文游戏名 彩源龙虎斗
-            enname: "lhd2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "lhd", // 跳转场景名
-            fuxin_lanchscene: "lhd", // 跳转场景名
-            xingui_lanchscene: "lhd", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210910",
-            serverUrl: "/go_lhd2", // 游戏服务器地址
-            endUrl: "/go_lhd2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 16,
-            resPath: "/btnanimation/longhudou",
-            isDown: false,
-            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "ebg2": {
-            zhname: "新二八杠", // 中文游戏名
-            enname: "ebg2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "ebg", // 跳转场景名
-            fuxin_lanchscene: "ebg", // 跳转场景名
-            xingui_lanchscene: "ebg", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210911",
-            serverUrl: "/erbg2", // 游戏服务器地址
-            endUrl: "/erbg2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 2,
-            resPath: "/btnanimation/28gang",
-            isDown: false,
-            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "zjh2": {
-            zhname: "扎金花", // 中文游戏名
-            enname: "zjh2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "ZJHLoad", // 跳转场景名
-            fuxin_lanchscene: "ZJHLoad", // 跳转场景名
-            xingui_lanchscene: "ZJHLoad", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210912",
-            serverUrl: "/zhajh2", // 游戏服务器地址
-            endUrl: "/zhajh2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 29,
-            resPath: "/btnanimation/zhajinhua",
-            isDown: false,
-            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "hbld2": {
-            zhname: "红包乱斗", // 中文游戏名
-            enname: "hbld2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "hbldGame", // 跳转场景名
-            fuxin_lanchscene: "hbldGame", // 跳转场景名
-            xingui_lanchscene: "hbldGame", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210913",
-            serverUrl: "/hongbaold2", // 游戏服务器地址
-            endUrl: "/hongbaold2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 10,
-            resPath: "/btnanimation/hbld",
-            isDown: false,
-            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "suoha2": {
-            zhname: "梭哈", // 中文游戏名
-            enname: "suoha2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "suoha_Hall", // 跳转场景名
-            fuxin_lanchscene: "suoha_Hall", // 跳转场景名
-            xingui_lanchscene: "suoha_Hall", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210914",
-            serverUrl: "/suoha2", // 游戏服务器地址
-            endUrl: "/suoha2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 31,
-            resPath: "/btnanimation/suoha_datingicon",
-            isDown: false,
-            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "szwg2": {
-            zhname: "狮子王国", // 中文游戏名
-            enname: "szwg2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "szwg_Hall", // 跳转场景名
-            fuxin_lanchscene: "szwg_Hall", // 跳转场景名
-            xingui_lanchscene: "szwg_Hall", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210915",
-            serverUrl: "/szwg2", // 游戏服务器地址
-            endUrl: "/szwg2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 15,
-            resPath: "/btnanimation/lionKingdom",
-            isDown: false,
-            gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "brnn2": {
-            zhname: "新百人牛牛", // 中文游戏名
-            enname: "brnn2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "brnn", // 跳转场景名
-            fuxin_lanchscene: "brnn", // 跳转场景名
-            xingui_lanchscene: "brnn", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210916",
-            serverUrl: "/bairenniuni2", // 游戏服务器地址
-            endUrl: "/bairenniuni2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 5,
-            resPath: "/btnanimation/brnn",
-            isDown: false,
-            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "ddz2": {
-            zhname: "斗地主", // 中文游戏名
-            enname: "ddz2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "ddzroom", // 跳转场景名
-            fuxin_lanchscene: "ddzroom", // 跳转场景名
-            xingui_lanchscene: "ddzroom", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210917",
-            serverUrl: "/landlord2", // 游戏服务器地址
-            endUrl: "/landlord2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 8,
-            resPath: "/btnanimation/doudizhu",
-            isDown: false,
-            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "bcbm2": {
-            zhname: "奔驰宝马", // 中文游戏名
-            enname: "bcbm2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "bcbmloading", // 跳转场景名
-            fuxin_lanchscene: "bcbmloading", // 跳转场景名
-            xingui_lanchscene: "bcbmloading", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210918",
-            serverUrl: "/bcbm2", // 游戏服务器地址
-            endUrl: "/bcbm2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 3,
-            resPath: "/btnanimation/bcbm",
-            isDown: false,
-            gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "hh2": {
-            zhname: "新红黑大战", // 中文游戏名
-            enname: "hh2", // 英文游戏名 （子游戏文件路径，更新子路径）ssss
-            lanchscene: "hhlobby", // 跳转场景名
-            fuxin_lanchscene: "hhlobby", // 跳转场景名
-            xingui_lanchscene: "hhlobby", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210919",
-            serverUrl: "/redblackwar2", // 游戏服务器地址
-            endUrl: "/redblackwar2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 12,
-            resPath: "/btnanimation/honhei",
-            isDown: false,
-            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "dzpk2": {
-            zhname: "德州扑克", // 中文游戏名
-            enname: "dzpk2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "dzpk_load", // 跳转场景名
-            fuxin_lanchscene: "dzpk_load", // 跳转场景名
-            xingui_lanchscene: "dzpk_load", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210920",
-            serverUrl: "/dezhoupoker2", // 游戏服务器地址
-            endUrl: "/dezhoupoker2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 9,
-            resPath: "/btnanimation/dzpk",
-            isDown: false,
-            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "shaibao2": {
-            zhname: "骰宝", // 中文游戏名
-            enname: "shaibao2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "shaibao_Hall", // 跳转场景名
-            fuxin_lanchscene: "shaibao_Hall", // 跳转场景名
-            xingui_lanchscene: "shaibao_Hall", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210921",
-            serverUrl: "/shaibao2", // 游戏服务器地址
-            endUrl: "/shaibao2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 25,
-            resPath: "/btnanimation/sicbo",
-            isDown: false,
-            gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "sss2": {
-            zhname: "十三水", // 中文游戏名
-            enname: "sss2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "SSSLoad", // 跳转场景名
-            fuxin_lanchscene: "SSSLoad", // 跳转场景名
-            xingui_lanchscene: "SSSLoad", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210922",
-            serverUrl: "/shisanshui2", // 游戏服务器地址
-            endUrl: "/shisanshui2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 24,
-            resPath: "/btnanimation/shisanshui",
-            isDown: false,
-            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
-        "ermj2": {
-            zhname: "二人麻将", // 中文游戏名
-            enname: "ermj2", // 英文游戏名 （子游戏文件路径，更新子路径）
-            lanchscene: "ERMJHallScene", // 跳转场景名
-            fuxin_lanchscene: "ERMJHallScene", // 跳转场景名
-            xingui_lanchscene: "ERMJHallScene", // 跳转场景名
-            game_id: "5b1f3a3cb76a451e210923",
-            serverUrl: "/ermj2", // 游戏服务器地址
-            endUrl: "/ermj2", // 游戏服务器地址
-            hasAccount: false, // 是否已创建子游戏账号
-            remoteData: null, // 服务端发送过来的游戏数据
-            hallid: 0,
-            resPath: "/btnanimation/2rmj",
-            isDown: false,
-            gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
-            loginHistory: [], // 子游戏最近一周登陆历史
-            hasRes: true,
-        },
+        // "szffc": {
+        //     zhname: "szffc", // 中文游戏名
+        //     enname: "szffc", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "szffc_load", // 跳转场景名
+        //     fuxin_lanchscene: "szffc_load", // 跳转场景名
+        //     xingui_lanchscene: "szffc_load", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210820",
+        //     serverUrl: "/szffc", // 游戏服务器地址
+        //     endUrl: "/szffc", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 44,
+        //     resPath: "/btnanimation/szffc",
+        //     isDown: false,
+        //     gameType: 1, // 游戏类型：棋牌游戏：0，电子游戏：1，真人视讯：2，彩票投注：3，体育赛事：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "mg": {
+        //     zhname: "MG", // 中文游戏名
+        //     enname: "mg", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "mg_main", // 跳转场景名
+        //     fuxin_lanchscene: "mg_main", // 跳转场景名
+        //     xingui_lanchscene: "mg_main", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210821",
+        //     serverUrl: "/mg", // 游戏服务器地址
+        //     endUrl: "/mg", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 45,
+        //     resPath: "/btnanimation/mg",
+        //     isDown: false,
+        //     gameType: 4, // 游戏类型：棋牌游戏：0，电子游戏：1，真人视讯：2，彩票投注：3，体育赛事：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "qt": {
+        //     zhname: "QT", // 中文游戏名
+        //     enname: "qt", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "qt_main", // 跳转场景名
+        //     fuxin_lanchscene: "qt_main", // 跳转场景名
+        //     xingui_lanchscene: "qt_main", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210822",
+        //     serverUrl: "/qt", // 游戏服务器地址
+        //     endUrl: "/qt", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 46,
+        //     resPath: "/btnanimation/qt",
+        //     isDown: false,
+        //     gameType: 4, // 游戏类型：棋牌游戏：0，电子游戏：1，真人视讯：2，彩票投注：3，体育赛事：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "lhd2": {
+        //     zhname: "龙虎斗", // 中文游戏名 彩源龙虎斗
+        //     enname: "lhd2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "lhd", // 跳转场景名
+        //     fuxin_lanchscene: "lhd", // 跳转场景名
+        //     xingui_lanchscene: "lhd", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210910",
+        //     serverUrl: "/go_lhd2", // 游戏服务器地址
+        //     endUrl: "/go_lhd2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 16,
+        //     resPath: "/btnanimation/longhudou",
+        //     isDown: false,
+        //     gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "ebg2": {
+        //     zhname: "新二八杠", // 中文游戏名
+        //     enname: "ebg2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "ebg", // 跳转场景名
+        //     fuxin_lanchscene: "ebg", // 跳转场景名
+        //     xingui_lanchscene: "ebg", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210911",
+        //     serverUrl: "/erbg2", // 游戏服务器地址
+        //     endUrl: "/erbg2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 2,
+        //     resPath: "/btnanimation/28gang",
+        //     isDown: false,
+        //     gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "zjh2": {
+        //     zhname: "扎金花", // 中文游戏名
+        //     enname: "zjh2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "ZJHLoad", // 跳转场景名
+        //     fuxin_lanchscene: "ZJHLoad", // 跳转场景名
+        //     xingui_lanchscene: "ZJHLoad", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210912",
+        //     serverUrl: "/zhajh2", // 游戏服务器地址
+        //     endUrl: "/zhajh2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 29,
+        //     resPath: "/btnanimation/zhajinhua",
+        //     isDown: false,
+        //     gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "hbld2": {
+        //     zhname: "红包乱斗", // 中文游戏名
+        //     enname: "hbld2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "hbldGame", // 跳转场景名
+        //     fuxin_lanchscene: "hbldGame", // 跳转场景名
+        //     xingui_lanchscene: "hbldGame", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210913",
+        //     serverUrl: "/hongbaold2", // 游戏服务器地址
+        //     endUrl: "/hongbaold2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 10,
+        //     resPath: "/btnanimation/hbld",
+        //     isDown: false,
+        //     gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "suoha2": {
+        //     zhname: "梭哈", // 中文游戏名
+        //     enname: "suoha2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "suoha_Hall", // 跳转场景名
+        //     fuxin_lanchscene: "suoha_Hall", // 跳转场景名
+        //     xingui_lanchscene: "suoha_Hall", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210914",
+        //     serverUrl: "/suoha2", // 游戏服务器地址
+        //     endUrl: "/suoha2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 31,
+        //     resPath: "/btnanimation/suoha_datingicon",
+        //     isDown: false,
+        //     gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "szwg2": {
+        //     zhname: "狮子王国", // 中文游戏名
+        //     enname: "szwg2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "szwg_Hall", // 跳转场景名
+        //     fuxin_lanchscene: "szwg_Hall", // 跳转场景名
+        //     xingui_lanchscene: "szwg_Hall", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210915",
+        //     serverUrl: "/szwg2", // 游戏服务器地址
+        //     endUrl: "/szwg2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 15,
+        //     resPath: "/btnanimation/lionKingdom",
+        //     isDown: false,
+        //     gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "brnn2": {
+        //     zhname: "新百人牛牛", // 中文游戏名
+        //     enname: "brnn2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "brnn", // 跳转场景名
+        //     fuxin_lanchscene: "brnn", // 跳转场景名
+        //     xingui_lanchscene: "brnn", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210916",
+        //     serverUrl: "/bairenniuni2", // 游戏服务器地址
+        //     endUrl: "/bairenniuni2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 5,
+        //     resPath: "/btnanimation/brnn",
+        //     isDown: false,
+        //     gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "ddz2": {
+        //     zhname: "斗地主", // 中文游戏名
+        //     enname: "ddz2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "ddzroom", // 跳转场景名
+        //     fuxin_lanchscene: "ddzroom", // 跳转场景名
+        //     xingui_lanchscene: "ddzroom", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210917",
+        //     serverUrl: "/landlord2", // 游戏服务器地址
+        //     endUrl: "/landlord2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 8,
+        //     resPath: "/btnanimation/doudizhu",
+        //     isDown: false,
+        //     gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "bcbm2": {
+        //     zhname: "奔驰宝马", // 中文游戏名
+        //     enname: "bcbm2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "bcbmloading", // 跳转场景名
+        //     fuxin_lanchscene: "bcbmloading", // 跳转场景名
+        //     xingui_lanchscene: "bcbmloading", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210918",
+        //     serverUrl: "/bcbm2", // 游戏服务器地址
+        //     endUrl: "/bcbm2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 3,
+        //     resPath: "/btnanimation/bcbm",
+        //     isDown: false,
+        //     gameType: 4, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "hh2": {
+        //     zhname: "新红黑大战", // 中文游戏名
+        //     enname: "hh2", // 英文游戏名 （子游戏文件路径，更新子路径）ssss
+        //     lanchscene: "hhlobby", // 跳转场景名
+        //     fuxin_lanchscene: "hhlobby", // 跳转场景名
+        //     xingui_lanchscene: "hhlobby", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210919",
+        //     serverUrl: "/redblackwar2", // 游戏服务器地址
+        //     endUrl: "/redblackwar2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 12,
+        //     resPath: "/btnanimation/honhei",
+        //     isDown: false,
+        //     gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "dzpk2": {
+        //     zhname: "德州扑克", // 中文游戏名
+        //     enname: "dzpk2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "dzpk_load", // 跳转场景名
+        //     fuxin_lanchscene: "dzpk_load", // 跳转场景名
+        //     xingui_lanchscene: "dzpk_load", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210920",
+        //     serverUrl: "/dezhoupoker2", // 游戏服务器地址
+        //     endUrl: "/dezhoupoker2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 9,
+        //     resPath: "/btnanimation/dzpk",
+        //     isDown: false,
+        //     gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "shaibao2": {
+        //     zhname: "骰宝", // 中文游戏名
+        //     enname: "shaibao2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "shaibao_Hall", // 跳转场景名
+        //     fuxin_lanchscene: "shaibao_Hall", // 跳转场景名
+        //     xingui_lanchscene: "shaibao_Hall", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210921",
+        //     serverUrl: "/shaibao2", // 游戏服务器地址
+        //     endUrl: "/shaibao2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 25,
+        //     resPath: "/btnanimation/sicbo",
+        //     isDown: false,
+        //     gameType: 1, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "sss2": {
+        //     zhname: "十三水", // 中文游戏名
+        //     enname: "sss2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "SSSLoad", // 跳转场景名
+        //     fuxin_lanchscene: "SSSLoad", // 跳转场景名
+        //     xingui_lanchscene: "SSSLoad", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210922",
+        //     serverUrl: "/shisanshui2", // 游戏服务器地址
+        //     endUrl: "/shisanshui2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 24,
+        //     resPath: "/btnanimation/shisanshui",
+        //     isDown: false,
+        //     gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
+        // "ermj2": {
+        //     zhname: "二人麻将", // 中文游戏名
+        //     enname: "ermj2", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "ERMJHallScene", // 跳转场景名
+        //     fuxin_lanchscene: "ERMJHallScene", // 跳转场景名
+        //     xingui_lanchscene: "ERMJHallScene", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e210923",
+        //     serverUrl: "/ermj2", // 游戏服务器地址
+        //     endUrl: "/ermj2", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 0,
+        //     resPath: "/btnanimation/2rmj",
+        //     isDown: false,
+        //     gameType: 0, // 游戏类型：棋牌对战：0，刺激投注：1，真人视讯：2，彩票足球：3，街机电玩：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
         // "pdk2": {
         //     zhname: "跑得快", // 中文游戏名
         //     enname: "pdk2", // 英文游戏名 （子游戏文件路径，更新子路径）

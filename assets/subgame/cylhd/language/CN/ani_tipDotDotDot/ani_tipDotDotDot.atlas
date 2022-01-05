@@ -1,0 +1,27 @@
+
+ani_tipDotDotDot.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+di
+  rotate: false
+  xy: 2, 139
+  size: 828, 190
+  orig: 828, 190
+  offset: 0, 0
+  index: -1
+dot
+  rotate: false
+  xy: 832, 309
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+kj
+  rotate: false
+  xy: 2, 2
+  size: 765, 135
+  orig: 765, 135
+  offset: 0, 0
+  index: -1

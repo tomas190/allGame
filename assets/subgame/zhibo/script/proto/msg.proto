@@ -1,0 +1,70 @@
+syntax = "proto3";
+package msg;
+option go_package = ".;msg";
+
+// 生成一個.go檔
+// protoc --go_out=. *.proto
+
+// 生成一個 .js .ts 檔 (提供Client使用)
+// pbjs -t static-module -w commonjs -o ZHIBOproto_msg.js *.proto
+// pbts -o ZHIBOproto_msg.d.ts ZHIBOproto_msg.js
+
+enum SubCommand {
+	//應與msg.go init註冊順序一致
+	//由client端發出
+	EnumSubLoginReq = 0; //登陆Req
+	EnumSubLoginResp = 1; //登陆Resp
+	EnumSubFrontEndLog = 2; //前端寫Log用
+}
+
+//------------------ common -----------------
+// 0.登入
+message LoginReq {
+	uint32 userID = 1;
+	string user_name = 2;
+	string user_avatar = 3; //玩家头像链接地址
+}
+
+// 1.登入, 玩家若在房間要直接傳房間內的資訊
+message LoginResp {
+	CommandResult result =1;
+	string version = 2; //目前server版本
+	repeated RoomInfo room_list= 3; //房間列表
+	repeated string line_list = 4; //域名线路列表
+	string load_url = 5; //预加载的地址（可访问此地址预先加载所需资源，避免等待时间过久）
+}
+
+// 直播房間信息
+message RoomInfo {
+	string live_user_name =1; //主播昵称
+	string game_code =2; //游戏代号
+	string room_code =3; //房间代号
+	string room_url =4; //直播间链接(完整的地址),根据此地址可直接跳转到直播页面(不含域名的地址)
+	string live_user_avatar =5; //完整的主播头像链接地址(不含域名的地址)
+}
+
+// 2.前端寫Log用
+message FrontEndLog {
+	uint32 code = 1;
+	string description = 2;
+}
+
+// 執行Command結果
+message CommandResult {
+	enum ResultCode{
+		UNKNOWN = 0; //未知錯誤 or 第三方返回error code
+		SUCCESS = 1; //请求成功
+		DATA_ILLEGAL = 2; //非法数据
+		FIND_USER_BY_AGENT_ERROR = 3; //尋找agent錯誤
+		DATABASE_READ_WRITE_FAILED = 4;	//数据库读写失败
+		CENTER_SERVER_DISCONNECT = 5;	//中心服务器中断
+
+		//登入登出
+		USER_NOT_EXIST = 11;	//用户不存在
+		OTHER_DEVICES_LOGIN = 12;	//账号在其他设备登陆
+		USER_DISABLE = 13;	//用户被封
+		NOT_ENOUGH_MIN_ENTRY_AMOUNT = 14; //用戶金幣低於准入門檻
+	}
+	ResultCode result_code = 2;
+	string message = 3; //補充訊息 ResultCode=0時,message=第三方返回error code
+}

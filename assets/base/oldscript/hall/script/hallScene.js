@@ -1754,12 +1754,12 @@ cc.Class({
             });
         }
         if (!cc.assetManager.getBundle(subname +"Res")) {
-            cc.assetManager.loadBundle(subname +"Res", (err) => {
+            cc.assetManager.loadBundle(subname , (err) => {
                 if (err) {
                     return cc.log('load subpackage script fail.', subname + 'Res');
                 }
-                hqq[subname + 'Res'] = cc.assetManager.getBundle(subname +"Res");
-                cc.log('load subpackage script successfully.', subname + 'Res');
+                hqq[subname + 'Res'] = cc.assetManager.getBundle(subname);
+                cc.log('load subpackage script successfully.', subname );
             });
         }
     },
