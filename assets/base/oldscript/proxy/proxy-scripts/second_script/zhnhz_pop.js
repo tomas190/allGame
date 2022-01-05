@@ -209,8 +209,8 @@ cc.Class({
                     let nums = (Database.balance + '').split(".")
 
                     this.geme_money.string = nums[0] + '';
-                    this.p1_money.string = Database.countCoinsShowLabel(Database.balance);
-
+                    // this.p1_money.string = Database.countCoinsShowLabel(Database.balance);
+                    this.node.parent.parent.getChildByName('page1').getChildByName('middle').getChildByName('grid').getChildByName('yjye').getComponent(cc.Label).string = num[0] + '';
                     console.log('互转成功');
                     if (gHandler.app.pinpai != 'ninetwo') {
                         commonVal.SaveEmailDetail(ID, num)

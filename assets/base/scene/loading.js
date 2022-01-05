@@ -168,9 +168,9 @@ cc.Class({
             hqq.setSprite(this.progressnode, { path: "base/xinsheng/img/panel1", active: false })
             hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/xinsheng/img/panel" })
         } else if (hqq.app.pinpai == "xinlong") {
-            hqq.setSprite(background, { path: "bigimg/xinlong/xl_loading3" })
-            hqq.setSprite(this.progressnode, { path: "base/xinsheng/img/panel1", active: false })
-            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/xinsheng/img/panel" })
+            hqq.setSprite(background, { Res:hqq["hall_"+hqq.app.pinpai], path: "xinlong/bigimg/back" })
+            // hqq.setSprite(this.progressnode, { Res:hqq["hall_"+hqq.app.pinpai], path: "base/xinsheng/img/panel1", active: false })
+            // hqq.setSprite(this.progressnode.getChildByName('bar'), { Res:hqq["hall_"+hqq.app.pinpai], path: "base/xinsheng/img/panel" })
         } else if (hqq.app.pinpai == "huangshi") {
             hqq.setSprite(background, { path: "bigimg/huangshi/bg" })
             hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
@@ -231,6 +231,12 @@ cc.Class({
             barEff.scaley = 0.8;
             barEff.setPosition(0, 0);
             barEff.active = false;
+        } else if(hqq.app.pinpai == "wansheng") {
+            hqq.setSprite(background, { path: "bigimg/wansheng/loading" })
+            hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
+            this.label.node.color = cc.color("#350058");
+            this.apkversion.color = cc.color("#350058");
         } else {
             hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
             hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
@@ -368,6 +374,8 @@ cc.Class({
                 }
             });
 
+        } else if(hqq.app.pinpai == "wansheng") {
+            hqq.addNode(this.bg,{path:"base/wansheng/wansheng_logo", scale:1.8, widget:{top: 30, right: 30}});
         } else {
             cc.resources.loadDir("bigimg/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai, sp.SkeletonData, (err, Data) => {
                 if (err) {

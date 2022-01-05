@@ -77,7 +77,7 @@ cc.Class({
             hqq.eventMgr.dispatch(hqq.eventMgr.showNetStateNode, { parent: pn, position: { x: 0, y: 0 },scale:0.7 })
         } else if (hqq.app.pinpai == "xinlong") {
             let pn = hqq.addNode(this.node, {
-                widget: { left: 260, top: 40 }
+                widget: { left: 750, top: 50 }
             })
             hqq.eventMgr.dispatch(hqq.eventMgr.showNetStateNode, { parent: pn, position: { x: 0, y: 0 },scale:0.7 })
         } else if (hqq.app.pinpai == "xinhao") {
@@ -93,6 +93,11 @@ cc.Class({
         } else if (hqq.app.pinpai == "ninetwo") {
             let pn = hqq.addNode(this.node, {
                 widget: { left: 300, top: 50 }
+            })
+            hqq.eventMgr.dispatch(hqq.eventMgr.showNetStateNode, { parent: pn, position: { x: 0, y: 0 } })
+        } else if(hqq.app.pinpai == "tianqi") {
+            let pn = hqq.addNode(this.node, {
+                widget: { left: 400, top: 50 }
             })
             hqq.eventMgr.dispatch(hqq.eventMgr.showNetStateNode, { parent: pn, position: { x: 0, y: 0 } })
         } else {
@@ -199,10 +204,10 @@ cc.Class({
                 hqq.setSprite(this.kefupoint, { path: "base/img/redpoint", position: { x: -5, y: 20 }, active: false })
                 hqq.setSprite(background, { Res:hqq["hall_"+hqq.app.pinpai],path: "fuxin/bg" })
 
-                hqq.setLabel(this.namelabel, { string: "", widget: { left: -70 }, fontSize: 30 })
+                hqq.setLabel(this.namelabel, { string: "", widget: { closeleft:true},x:-80 })
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 35, widget: { horizontalCenter: -6 } })
                 hqq.setBtn(touxiang, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "touxiangkuang", size: { height: 90, width: 90 }, widget: { top: 20, left: 20 }, callback: "onClickPlayerBtn", script: this })
-                hqq.setSprite(namebg, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "di2", widget: { left: 180, top: 30 }, size: { height: 40, width: 200 } })
+                hqq.setSprite(namebg, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "di2", widget: { left: 180, top: 30 ,target:background.parent}, size: { height: 40, width: 200 } })
                 hqq.setSprite(goldback, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "di2", widget: { horizontalCenter: 0, top: 18 }, size: { width: 300 } })
                 hqq.addNode(goldback, { normal: "base/img/refresh", callback: "onClickGetGold", script: this, x: 190, size: { width: 35, height: 35 } })
                 hqq.setSprite(jinbi, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "ziyuantubiao", widget: { horizontalCenter: -125 } })
@@ -311,11 +316,11 @@ cc.Class({
                 hqq.setSprite(this.kefupoint, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/dian0", position: { x: -5, y: 20 }, active: false })
                 hqq.setSprite(background, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "bg" })
 
-                hqq.setLabel(this.namelabel, { string: "", widget: { left: -65 }, fontSize: 30 })
+                hqq.setLabel(this.namelabel, { string: "", widget: { closeleft: true , fontSize:30},x:-80 })
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 35, widget: { horizontalCenter: -6 } })
                 hqq.setBtn(touxiang, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/tx", widget: { top: 0, left: 5 }, callback: "onClickPlayerBtn", script: this })
 
-                hqq.setSprite(namebg, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/zyd", widget: { left: 70, top: 23 }, size: { height: 40, width: 200 } })
+                hqq.setSprite(namebg, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/zyd", widget: { left: 75, top: 23,target:background.parent }, size: { height: 35, width: 212 } })
                 hqq.setSprite(goldback, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/d_jb", widget: { top: 18 ,left:(350 * (cc.winSize.width / 1334) )}, size: { width: 300, height: 70 } })
                 
                 hqq.setSprite(jinbi, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/icon_jb", widget: { horizontalCenter: -125 } })
@@ -360,12 +365,12 @@ cc.Class({
                 hqq.setSprite(background, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "bigimg/hallback" })
                 background.getChildByName("xinsheng").active = true
                 hqq.setWidget(subgameview, { left: 250, top: 100, bottom: 100 })
-                hqq.setLabel(this.namelabel, { string: "", widget: { left: -55 }, fontSize: 25 })
+                hqq.setLabel(this.namelabel, { string: "", widget: { closeleft: true },fontSize: 25,x:-65 })
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 25 })
                 hqq.setBtn(touxiang, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/touxiang", widget: { top: 10, left: 5 }, callback: "onClickPlayerBtn", script: this })
                 mask.getComponent(cc.Mask).spriteFrame = hqq.getSpriteFrame(hpath + "img/headmask",hqq["hall_"+hqq.app.pinpai])
-                hqq.setSprite(namebg, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 75, top: 20 } })
-                hqq.setSprite(goldback, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 310, top: 20 }, size: { width: 200 } })
+                hqq.setSprite(namebg, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 75, top: 20 } ,width:161,height:45})
+                hqq.setSprite(goldback, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 320, top: 20 }, size: { width: 200 } })
                 hqq.setSprite(jinbi, { path: "base/img/sp_coin2", widget: { horizontalCenter: -100 } })
                 //hqq.setBtn(btncopy, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "img/btncopy", widget: { horizontalCenter: 81 }, callback: "onClickPlayerBtn", script: this })
                 hqq.setBtn(btnplus, { normal: "base/img/btn_refresh2", widget: { horizontalCenter: 95 }, callback: "onClickGetGold", script: this ,size: { height: 61, width: 61 } })
@@ -409,7 +414,7 @@ cc.Class({
                 this.UILoadFinished();
             })
         } else if ( hqq.app.pinpai == "xinlong" ) {
-            hqq["hall_xinlong"].load("prefab/xinsheng", cc.Prefab, (err, prefab)=>{
+            hqq["hall_xinlong"].load("prefab/xinlong", cc.Prefab, (err, prefab)=>{
                 if(err){
                     cc.log(err);
                     return;
@@ -426,47 +431,54 @@ cc.Class({
                 hqq.setSprite(this.shouyipoint, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/redpoint", position: { x: 0, y: 20 }, active: false })
                 hqq.setSprite(this.kefupoint, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/redpoint", position: { x: -5, y: 20 }, active: false })
                 hqq.setSprite(background, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "bigimg/hallback" })
-                background.getChildByName("xinsheng").active = true
+                background.getChildByName("xinlong").active = true
                 hqq.setWidget(subgameview, { left: 250, top: 100, bottom: 100 })
                 hqq.setLabel(this.namelabel, { string: "", widget: { left: -55 }, fontSize: 25 })
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 25 })
-                hqq.setBtn(touxiang, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/touxiang", widget: { top: 10, left: 5 }, callback: "onClickPlayerBtn", script: this })
+                hqq.setBtn(touxiang, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/touxiang", widget: { top: 5, left: 12 }, callback: "onClickPlayerBtn", script: this })
                 mask.getComponent(cc.Mask).spriteFrame = hqq.getSpriteFrame(hpath + "img/headmask",hqq["hall_"+hqq.app.pinpai])
-                hqq.setSprite(namebg, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 75, top: 20 } })
-                hqq.setSprite(goldback, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 310, top: 20 }, size: { width: 200 } })
+                hqq.setSprite(namebg, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/frameback", widget: { left: 95, top: 10 } })
+                hqq.setSprite(goldback, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/GoldBG", widget: { left: 405, top: 5 }/*, size: { width: 200 }*/ })
                 hqq.setSprite(jinbi, { path: "base/img/sp_coin2", widget: { horizontalCenter: -100 } })
                 //hqq.setBtn(btncopy, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "img/btncopy", widget: { horizontalCenter: 81 }, callback: "onClickPlayerBtn", script: this })
+                btncopy.active = false;
                 hqq.setBtn(btnplus, { normal: "base/img/btn_refresh2", widget: { horizontalCenter: 95 }, callback: "onClickGetGold", script: this ,size: { height: 61, width: 61 } })
 
                 // hqq.setBtn(this.btnhby, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnhby", widget: { top: 15, right: 460 }, callback: "onClickHBY", script: this })
                 // hqq.setBtn(this.btnjfcj, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnjfcj", widget: { top: 15, right: 355 }, callback: "onClickJFCJ", script: this })
-                hqq.setBtn(btnjchd, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnjchd", widget: { top: 15, right: 240 }, callback: "onClickJCHD", script: this })
-                hqq.setBtn(btnqmdl, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnqmdl", widget: { top: 15, right: 115 }, callback: "onClickQMDL", script: this })
-                hqq.setBtn(this.btngonggao, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btngonggao", widget: { top: 15, right: 40 }, callback: "onClickGG", script: this })
+                hqq.setBtn(btnjchd, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnjchd", widget: { top: 8, right: 125 }, callback: "onClickJCHD", script: this })
+                hqq.setBtn(btnqmdl, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnqmdl", widget: { top: 8, right: 230 }, callback: "onClickQMDL", script: this })
+                hqq.setBtn(this.btngonggao, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btngonggao", widget: { isAlignTop: true, isAlignRight: true, isAlignLeft: true, isAlignBottom: true, top: 680, right: 700, left: 495, bottom: 10 }, callback: "onClickGG", script: this })
 
-                hqq.setBtn(this.btnshouyi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnshouyi", widget: { left: 0, bottom: 0 }, callback: "onClickSY", script: this })
-                hqq.setBtn(this.btnkefu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnkefu", widget: { left: 188, bottom: 0 }, callback: "onClickKF", script: this })
-                hqq.setBtn(btnmfjb, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnmfjb", widget: { left: 376, bottom: 0 }, callback: "onClickMFJB", script: this })
-                hqq.setBtn(btnchongzhi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnchongzhi", widget: { right: 0, bottom: 0 }, callback: "onClickCC", script: this })
+                hqq.setBtn(this.btnshouyi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnshouyi", widget: { left: 45, bottom: 10 }, callback: "onClickSY", script: this })
+                hqq.setBtn(this.btnkefu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnkefu", widget: { left: 275, bottom: 5 }, callback: "onClickKF", script: this })
+                hqq.setBtn(btnmfjb, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnmfjb", widget: { left: 690, bottom: 10 }, callback: "onClickMFJB", script: this })
+                hqq.setBtn(btnchongzhi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnchongzhi", widget: { right: 63, bottom: 5 }, callback: "onClickCC", script: this })
 
-                this.menuBtnListNode = cc.find("Canvas/hallback/xinsheng/xinshengmenu")
-                let btn_all = this.menuBtnListNode.getChildByName("btn_all")
-                hqq.setBtn(btn_all, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_all", pressed: hlpath + "btn_all1", custom: this.menuBtnInfoList[0], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE, interactable: false,active:true })
-                let btn_changyong = this.menuBtnListNode.getChildByName("btn_changyong")
-                hqq.setBtn(btn_changyong, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_changyong", pressed: hlpath + "btn_changyong1", custom: this.menuBtnInfoList[1], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_duizhan = this.menuBtnListNode.getChildByName("btn_duizhan")
-                hqq.setBtn(btn_duizhan, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_duizhan", pressed: hlpath + "btn_duizhan1", custom: this.menuBtnInfoList[2], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_touzhu = this.menuBtnListNode.getChildByName("btn_touzhu")
-                hqq.setBtn(btn_touzhu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_touzhu", pressed: hlpath + "btn_touzhu1", custom: this.menuBtnInfoList[3], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_shixun = this.menuBtnListNode.getChildByName("btn_shixun")
-                hqq.setBtn(btn_shixun, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_shixun", pressed: hlpath + "btn_shixun1", custom: this.menuBtnInfoList[4], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_zuqiu = this.menuBtnListNode.getChildByName("btn_zuqiu")
-                hqq.setBtn(btn_zuqiu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_zuqiu", pressed: hlpath + "btn_zuqiu1", custom: this.menuBtnInfoList[5], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let btn_jieji = this.menuBtnListNode.getChildByName("btn_jieji")
-                hqq.setBtn(btn_jieji, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_jieji", pressed: hlpath + "btn_jieji1", custom: this.menuBtnInfoList[6], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
-                let xinshengtitle = cc.find("Canvas/hallback/xinsheng/xinshengtitle");
-                hqq.setSprite(xinshengtitle, { Res:hqq["hall_"+hqq.app.pinpai] , path: hlpath + "xinlongtitle" })
-                hqq.addNode(this.node, { normal: "base/language/"+hqq.language+"/img/vip_diamond", widget:{horizontalCenter:150,bottom:-10} ,callback:"toogleManyCai",script:this});
+                this.menuBtnListNode = cc.find("Canvas/hallback/xinlong/xinlongmenu")
+                // let btn_all = this.menuBtnListNode.getChildByName("btn_all")
+                // hqq.setBtn(btn_all, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_all", pressed: hlpath + "btn_all1", custom: this.menuBtnInfoList[0], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE, interactable: false,active:true })
+                // let btn_changyong = this.menuBtnListNode.getChildByName("btn_changyong")
+                // hqq.setBtn(btn_changyong, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_changyong", pressed: hlpath + "btn_changyong1", custom: this.menuBtnInfoList[1], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_duizhan = this.menuBtnListNode.getChildByName("btn_duizhan")
+                // hqq.setBtn(btn_duizhan, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_duizhan", pressed: hlpath + "btn_duizhan1", custom: this.menuBtnInfoList[2], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_touzhu = this.menuBtnListNode.getChildByName("btn_touzhu")
+                // hqq.setBtn(btn_touzhu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_touzhu", pressed: hlpath + "btn_touzhu1", custom: this.menuBtnInfoList[3], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_shixun = this.menuBtnListNode.getChildByName("btn_shixun")
+                // hqq.setBtn(btn_shixun, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_shixun", pressed: hlpath + "btn_shixun1", custom: this.menuBtnInfoList[4], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_zuqiu = this.menuBtnListNode.getChildByName("btn_zuqiu")
+                // hqq.setBtn(btn_zuqiu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_zuqiu", pressed: hlpath + "btn_zuqiu1", custom: this.menuBtnInfoList[5], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let btn_jieji = this.menuBtnListNode.getChildByName("btn_jieji")
+                // hqq.setBtn(btn_jieji, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btn_jieji", pressed: hlpath + "btn_jieji1", custom: this.menuBtnInfoList[6], callback: "onClickMenuBtn", script: this, transition: cc.Button.Transition.SPRITE,active:true })
+                // let xinshengtitle = cc.find("Canvas/hallback/xinsheng/xinshengtitle");
+                // hqq.setSprite(xinshengtitle, { Res:hqq["hall_"+hqq.app.pinpai] , path: hlpath + "xinlongtitle" })
+                this.xinshengad1 = hqq.addNode(cc.find("Canvas/hallback/xinlong/renwu"),{Res:hqq["hall_"+hqq.app.pinpai], path: hlpath + "lbt1"});
+                this.xinshengad2 = hqq.addNode(cc.find("Canvas/hallback/xinlong/renwu"),{Res:hqq["hall_"+hqq.app.pinpai], path: hlpath + "lbt2"});
+                this.xinshengad3 = hqq.addNode(cc.find("Canvas/hallback/xinlong/renwu"),{Res:hqq["hall_"+hqq.app.pinpai], path: hlpath + "lbt3"});
+                this.xinshengad1.active = false;
+                this.xinshengad2.active = false;
+                this.xinshengad3.active = false;
+                hqq.setWidget(subgameview, { left: 380 })
                 this.noticepanel.active = true;
                 this.UILoadFinished();
             })
@@ -488,16 +500,16 @@ cc.Class({
                 hqq.setSprite(this.jchdRedPoint, { path: "base/img/redpoint", position: { x: 30, y: 20 }, active: false })
                 hqq.setSprite(this.shouyipoint, { path: "base/img/redpoint", position: { x: 0, y: 20 }, active: false })
                 hqq.setSprite(this.kefupoint, { path: "base/img/redpoint", position: { x: -5, y: 20 }, active: false })
-                hqq.setLabel(this.namelabel, { string: "", widget: { left: -53 } })
+                hqq.setLabel(this.namelabel, { string: "", widget: { closeleft: true},x:-80 })
                 hqq.setLabel(this.coinlabel, { string: "" })
                 hqq.setSprite(background, { Res:hqq["hall_test"],path: hpath + "bigimg/roombgmin" })
                 hqq.setBtn(touxiang, { Res:hqq["hall_test"],path: hpath + "img/headfram2", widget: { top: 8, left: 10 }, callback: "onClickPlayerBtn", script: this })
                 mask.getComponent(cc.Mask).spriteFrame = hqq.getSpriteFrame("test/img/p_head_mask",hqq["hall_test"])
-                hqq.setSprite(namebg, { Res:hqq["hall_test"],path: hpath + "img/namebg", widget: { left: 50, top: 25 },width:175 })
-                hqq.setSprite(goldback, { Res:hqq["hall_test"],path: hpath + "img/sp_num_bg", widget: { left: 270, top: 20 } , width:260})
-                hqq.setSprite(jinbi, { path: "base/img/sp_coin2", widget: { horizontalCenter: -110 } })
+                hqq.setSprite(namebg, { Res:hqq["hall_test"],path: hpath + "img/namebg", widget: { left: 90, top: 25 ,target:background.parent},width:175 })
+                hqq.setSprite(goldback, { Res:hqq["hall_test"],path: hpath + "img/sp_num_bg", widget: { left: 280, top: 20 } , width:260})
+                hqq.setSprite(jinbi, { path: "base/img/sp_coin2", widget: { horizontalCenter: false },x:-110 })
                 // hqq.setBtn(btncopy, { normal: hpath + "img/copyname", widget: { horizontalCenter: 107 }, callback: "onClickPlayerBtn", script: this })
-                hqq.setBtn(btnplus, { normal: "base/img/btn_refresh2", widget: { horizontalCenter: 115 }, callback: "onClickGetGold", script: this ,size: { height: 61, width: 61 }})
+                hqq.setBtn(btnplus, { normal: "base/img/btn_refresh2", widget: { horizontalCenter: false },x:110, callback: "onClickGetGold", script: this ,size: { height: 61, width: 61 }})
 
                 // hqq.setBtn(this.btnhby, { path: hrpath + "dating_hby", aniname: "animation", loop: true, widget: { top: 36, right: 450 }, active: false, callback: "onClickHBY", script: this })
                 // hqq.setBtn(this.btnjfcj, { path: hrpath + "dating_jfcj", aniname: "animation", loop: true, widget: { top: 45, right: 350 }, callback: "onClickJFCJ", script: this })
@@ -555,14 +567,14 @@ cc.Class({
                 hqq.setSprite(this.kefupoint, { path: "base/img/redpoint", position: { x: -5, y: 20 }, active: false })
                 hqq.setSprite(background, { path: "bigimg/juding/plaza_bg" })
 
-                hqq.setLabel(this.namelabel, { string: "", widget: { left: -70 }, fontSize: 30 })
+                hqq.setLabel(this.namelabel, { string: "", widget: { closeleft: true}, fontSize: 30 ,x:-90})
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 35, widget: { horizontalCenter: -6 } })
                 hqq.setBtn(touxiang, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "headframe", size: { height: 90, width: 90 }, widget: { top: 10, left: 10 }, callback: "onClickPlayerBtn", script: this })
                 hqq.setSprite(namebg, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "namebg", widget: { left: 100, top: 20 }, size: { height: 40, width: 200 } })
                 hqq.setSprite(goldback, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "namebg", widget: { horizontalCenter: 0, top: 18 }, size: { width: 300 } })
                 hqq.setSprite(jinbi, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "sp_coin", widget: { horizontalCenter: -125 } })
 
-                hqq.setBtn(btncopy, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "profile_edit", widget: { horizontalCenter: 80 }, callback: "onClickPlayerBtn", script: this })
+                hqq.setBtn(btncopy, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "profile_edit", widget: { horizontalCenter: false },x:100, callback: "onClickPlayerBtn", script: this })
                 hqq.setBtn(btnplus, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "btn_refresh", widget: { horizontalCenter: 120 }, callback: "onClickGetGold", script: this ,size: { height: 47, width: 46 }})
 
                 hqq.setBtn(btnqmdl, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "icon_daili", widget: { top: 15, right: 120 }, callback: "onClickQMDL", script: this })
@@ -625,7 +637,7 @@ cc.Class({
                 hqq.setSprite(this.kefupoint, { path: "base/img/redpoint", position: { x: -5, y: 20 }, active: false })
                 hqq.setSprite(background, { path: "bigimg/huaxing/bg" })
 
-                hqq.setLabel(this.namelabel, { string: "", widget: { left: -70 }, fontSize: 30 })
+                hqq.setLabel(this.namelabel, { string: "", widget: { closeleft: true }, fontSize: 30 ,x:-95})
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 35, widget: { horizontalCenter: -6 } })
                 hqq.setBtn(touxiang, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "txk", height: 90, width: 90, widget: { top: 10, left: 10 }, callback: "onClickPlayerBtn", script: this })
                 hqq.setNode(touxiang.getChildByName("mask"),{height: 80, width: 80})
@@ -636,7 +648,7 @@ cc.Class({
                 hqq.setSprite(goldback, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "d3", widget: { left:400, top: 18 }, size: { width: 300 } })
                 hqq.setSprite(jinbi, { path: "base/img/sp_coin2", widget: { horizontalCenter: -125 } })
 
-                hqq.setBtn(btncopy, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "xg", widget: { horizontalCenter: 80 }, callback: "onClickPlayerBtn", script: this })
+                hqq.setBtn(btncopy, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "xg", widget: { horizontalCenter: false },x:85, callback: "onClickPlayerBtn", script: this })
                 hqq.setBtn(btnplus, { Res:hqq["hall_"+hqq.app.pinpai],normal: hpath + "sx", widget: { horizontalCenter: 120 }, callback: "onClickGetGold", script: this ,size: { height: 47, width: 46 }})
 
                 hqq.setBtn(btnqmdl, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "qmdl", widget: { top: 15, right: 10 }, callback: "onClickQMDL", script: this })
@@ -707,7 +719,7 @@ cc.Class({
                 hqq.setSprite(this.kefupoint, { path: "base/img/redpoint", position: { x: -5, y: 20 }, active: false })
                 hqq.setSprite(background, { path: "bigimg/ninetwo/beijingtu" })
 
-                hqq.setLabel(this.namelabel, { string: "", widget: { left: -70 }, fontSize: 30 })
+                hqq.setLabel(this.namelabel, { string: "", widget: { closeleft: true },x:-90, fontSize: 30 })
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 35, widget: { horizontalCenter: -6 },fontFamily:"Arial" })
                 hqq.setNode(touxiang,{width:76,height:76,widget:{left:10,top:5}});
                 this.head = hqq.addNode(touxiang,{height: 74, width: 74,x:-2,y:4,zIndex:-2});
@@ -803,12 +815,12 @@ cc.Class({
             hqq.setSprite(this.jchdRedPoint, { path: "base/img/redpoint", position: { x: 30, y: 20 }, active: false })
             hqq.setSprite(this.shouyipoint, { path: "base/img/redpoint", position: { x: 0, y: 20 }, active: false })
             hqq.setSprite(this.kefupoint, { path: "base/img/redpoint", position: { x: -5, y: 20 }, active: false })
-            hqq.setLabel(this.namelabel, { string: "", widget: { left: -85 } })
+            hqq.setLabel(this.namelabel, { string: "", widget:{closeleft: true},x:-90});
             hqq.setLabel(this.coinlabel, { string: "" })
             hqq.setSprite(background, { Res:hqq["hall_test"],path: hpath + "bigimg/roombgmin" })
             hqq.setBtn(touxiang, { Res:hqq["hall_test"],path: hpath + "img/headfram2", widget: { top: 8, left: 20 }, callback: "onClickPlayerBtn", script: this })
             mask.getComponent(cc.Mask).spriteFrame = hqq.getSpriteFrame("base/img/p_head_mask")
-            hqq.setSprite(namebg, { Res:hqq["hall_test"],path: hpath + "img/namebg", widget: { left: 100, top: 25 } })
+            hqq.setSprite(namebg, { Res:hqq["hall_test"],path: hpath + "img/namebg", widget: { left: 100, top: 25 ,target:background.parent} })
             hqq.setSprite(goldback, { Res:hqq["hall_test"],path: hpath + "img/sp_num_bg", widget: { horizontalCenter: 0, top: 20 } })
             hqq.setSprite(jinbi, { path: "base/img/sp_coin2", widget: { horizontalCenter: -140 } })
             hqq.setBtn(btncopy, { Res:hqq["hall_test"],normal: hpath + "img/copyname", widget: { horizontalCenter: 107 }, callback: "onClickPlayerBtn", script: this })
@@ -823,8 +835,7 @@ cc.Class({
             hqq.setBtn(this.btnkefu, { Res:hqq["hall_test"],normal: hlpath + "icon_chat2", widget: { left: 70, bottom: 30 }, callback: "onClickKF", script: this })
             hqq.setBtn(this.btnshouyi, { Res:hqq["hall_test"],normal: hlpath + "icon_duihuan", widget: { left: 245, bottom: 30 }, callback: "onClickSY", script: this })
             hqq.setBtn(btnmfjb, { Res:hqq["hall_test"],normal: hlpath + "btnmfjb", widget: { left: 445, bottom: 30 }, callback: "onClickMFJB", script: this })
-            hqq.setBtn(btnchongzhi, { Res:hqq["hall_test"],path: hrpath + "chongzhi", aniname: "dating_chongzhi", loop: true, widget: { right: 0, bottom: -153 }, size: { width: 385, height: 255 }, callback: "onClickCC", script: this })
-
+            hqq.setBtn(btnchongzhi, { Res:hqq["hall_test"],path: hrpath + "chongzhi", aniname: "dating_chongzhi", loop: true, widget: { right: 28, bottom: -130 }, size: { width: 385, height: 255 }, callback: "onClickCC", script: this })
             if (hqq.app.pinpai == "yuyu" || hqq.app.pinpai == "nineone") {
                 hqq["hall_test"].load("test/prefab/yuyu", cc.Prefab, (err, prefab)=>{
                     if(err){
@@ -915,7 +926,8 @@ cc.Class({
                     // hqq.setSprite(this.jchdRedPoint, { Res:hqq["hall_"+hqq.app.pinpai],path: "tianqi/img/redpoint", position: { x: 30, y: 20 }, active: false })
                     // hqq.setSprite(this.shouyipoint, { Res:hqq["hall_"+hqq.app.pinpai],path: "tianqi/img/redpoint", position: { x: 0, y: 20 }, active: false })
                     // hqq.setSprite(this.kefupoint, { Res:hqq["hall_"+hqq.app.pinpai],path: "tianqi/img/redpoint", position: { x: -5, y: 20 }, active: false })
-                    hqq.setLabel(this.namelabel, { string: "" })
+                    this.namelabel.getComponent(cc.Widget).target = background.parent;
+                    hqq.setLabel(this.namelabel, { string: "", widget:{left: 127 }});
                     hqq.setLabel(this.coinlabel, { string: "" })
                     // hqq.setSprite(background, { Res:hqq["hall_test"],path: hpath + "bigimg/roombgmin" })
                     // hqq.setBtn(touxiang, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "img/headfram2", widget: { top: 8, left: 20 }, callback: "onClickPlayerBtn", script: this })
@@ -936,8 +948,6 @@ cc.Class({
                     hqq.setBtn(this.btnkefu, { normal: blpath + "icon_chat2", widget: { left: 70, bottom: 30 }, callback: "onClickKF", script: this })
                     hqq.setBtn(this.btnshouyi, { normal: blpath + "icon_duihuan", widget: { left: 245, bottom: 30 }, callback: "onClickSY", script: this })
                     hqq.setBtn(btnmfjb, { normal: blpath + "btnmfjb", widget: { left: 445, bottom: 30 }, callback: "onClickMFJB", script: this })
-                    hqq.setBtn(btnchongzhi, { path: brpath + "chongzhi", aniname: "dating_chongzhi", loop: true, widget: { right: 0, bottom: -153 }, size: { width: 385, height: 255 }, callback: "onClickCC", script: this })
-        
                     // ---------
                     this.noticepanel.active = true
                     background.getChildByName("tianqi").active = true
@@ -1304,6 +1314,8 @@ cc.Class({
             hqq.setBtn(this.btnhby, { Res:hqq["hall_"+hqq.app.pinpai],normal: "language/" + hqq.language + "/xingui/btn_hby", widget: { top: 11, right: 390 }, callback: "onClickHBY", script: this })
         } else if (hqq.app.pinpai == "xinsheng") {
             hqq.setBtn(this.btnhby, { Res:hqq["hall_"+hqq.app.pinpai],normal: "language/" + hqq.language + "/xinsheng/btnhby", widget: { top: 11, right: 350 }, callback: "onClickHBY", script: this })
+        } else if (hqq.app.pinpai == "xinlong") {
+            hqq.setBtn(this.btnhby, { Res:hqq["hall_"+hqq.app.pinpai],normal: "language/" + hqq.language + "/xinlong/btnhby", widget: { top: 8, right: 12 }, callback: "onClickHBY", script: this })
         } else if(hqq.app.pinpai == "xinhao"){
             hqq.setBtn(this.btnhby, { Res:hqq["hall_test"],path: "language/" + hqq.language + "/dating_hby", aniname: "animation", loop: true, widget: { top: -15 , right: 260 }, callback: "onClickHBY", script: this })
         } else if(hqq.app.pinpai == "juding"){
@@ -2218,7 +2230,37 @@ cc.Class({
             this.suggameScrollView.content.x = -this.suggameScrollView.node.width / 2
             this.onscrollEvents(this.suggameScrollView);
 
-            if( cc.isValid( this.xinshengad1 ) && cc.isValid( this.xinshengad2 ) ){
+            if( cc.isValid( this.xinlongad1 ) && cc.isValid( this.xinlongad2 ) && cc.isValid( this.xinlongad3 ) ){
+                cc.tween(this.node)
+                        .repeatForever(
+                            cc.tween()
+                            .call(()=>{
+                                if( cc.isValid( this.xinlongad1 ) && cc.isValid( this.xinlongad2 ) && cc.isValid( this.xinlongad3 ) ){
+                                    this.xinlongad1.active = true;
+                                    this.xinlongad2.active = false;
+                                    this.xinlongad3.active = false;
+                                }
+                            })
+                            .delay(3)
+                            .call(()=>{
+                                if( cc.isValid( this.xinlongad1 ) && cc.isValid( this.xinlongad2 ) && cc.isValid( this.xinlongad3 ) ){
+                                    this.xinlongad1.active = false;
+                                    this.xinlongad2.active = true;
+                                    this.xinlongad3.active = false;
+                                }
+                            })
+                            .delay(3)
+                            .call(()=>{
+                                if( cc.isValid( this.xinlongad1 ) && cc.isValid( this.xinlongad2 ) && cc.isValid( this.xinlongad3 ) ){
+                                    this.xinlongad1.active = false;
+                                    this.xinlongad2.active = false;
+                                    this.xinlongad3.active = true;
+                                }
+                            })
+                            .delay(3)
+                        )
+                        .start(); 
+            } else if( cc.isValid( this.xinshengad1 ) && cc.isValid( this.xinshengad2 ) ){
                 cc.tween(this.node)
                         .repeatForever(
                             cc.tween()
@@ -4096,39 +4138,93 @@ cc.Class({
     resetSubGameList(){
         if ((hqq.app.pinpai == "fuxin" ) && hqq.subGameList["aga"]) {
             this.subGameList = hqq.commonTools.jsonCopy(hqq.subGameList)
-            delete this.subGameList["duofuduocai"]
-            delete this.subGameList["cbzb"]
-            delete this.subGameList["ygxb"]
-            delete this.subGameList["fkxw"]
+            if(this.subGameList["duofuduocai"]){
+                delete this.subGameList["duofuduocai"]
+            }
+            if(this.subGameList["cbzb"]){
+                delete this.subGameList["cbzb"]
+            }
+            if(this.subGameList["ygxb"]){
+                delete this.subGameList["ygxb"]
+            }
+            if(this.subGameList["fkxw"]){
+                delete this.subGameList["fkxw"]
+            }
         } else if ( hqq.app.pinpai == "nineone" || hqq.app.pinpai == "huangshi" ||
                     hqq.app.pinpai == "test" || hqq.app.pinpai == "debi" ||
                     hqq.app.pinpai == "xingba" || hqq.app.pinpai == "huaxing" ||
                     hqq.app.pinpai == "tianqi" ) {
             this.subGameList = hqq.subGameList
-            this.subGameList["sbty1"].gameType = 1;
-            this.subGameList["sbty2"].gameType = 1;
+            if(this.subGameList["sbty1"]){
+                this.subGameList["sbty1"].gameType = 1;
+            }
+            if(this.subGameList["sbty2"]){
+                this.subGameList["sbty2"].gameType = 1;
+            }
 
-            this.subGameList["cylhd"].gameType = 0;
-            this.subGameList["lhd"].gameType = 0;
-            this.subGameList["cdx"].gameType = 0;
-            this.subGameList["lp"].gameType = 0;
-            this.subGameList["shaibao"].gameType = 0;
-            this.subGameList["duofuduocai"].gameType = 0;
-            this.subGameList["caishendao"].gameType = 0;
-            this.subGameList["ygxb"].gameType = 0;
-            this.subGameList["fctbj"].gameType = 0;
-            this.subGameList["fkxw"].gameType = 0;
-            this.subGameList["sgj"].gameType = 0;
-            this.subGameList["jbpby"].gameType = 0;
-            this.subGameList["bcbm"].gameType = 0;
-            this.subGameList["hwby"].gameType = 0;
-            this.subGameList["szwg"].gameType = 0;
-            this.subGameList["cbzb"].gameType = 0;
-            this.subGameList["brnn"].gameType = 0;
-            this.subGameList["bjl"].gameType = 0;
-            this.subGameList["ebg"].gameType = 0;
-            this.subGameList["hbld"].gameType = 0;
-            this.subGameList["hh"].gameType = 0;
+            if( this.subGameList["cylhd"] ){
+                this.subGameList["cylhd"].gameType = 0;
+            }
+            if(this.subGameList["lhd"]){
+                this.subGameList["lhd"].gameType = 0;
+            }
+            if(this.subGameList["cdx"]){
+                this.subGameList["cdx"].gameType = 0;
+            }
+            if(this.subGameList["lp"]){
+                this.subGameList["lp"].gameType = 0;
+            }
+            if(this.subGameList["shaibao"]){
+                this.subGameList["shaibao"].gameType = 0;
+            }
+            if(this.subGameList["duofuduocai"]){
+                this.subGameList["duofuduocai"].gameType = 0;
+            }
+            if(this.subGameList["caishendao"]){
+                this.subGameList["caishendao"].gameType = 0;
+            }
+            if(this.subGameList["ygxb"]){
+                this.subGameList["ygxb"].gameType = 0;
+            }
+            if(this.subGameList["fctbj"]){
+                this.subGameList["fctbj"].gameType = 0;
+            }
+            if(this.subGameList["fkxw"]){
+                this.subGameList["fkxw"].gameType = 0;
+            }
+            if(this.subGameList["sgj"]){
+                this.subGameList["sgj"].gameType = 0;
+            }
+            if(this.subGameList["jbpby"]){
+                this.subGameList["jbpby"].gameType = 0;
+            }
+            if(this.subGameList["bcbm"]){
+                this.subGameList["bcbm"].gameType = 0;
+            }
+            if(this.subGameList["hwby"]){
+                this.subGameList["hwby"].gameType = 0;
+            }
+            if(this.subGameList["szwg"]){
+                this.subGameList["szwg"].gameType = 0;
+            }
+            if(this.subGameList["cbzb"]){
+                this.subGameList["cbzb"].gameType = 0;
+            }
+            if(this.subGameList["brnn"]){
+                this.subGameList["brnn"].gameType = 0;
+            }
+            if(this.subGameList["bjl"]){
+                this.subGameList["bjl"].gameType = 0;
+            }
+            if(this.subGameList["ebg"]){
+                this.subGameList["ebg"].gameType = 0;
+            }
+            if(this.subGameList["hbld"]){
+                this.subGameList["hbld"].gameType = 0;
+            }
+            if(this.subGameList["hh"]){
+                this.subGameList["hh"].gameType = 0;
+            }
 
             if( this.subGameList["cyqp"])
             {
@@ -4136,64 +4232,96 @@ cc.Class({
             }
         } else if ( hqq.app.pinpai == "ninetwo" ) {
             this.subGameList = hqq.subGameList
-            this.subGameList["sbty1"].gameType = 1;
-            this.subGameList["sbty2"].gameType = 1;
+            if(this.subGameList["sbty1"]){
+                this.subGameList["sbty1"].gameType = 1;
+            }
+            if(this.subGameList["sbty2"]){
+                this.subGameList["sbty2"].gameType = 1;
+            }
 
-            this.subGameList["cylhd"].gameType = 0;
-            this.subGameList["lhd"].gameType = 0;
-            this.subGameList["cdx"].gameType = 0;
-            this.subGameList["lp"].gameType = 0;
-            this.subGameList["shaibao"].gameType = 0;
-            this.subGameList["duofuduocai"].gameType = 0;
-            this.subGameList["caishendao"].gameType = 0;
-            this.subGameList["ygxb"].gameType = 0;
-            this.subGameList["fctbj"].gameType = 0;
-            this.subGameList["fkxw"].gameType = 0;
-            this.subGameList["sgj"].gameType = 0;
-            this.subGameList["jbpby"].gameType = 0;
-            this.subGameList["bcbm"].gameType = 0;
-            this.subGameList["hwby"].gameType = 0;
-            this.subGameList["szwg"].gameType = 0;
-            this.subGameList["cbzb"].gameType = 0;
-            this.subGameList["brnn"].gameType = 0;
-            this.subGameList["bjl"].gameType = 0;
-            this.subGameList["ebg"].gameType = 0;
-            this.subGameList["hbld"].gameType = 0;
-            this.subGameList["hh"].gameType = 0;
+            if( this.subGameList["cylhd"] ){
+                this.subGameList["cylhd"].gameType = 0;
+            }
+            if(this.subGameList["lhd"]){
+                this.subGameList["lhd"].gameType = 0;
+            }
+            if(this.subGameList["cdx"]){
+                this.subGameList["cdx"].gameType = 0;
+            }
+            if(this.subGameList["lp"]){
+                this.subGameList["lp"].gameType = 0;
+            }
+            if(this.subGameList["shaibao"]){
+                this.subGameList["shaibao"].gameType = 0;
+            }
+            if(this.subGameList["duofuduocai"]){
+                this.subGameList["duofuduocai"].gameType = 0;
+            }
+            if(this.subGameList["caishendao"]){
+                this.subGameList["caishendao"].gameType = 0;
+            }
+            if(this.subGameList["ygxb"]){
+                this.subGameList["ygxb"].gameType = 0;
+            }
+            if(this.subGameList["fctbj"]){
+                this.subGameList["fctbj"].gameType = 0;
+            }
+            if(this.subGameList["fkxw"]){
+                this.subGameList["fkxw"].gameType = 0;
+            }
+            if(this.subGameList["sgj"]){
+                this.subGameList["sgj"].gameType = 0;
+            }
+            if(this.subGameList["jbpby"]){
+                this.subGameList["jbpby"].gameType = 0;
+            }
+            if(this.subGameList["bcbm"]){
+                this.subGameList["bcbm"].gameType = 0;
+            }
+            if(this.subGameList["hwby"]){
+                this.subGameList["hwby"].gameType = 0;
+            }
+            if(this.subGameList["szwg"]){
+                this.subGameList["szwg"].gameType = 0;
+            }
+            if(this.subGameList["cbzb"]){
+                this.subGameList["cbzb"].gameType = 0;
+            }
+            if(this.subGameList["brnn"]){
+                this.subGameList["brnn"].gameType = 0;
+            }
+            if(this.subGameList["bjl"]){
+                this.subGameList["bjl"].gameType = 0;
+            }
+            if(this.subGameList["ebg"]){
+                this.subGameList["ebg"].gameType = 0;
+            }
+            if(this.subGameList["hbld"]){
+                this.subGameList["hbld"].gameType = 0;
+            }
+            if(this.subGameList["hh"]){
+                this.subGameList["hh"].gameType = 0;
+            }
 
-            // if(!hqq.resetNineTwoSort){
-            //     hqq.resetNineTwoSort = true;
-            //     let temphallid = this.subGameList["zhibo"].hallid;
-            //     this.subGameList["zhibo"].hallid = this.subGameList["zrsx1"].hallid;
-            //     this.subGameList["zrsx1"].hallid = this.subGameList["zrsx2"].hallid;
-            //     this.subGameList["zrsx2"].hallid = temphallid;
-
-            //     temphallid = this.subGameList["pg"].hallid;
-            //     this.subGameList["pg"].hallid = this.subGameList["ag"].hallid;
-            //     this.subGameList["ag"].hallid = temphallid;
-
-            //     temphallid = this.subGameList["pg2"].hallid;
-            //     let temppthallid = this.subGameList["pt"].hallid;
-            //     this.subGameList["pg2"].hallid = this.subGameList["cq9"].hallid;
-            //     this.subGameList["pt"].hallid = temphallid;
-
-            //     temphallid = this.subGameList["ppdz"].hallid;
-            //     this.subGameList["ppdz"].hallid = temppthallid;
-            //     this.subGameList["cq9"].hallid = this.subGameList["jdb"].hallid;
-            //     this.subGameList["jdb"].hallid = this.subGameList["mg"].hallid;
-            //     this.subGameList["mg"].hallid = temphallid;
-            // }
             if( this.subGameList["cyqp"])
             {
                 this.subGameList["cyqp"].gameType = -1;
             }
         } else if(hqq.app.pinpai == "juding"){
             this.subGameList = hqq.commonTools.jsonCopy(hqq.subGameList);
-            delete this.subGameList["cyqp"];
-            delete this.subGameList["zrsx1"];
-            delete this.subGameList["zrsx2"];
+            if(this.subGameList["cyqp"]){
+                delete this.subGameList["cyqp"];
+            }
+            if(this.subGameList["zrsx1"]){
+                delete this.subGameList["zrsx1"];
+            }
+            if(this.subGameList["zrsx2"]){
+                delete this.subGameList["zrsx2"];
+            }
             // delete this.subGameList["zhibo"];
-            delete this.subGameList["ygxb"];
+            if(this.subGameList["ygxb"]){
+                delete this.subGameList["ygxb"];
+            }
         } else {
             this.subGameList = hqq.commonTools.jsonCopy(hqq.subGameList);
         }

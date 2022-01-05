@@ -101,7 +101,7 @@ export default class NewClass extends cc.Component {
 
         let bdali_form= cc.find('Canvas/AlipayAccountAlert/Layout/content/bdali_form')
         let btn1= cc.find('Canvas/AlipayAccountAlert/Layout/btn1')
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8 ){
             this.app.loadIconLg(`${src}/font/queding`,btn1.children[0])
             this.app.loadIconLg(`${src}/font/zfbzh`,bdali_form.children[0])
             this.app.loadIconLg(`${src}/font/skrxm`,bdali_form.children[1])
@@ -112,7 +112,7 @@ export default class NewClass extends cc.Component {
             bdali_form.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("支付宝账户:")
             bdali_form.children[1].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("收款人姓名:")
             bdali_form.children[2].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("*温馨提示：绑定支付宝成功后无法自行修改!请仔细填写您的姓名和账号!")
-        }else if(this.app.UrlData.package_id == 15){
+        }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
             
         }else{
             this.app.loadIconLg(`${src}/form/bdali_form`,bdali_form)

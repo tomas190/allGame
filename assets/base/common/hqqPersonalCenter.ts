@@ -581,6 +581,10 @@ export default class hqqPersonalCenter extends cc.Component {
         let todayWeek = today.getDay();
         let monday = today.setHours(0,0,0,0) - ( todayWeek  - 1 ) * (86400*1000);
         let sunday = today.setHours(23,59,59,999) + ( 7 - todayWeek ) * (86400*1000);
+        if( todayWeek === 0 ){
+            monday = today.setHours(0,0,0,0) - ( 6 ) * (86400*1000);
+            sunday = today.setHours(0,0,0,0);
+        }
         let url = hqq.gameGlobal.proxy.proxy_host+"/Proxy/User/GetProxyLinkPayInfo";
         url += "?token=" + hqq.gameGlobal.proxy.token;
         url += "&account_name="  + hqq.gameGlobal.player.account_name;
@@ -667,10 +671,11 @@ export default class hqqPersonalCenter extends cc.Component {
         }
         let today = new Date();
         let todayWeek = today.getDay();
+        cc.log("requestBZYJ todayWeek=",todayWeek);
         let monday = today.getTime() - ( todayWeek  - 1 ) * (86400*1000);
         let sunday = today.getTime() + ( 7 - todayWeek ) * (86400*1000);
         if( todayWeek === 0 ){
-            monday = today.getTime() - ( 7 ) * (86400*1000);
+            monday = today.getTime() - ( 6 ) * (86400*1000);
             sunday = today.getTime();
         }
         let url = hqq.gameGlobal.proxy.proxy_host+"/Proxy/User/GetBaseDividendInfo2";

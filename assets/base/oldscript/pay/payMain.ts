@@ -196,6 +196,21 @@ export default class NewClass extends cc.Component {
     @property(cc.Prefab)
     BankTipAlert_21:cc.Prefab = null;
 
+    @property(cc.Prefab)
+    BankAccountAlert_22:cc.Prefab = null;
+
+    @property(cc.Prefab)
+    UsdtAccountAlert_22:cc.Prefab = null;
+
+    @property(cc.Prefab)
+    PublicOrderAlert_22:cc.Prefab = null;
+
+    @property(cc.Prefab)
+    BeforePayOrderAlert_22:cc.Prefab = null;
+
+    @property(cc.Prefab)
+    BankTipAlert_22:cc.Prefab = null;
+
     @property()
     public UrlData : any = [];
     public config :Config = null;
@@ -228,7 +243,7 @@ export default class NewClass extends cc.Component {
         this.preLoadPrefab()
     }
     preLoadPrefab(){
-        if(this.UrlData.package_id == 8 || this.UrlData.package_id == 12 ){
+        if(this.UrlData.package_id == 8){
             this.loadBundlePrefab("Prefab/AlipayAccountAlert",(Prefab)=>{
                 if(Prefab){ this.AlipayAccountAlert_8 = Prefab }
             })
@@ -294,7 +309,7 @@ export default class NewClass extends cc.Component {
             this.loadBundlePrefab("Prefab/BeforePayOrderAlert",(Prefab)=>{
                 if(Prefab){ this.BeforePayOrderAlert_10 = Prefab }
             })
-        }else if(this.UrlData.package_id == 15){
+        }else if(this.UrlData.package_id == 15 || this.UrlData.package_id == 12){
             this.loadBundlePrefab("Prefab/AlipayAccountAlert",(Prefab)=>{
                 if(Prefab){ this.AlipayAccountAlert_15 = Prefab }
             })
@@ -385,6 +400,22 @@ export default class NewClass extends cc.Component {
             })
             this.loadBundlePrefab("Prefab/BeforePayOrderAlert",(Prefab)=>{
                 if(Prefab){ this.BeforePayOrderAlert_21 = Prefab }
+            })
+        }else if(this.UrlData.package_id == 22){
+            this.loadBundlePrefab("Prefab/PublicOrderAlert",(Prefab)=>{
+                if(Prefab){ this.PublicOrderAlert_22= Prefab }
+            })
+            this.loadBundlePrefab("Prefab/BankAccountAlert",(Prefab)=>{
+                if(Prefab){ this.BankAccountAlert_22 = Prefab }
+            })
+            this.loadBundlePrefab("Prefab/BankTipAlert",(Prefab)=>{
+                if(Prefab){ this.BankTipAlert_22 = Prefab }
+            })
+            this.loadBundlePrefab("Prefab/UsdtAccountAlert",(Prefab)=>{
+                if(Prefab){ this.UsdtAccountAlert_22 = Prefab }
+            })
+            this.loadBundlePrefab("Prefab/BeforePayOrderAlert",(Prefab)=>{
+                if(Prefab){ this.BeforePayOrderAlert_22 = Prefab }
             })
         }else{
             this.loadBundlePrefab("Prefab/AlipayAccountAlert",(Prefab)=>{
@@ -515,7 +546,7 @@ export default class NewClass extends cc.Component {
     public showOrderAlert(type,data,beforePay = true){
         var node = null
         var beforePayOrder = null
-        if(this.UrlData.package_id == 8 || this.UrlData.package_id == 12){
+        if(this.UrlData.package_id == 8 ){
             node = cc.instantiate(this.PublicOrderAlert_8);
             beforePayOrder = cc.instantiate(this.BeforePayOrderAlert_8);
         }else if(this.UrlData.package_id == 9){
@@ -524,7 +555,7 @@ export default class NewClass extends cc.Component {
         }else if(this.UrlData.package_id == 10 ){
             node = cc.instantiate(this.PublicOrderAlert_10);
             beforePayOrder = cc.instantiate(this.BeforePayOrderAlert_10);
-        }else if( this.UrlData.package_id == 15){
+        }else if( this.UrlData.package_id == 15|| this.UrlData.package_id == 12){
             node = cc.instantiate(this.PublicOrderAlert_15);
             beforePayOrder = cc.instantiate(this.BeforePayOrderAlert_15);
         }else if( this.UrlData.package_id == 16){
@@ -539,6 +570,9 @@ export default class NewClass extends cc.Component {
         }else if( this.UrlData.package_id == 21){
             node = cc.instantiate(this.PublicOrderAlert_21);
             beforePayOrder = cc.instantiate(this.BeforePayOrderAlert_21);
+        }else if( this.UrlData.package_id == 22){
+            node = cc.instantiate(this.PublicOrderAlert_22);
+            beforePayOrder = cc.instantiate(this.BeforePayOrderAlert_22);
         }else{
             node = cc.instantiate(this.PublicOrderAlert);
             beforePayOrder = cc.instantiate(this.BeforePayOrderAlert);
@@ -565,13 +599,13 @@ export default class NewClass extends cc.Component {
     public showAlipayAccountAlert(data){
         var canvas = cc.find('Canvas');
         var node = null
-        if(this.UrlData.package_id == 8 || this.UrlData.package_id == 12){
+        if(this.UrlData.package_id == 8 ){
             node = cc.instantiate(this.AlipayAccountAlert_8);
         }else if(this.UrlData.package_id == 9){
             node = cc.instantiate(this.AlipayAccountAlert_9);
         }else if(this.UrlData.package_id == 10){
             node = cc.instantiate(this.AlipayAccountAlert_10);
-        }else if( this.UrlData.package_id == 15){
+        }else if( this.UrlData.package_id == 15|| this.UrlData.package_id == 12){
             node = cc.instantiate(this.AlipayAccountAlert_15);
         }else{
             node = cc.instantiate(this.AlipayAccountAlert);
@@ -596,13 +630,13 @@ export default class NewClass extends cc.Component {
         var canvas = cc.find('Canvas');
         
         var node = null
-        if(this.UrlData.package_id == 8 || this.UrlData.package_id == 12){
+        if(this.UrlData.package_id == 8 ){
             node = cc.instantiate(this.BankAccountAlert_8);
         }else if(this.UrlData.package_id == 9){
             node = cc.instantiate(this.BankAccountAlert_9);
         }else if(this.UrlData.package_id == 10){
             node = cc.instantiate(this.BankAccountAlert_10);
-        }else if(this.UrlData.package_id == 15){
+        }else if(this.UrlData.package_id == 15 || this.UrlData.package_id == 12){
             node = cc.instantiate(this.BankAccountAlert_15);
         }else if(this.UrlData.package_id == 18){
             node = cc.instantiate(this.BankAccountAlert_18);
@@ -610,6 +644,8 @@ export default class NewClass extends cc.Component {
             node = cc.instantiate(this.BankAccountAlert_20);
         }else if(this.UrlData.package_id == 21){
             node = cc.instantiate(this.BankAccountAlert_21);
+        }else if(this.UrlData.package_id == 22){
+            node = cc.instantiate(this.BankAccountAlert_22);
         }else{
             node = cc.instantiate(this.BankAccountAlert);
         }
@@ -631,13 +667,13 @@ export default class NewClass extends cc.Component {
     public showUsdtAccountAlert(itemId,type){
         var canvas = cc.find('Canvas');
         var node = null
-        if(this.UrlData.package_id == 8 || this.UrlData.package_id == 12){
+        if(this.UrlData.package_id == 8 ){
             node = cc.instantiate(this.UsdtAccountAlert_8);
         }else if(this.UrlData.package_id == 9){
             node = cc.instantiate(this.UsdtAccountAlert_9);
         }else if(this.UrlData.package_id == 10){
             node = cc.instantiate(this.UsdtAccountAlert_10);
-        }else if(this.UrlData.package_id == 15){
+        }else if(this.UrlData.package_id == 15 || this.UrlData.package_id == 12){
             node = cc.instantiate(this.UsdtAccountAlert_15);
         }else if(this.UrlData.package_id == 18){
             node = cc.instantiate(this.UsdtAccountAlert_18);
@@ -647,6 +683,8 @@ export default class NewClass extends cc.Component {
             node = cc.instantiate(this.UsdtAccountAlert_20);
         }else if(this.UrlData.package_id == 21){
             node = cc.instantiate(this.UsdtAccountAlert_21);
+        }else if(this.UrlData.package_id == 22){
+            node = cc.instantiate(this.UsdtAccountAlert_22);
         }else{
             node = cc.instantiate(this.UsdtAccountAlert);
         }
@@ -664,7 +702,7 @@ export default class NewClass extends cc.Component {
     public showBankTipAlert(component){
         var canvas = cc.find('Canvas');
         var node = null;
-        if(this.UrlData.package_id == 15){
+        if(this.UrlData.package_id == 15 || this.UrlData.package_id == 12){
             node = cc.instantiate(this.BankTipAlert_15);
         }else if(this.UrlData.package_id == 16){
             node = cc.instantiate(this.BankTipAlert_16);
@@ -672,7 +710,7 @@ export default class NewClass extends cc.Component {
             node = cc.instantiate(this.BankTipAlert_18);
         }else if(this.UrlData.package_id == 20){
             node = cc.instantiate(this.BankTipAlert_20);
-        }else if(this.UrlData.package_id == 8 || this.UrlData.package_id == 12){
+        }else if(this.UrlData.package_id == 8 ){
             node = cc.instantiate(this.BankTipAlert_8)
         }else if(this.UrlData.package_id == 9){
             node = cc.instantiate(this.BankTipAlert_9)
@@ -680,6 +718,8 @@ export default class NewClass extends cc.Component {
             node = cc.instantiate(this.BankTipAlert_10)
         }else if(this.UrlData.package_id == 21){
             node = cc.instantiate(this.BankTipAlert_21);
+        }else if(this.UrlData.package_id == 22){
+            node = cc.instantiate(this.BankTipAlert_22);
         }else{
             node = cc.instantiate(this.BankTipAlert);
         }
@@ -694,7 +734,7 @@ export default class NewClass extends cc.Component {
      * @param label 
      * @param type 
      */
-    public showKeyBoard(label,type){
+    public showKeyBoard(label,type,callBack = ()=>{}){
         var node = null
         if(this.UrlData.package_id == 16){
             node = cc.instantiate(this.keyBoardAlert16);
@@ -703,7 +743,7 @@ export default class NewClass extends cc.Component {
         }
         let canvas = cc.find('Canvas');
         canvas.addChild(node);
-        node.getComponent('payKeyBoardAlert').init(label,type)
+        node.getComponent('payKeyBoardAlert').init(label,type,callBack)
     }
     /**
      * 小键盘 
@@ -742,13 +782,13 @@ export default class NewClass extends cc.Component {
      */
     showWriteMoneyAlert(component,type,data){
         var node = null
-        if(this.UrlData.package_id == 8 || this.UrlData.package_id == 12){
+        if(this.UrlData.package_id == 8 ){
             node = cc.instantiate(this.WriteMoneyAlert_8);
         }else if(this.UrlData.package_id == 9){
             node = cc.instantiate(this.WriteMoneyAlert_9);
         }else if(this.UrlData.package_id == 10){
             node = cc.instantiate(this.WriteMoneyAlert_10);
-        }else if(this.UrlData.package_id == 15){
+        }else if(this.UrlData.package_id == 15 || this.UrlData.package_id == 12){
             node = cc.instantiate(this.WriteMoneyAlert_15);
         }else{
             node = cc.instantiate(this.WriteMoneyAlert);

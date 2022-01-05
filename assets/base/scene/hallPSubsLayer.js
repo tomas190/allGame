@@ -218,7 +218,7 @@ cc.Class({
 
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
-        } else if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xinlong") {
+        } else if (hqq.app.pinpai == "xinsheng") {
             let xpath = "base/xinsheng/img/"
             let xlpath = "base/language/" + hqq.language + "/xinsheng/"
             hqq.setSprite(this.back, { path: xpath + "back1", size: { width: 880 } })
@@ -263,6 +263,131 @@ cc.Class({
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.y = 10;
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
+        } else if (hqq.app.pinpai == "xinlong") {
+            // let bpath = "xinlong/img/"
+            // let blpath = "base/language/" + hqq.language + "/xinlong/"
+            // let hpath = "xinlong/img/"
+            // let hlpath = "language/" + hqq.language + "/xinlong/"
+            // tip0.getComponent(cc.Label).fontSize = 28
+            // tip0.getComponent(cc.Label).lineHeight = 28
+            // tip1.getComponent(cc.Label).fontSize = 28
+            // tip1.getComponent(cc.Label).lineHeight = 28
+            // hqq.setSprite(this.back, { Res:hqq["hall_"+hqq.app.pinpai], path: bpath + "jd_p_bandalibg_1", width: 857, height: 529 })
+            // hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai], path: bpath + "jd_popup_btn_close", x: 365, y: 221 , width:119, height:70})
+            // hqq.addNode(surecg, { string: "qr",fontSize:32,color:cc.color("#94510A"),y:-10,bold:true })
+
+            tip0.getComponent(cc.Label).fontSize = 28
+            tip0.getComponent(cc.Label).lineHeight = 28
+            tip1.getComponent(cc.Label).fontSize = 28
+            tip1.getComponent(cc.Label).lineHeight = 28
+            // let bpath = "base/juding/img/"
+            // let blpath = "base/language/" + hqq.language + "/juding/"
+            let hpath = "xinlong/img/"
+            let hlpath = "language/" + hqq.language + "/xinlong/"
+            hqq.setSprite(this.back, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_bandalibg_1", width: 857, height: 529 })
+            hqq.setBtn(surecg, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_3" , x:0})
+            hqq.addNode(surecg, { string: "qr",fontSize:32,color:cc.color("#94510A"),y:-10,bold:true })
+            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_popup_btn_close", x: 365, y: 221 , width:119, height:70})
+            
+            hqq.setSprite(title_changehead, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_popup_title_profile", x:-315,y: 225 })
+            let changehead_di = cc.find("smallsublayer/changehead/changehead_di")
+            changehead_di.active = false
+
+            hqq.setSprite(titile_tip, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_popup_title_changeNickname", x:-315,y: 225 })
+            hqq.setSprite(inputurnickname, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", y: 20, width: 600, type: cc.Sprite.Type.SLICED })
+
+            hqq.setSprite(title_login, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "denglu", x:-320,y: 230 })
+            login_form.active = false
+            let login = cc.find("smallsublayer/login")
+            hqq.addNode(login, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -1, width: 560, y: 100, type: cc.Sprite.Type.SLICED })
+            hqq.addNode(login, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -1, width: 560, type: cc.Sprite.Type.SLICED })
+            hqq.addNode(login, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "shoujid", x: -250, y: 100, })
+            hqq.addNode(login, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "suotou", x: -250, y: 0, })
+            hqq.setBtn(txt_forgetpwd, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "wjmm" })
+            login.getChildByName("phoneeditbox").getChildByName("TEXT_LABEL").color = cc.color("#546277");
+            login.getChildByName("phoneeditbox").getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+            login.getChildByName("phoneeditbox").getChildByName("PLACEHOLDER_LABEL").color = cc.color("#546277");
+            login.getChildByName("phoneeditbox").getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+
+            login.getChildByName("passeditbox").getChildByName("TEXT_LABEL").color = cc.color("#546277");
+            login.getChildByName("passeditbox").getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+            login.getChildByName("passeditbox").getChildByName("PLACEHOLDER_LABEL").color = cc.color("#546277");
+            login.getChildByName("passeditbox").getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+
+
+            hqq.setBtn(copybtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_3" })
+            hqq.setNode(btnlabel, { color: cc.color(187, 187, 187) })
+
+            hqq.addNode(this.imnode, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "kffkxz", x:-280,y: 230 })
+            hqq.setBtn(webbtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_1" })
+            hqq.setBtn(appbtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_1", active: false })
+            weblabel.color = new cc.Color(255, 255, 255)
+            applabel.color = new cc.Color(255, 255, 255)
+            weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
+            applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
+
+            let rlogin_form = cc.find("smallsublayer/register/login_form")
+            rlogin_form.active = false
+            let login_form1 = cc.find("smallsublayer/register/login_form1")
+            login_form1.active = false
+            let register = cc.find("smallsublayer/register")
+            hqq.addNode(register,{Res:hqq["hall_"+hqq.app.pinpai],path:hlpath+"jd_popup_form_signUp"});
+            hqq.addNode(register,{Res:hqq["hall_"+hqq.app.pinpai],path:hlpath+"jd_popup_title_signUp",x:-350,y:225});
+            registertitle.active = false;
+            title0.active = false;
+            title1.active = false;
+            title2.active = false;
+            accountnode.x = 120;
+            accountnode.y = 115;
+            accountnode.getChildByName("TEXT_LABEL").color = cc.color("#546277");
+            accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+            accountnode.getChildByName("PLACEHOLDER_LABEL").color = cc.color("#546277");
+            accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+            pass0node.x = 120;
+            pass0node.y = 5;
+            pass0node.getChildByName("TEXT_LABEL").color = cc.color("#546277");
+            pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+            pass0node.getChildByName("PLACEHOLDER_LABEL").color = cc.color("#546277");
+            pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+            pass1node.x = 120;
+            pass1node.y = -105;
+            pass1node.getChildByName("TEXT_LABEL").color = cc.color("#546277");
+            pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+            pass1node.getChildByName("PLACEHOLDER_LABEL").color = cc.color("#546277");
+            pass1node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+            tip0.color = cc.color("#EC6941")
+            tip0.getComponent(cc.Label).fontSize = 24;
+            tip0.getComponent(cc.Label).string = hqq.getTip("tip2")
+            tip1.color = cc.color("#EC6941")
+            tip1.getComponent(cc.Label).fontSize = 24;
+            tip1.getComponent(cc.Label).string = hqq.getTip("tip3")
+
+            let proxycodechangehead_di = cc.find("smallsublayer/proxycode/changehead_di")
+            hqq.setSprite(proxycodechangehead_di, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", width: 550, type: cc.Sprite.Type.SLICED })
+            cc.find("smallsublayer/proxycode/codeeditbox/TEXT_LABEL").color = cc.color("#546277");
+            cc.find("smallsublayer/proxycode/codeeditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+            cc.find("smallsublayer/proxycode/codeeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+            cc.find("smallsublayer/proxycode/codeeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+
+            let bindusdt = cc.find("smallsublayer/bindusdt")
+            hqq.addNode(bindusdt, { path: hpath + "jd_p_inputBox_1", zIndex: -1, width: 570, x: 80, y: 105, type: cc.Sprite.Type.SLICED })
+            hqq.addNode(bindusdt, { path: hpath + "jd_p_inputBox_1", zIndex: -1, width: 460, x: 25, y: -15, type: cc.Sprite.Type.SLICED })
+            hqq.setSprite(usdttitle, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "UST", x:-270,y: 225 })
+            hqq.addNode(bindusdt, { string: "usdtllx", x: -260, y: -15 ,fontSize:32,color:cc.color("#485E9A"),bold:true})
+            hqq.addNode(bindusdt, { string: "usdtqbdz", x: -270, y: 105 ,fontSize:32,color:cc.color("#485E9A"),bold:true})
+            bindusdt.getChildByName("type").color = cc.color("#546277");
+            bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").color = cc.color("#546277");
+            bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+            bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").color = cc.color("#546277");
+            bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+            info.color = cc.color("#0B3460")
+            info.getComponent(cc.Label).string = hqq.getTip("proxy2")
+            this.tiplayerinfo.node.color = cc.color("#0B3460")
+            this.tiplayerinfo.node.y -= 30;
+
+            downlabel.color = cc.color("#546277");
+            downlabel2.color = cc.color("#546277");
+
         } else if (hqq.app.pinpai == "juding" ) {
             tip0.getComponent(cc.Label).fontSize = 28
             tip0.getComponent(cc.Label).lineHeight = 28
@@ -276,7 +401,7 @@ cc.Class({
             hqq.setBtn(surecg, { path: bpath + "jd_p_btn_1_3" , x:0})
             hqq.addNode(surecg, { string: "qr",fontSize:32,lineHeight:35,color:cc.color("#94510A"),y:0,bold:true })
             hqq.setBtn(closebtn, { path: bpath + "jd_popup_btn_close", x: 365, y: 221 , width:119, height:70})
-             
+            
             hqq.setSprite(title_changehead, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_popup_title_profile", x:-315,y: 225 })
             let changehead_di = cc.find("smallsublayer/changehead/changehead_di")
             changehead_di.active = false
@@ -871,8 +996,14 @@ cc.Class({
                 break;
             case 7: // 账号掉线 加自动登录
                 this.login.active = true
-                if (this.login.getChildByName("txt_autologin")) {
-                    this.login.getChildByName("txt_autologin").active = true
+                if(hqq.app.pinpai == "tianqi") {
+                    if (this.login.getChildByName("txt_autologin")) {
+                        this.login.getChildByName("txt_autologin").active = false;
+                    }
+                } else {
+                    if (this.login.getChildByName("txt_autologin")) {
+                        this.login.getChildByName("txt_autologin").active = true
+                    }
                 }
                 if (this.login.getChildByName("txt_forgetpwd")) {
                     this.login.getChildByName("txt_forgetpwd").active = false

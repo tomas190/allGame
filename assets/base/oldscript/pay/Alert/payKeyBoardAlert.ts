@@ -20,7 +20,8 @@ export default class NewClass extends cc.Component {
     isCap = false;
     type = null;
     app = null;
-    init(label,type){
+    callBack = null;
+    init(label,type,callBack){
         this.label = label;
         if(label.string == '点击输入'){
             this.inputlabel.string = '';
@@ -29,6 +30,7 @@ export default class NewClass extends cc.Component {
         }
         
         this.type = type;
+        this.callBack = callBack
     }
 
     onLoad(){
@@ -103,6 +105,7 @@ export default class NewClass extends cc.Component {
             this.app.setInputColor("2",this.label);
         }
         this.label.string = string;
+        this.callBack(Number(string))
         this.node.removeFromParent();
     }
 

@@ -35,6 +35,9 @@ export default class NewClass extends cc.Component {
     @property(cc.Prefab)
     BankCardManage :cc.Prefab = null;
 
+    @property(cc.Prefab)
+    JisuDh : cc.Prefab = null;
+
     @property
     app= null;
     text = null;
@@ -61,9 +64,11 @@ export default class NewClass extends cc.Component {
                     zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "兑换记录");
                 }else if(this.text == 'USDT兑换'){
                     zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "USDT钱包");
+                }else if(this.text == '极速兑换'){
+                    zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "极速兑换");
                 }
             }
-        }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18|| this.app.UrlData.package_id == 20){
+        }else if(this.app.UrlData.package_id == 15 || this.app.UrlData.package_id == 18|| this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
             if(this.text == '支付宝兑换'){
                 this.normalIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "支付宝");
                 this.currentIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "支付宝");
@@ -80,6 +85,9 @@ export default class NewClass extends cc.Component {
             }else if(this.text == 'USDT兑换'){
                 this.normalIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "USDT钱包");
                 this.currentIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "USDT钱包");
+            }else if(this.text == '极速兑换'){
+                this.normalIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "极速兑换");
+                this.currentIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "极速兑换");
             }
         }else if(this.app.UrlData.package_id == 16){
             if(this.text == '银行卡兑换'){
@@ -103,6 +111,13 @@ export default class NewClass extends cc.Component {
                 let currentIcon = this.node.getChildByName("checkmark").getChildByName("icon")
                 this.app.loadIcon(`${src}/menu/usdtcz2`,normalIcon,44,44);
                 this.app.loadIcon(`${src}/menu/usdtcz1`,currentIcon,44,44);
+            }else if(this.text == '极速兑换'){
+                this.normalIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "极速兑换");
+                this.currentIcon.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "极速兑换");
+                let normalIcon = this.node.getChildByName("Background").getChildByName("icon")
+                let currentIcon = this.node.getChildByName("checkmark").getChildByName("icon")
+                this.app.loadIcon(`${src}/menu/jisu2`,normalIcon,44,44);
+                this.app.loadIcon(`${src}/menu/jisu1`,currentIcon,44,44);
             }else{
                 this.node.removeFromParent()
             }
@@ -122,6 +137,9 @@ export default class NewClass extends cc.Component {
             }else if(this.text == 'USDT兑换'){
                 this.app.loadIcon(`${src}/menu/menu_usdtQb_1`,this.normalIcon,242,86)
                 this.app.loadIcon(`${src}/menu/menu_usdtQb_2`,this.currentIcon,249,86)
+            }else if(this.text == '极速兑换'){
+                this.app.loadIcon(`${src}/menu/menu_jsdh_1`,this.normalIcon,242,86)
+                this.app.loadIcon(`${src}/menu/menu_jsdh_2`,this.currentIcon,249,86)
             }
         }
     }
@@ -173,6 +191,8 @@ export default class NewClass extends cc.Component {
             this.addContent('USDT');
         }else if(this.text == "银行卡管理"){
             this.addContent("BankCardManage")
+        }else if(this.text == "极速兑换"){
+            this.addContent("极速兑换")
         }
     }
 
@@ -190,6 +210,8 @@ export default class NewClass extends cc.Component {
             var node = cc.instantiate(this.UsdtDh);
         }else if(data == 'BankCardManage'){
             var node = cc.instantiate(this.BankCardManage);
+        }else if(data == '极速兑换'){
+            var node = cc.instantiate(this.JisuDh);
         }
         content.removeAllChildren();
         content.addChild(node);

@@ -818,6 +818,15 @@ cc.Class({
                             gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, '超出设置区间,设置失败')
                             return
                         }
+                        if(parseInt(mon) > 290){
+                            cc.log('else 7设置失败', mon);
+                            box.string = Database.p9_jd_xjgz + ''
+                            this.CofAmount.string = Database.p9_jd_xjgz + ''
+                            // this.CofAmount.active =false
+                            this.Amount.string = Database.p9_jd_xjgz + ''
+                            gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, '超出设置区间,设置失败')
+                            return
+                        }
                     }
                     let num = this.nums
                     function check() {

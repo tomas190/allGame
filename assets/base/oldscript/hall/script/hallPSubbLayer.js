@@ -123,7 +123,7 @@ cc.Class({
             hqq.setBtn(getcodebtn, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "btn_4" })
             hqq.setBtn(getcodebtn2, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "btn_4" })
             hqq.setSprite(title_signup, {Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "zhuczszh", y: 240 })
-        } else if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xinlong" ) {
+        } else if (hqq.app.pinpai == "xinsheng") {
             let xpath = "base/xinsheng/img/"
             let xlpath = "base/language/" + hqq.language + "/xinsheng/"
             let hlpath = "base/language/" + hqq.language + "/img/"
@@ -138,6 +138,18 @@ cc.Class({
 
             hqq.setSprite(bankcard_form, { path: hlpath + "bankcard_form" })
             hqq.setSprite(title_signup, { path: xlpath + "zczszh", position: { x: -200, y: 250 } })
+        } else if (hqq.app.pinpai == "xinlong") {
+            let xpath = "xinlong/img/"
+            let hlpath = "base/language/" + hqq.language + "/img/"
+            hqq.setSprite(this.back, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_p_bandalibg_2", width: 897, height: 609 })
+            // hqq.addNode(this.back, { path: bpath + "tck", y: -10, width: 420, height: 640, anchorX: 1, scaleX: -1, type: cc.Sprite.Type.SLICED })
+            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_popup_btn_close", x: 385, y: 248 , width:119, height:70 })
+            hqq.setBtn(surecg, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_p_btn_1_3" })
+            hqq.addNode(surecg, { string: "qr",fontSize:32,color:cc.color("#94510A"),y:-10,bold:true })
+            hqq.setBtn(getcodebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_p_btn_1_1" })
+            hqq.setBtn(getcodebtn2, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_p_btn_1_1" })
+
+            hqq.setSprite(title_signup, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "zhucezhengshizhanghao", x:-300,y: 255 })
         } else if (hqq.app.pinpai == "huaxing" ) {
             let bpath = "base/huaxing/img/";
             let blpath = "base/language/" + hqq.language + "/huaxing/"
@@ -1287,7 +1299,8 @@ cc.Class({
         let callback = (responsedata) => {
             cc.log("responsedata", responsedata)
             if (this.timer) {
-                clearInterval(this.timer);
+                //不要重设计时器
+                //clearInterval(this.timer);
             }
             if (responsedata.status != 0) {
                 hqq.logMgr.log("officeloginEnsure callback responsedata", JSON.stringify(responsedata)," phonenum=",phonenum , " userid=",hqq.gameGlobal.pay.user_id)
@@ -1297,6 +1310,8 @@ cc.Class({
                 if (hqq.app.pinpai == 'debi') {
                     hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("showtip38"));
                 } else if(hqq.app.pinpai == "ninetwo"){
+                    hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("bindphonesucess"));
+                } else if(hqq.app.pinpai == "tianqi") {
                     hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("bindphonesucess"));
                 } else {
                     hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("showtip39"));

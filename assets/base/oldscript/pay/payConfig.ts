@@ -129,6 +129,18 @@ export default class Config extends cc.Component {
         var newDate = h + ":" + minute + ":" + s;
         return newDate;
     }
+    //时间转换分钟➕秒
+    public getTime3(time){
+        var minute = parseInt(`${time/60}`);
+        var s = time%60;
+        var  newDate = ''
+        if(Number(minute) > 0) {
+            newDate =  minute + ":" + s;
+        }else{
+            newDate = `${s}`;
+        }
+        return newDate;
+    }
     public testBankNum(num){
         console.log(num)
         if (isNaN(num)) {

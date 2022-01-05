@@ -117,6 +117,7 @@ cc.Class({
 
                     let num = (resData.msg.balance + '').split(".")
                     this.account_money.string = num[0] + '';
+                    this.node.parent.parent.getChildByName('page1').getChildByName('middle').getChildByName('grid').getChildByName('yjye').getComponent(cc.Label).string = num[0] + '';
                     Database.balance = resData.msg.balance;
                     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "资金转入成功")
                 }

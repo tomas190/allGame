@@ -1659,17 +1659,18 @@ let commonVal = {
         xhr_test.onreadystatechange = function () {
             if (xhr_test.readyState == 4 && xhr_test.status === 200) {
                 var resData = JSON.parse(xhr_test.responseText);
-                if (resData.code != 404) {
+                if (resData.code != 404 && resData.msg) {
                     cc.log(" p9_GetProxyUser返回 查询单个ID", resData);
 
                     Database.p9_dlsj = resData.msg
+                    a();
                 } else {
                     cc.log(" p9_GetProxyUser返回 查询单个ID 404", resData);
 
 
                 }
 
-                a();
+               
                 xhr_test.abort();
 
 

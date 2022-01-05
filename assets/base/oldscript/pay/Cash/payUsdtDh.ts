@@ -349,7 +349,7 @@ export default class NewClass extends cc.Component {
         let dhqd= cc.find('Canvas/Cash/Content/UsdtDh/group6/dhqd')
         let btn= cc.find('Canvas/Cash/Content/UsdtDh/btn')
 
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 9 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 9){
             btn_75.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("重置")
             accountBtn.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("绑 定")
             this.app.loadIconLg(`${src}/font/jiesuan`,btn.children[0])
@@ -369,7 +369,7 @@ export default class NewClass extends cc.Component {
             accountBtn.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("绑 定")
             this.app.loadIconLg(`${src}/btn/75`,btn_75)
             this.app.loadIconLg(`${src}/font/jiesuan`,btn.children[0])
-        }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 18  || this.app.UrlData.package_id == 16){
+        }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 18  || this.app.UrlData.package_id == 16|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
 
         }else{
             this.app.loadIconLg(`${src}/btn/75`,btn_75)

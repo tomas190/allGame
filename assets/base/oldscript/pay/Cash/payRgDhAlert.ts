@@ -199,7 +199,7 @@ export default class NewClass extends cc.Component {
 
         
         
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8){
             this.app.loadIconLg(`${src}/font/txt_zhye`,txt_zhye2)
             this.app.loadIconLg(`${src}/font/txt_dhje`,txt_dhje2)
             this.app.loadIconLg(`${src}/font/title_rgdh`,toutpd)

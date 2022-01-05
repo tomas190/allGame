@@ -31,7 +31,7 @@ cc.Class({
     onExit() {
         cc.log('tuichu')
         Database.a_num=0;
-        cc.director.loadScene(gHandler.hallConfig.lanchscene)
+        gHandler.eventMgr.dispatch(hqq.eventMgr.showJumpScene,"hall");
       },
       onfybl() {
         cc.log('返佣比例')

@@ -2,6 +2,7 @@ let gHandler = require('gHandler')
 let commonVal = require('./public_script/proxy-http')
 var Database = require("./public_script/Database");
 
+
 cc.Class({
   extends: cc.Component,
   properties: {
@@ -354,7 +355,7 @@ cc.Class({
     //音效
     Database.clickSound(Database.hall_sound)
     Database.a_num = 0;
-    cc.director.loadScene(gHandler.hallConfig.lanchscene)
+    gHandler.eventMgr.dispatch(hqq.eventMgr.showJumpScene,"hall");
   }
 
   // update (dt) {},

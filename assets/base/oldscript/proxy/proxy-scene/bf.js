@@ -102,7 +102,7 @@ cc.Class({
     //音效
     Database.clickSound(Database.hall_sound)
     Database.a_num = 0;
-    cc.director.loadScene(gHandler.hallConfig.lanchscene)
+    gHandler.eventMgr.dispatch(hqq.eventMgr.showJumpScene,"hall");
   }
 
   // update (dt) {},

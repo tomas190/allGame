@@ -1423,6 +1423,24 @@ let gHandler = {
             loginHistory: [], // 子游戏最近一周登陆历史
             hasRes: true,
         },
+        // "pq": {
+        //     zhname: "PQ", // 中文游戏名
+        //     enname: "pq", // 英文游戏名 （子游戏文件路径，更新子路径）
+        //     lanchscene: "pq_main", // 跳转场景名
+        //     fuxin_lanchscene: "pq_main", // 跳转场景名
+        //     xingui_lanchscene: "pq_main", // 跳转场景名
+        //     game_id: "5b1f3a3cb76a451e211229",
+        //     serverUrl: "/pq", // 游戏服务器地址
+        //     endUrl: "/pq", // 游戏服务器地址
+        //     hasAccount: false, // 是否已创建子游戏账号
+        //     remoteData: null, // 服务端发送过来的游戏数据
+        //     hallid: 46,
+        //     resPath: "/btnanimation/pq",
+        //     isDown: false,
+        //     gameType: 4, // 游戏类型：棋牌游戏：0，电子游戏：1，真人视讯：2，彩票投注：3，体育赛事：4
+        //     loginHistory: [], // 子游戏最近一周登陆历史
+        //     hasRes: true,
+        // },
     },
     // 大厅配置
     hallConfig: {
@@ -2505,6 +2523,7 @@ let gHandler = {
         "qznn":"qznn2",
     },
     resetNineTwoSort:false,
+    spriteResMap: {}, //记录载过的图  减少重复加载
     setFuxinHallIdType() {
         // this.menuBtnInfoList = ["all", "duizhan", "touzhu", "shixun", "zuqiu", "jieji", "remen"]
         let alllist = {
@@ -2569,7 +2588,9 @@ let gHandler = {
             "bcbm": 8,
         }
         for (let k in duizhan) {
-            this.subGameList[k].duizhan = duizhan[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].duizhan = duizhan[k]
+            }
         }
         let touzhu = {
             "qznn": 0,
@@ -2584,14 +2605,18 @@ let gHandler = {
             // "hbsl": 9
         }
         for (let k in touzhu) {
-            this.subGameList[k].touzhu = touzhu[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].touzhu = touzhu[k]
+            }
         }
         let shixun = {
             "zrsx1": 0,
             "zrsx2": 1,
         }
         for (let k in shixun) {
-            this.subGameList[k].shixun = shixun[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].shixun = shixun[k]
+            }
         }
         let zuqiu = {
             "pccp": 0,
@@ -2599,7 +2624,9 @@ let gHandler = {
             "sbty1": 2
         }
         for (let k in zuqiu) {
-            this.subGameList[k].zuqiu = zuqiu[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].zuqiu = zuqiu[k]
+            }
         }
         let jieji = {
             "aga": 0,
@@ -2618,7 +2645,9 @@ let gHandler = {
             "fctbj": 13,
         }
         for (let k in jieji) {
-            this.subGameList[k].jieji = jieji[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].jieji = jieji[k]
+            }
         }
         let remen = {
             "cdx": 0,
@@ -2638,7 +2667,9 @@ let gHandler = {
             "zhibo":14,
         }
         for (let k in remen) {
-            this.subGameList[k].remen = remen[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].remen = remen[k]
+            }
         }
         let agalist = {
             "duofuduocai": 0,
@@ -2647,7 +2678,9 @@ let gHandler = {
             "ygxb": 3,
         }
         for (let k in this.agaSubGameList) {
-            this.agaSubGameList[k].hallid = agalist[k]
+            if(this.agaSubGameList[k]){
+                this.agaSubGameList[k].hallid = agalist[k]
+            }
         }
     },
     setJudingHallIdType() {
@@ -2735,13 +2768,17 @@ let gHandler = {
             "fctbj":28,
         }
         for (let k in duizhan) {
-            this.subGameList[k].duizhan = duizhan[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].duizhan = duizhan[k]
+            }
         }
         let touzhu = {
             // "pccp": 0,
         }
         for (let k in touzhu) {
-            this.subGameList[k].touzhu = touzhu[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].touzhu = touzhu[k]
+            }
         }
         
         let tiyu = {
@@ -2749,7 +2786,9 @@ let gHandler = {
             // "sbty2": 1,
         }
         for (let k in tiyu) {
-            this.subGameList[k].tiyu = tiyu[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].tiyu = tiyu[k]
+            }
         }
         let dianzi = {
             "pg": 5,
@@ -2762,7 +2801,9 @@ let gHandler = {
             "pt": 7,
         }
         for (let k in dianzi) {
-            this.subGameList[k].dianzi = dianzi[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].dianzi = dianzi[k]
+            }
         }
         let remen = {
             "szffc": 0,
@@ -2785,7 +2826,9 @@ let gHandler = {
             "zhibo":17,
         }
         for (let k in remen) {
-            this.subGameList[k].remen = remen[k]
+            if(this.subGameList[k]){
+                this.subGameList[k].remen = remen[k]
+            }
         }
     },
     // 加载图片 SpriteFrame
@@ -3039,7 +3082,7 @@ let gHandler = {
         if(config.alignMode){
             widget.alignMode = config.alignMode
         } else{
-            widget.alignMode = cc.Widget.AlignMode.ONCE
+            widget.alignMode = cc.Widget.AlignMode.ON_WINDOW_RESIZE
         }
 
         if (config.closetop) {
@@ -3166,20 +3209,33 @@ let gHandler = {
         {
             tempRes = cfg.Res;
         }
-        tempRes.load(cfg.path, cc.SpriteFrame, (err, frame) => {
-            if (err) {
-                cc.log("setSprite 加载图片失败", err , cfg.Res , tempRes)
-                return;
-            }
+        if(this.spriteResMap[cfg.path]) {
             if (!cc.isValid(node)) {
                 return
             }
-            sprite.spriteFrame = frame;
+            sprite.spriteFrame = this.spriteResMap[cfg.path];
             this.setNode(node, cfg);
             if (cfg.type) {
                 sprite.type = cfg.type
             }
-        })
+        } else {
+            tempRes.load(cfg.path, cc.SpriteFrame, (err, frame) => {
+                if (err) {
+                    cc.log("setSprite 加载图片失败", err , cfg.Res , tempRes)
+                    return;
+                }
+                if (!cc.isValid(node)) {
+                    return
+                }
+                this.spriteResMap[cfg.path] = frame;
+                sprite.spriteFrame = frame;
+                this.setNode(node, cfg);
+                if (cfg.type) {
+                    sprite.type = cfg.type
+                }
+            })
+        }
+        
     },
     setBtn(node, cfg) { // normal == path, pressed, interactable, callback，widget
         if (!node) {
@@ -3507,6 +3563,9 @@ let gHandler = {
         }
         if (cfg.opacity || 0 == cfg.opacity) {
             node.opacity = cfg.opacity
+        }
+        if (cfg.widget) {
+            this.setWidget(node, cfg.widget)
         }
     },
 

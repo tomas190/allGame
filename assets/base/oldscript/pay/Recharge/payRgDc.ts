@@ -71,7 +71,7 @@ export default class NewClass extends cc.Component {
         let tips000= cc.find("Canvas/Recharge/Content/RgDc/frame/layout/tips000")
         let btn_contactCS= cc.find("Canvas/Recharge/Content/RgDc/frame/layout/btn_contactCS")
 
-        if(this.app.UrlData.package_id == 8 ||this.app.UrlData.package_id == 10 ||this.app.UrlData.package_id == 9 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8 ||this.app.UrlData.package_id == 10 ||this.app.UrlData.package_id == 9 ){
             tips000.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('在充值过程中，如果遇到没有回应等任何问题，请联系客服处理')
             btn_contactCS.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText('联系客服')
         }else{

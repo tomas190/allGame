@@ -292,7 +292,7 @@ export default class NewClass extends cc.Component {
         let txt_dhqd= cc.find('Canvas/Cash/Content/Dh/group3/txt_dhqd')
         let btn_dh= cc.find('Canvas/Cash/Content/Dh/btn_dh')
 
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8){
             btn_max.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("最 大")
             btn_75.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("重置")
             accountBtn.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("绑定支付宝")
@@ -310,7 +310,7 @@ export default class NewClass extends cc.Component {
             txt_dhje.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("兑换余额")
             zfb.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("支付宝")
             txt_dhqd.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("兑换渠道")
-        }else if(this.app.UrlData.package_id == 15|| this.app.UrlData.package_id == 20){
+        }else if(this.app.UrlData.package_id == 15|| this.app.UrlData.package_id == 20|| this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
             
         }else{
             this.app.loadIconLg(`${src}/btn/btn_max`,btn_max)

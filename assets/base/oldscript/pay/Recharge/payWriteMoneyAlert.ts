@@ -123,7 +123,7 @@ export default class NewClass extends cc.Component {
 
         
 
-        if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 12){
+        if(this.app.UrlData.package_id == 8 ){
             btn_75.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("重置")
             this.app.loadIconLg(`${src}/font/queding`,surebtn1.children[0])
             this.app.loadIconLg(`${src}/font/toutpd`,toutpd)
@@ -138,8 +138,9 @@ export default class NewClass extends cc.Component {
             this.app.loadIconLg(`${src}/font/title_srje`,toutpd)
             this.app.loadIconLg(`${src}/font/txt_czje`,txt_czje2)
             this.app.loadIconLg(`${src}/font/queding`,surebtn1.children[0])
-        }else if (this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20){
+        }else if (this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12){
             btn_75.children[0].getComponent(cc.Label).string = Language_pay.Lg.ChangeByText("重置")
+        }else if (this.app.UrlData.package_id == 22){
         }else{
             this.app.loadIconLg(`${src}/btn/75`,btn_75)
             this.app.loadIconLg(`${src}/btn/surebtn1`,surebtn1)

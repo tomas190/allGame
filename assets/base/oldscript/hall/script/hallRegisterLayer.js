@@ -22,9 +22,6 @@ cc.Class({
     UILoad() {
         let givejinbi = cc.find("registerlayer/aninode/givejinbi")
         let registerbtn = cc.find("registerlayer/aninode/registerbtn")
-        if (hqq.app.pinpai != "xinsheng" ){
-            hqq.btnLoad(registerbtn, "base/language/" + hqq.language + "/img/registerbtn")
-        }
         let aninode = cc.find("registerlayer/aninode")
         let closebtn = cc.find("registerlayer/aninode/p_close")
         if (hqq.app.pinpai == "fuxin" ) {
@@ -50,19 +47,11 @@ cc.Class({
             hqq.setSprite(registerbtn, { Res:hqq["hall_"+hqq.app.pinpai],path: "language/" + hqq.language + "/xinsheng/btn", position: { x: 0, y: -230 } })
             hqq.setBtn(closebtn, { path: "base/xinsheng/img/exit" })
         } else if ( hqq.app.pinpai == "xinlong" ) {
-            this.chongzhi.font = this.xsnumfont
-            this.chongzhi.fontSize = 65
-            this.chongzhi.string = "200"
-            this.chongzhi.node.x = -40
-            this.chongzhi.node.y = -180
-            this.goldlabel.font = this.xsnumfont
-            this.goldlabel.fontSize = 80
-            this.goldlabel.string = "28"
-            this.goldlabel.node.x = 270
-            this.goldlabel.node.y = -174
-            hqq.setSprite(givejinbi, { path: "base/language/" + hqq.language + "/img/givejinbi3", position: { x: 400, y: -205 } })
-            hqq.skeletonLoad(aninode, "language/" + hqq.language + "/huodong_signupbonus", "xunhuan", true,hqq["hall_"+hqq.app.pinpai])
-            hqq.setBtn(closebtn, { path: "base/xinsheng/img/exit" })
+            this.chongzhi.node.active = false;
+            this.goldlabel.node.active = false;
+            hqq.setSprite(aninode, {Res:hqq["hall_"+hqq.app.pinpai],path:"language/" + hqq.language + "/bigimg/d",width:1273,height:668,widget:{horizontalCenter:0,verticalCenter:-30}})
+            hqq.setSprite(registerbtn, { Res:hqq["hall_"+hqq.app.pinpai],path: "language/" + hqq.language + "/xinlong/btn", position: { x: 110, y: -155 } })
+            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai], path: "xinlong/img/exit", position: { x: 520, y: 220} })
         } else if ( hqq.app.pinpai == "xingui") {
             this.chongzhi.font = this.xsnumfont
             this.chongzhi.fontSize = 65
