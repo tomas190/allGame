@@ -453,26 +453,6 @@ cc.Class({
             }
             cc.log('load subpackage script successfully.', subname + "_" + hqq.app.pinpai);
         });
-        
-        if (!cc.assetManager.getBundle(subname +"Res_" + hqq.app.pinpai ) )
-        {
-            cc.assetManager.loadBundle(subname +"Res_" + hqq.app.pinpai, (err) => {
-                if (err) {
-                    if (!cc.assetManager.getBundle(subname +"Res")) {
-                        cc.assetManager.loadBundle(subname +"Res", (err) => {
-                            if (err) {
-                                return cc.log('load subpackage script fail.', subname + 'Res');
-                            }
-                            hqq[subname + 'Res'] = cc.assetManager.getBundle(subname +"Res");
-                            cc.log('load subpackage script successfully.', subname + 'Res');
-                        });
-                    }
-                    return cc.log('load subpackage script fail.', subname +"Res_" + hqq.app.pinpai);
-                }
-                hqq[subname +"Res_" + hqq.app.pinpai] = cc.assetManager.getBundle(subname +"Res_" + hqq.app.pinpai );
-                cc.log('load subpackage script successfully.', subname +"Res_" + hqq.app.pinpai );
-            });
-        }
     },
     // 跳转至子游戏场景
     jumpToSubGame(enname) {

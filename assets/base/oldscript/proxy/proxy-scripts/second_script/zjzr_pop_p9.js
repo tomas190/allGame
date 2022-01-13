@@ -119,6 +119,8 @@ cc.Class({
                     this.account_money.string = num[0] + '';
                     Database.balance = resData.msg.balance;
                     commonVal.balance = resData.msg.balance;
+                    gHandler.gameGlobal.player.gold = resData.msg.game_gold
+
                     // this.p1_money.string = Database.countCoinsShowLabel(Database.balance);
                     this.node.parent.parent.getChildByName('page1').getChildByName('middle').getChildByName('grid').getChildByName('yjye').getComponent(cc.Label).string = num[0] + '';
                     gHandler.eventMgr.dispatch(gHandler.eventMgr.showTip, "资金转入成功")

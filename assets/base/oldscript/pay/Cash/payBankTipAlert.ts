@@ -35,9 +35,10 @@ export default class NewClass extends cc.Component {
         let btn1= cc.find('Canvas/BankTipAlert/Layout/btn1')
         let Label= cc.find('Canvas/BankTipAlert/Layout/Label').getComponent(cc.Label)
 
+        console.log(this.app.UrlData.package_id)
         if(this.app.UrlData.package_id == 10){
             this.app.loadIconLg(`${src}/font/queding`,btn1.children[0])
-        }else if(this.app.UrlData.package_id == 15|| this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 18 || this.app.UrlData.package_id == 16 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
+        }else if(this.app.UrlData.package_id == 15|| this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 18 || this.app.UrlData.package_id == 16 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22  || this.app.UrlData.package_id == 8){
         }else{
             this.app.loadIconLg(`${src}/btn/surecg`,btn1)
         }

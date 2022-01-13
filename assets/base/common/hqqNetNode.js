@@ -15,13 +15,12 @@ cc.Class({
         this.UILoad()
         this.upTime = 0;
         this.centerTime = 0;
-        hqq.eventMgr.register(hqq.eventMgr.refreshNetState, "netnode", this.refreshNetState.bind(this))
         this.blinkaction = cc.repeatForever(cc.blink(3, 3));
         this.isOnAction = false
     },
 
     start() {
-
+        hqq.eventMgr.register(hqq.eventMgr.refreshNetState, "netnode", this.refreshNetState.bind(this))
     },
 
     // UI动态加载

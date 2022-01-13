@@ -21,14 +21,14 @@ export default class hqqWebview extends cc.Component {
         let tempnode = new cc.Node("event_popupWin_loading");
         this.node.addChild(tempnode);
         hqq.setSkeleton( tempnode , {path:"bigimg/event_popupWin_loading/",aniname:"animation",loop:true} );
-        hqq.addNode(tempnode,{normal:"base/img/btn_close",x:200,y:200,callback: "onClose", script: this});
+        hqq.addNode(tempnode,{normal:"base/img/btn_close",x:200,y:200,callback: "onForceClose", script: this});
         tempnode = null;
         // this.scheduleOnce(()=>{
         //     this.onClose();
         // },8)
     }
 
-    private onWebviewEvent(webview: cc.WebView, eventType: cc.WebView.EventType): void {
+    public onWebviewEvent(webview: cc.WebView, eventType: cc.WebView.EventType): void {
         if (eventType === cc.WebView.EventType.LOADED) {
             this.loadcount++;
             cc.log("onWebviewEvent cc.WebView.EventType.LOADED")
@@ -132,6 +132,17 @@ export default class hqqWebview extends cc.Component {
         }
         this.loadcount = 0;
         hqq.eventMgr.dispatch(hqq.eventMgr.showPayActivityWeb, false);
+        hqq.eventMgr.dispatch(hqq.eventMgr.refreshPlayerGold, null);
+    }
+
+    onForceClose()
+    {
+        if( this.jiaziTimerID )
+        {
+            clearInterval(this.jiaziTimerID);
+        }
+        this.loadcount = 0;
+        hqq.eventMgr.dispatch(hqq.eventMgr.showPayActivityWeb, false,true);
         hqq.eventMgr.dispatch(hqq.eventMgr.refreshPlayerGold, null);
     }
 }

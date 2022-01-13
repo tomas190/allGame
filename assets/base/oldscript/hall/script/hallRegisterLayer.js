@@ -23,6 +23,9 @@ cc.Class({
         let givejinbi = cc.find("registerlayer/aninode/givejinbi")
         let registerbtn = cc.find("registerlayer/aninode/registerbtn")
         let aninode = cc.find("registerlayer/aninode")
+        if (hqq.app.pinpai != "xinsheng" ){
+            hqq.btnLoad(registerbtn, "base/language/" + hqq.language + "/img/registerbtn")
+        }
         let closebtn = cc.find("registerlayer/aninode/p_close")
         if (hqq.app.pinpai == "fuxin" ) {
             registerbtn.active = false

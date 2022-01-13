@@ -63,6 +63,7 @@ export default class NewClass extends cc.Component {
     game_gold = 0 // 余额
     showBaopeiTip = false
     payment_id = 1 // 极速充值payment_id
+    amount_list = []//常用金额
     onLoad () {
         this.app = cc.find('Canvas/Main').getComponent('payMain');
         //请求支付宝
@@ -78,6 +79,7 @@ export default class NewClass extends cc.Component {
             this.fetchgetApplyReimburseInfo()
         }
         this.fetchgetHighSpeedTransferPayRange()
+        cc.systemEvent.on('closeRechargeHistory',this.fetchgetHighSpeedTransferPayRange.bind(this))
     }
     setAmount() {
         this.app.showAlert("请点选充值金额")
@@ -91,7 +93,7 @@ export default class NewClass extends cc.Component {
             if(response.status == 0){
                 let discount_rate = response.data.discount_rate
                 self.results = response.data.pq_pay;
-                this.setInterval(discount_rate.jisu_recharge)
+                this.setDiscount_rate(discount_rate.jisu_recharge)
                 //验证有没有绑卡
                 this.fetchIndex()
                 self.current = self.results[0];
@@ -114,16 +116,17 @@ export default class NewClass extends cc.Component {
             if(response.status == 0){
                 //删除旧的选项
                 this.neikuagn.removeAllChildren()
-                console.log(response.data.amount_list)
+                this.amount_list = response.data.amount_list
+                console.log("更新常用金额",response.data.amount_list,this.amount_list)
                 if(response.data.amount_list.length > 18){
                     response.data.amount_list= response.data.amount_list.slice(0,18)
-                    console.log(response.data.amount_list)
                 }
                 response.data.amount_list.forEach((e)=>{
                     var node = cc.instantiate(this.btnNum)
                     node.getComponent("payBtnNum").init(e.amount,this.addGold.bind(this),e.id)
                     this.neikuagn.addChild(node)
                 })
+                
             }else{
                 self.app.showAlert(response.msg)
             }
@@ -157,7 +160,7 @@ export default class NewClass extends cc.Component {
             self.app.showAlert(`${Language_pay.Lg.ChangeByText('网络错误')}${errstatus}`)
         })
     }
-    setInterval(discount_rate_item) {
+    setDiscount_rate(discount_rate_item) {
         let percent = 0
         let minAmount = 0
         let maxAmount = 0
@@ -386,5 +389,8 @@ export default class NewClass extends cc.Component {
             //修改界面初始数据
             changeData:false
         })
+    }
+    onDestroy(){
+        cc.systemEvent.off('closeRechargeHistory')
     }
 }

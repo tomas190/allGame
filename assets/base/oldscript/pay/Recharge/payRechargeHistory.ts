@@ -124,6 +124,7 @@ export default class NewClass extends cc.Component {
         if(this.ReturnToHall){
             this.node.destroy();
         }
+        cc.systemEvent.emit("closeRechargeHistory");
     }
 
     pageUp(){

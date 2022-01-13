@@ -91,7 +91,11 @@ let hqqViewCtr = {
                     return;
                 }
                 this.nodelist[nodename] = node;
-                node.getComponent(script).init(data)
+                let comp = node.getComponent(script);
+                if(!comp){
+                    comp = node.addComponent(script);
+                }
+                comp.init(data)
                 if (ispersist) {
                     cc.game.addPersistRootNode(node);
                 }
@@ -115,7 +119,7 @@ let hqqViewCtr = {
         }
     },
     init() {
-        this.oldpinpailist = ["test","fuxin","xingui","debi","xingba","nineone","xinsheng",
+        this.oldpinpailist = ["test","fuxin","xingui","xingba","nineone","xinsheng",
                               "xinhao","xinlong","huangshi","juding","huaxing","ninetwo","tianqi"];
 
         hqq.eventMgr.register(hqq.eventMgr.showSamlllayer, "hqqViewCtr", this.showSmallsublayer.bind(this))
@@ -307,14 +311,22 @@ let hqqViewCtr = {
         let scriptname = this.config.aga.scriptName
         this.showLayer(path, scriptname, data, this.netpanelIndex)
     },
-    showPayActivityWeb(data){
-        let path = this.config.payactivityweb.path
+    showPayActivityWeb(data,forcedelete=false,prefabpath = "",script="" ){
+        let path = this.config.payactivityweb.path;
+        if(prefabpath){
+            path = prefabpath;
+        }
         let nodename = path.substring(path.lastIndexOf('/') + 1)
         let payactivityweb = null;
         if (cc.director.getScene() && cc.director.getScene().getChildByName(nodename)) {
             payactivityweb = cc.director.getScene().getChildByName(nodename)
         }
-        if( !data ){
+        if(forcedelete){
+            if(cc.isValid(payactivityweb)){
+                payactivityweb.destroy();
+            }
+        }
+        else if( !data ){
             if(cc.isValid(payactivityweb)){
                 payactivityweb.active = false;
                 // payactivityweb.destroy();
@@ -360,7 +372,11 @@ let hqqViewCtr = {
                 payactivityweb.active = true;
                 setpayactivityweb(payactivityweb);
             } else{
-                cc.resources.load(path, cc.Prefab, (err, prefab) => {
+                let tempRes = cc.resources;
+                if(prefabpath){
+                    tempRes = hqq["hall_"+hqq.app.pinpai];
+                }
+                tempRes.load(path, cc.Prefab, (err, prefab) => {
                     if (err) {
                         console.log(err)
                         hqq.logMgr.logerror(err)
@@ -372,6 +388,11 @@ let hqqViewCtr = {
                     }else{
                         node.destroy();
                         return;
+                    }
+                    if(script){
+                        if(!node.getComponent(script)){
+                            node.addComponent(script);
+                        }
                     }
                     setpayactivityweb(node);
                 })

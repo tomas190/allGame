@@ -19,7 +19,7 @@ let appLogin = {
             + ",osMainVersion:" + cc.sys.osMainVersion
             + ",Cocos Creator v" + cc.ENGINE_VERSION;
 
-        this.hallversionList = [ "test","debi","xingba","nineone","xinhao","huangshi","tianqi"];
+        this.hallversionList = [ "test","xingba","nineone","xinhao","huangshi","tianqi"];
         this.proxyversionList = [ "test"];
         this.IMversionList = [];
         this.payversionList = [ "test","debi","xingba","nineone","xinhao","huangshi","chaofan"];
@@ -175,6 +175,7 @@ let appLogin = {
         cc.game.on(cc.game.EVENT_SHOW, function () {
             cc.audioEngine.resumeMusic();
             cc.audioEngine.resumeAllEffects();
+            hqq.eventMgr.dispatch(hqq.eventMgr.eventShowToSetHall);
         });
     },
     /** 密码本解密 */
@@ -334,6 +335,9 @@ let appLogin = {
     /** 请求最快的select服务器 */
     requestFastestSelectServer() {
         let urllist = hqq.localStorage.globalGet(hqq.app.codeBookKey)
+        if(CC_DEBUG && hqq.app.huanjin === "dev" ){
+            urllist = ["http://select.539316.com/Get/EntryHosts?mode=dev"]
+        }
         hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, hqq.getTip("showtip55"))
         let hasreceive = false;
         if (hqq.app.selectServerIndex) {
@@ -363,7 +367,7 @@ let appLogin = {
                     }
                 }
                 if (hqq.app.huanjin == "dev" && hqq.app.hotServer.length == 0) {
-                    hqq.app.hotServer = ["http://upgrade.539316.com"]
+                    hqq.app.hotServer = ["http://upgrade.0717996.com"]
                 }
                 hqq.localStorage.globalSet(hqq.app.hotServerKey, hqq.app.hotServer)
                 hqq.localStorage.globalSet(hqq.app.serverListKey, hqq.app.serverList);
@@ -420,7 +424,7 @@ let appLogin = {
         hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, hqq.getTip("showtip57"))
         cc.director.preloadScene("hall");
         let callback = (data, murl) => {
-            this.log(" getserverinfo callback", data)
+            this.log(" getserverinfo callback", data," murl=",murl)
             if (data.code === 200) {
                 this.serverinfoTryIndex = 0
                 hqq.app.remoteSeverinfo = data.msg;
@@ -432,7 +436,7 @@ let appLogin = {
             }
         }
         let failcallback = (status, forcejump, url, err, readyState) => {
-            hqq.logMgr.log("获取服务器信息失败，重新刷选select线路", status, forcejump, err, readyState)
+            hqq.logMgr.log("获取服务器信息失败，重新刷选select线路", status, forcejump, err, readyState,url)
             hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, hqq.getTip("showtip58") + status + ",err:" + err)
             if (hqq.app.serverList[this.serverinfoTryIndex]) {
                 let newserver = hqq.app.serverList[this.serverinfoTryIndex]
@@ -443,6 +447,11 @@ let appLogin = {
             }
         }
         let endurl = hqq.app.remotePath + hqq.app.remoteGetSeverInfo + "?platform_key=" + hqq.app.remoteToken + "&package_name=" + hqq.app.packgeName + "&os=" + hqq.app.os;
+        cc.log("endurl=",endurl)
+        if(CC_DEBUG && hqq.app.huanjin === "dev" ){
+            endurl = hqq.app.remotePath + hqq.app.remoteGetSeverInfo + "?platform_key=" + hqq.app.remoteToken + "&package_name=" + "com.test.online.android" + "&os=" + hqq.app.os;
+            cc.log("======================endurl=",endurl)
+        }
         hqq.http.sendXMLHttpRequest({
             method: "GET",
             urlto: url,
@@ -580,6 +589,10 @@ let appLogin = {
                             delete hqq.subGameList["sbty2"];
                             delete hqq.subGameList["zrsx1"];
                             delete hqq.subGameList["zrsx2"];
+                            delete hqq.subGameList["cdx"];
+                            delete hqq.subGameList["cylhd"];
+                            delete hqq.subGameList["ygxb"];
+                            delete hqq.subGameList["zhibo"];
                         } else if(hqq.app.pinpai == "nineone"||hqq.app.pinpai == "huaxing" ){
                             // delete hqq.subGameList["hbsl"];
                             delete hqq.subGameList["cyqp"];
@@ -1033,6 +1046,58 @@ let appLogin = {
         this.log('login2', hqq.app.server)
         hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, hqq.getTip("showtip64"));
         if (hqq.webUpAgent && hqq.webAcconunt && hqq.webDeviceid) { // 网页版
+            // 第三方游戏列表
+            let thirdgamelist = [
+                "5b1f3a3cb76a591e7f25173",//真人视讯
+
+                "569a62be7ff123m117d446aa",//派彩
+                
+                "5b1f3a3cb76a591e7f25179",//沙巴体育
+                "5b1f3a3cb76a451e211109",//三昇体育
+                
+                "5b1f3a3cb76a591e7f251736",//AG游戏
+                "5b1f3a3cb1005251736",//PG游戏
+                "5b1f3a3cb76a451e210629",//PG2游戏
+                "5b1f3a3cb76a591e7f251735",//CQ9游戏
+                "5b1f3a3cb76a451e7f251739",//JDB游戏
+                "5b1f3a3cb76a591e7f251737",//PT游戏
+                "5b1f3a3cb76a451e210821",//MG游戏
+                "5b1f3a3cb76a451e210822",//QT游戏
+                "5b1f3a3cb76a451e211110",//PP游戏
+                // "5b1f3a3cb76a451e211229",//PQ游戏
+            ]
+            let remotedata = null;
+            // 取得运维工具资料
+            for (let i = 0; i < hqq.app.remoteGamelist.length; i++) {
+                if (hqq.webGameID === hqq.app.remoteGamelist[i].game_id) {
+                    remotedata = hqq.app.remoteGamelist[i];
+                    break;
+                }
+            }
+            if(remotedata){
+                // 没开放此游戏
+                if(remotedata.open === 0 ){
+                    hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, {
+                        type: 10,
+                        msg: hqq.getTip("b2bwebtip1"),
+                    })
+                    hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, hqq.getTip("b2bwebtip1") )
+                    return;
+                }
+            }
+            for (let i = 0; i < thirdgamelist.length; i++) {
+                // 第三方游戏
+                if (hqq.webGameID === thirdgamelist[i]) {
+                    hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, {
+                        type: 10,
+                        msg: hqq.getTip("b2bwebtip1"),
+                        horizontalAlign:cc.Label.HorizontalAlign.CENTER
+                    })
+                    hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, hqq.getTip("b2bwebtip1") )
+                    return;
+                }
+            }
+
             hqq.gameGlobal.player.account_name = hqq.webAcconunt
             hqq.gameGlobal.player.account_pass = hqq.webAcconuntPass
             hqq.app.deviceID = hqq.webDeviceid
@@ -1119,7 +1184,9 @@ let appLogin = {
             this.log(" loginWithUUID callback", data, url)
             if (data.code !== 200) {
                 this.errinfo += "uuidLogin 失败:" + data.code + ",msg:" + data.msg + ";"
-                this.firstLogin();
+                if(!hqq.webAcconunt){
+                    this.firstLogin();
+                }
             } else {
                 this.setPlayerInfo(data)
             }
@@ -1165,7 +1232,7 @@ let appLogin = {
                         hqq.app.pinpai == "juding" || hqq.app.pinpai == "nineone" ||
                         hqq.app.pinpai == "huaxing" || hqq.app.pinpai == "ninetwo" ||
                         hqq.app.pinpai == "huangshi" || hqq.app.pinpai == "chaofan" ||
-                        hqq.app.pinpai == "tianqi" )
+                        hqq.app.pinpai == "tianqi" || hqq.app.pinpai == "wansheng" )
                     {
                         if(hqq.app.getGeneralAgency() == hqq.app.proxyUserID){
                             hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, {
@@ -1231,7 +1298,7 @@ let appLogin = {
     },
     // 获取上级代理id
     getOnlineCode(trynum, server) {
-        hqq.logMgr.log("getOnlineCode", trynum)
+        hqq.logMgr.log("getOnlineCode", trynum , " hqq.app.clipboard=",hqq.app.clipboard)
         if (hqq.app.clipboard == "" || !hqq.app.clipboard) {
             hqq.app.clipboard = 'empty'
         }
@@ -1248,6 +1315,7 @@ let appLogin = {
             if (response.code == 200) {
                 hqq.gameGlobal.player.code = response.msg.proxy_user_id
                 hqq.gameGlobal.player.id = response.msg.account_name
+                hqq.logMgr.log("getOnlineCode sucess hqq.gameGlobal.player.code", hqq.gameGlobal.player.code , " hqq.gameGlobal.player.id=",hqq.gameGlobal.player.id)
                 this.firstLogin()
             } else {
                 hqq.logMgr.log('getOnlineCode没有获取到玩家code,自动登录,' + urlto + "," + JSON.stringify(response) + "," +
@@ -1257,7 +1325,8 @@ let appLogin = {
                     if( hqq.app.pinpai == "fuxin" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "juding" ||
                         hqq.app.pinpai == "nineone" || hqq.app.pinpai == "huaxing" ||
                         hqq.app.pinpai == "ninetwo" || hqq.app.pinpai == "huangshi" ||
-                        hqq.app.pinpai == "chaofan" || hqq.app.pinpai == "tianqi" )
+                        hqq.app.pinpai == "chaofan" || hqq.app.pinpai == "tianqi" ||
+                        hqq.app.pinpai == "wansheng" )
                     {
                         hideexitbtn = true;
                     }
@@ -1583,6 +1652,7 @@ let appLogin = {
         this.updatefininshed = true;
         if (hqq.webGameID) {
             let mcallback = (subdata) => {
+                this.webgamedelete();
                 if (subdata == "hbsl" || subdata == 'zrsx1' || subdata == 'zrsx2'
                     || subdata == 'pccp' || subdata == 'sbty1' || subdata == 'sbty2'
                     || subdata == 'fctbj') { //  真人视讯 红包扫雷 派彩 沙巴体育 发财推币机 竖屏
@@ -1626,28 +1696,14 @@ let appLogin = {
                     }
                 }
                 if (hqq.subGameList[subdata] && hqq.subGameList[subdata].hasRes) {
-                    cc.assetManager.loadBundle( subdata + "Res" , (err2)=>{
-                        if(err2){
-                            cc.assetManager.loadBundle(subdata , (err) => {
-                                if (err) {
-                                    return cc.log('load subpackage script fail.', subdata + "Res" );
-                                }
-                                hqq[subdata] = cc.assetManager.getBundle(subdata  );
-                                cc.log('load subpackage script successfully.', subdata );
-                                this.loadNextScene(subdata);
-                            });
-                            return;
+                    cc.assetManager.loadBundle(subdata , (err3) => {
+                        if (err3) {
+                            return cc.log('load subpackage script fail.', subdata );
                         }
-                        hqq[subdata + "Res"] = cc.assetManager.getBundle(subdata + "Res"  );
-                        cc.assetManager.loadBundle(subdata , (err3) => {
-                            if (err3) {
-                                return cc.log('load subpackage script fail.', subdata );
-                            }
-                            hqq[subdata] = cc.assetManager.getBundle(subdata  );
-                            cc.log('load subpackage script successfully.', subdata );
-                            this.loadNextScene(subdata);
-                        });
-                    })
+                        hqq[subdata] = cc.assetManager.getBundle(subdata  );
+                        cc.log('load subpackage script successfully.', subdata );
+                        this.loadNextScene(subdata);
+                    });
                 } else {
                     cc.log('load subpackage script successfully.', subdata);
                     this.loadNextScene(subdata);
@@ -1664,27 +1720,30 @@ let appLogin = {
                 }
             }
         } else {
+            if(hqq.webAcconunt){
+                this.webgamedelete();
+            }
             hqq.eventMgr.dispatch(hqq.eventMgr.showJumpScene,"hall");
         }
     },
     loadNextScene(enname) {
         if (hqq.app.pinpai == "fuxin" ) {
-            cc.director.preloadScene(this.subGameList[enname].fuxin_lanchscene, this.preloadSceneOnProgress, (err, scene) => {
+            cc.director.preloadScene(hqq.subGameList[enname].fuxin_lanchscene, this.preloadSceneOnProgress, (err, scene) => {
                 if (err) {
                     cc.log(err)
                     hqq.logMgr.logerror(err)
                     return
                 }
-                cc.director.loadScene(this.subGameList[enname].fuxin_lanchscene);
+                cc.director.loadScene(hqq.subGameList[enname].fuxin_lanchscene);
             })
         } else {
-            cc.director.preloadScene(this.subGameList[enname].lanchscene, this.preloadSceneOnProgress, (err, scene) => {
+            cc.director.preloadScene(hqq.subGameList[enname].lanchscene, this.preloadSceneOnProgress, (err, scene) => {
                 if (err) {
                     cc.log(err)
                     hqq.logMgr.logerror(err)
                     return
                 }
-                cc.director.loadScene(this.subGameList[enname].lanchscene);
+                cc.director.loadScene(hqq.subGameList[enname].lanchscene);
             })
         }
     },
@@ -2262,6 +2321,55 @@ let appLogin = {
             failcallback: failcallback,
             needJsonParse: true,
         })
+    },
+    // b2bweb网页版 删除不显示游戏
+    webgamedelete(){
+        delete hqq.subGameList["zrsx1"];
+        delete hqq.subGameList["zrsx2"];
+
+        delete hqq.subGameList["pccp"];
+
+        delete hqq.subGameList["sbty1"];
+        delete hqq.subGameList["sbty2"];
+        delete hqq.subGameList["sanshengtiyu"];
+
+        delete hqq.subGameList["ag"];
+        delete hqq.subGameList["pg"];
+        delete hqq.subGameList["pg2"];
+        delete hqq.subGameList["cq9"];
+        delete hqq.subGameList["jdb"];
+        delete hqq.subGameList["pt"];
+        delete hqq.subGameList["mg"];
+        delete hqq.subGameList["qt"];
+        delete hqq.subGameList["pp"];
+        // delete hqq.subGameList["pq"];
+        let sortarray = []
+        for (let k in hqq.subGameList) {
+            if (!hqq.checkIsAgaSubgame(k)) {
+                sortarray.push(hqq.subGameList[k])
+            }
+        }
+        for (let k in hqq.oldGameList) {
+            for (let i = 0; i < hqq.app.remoteGamelist.length; i++) {
+                if (hqq.oldGameList[k].game_id == hqq.app.remoteGamelist[i].game_id) {
+                    hqq.oldGameList[k].remoteData = hqq.app.remoteGamelist[i]
+                    break;
+                }
+            }
+        }
+        sortarray.sort(function (a, b) {
+            if (b.remoteData && a.remoteData) {
+                return b.remoteData.sort - a.remoteData.sort
+            }
+        })
+        for (let k in hqq.subGameList) {
+            for (let i = 0; i < sortarray.length; i++) {
+                if (hqq.subGameList[k].game_id == sortarray[i].game_id && k == sortarray[i].enname && !hqq.checkIsAgaSubgame(k)) {
+                    hqq.subGameList[k].hallid = i
+                    break;
+                }
+            }
+        }
     },
 }
 

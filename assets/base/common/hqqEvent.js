@@ -56,6 +56,9 @@ let hqqEvent = {
     showKeFuPanel:64, // 显示或关闭客服介面
     showPersonalCenter:65, // 显示或关闭个人中心介面
 
+    eventShowToSetHall: 66, //后台回游戏  界面整理
+    showLeaderBoard:67, // 排行榜
+
     init() {
         this.mapReciver = {};
         return this;

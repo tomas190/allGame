@@ -458,6 +458,8 @@ export namespace Language_pay {
                 bundleName = `pay_tianqi`
             }else if(gHandler.gameGlobal.pay.package_id == 22){
                 bundleName = `pay_jiaxing`
+            }else if(gHandler.gameGlobal.pay.package_id == 2){
+                bundleName = `pay_jincheng`
             }else{
                 bundleName = `pay_test`
             }

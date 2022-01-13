@@ -69,6 +69,58 @@ let commonTools = {
                     }
                 })
 
+            } else if (hqq.app.pinpai == "juding") {
+                hqq["hall_juding"].load(`juding/imhead/im_head`, cc.SpriteAtlas, (err, t) => {
+                    if (t) {
+                        if( cc.isValid( headsprite ) )
+                        {
+                            this.headRes = t
+                            var spriteFrame = t.getSpriteFrame(`Avatar` + headid)
+                            if (spriteFrame) {
+                                headsprite.spriteFrame = spriteFrame;
+                            } else {
+                                headsprite.spriteFrame = t.getSpriteFrame(`Avatar0`);
+                            }
+                            if (size) {
+                                headsprite.node.width = size
+                                headsprite.node.height = size
+                            }
+                        }
+                    }
+                })
+            } else if(hqq.app.pinpai == "wansheng") {
+                hqq["hall_wansheng"].load(`wansheng/imhead/im_head`, cc.SpriteAtlas, (err, t) => {
+                    if (t) {
+                        if( cc.isValid( headsprite ) )
+                        {
+                            this.headRes = t
+                            var spriteFrame = t.getSpriteFrame(`Avatar` + headid)
+                            if (spriteFrame) {
+                                headsprite.spriteFrame = spriteFrame;
+                            } else {
+                                headsprite.spriteFrame = t.getSpriteFrame(`Avatar0`);
+                            }
+                            if (size) {
+                                headsprite.node.width = size
+                                headsprite.node.height = size
+                            }
+                        }
+                    }
+                })
+            } else if (hqq.app.pinpai == "debi") {
+                let headstr = "x"
+                if (size == 101) {
+                    headstr = "d"
+                }
+                let headconverid = [0, 0, 0, 1, 1, 1, 2, 2, 3, 3]
+                cc.log("loadHeadRes headid=", headid, " head[i]=", headid)
+                hqq["hall_debi"].load(`debi/imhead/Avatar` + headid, cc.SpriteFrame, (err, t) => {
+                    if (cc.isValid(headsprite)) {
+                        headsprite.spriteFrame = t;
+                        headsprite.node.width = size == null ? 155 : size
+                        headsprite.node.height = size == null ? 155 : size
+                    }
+                })
             } else {
                 cc.resources.load(`/head/im_head`, cc.SpriteAtlas, (err, t) => {
                     if( cc.isValid( headsprite ) )

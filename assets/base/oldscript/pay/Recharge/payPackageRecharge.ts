@@ -7,7 +7,7 @@ export default class NewClass extends cc.Component {
     onLoad() {
         //渠道id 品牌对照
         //package_id = 1 (test)
-        //package_id = 2 (debi)
+        //package_id = 2 (jincheng)
         //package_id = 3 (xingba)
         //package_id = 6 (nineone)
         //package_id = 8 (xinsheng)

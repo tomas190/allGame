@@ -168,9 +168,9 @@ cc.Class({
             hqq.setSprite(this.progressnode, { path: "base/xinsheng/img/panel1", active: false })
             hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/xinsheng/img/panel" })
         } else if (hqq.app.pinpai == "xinlong") {
-            hqq.setSprite(background, { Res:hqq["hall_"+hqq.app.pinpai], path: "xinlong/bigimg/back" })
-            // hqq.setSprite(this.progressnode, { Res:hqq["hall_"+hqq.app.pinpai], path: "base/xinsheng/img/panel1", active: false })
-            // hqq.setSprite(this.progressnode.getChildByName('bar'), { Res:hqq["hall_"+hqq.app.pinpai], path: "base/xinsheng/img/panel" })
+            hqq.setSprite(background, { path: "bigimg/xinlong/back" })
+            hqq.setSprite(this.progressnode, { path: "base/xinlong/img/jd1", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/xinlong/img/jd2" })
         } else if (hqq.app.pinpai == "huangshi") {
             hqq.setSprite(background, { path: "bigimg/huangshi/bg" })
             hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
@@ -233,10 +233,20 @@ cc.Class({
             barEff.active = false;
         } else if(hqq.app.pinpai == "wansheng") {
             hqq.setSprite(background, { path: "bigimg/wansheng/loading" })
-            hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
-            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
+            this.progressnode.getComponent(cc.ProgressBar).totalLength = 745;
+            hqq.setSprite(this.progressnode, { path: "base/wansheng/img/jd1", active: false , height:40})
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/wansheng/img/jd2", x: -370 })
             this.label.node.color = cc.color("#350058");
             this.apkversion.color = cc.color("#350058");
+        } else if(hqq.app.pinpai == "debi") {
+            hqq.setSprite(background, { path: "bigimg/debi/d"});
+            hqq.setSprite(this.progressnode, { path: "base/debi/img/ld1", active: false })
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/debi/img/ld2" })
+        } else if (hqq.app.pinpai == "jiaxing") {
+            hqq.setSprite(background, { path: "bigimg/jiaxing/bg" })
+            hqq.setSprite(this.progressnode, { path: "bigimg/jiaxing/jiazbg", active: false , y:-343})
+            hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "bigimg/jiaxing/jiaz" })
+            this.progressicon = hqq.addNode(this.progressnode, { path: "base/jiaxing/img/touzi", x:-385.5 })
         } else {
             hqq.setSprite(this.progressnode, { path: "base/img/jiazbg", active: false })
             hqq.setSprite(this.progressnode.getChildByName('bar'), { path: "base/img/jiaz" })
@@ -376,6 +386,11 @@ cc.Class({
 
         } else if(hqq.app.pinpai == "wansheng") {
             hqq.addNode(this.bg,{path:"base/wansheng/wansheng_logo", scale:1.8, widget:{top: 30, right: 30}});
+        } else if(hqq.app.pinpai == "debi") {
+            hqq.addNode(this.bg,{path:"base/debi/logo"});
+            hqq.addNode(this.bg,{path:"base/debi/zi", widget:{top: 30, left: 40}});
+        } else if(hqq.app.pinpai == "jiaxing") {
+            hqq.addNode(this.bg,{path:"base/language/"+ hqq.language + "/jiaxing/logo",scale:1.8});
         } else {
             cc.resources.loadDir("bigimg/language/" + hqq.language + "/pinpai/" + hqq.app.pinpai, sp.SkeletonData, (err, Data) => {
                 if (err) {
@@ -400,7 +415,7 @@ cc.Class({
         this.ani.setCompleteListener(null);
         this.layer.active = true;
         if (hqq.isDebug) {
-            cc.director.loadScene('hall')
+            hqq.eventMgr.dispatch(hqq.eventMgr.showJumpScene,"hall");
         } else {
             this.runApplogin()
         }
@@ -756,11 +771,68 @@ cc.Class({
         cc.log("uncrypted.device_id", uncrypted.device_id)
         cc.log("uncrypted.superior_agent", uncrypted.superior_agent)
         cc.log("uncrypted.game_id", uncrypted.game_id)
+        cc.log("uncrypted.package_name", uncrypted.package_name)
         hqq.webAcconunt = uncrypted.account
         hqq.webAcconuntPass = uncrypted.password
         hqq.webDeviceid = uncrypted.device_id
         hqq.webUpAgent = uncrypted.superior_agent
         hqq.webGameID = uncrypted.game_id
+        hqq.app.packgeName = uncrypted.package_name;
+        if (hqq.app.packgeName.match("test")) {
+            hqq.app.packageID = 1;
+            hqq.app.pinpai = "tetst";
+        } else if (hqq.app.packgeName.match("debi")) {
+            hqq.app.packageID = 2;
+            hqq.app.pinpai = "debi";
+        } else if (hqq.app.packgeName.match("xingba")) {
+            hqq.app.packageID = 3;
+            if (this.huanjin == "dev") {
+                hqq.app.packageID = 5;
+            }
+            hqq.app.pinpai = "xingba";
+        } else if (hqq.app.packgeName.match("nineone") && (this.huanjin=="pre"||this.huanjin=="online")) {
+            hqq.app.packageID = 6;
+            hqq.app.pinpai = "nineone";
+        } else if (hqq.app.packgeName.match("nineone") && this.huanjin=="dev" ) {
+            hqq.app.packageID = 7;
+            hqq.app.pinpai = "nineone";
+        } else if (hqq.app.packgeName.match("xinsheng")) {
+            hqq.app.packageID = 8;
+            hqq.app.pinpai = "xinsheng";
+        } else if (hqq.app.packgeName.match("xingui")) {
+            hqq.app.packageID = 9;
+            hqq.app.pinpai = "xingui";
+        } else if (hqq.app.packgeName.match("fuxin")) {
+            hqq.app.packageID = 10;
+            hqq.app.pinpai = "fuxin";
+        } else if (hqq.app.packgeName.match("xinhao")) {
+            hqq.app.packageID = 11;
+            hqq.app.pinpai = "xinhao";
+        } else if (hqq.app.packgeName.match("xinlong")) {
+            hqq.app.packageID = 12;
+            hqq.app.pinpai = "xinlong";
+        } else if (hqq.app.packgeName.match("huangshi")) {
+            hqq.app.packageID = 13;
+            hqq.app.pinpai = "huangshi";
+        } else if (hqq.app.packgeName.match("juding")) {
+            hqq.app.packageID = 15;
+            hqq.app.pinpai = "juding";
+        } else if (hqq.app.packgeName.match("huaxing")) {
+            hqq.app.packageID = 18;
+            hqq.app.pinpai = "huaxing";
+        } else if (hqq.app.packgeName.match("ninetwo")) {
+            hqq.app.packageID = 16;
+            hqq.app.pinpai = "ninetwo";
+        } else if (hqq.app.packgeName.match("tianqi")) {
+            hqq.app.packageID = 21;
+            hqq.app.pinpai = "tianqi";
+        } else if (hqq.app.packgeName.match("chaofan")) {
+            hqq.app.packageID = 19;
+            hqq.app.pinpai = "chaofan";
+        } else if (hqq.app.packgeName.match("wansheng")) {
+            hqq.app.packageID = 20
+            hqq.app.pinpai = "wansheng";
+        }
         if(uncrypted.language){
             hqq.language = uncrypted.language
         }
@@ -875,6 +947,10 @@ cc.Class({
         if(hqq.app.pinpai === "ninetwo" ){
             // console.log("this.progressBar.progress=",this.progressBar.progress)
             // this.ninetwovideo.evaluateJS(`setProgressBar(${JSON.stringify(this.progressBar.progress)})`);
+            if(cc.isValid(this.progressicon)){
+                this.progressicon.x = -385.5 + (this.progressBar.progress * this.progressnode.width);
+            }
+        } else if(hqq.app.pinpai === "jiaxing" ){
             if(cc.isValid(this.progressicon)){
                 this.progressicon.x = -385.5 + (this.progressBar.progress * this.progressnode.width);
             }

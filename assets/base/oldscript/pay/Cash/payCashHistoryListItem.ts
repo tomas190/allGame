@@ -56,7 +56,7 @@ export default class NewClass extends cc.Component {
             this.exchangeLabel.string  = `${this.app.config.toDecimal1(data.handling_fee*100)}%`;
         }else if(data.type == 4 || data.type == 5){
             this.exchangeLabel.string  = '0.0%';
-        }else if(data.type == 1 || data.type == 2) {
+        }else if(data.type == 1 || data.type == 2 || data.type ==8) {
             //平台费率➕渠道费率
             var sum = Number(data.results.platform_rate) + Number(data.results.channel_rate);
             this.exchangeLabel.string  = `${this.app.config.toDecimal1(sum*100)}%`;

@@ -45,7 +45,7 @@ export default class NewClass extends cc.Component {
     }
     setLanguageResource(){
         let src = Language_pay.Lg.getLgSrc()
-
+        
         let btn1= cc.find('Canvas/CashAlert/popWindowBG/btn1')
         if(this.app.UrlData.package_id == 8 || this.app.UrlData.package_id == 10){
             this.app.loadIconLg(`${src}/font/queding`,btn1.children[0])

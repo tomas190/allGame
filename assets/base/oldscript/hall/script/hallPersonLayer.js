@@ -229,41 +229,128 @@ cc.Class({
             })
 
         } else if (hqq.app.pinpai == "xinlong") {
-            let xpath = "base/xinsheng/img/"
-            let xlpath = "language/" + hqq.language + "/xinlong/"
-            hqq.setWidget(headfram3, { left: 83 })
-            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: "xinlong/img/btnclose", widget: { left: 0, top: 0 } })
-            hqq.setSprite(background, { Res:hqq["hall_"+hqq.app.pinpai],path: "xinlong/bigimg/personback2", widget: { left: 0, right: 0, top: 0, bottom: 0 } })
-            hqq.setSprite(title_personal, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "grxx", widget: { top: 15, left: 330 } })
-            hqq.setSprite(personal_form, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "personform" }) // , position: { x: -149, y: 20 }
-            hqq.setBtn(changebt, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "changebt", widget: { left: 80 } })
-            hqq.setBtn(btn_copy, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "btn_copy" }) // , position: { x: 117, y: 120 }
-            hqq.setBtn(phone_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "btn_bind" }) // , position: { x: 117, y: 25 }
-            hqq.setBtn(alipay_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "btn_bind" })
-            hqq.setBtn(yinghangka_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "btn_bind" }) // , position: { x: 130, y: -170 }
-            hqq.setBtn(qiehuan, { path: xpath + "btnback" })
-            let node = new cc.Node();
-            hqq.setSprite(node, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "qhzh",y:10 })
-            qiehuan.addChild(node)
-            hqq.setSprite(txt_se, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "txt_se" })
-            hqq.setSprite(txt_bgm, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "txt_bgm" })
-            hqq["hall_"+hqq.app.pinpai].load(xlpath + "opensp", cc.SpriteFrame, (err, frame) => {
+            // let xpath = "base/xinsheng/img/"
+            // let xlpath = "language/" + hqq.language + "/xinlong/"
+            // hqq.setWidget(headfram3, { left: 83 })
+            // hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: "xinlong/img/btnclose", widget: { left: 0, top: 0 } })
+            // hqq.setSprite(background, { Res:hqq["hall_"+hqq.app.pinpai],path: "xinlong/bigimg/personback2", widget: { left: 0, right: 0, top: 0, bottom: 0 } })
+            // hqq.setSprite(title_personal, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "grxx", widget: { top: 15, left: 330 } })
+            // hqq.setSprite(personal_form, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "personform" }) // , position: { x: -149, y: 20 }
+            // hqq.setBtn(changebt, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "changebt", widget: { left: 80 } })
+            // hqq.setBtn(btn_copy, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "btn_copy" }) // , position: { x: 117, y: 120 }
+            // hqq.setBtn(phone_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "btn_bind" }) // , position: { x: 117, y: 25 }
+            // hqq.setBtn(alipay_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "btn_bind" })
+            // hqq.setBtn(yinghangka_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "btn_bind" }) // , position: { x: 130, y: -170 }
+            // hqq.setBtn(qiehuan, { path: xpath + "btnback" })
+            // let node = new cc.Node();
+            // hqq.setSprite(node, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "qhzh",y:10 })
+            // qiehuan.addChild(node)
+            // hqq.setSprite(txt_se, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "txt_se" })
+            // hqq.setSprite(txt_bgm, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "txt_bgm" })
+            // hqq["hall_"+hqq.app.pinpai].load(xlpath + "opensp", cc.SpriteFrame, (err, frame) => {
+            //     if (err) {
+            //         cc.log("加载图片失败", err)
+            //         return;
+            //     }
+            //     if(!cc.isValid(this.node))return;
+            //     yinyuetoggle.checkMark.spriteFrame = frame;
+            //     yinxiaotoggle.checkMark.spriteFrame = frame;
+            // })
+            // hqq["hall_"+hqq.app.pinpai].load(xlpath + "closesp", cc.SpriteFrame, (err, frame) => {
+            //     if (err) {
+            //         cc.log("加载图片失败", err)
+            //         return;
+            //     }
+            //     if(!cc.isValid(this.node))return;
+            //     yinyuetoggle.target.getComponent(cc.Sprite).spriteFrame = frame;
+            //     yinxiaotoggle.target.getComponent(cc.Sprite).spriteFrame = frame;
+            // })
+
+            let xpath = "base/xinlong/img/"
+            let blpath = "base/language/" + hqq.language + "/xinlong/"
+            let hpath = "xinlong/img/"
+            let hbpath = "xinlong/bigimg/"
+            let hlpath = "language/" + hqq.language + "/xinlong/"
+            hqq.setSprite(background, { Res:hqq["hall_"+hqq.app.pinpai],path: hbpath + "jd_personal_bg" ,widget: { left: 0, right: 0, top: 0, bottom: 0 }})
+            // hqq.addNode(background, { path: xpath + "bg", widget: { right: 0, left: cc.winSize.width / 2, }, anchorX: 1, scaleX: -1, type: cc.Sprite.Type.SLICED })
+            hqq.setSprite(title_personal, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_title_personal", widget: { top: 11,left:162 } })
+            cc.find("personallayer/person/personal_form/nick").color = cc.color("#546277");
+            cc.find("personallayer/person/personal_form/nick").y = 180;
+            cc.find("personallayer/person/personal_form/nick").x = -50;
+            cc.find("personallayer/person/personal_form/id").color = cc.color("#546277");
+            cc.find("personallayer/person/personal_form/id").y = 90;
+            cc.find("personallayer/person/personal_form/id").x = -50;
+            cc.find("personallayer/person/personal_form/phone").color = cc.color("#546277");
+            cc.find("personallayer/person/personal_form/phone").y = 0;
+            cc.find("personallayer/person/personal_form/phone").x = -50;
+            cc.find("personallayer/person/personal_form/alipay").color = cc.color("#546277");
+            cc.find("personallayer/person/personal_form/alipay").x = -50;
+            cc.find("personallayer/person/personal_form/yinhangka").color = cc.color("#546277");
+            cc.find("personallayer/person/personal_form/yinhangka").x = -50;
+            cc.find("personallayer/person/personal_form/yinhangka").y = -175;
+            hqq.setSprite(personal_form, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_personal_form"})
+
+            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_return", widget: { top: 0, left: 0 } })
+            hqq.setBtn(changebt, { path: xpath + "jd_p_btn_1_2", widget: { left: 90 } })
+            hqq.addNode(changebt, { string:"personch" , fontSize:24,color:cc.color("#94510A"),y:-10,bold:true})
+            hqq.setBtn(btn_copy, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_1" })
+            hqq.addNode(btn_copy, { string:"fz" , fontSize:24,color:cc.color("#94510A"),y:-10,bold:true })
+            hqq.setBtn(phone_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_1" })
+            hqq.addNode(phone_btn_bind, { string: "bd" , fontSize:24,color:cc.color("#94510A"),y:-10,bold:true })
+            hqq.setBtn(alipay_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_1" })
+            hqq.addNode(alipay_btn_bind, { string: "bd" , fontSize:24,color:cc.color("#94510A"),y:-10,bold:true })
+            hqq.setBtn(yinghangka_btn_bind, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_1" })
+            hqq.addNode(yinghangka_btn_bind, { string: "bd" , fontSize:24,color:cc.color("#94510A"),y:-10,bold:true })
+
+            hqq.setBtn(qiehuan, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_2", x: 120 })
+            hqq.addNode(qiehuan, { string:"qiehuan" ,fontSize:24,color:cc.color("#FFFFFF"),y:-10,bold:true})
+
+            hqq.setSprite(txt_se, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_personal_txt_se" ,x:375,y:-61})
+            hqq.setSprite(txt_bgm, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_personal_txt_music",x:375,y:51 })
+
+            hqq.setSprite(headfram3, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_personal_headframe_1",widget: { left: 90 } })
+            yinyuetoggle.node.setPosition(532,46);
+            yinxiaotoggle.node.setPosition(532,-62);
+            
+            hqq["hall_"+hqq.app.pinpai].load(hlpath + "jd_personal_turnOn", cc.SpriteFrame, (err, frame) => {
                 if (err) {
-                    cc.log("加载图片失败", err)
+                    console.log("加载图片失败", err)
                     return;
                 }
                 if(!cc.isValid(this.node))return;
                 yinyuetoggle.checkMark.spriteFrame = frame;
                 yinxiaotoggle.checkMark.spriteFrame = frame;
+                if( hqq.audioMgr && hqq.audioMgr.getBgState()){
+                    yinyuetoggle.node.getChildByName("Background").active = false;
+                } else {
+                    yinyuetoggle.node.getChildByName("Background").active = true;
+                }
+    
+                if( hqq.audioMgr && hqq.audioMgr.getEffectState()){
+                    yinxiaotoggle.node.getChildByName("Background").active = false;
+                } else {
+                    yinxiaotoggle.node.getChildByName("Background").active = true;
+                }
             })
-            hqq["hall_"+hqq.app.pinpai].load(xlpath + "closesp", cc.SpriteFrame, (err, frame) => {
+            hqq["hall_"+hqq.app.pinpai].load(hlpath + "jd_personal_turnOff", cc.SpriteFrame, (err, frame) => {
                 if (err) {
-                    cc.log("加载图片失败", err)
+                    console.log("加载图片失败", err)
                     return;
                 }
                 if(!cc.isValid(this.node))return;
                 yinyuetoggle.target.getComponent(cc.Sprite).spriteFrame = frame;
                 yinxiaotoggle.target.getComponent(cc.Sprite).spriteFrame = frame;
+                if( hqq.audioMgr && hqq.audioMgr.getBgState()){
+                    yinyuetoggle.node.getChildByName("Background").active = false;
+                } else {
+                    yinyuetoggle.node.getChildByName("Background").active = true;
+                }
+    
+                if( hqq.audioMgr && hqq.audioMgr.getEffectState()){
+                    yinxiaotoggle.node.getChildByName("Background").active = false;
+                } else {
+                    yinxiaotoggle.node.getChildByName("Background").active = true;
+                }
             })
 
         } else if (hqq.app.pinpai == "juding" ) {

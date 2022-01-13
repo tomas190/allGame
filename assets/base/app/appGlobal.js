@@ -2,7 +2,7 @@
 let appGlobal = {
     isRelease: true, // 是否是版本发布状态
     /* ------------------------------------------------------------------- */
-    pinpai: "chaofan", // 渠道 test （特斯特） fuxin(富鑫) xingui (新贵) debi （德比） qibao （七宝） xingba （杏吧娱乐） yuyu （渔鱼游戏） nineone （91游戏） xinsheng （新盛更名为大喜发） xinhao (新豪) xinlong(新隆) huangshi(皇室游戏) juding(聚鼎娱乐) huaxing(华兴娱乐) ninetwo(92游戏) tianqi(天启) chaofan(超凡娱乐) wansheng(万盛娱乐)
+    pinpai: "test", // 渠道 test （特斯特） fuxin(富鑫) xingui (新贵) debi （德比） qibao （七宝） xingba （杏吧娱乐） yuyu （渔鱼游戏） nineone （91游戏） xinsheng （新盛更名为大喜发） xinhao (新豪) xinlong(新隆) huangshi(皇室游戏) juding(聚鼎娱乐) huaxing(华兴娱乐) ninetwo(92游戏) tianqi(天启) chaofan(超凡娱乐) wansheng(万盛娱乐) jiaxing(嘉兴娱乐)
     // huanjin: "dev", // dev pre online
     huanjin: "pre", // pre online
     // huanjin: "online", // pre online
@@ -36,7 +36,7 @@ let appGlobal = {
     version: "1.0.0",
 
     // hallVersionKey: "hallVersionKey",
-    hallVersion: "2.0.52",
+    hallVersion: "2.0.70",
 
     secretBookKey: "secretBookKey", // 密码本
     secretBook: "", // 密码本
@@ -123,8 +123,8 @@ let appGlobal = {
         },
         debi: {
             dev: 970374128,
-            pre: 218638346,
-            online: 770256905
+            pre: 366974646,
+            online: 681384141
         },
         qibao: {
             dev: 638044957,
@@ -194,7 +194,7 @@ let appGlobal = {
         tianqi:{
             dev: 455263995,
             pre: 372584699,
-            online: 552856005
+            online: 118990399
         },
         chaofan:{
             dev: 351527366,
@@ -205,6 +205,11 @@ let appGlobal = {
             dev: 968702313,
             pre: 162354480,
             online: 712529050
+        },
+        jiaxing:{
+            dev: 861203458,
+            pre: 217308819,
+            online: 243664910
         },
     },
     versionJson: {}, // version.json
@@ -313,18 +318,20 @@ let appGlobal = {
             this.packageID = 19
         } else if (this.pinpai == "wansheng") {
             this.packageID = 20
+        } else if (this.pinpai == "jiaxing") {
+            this.packageID = 22
         }
         if (hqq.isDebug) {
             if (!this.deviceID) {
                 this.deviceID = "0123456789"
             }
-            if (this.huanjin == 'dev') {
-                this.server = 'http://center.539316.com'
-                this.canHotServer = 'http://upgrade.539316.com'
-            } else if (this.huanjin == 'pre') {
-                this.server = 'https://center.lymrmfyp.com'
-                this.canHotServer = 'https://upgrade.lymrmfyp.com'
-            }
+            // if (this.huanjin == 'dev') {
+            //     this.server = 'http://center.539316.com'
+            //     this.canHotServer = 'http://upgrade.539316.com'
+            // } else if (this.huanjin == 'pre') {
+            //     this.server = 'https://center.lymrmfyp.com'
+            //     this.canHotServer = 'https://upgrade.lymrmfyp.com'
+            // }
         }
         else if (CC_DEBUG) {
             // this.isRelease = false

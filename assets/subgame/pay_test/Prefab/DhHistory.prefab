@@ -50,19 +50,19 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1090,
-      "height": 672
+      "height": 580
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 1
     },
     "_trs": {
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
         667,
-        375,
+        650,
         0,
         0,
         0,
@@ -130,7 +130,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1080,
-      "height": 672
+      "height": 580
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -142,7 +142,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        0,
+        -290,
         0,
         0,
         0,
@@ -200,7 +200,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 1080,
-      "height": 560
+      "height": 460
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -212,7 +212,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        -2.0780000000000314,
+        1.9180000000000064,
         0,
         0,
         0,
@@ -277,7 +277,7 @@
     "_layoutSize": {
       "__type__": "cc.Size",
       "width": 1080,
-      "height": 560
+      "height": 460
     },
     "_resize": 0,
     "_N$layoutType": 2,
@@ -311,7 +311,7 @@
     "_alignFlags": 41,
     "_left": 0,
     "_right": 0,
-    "_top": 58.07800000000003,
+    "_top": 58.08200000000001,
     "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
@@ -382,7 +382,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        305,
+        259,
         0,
         0,
         0,
@@ -551,7 +551,7 @@
       "ctor": "Float64Array",
       "array": [
         -70,
-        -308.262,
+        -260.098,
         0,
         0,
         0,
@@ -743,7 +743,7 @@
       "ctor": "Float64Array",
       "array": [
         60,
-        -308.262,
+        -260.098,
         0,
         0,
         0,
@@ -932,7 +932,7 @@
       "ctor": "Float64Array",
       "array": [
         -6,
-        -306.262,
+        -258.098,
         0,
         0,
         0,
@@ -1084,8 +1084,8 @@
     "_alignFlags": 45,
     "_left": 122,
     "_right": 122,
-    "_top": 39,
-    "_bottom": 39,
+    "_top": 100,
+    "_bottom": 70,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,

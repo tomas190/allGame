@@ -50,6 +50,9 @@ export default class NewClass extends cc.Component {
     @property(cc.Label)
     boundsLabel:cc.Label = null;
 
+    @property(cc.Prefab)
+    JisuCyjeAlert:cc.Prefab = null;
+
     @property
     public data : any = {};
     public showSelect = false;
@@ -78,6 +81,7 @@ export default class NewClass extends cc.Component {
     order_id = ''//未完成的order_id
     countdown = 0 //倒计时
     withdraw_bonus = {}
+    withdraw_countdown_time = 15//订单过期的时间，分钟
     onLoad () {
         this.app = cc.find('Canvas/Main').getComponent('payMain');
         this.fetchIndex();
@@ -85,10 +89,11 @@ export default class NewClass extends cc.Component {
         this.fetchgetHighSpeedWithdrawOrder()
         this.fetchgetHighSpeedWithdrawCountDown()
         this.fetchgetHighSpeedWithdrawSecurityRate()
+        this.fetchgetHighSpeedWithdrawCountDownTime()
     }
 
     setAmount() {
-        this.app.showKeyBoard(this.amountLabel,1,this.setDepostLabel.bind(this));
+        this.app.showAlert("请点击【常用金额】选择面值")
     }
 
     public fetchIndex(){
@@ -129,6 +134,21 @@ export default class NewClass extends cc.Component {
             self.app.hideLoading();
         })
     }
+    //倒计时新
+    public fetchgetHighSpeedWithdrawCountDownTime(){
+        var url = `${this.app.UrlData.host}/api/with_draw/getHighSpeedWithdrawCountDownTime?`;
+        let self = this;
+        this.app.ajax('GET',url,'',(response)=>{
+            if(response.status == 0){
+                this.withdraw_countdown_time = Number(response.data.withdraw_countdown_time)
+            }else{
+                self.app.showAlert(response.msg)
+            }
+        },(errstatus)=>{
+            self.app.showAlert(`${Language_pay.Lg.ChangeByText('网络错误')}${errstatus}`)
+            self.app.hideLoading();
+        })
+    }
     //获取保证金费率
     public fetchgetHighSpeedWithdrawSecurityRate(){
         var url = `${this.app.UrlData.host}/api/with_draw/getHighSpeedWithdrawSecurityRate?`;
@@ -154,7 +174,7 @@ export default class NewClass extends cc.Component {
             if(response.status == 0){
                 if(response.data.order.length > 0){
                     let time = parseInt(`${new Date().getTime()/1000}`) // 现在的时间
-                    let daoqi = response.data.order[0].created_at+900 // 到期时间
+                    let daoqi = response.data.order[0].created_at+this.withdraw_countdown_time*60 // 到期时间
                     console.log(time,"到期时间",daoqi)
                     this.countdown = (daoqi - Number(time) )>0 ? (daoqi - Number(time)):0 //
                     this.openJsQrAlert()
@@ -237,14 +257,13 @@ export default class NewClass extends cc.Component {
             this.accountBtn.active = false;
         }
     }
-
+    //极速兑换改为显示常用金额弹窗
     deleteAmount(){
         //按键音效
         this.app.loadMusic(1);
-
-        this.amountLabel.string = Language_pay.Lg.ChangeByText('点击输入');
-        this.app.setInputColor('',this.amountLabel);
-        this.setDepostLabel(0)
+        var node = cc.instantiate(this.JisuCyjeAlert)
+        node.getComponent("payJisuCyjeAlert").init(this.amountLabel,this.setDepostLabel.bind(this))
+        cc.find("Canvas").addChild(node)
     }
 
     //兑换提示
@@ -302,7 +321,7 @@ export default class NewClass extends cc.Component {
                 if(response.msg !="Success!"){
                     self.app.showAlert(response.msg.msg);
                 }else{
-                    this.countdown = 900 //默认15分钟后超时
+                    this.countdown = this.withdraw_countdown_time*60 //超时时间
                     self.openJsQrAlert()
                 }
                 self.fetchIndex();
@@ -359,15 +378,10 @@ export default class NewClass extends cc.Component {
             this.app.showAlert(`${Language_pay.Lg.ChangeByText('渠道未开放，请选择其他兑换方式!')}`)
         }else if(this.Info.bank_province == '' ||this.Info.bank_city =='' || this.Info.card_num == ''){
             this.app.showBankTipAlert(this)
-        }else if(this.amountLabel.string == Language_pay.Lg.ChangeByText('点击输入')){
+        }else if(this.amountLabel.string == "请点击【常用金额】选择面值"){
             this.app.showAlert(Language_pay.Lg.ChangeByText('兑换金额不能为空'))
-        }else if(Number(this.amountLabel.string)%multiple_amount != 0 && amount != minAmount ){
-            this.app.showAlert(`${Language_pay.Lg.ChangeByText('兑换金额必须为')}${multiple_amount}${Language_pay.Lg.ChangeByText('的倍数')}！`)
-        }
-        else if(amount + this.depost > Number(this.goldLabel.string)){
+        }else if(amount + this.depost > Number(this.goldLabel.string)){
             this.app.showAlert(Language_pay.Lg.ChangeByText('余额不足'))
-        }else if(amount < minAmount || amount >maxAmount){
-            this.app.showAlert(Language_pay.Lg.ChangeByText('超出兑换范围'))
         }else{
             this.showCashAlert();
         }

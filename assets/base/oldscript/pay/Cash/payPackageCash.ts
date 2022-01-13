@@ -7,7 +7,7 @@ export default class NewClass extends cc.Component {
     onLoad() {
         //渠道id 品牌对照
         //package_id = 1 (test)
-        //package_id = 2 (debi)
+        //package_id = 2 (jincheng)
         //package_id = 3 (xingba)
         //package_id = 6 (nineone)
         //package_id = 8 (xinsheng)
@@ -21,6 +21,7 @@ export default class NewClass extends cc.Component {
         //package_id = 18 (huaxing)
         //package_id = 20 (wansheng)
         //package_id = 21 (tianqi)
+        //package_id = 22 (jiaxing)
         this.app = cc.find('Canvas/Main').getComponent('payMain');
         this.loadBundle(Language_pay.Lg.getBundleName(),"Prefab/Cash")
     }

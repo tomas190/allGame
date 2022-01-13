@@ -207,7 +207,7 @@ cc.Class({
                 hqq.setLabel(this.namelabel, { string: "", widget: { closeleft:true},x:-80 })
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 35, widget: { horizontalCenter: -6 } })
                 hqq.setBtn(touxiang, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "touxiangkuang", size: { height: 90, width: 90 }, widget: { top: 20, left: 20 }, callback: "onClickPlayerBtn", script: this })
-                hqq.setSprite(namebg, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "di2", widget: { left: 180, top: 30 ,target:background.parent}, size: { height: 40, width: 200 } })
+                hqq.setSprite(namebg, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "di2", widget: { left: 120, top: 30 ,target:background.parent}, size: { height: 40, width: 200 } })
                 hqq.setSprite(goldback, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "di2", widget: { horizontalCenter: 0, top: 18 }, size: { width: 300 } })
                 hqq.addNode(goldback, { normal: "base/img/refresh", callback: "onClickGetGold", script: this, x: 190, size: { width: 35, height: 35 } })
                 hqq.setSprite(jinbi, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "ziyuantubiao", widget: { horizontalCenter: -125 } })
@@ -433,7 +433,7 @@ cc.Class({
                 hqq.setSprite(background, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "bigimg/hallback" })
                 background.getChildByName("xinlong").active = true
                 hqq.setWidget(subgameview, { left: 250, top: 100, bottom: 100 })
-                hqq.setLabel(this.namelabel, { string: "", widget: { left: -55 }, fontSize: 25 })
+                hqq.setLabel(this.namelabel, { string: "", position: { x: -100, y: 0 }, fontSize: 25 })
                 hqq.setLabel(this.coinlabel, { string: "", fontSize: 25 })
                 hqq.setBtn(touxiang, {Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "img/touxiang", widget: { top: 5, left: 12 }, callback: "onClickPlayerBtn", script: this })
                 mask.getComponent(cc.Mask).spriteFrame = hqq.getSpriteFrame(hpath + "img/headmask",hqq["hall_"+hqq.app.pinpai])
@@ -448,7 +448,7 @@ cc.Class({
                 // hqq.setBtn(this.btnjfcj, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnjfcj", widget: { top: 15, right: 355 }, callback: "onClickJFCJ", script: this })
                 hqq.setBtn(btnjchd, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnjchd", widget: { top: 8, right: 125 }, callback: "onClickJCHD", script: this })
                 hqq.setBtn(btnqmdl, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnqmdl", widget: { top: 8, right: 230 }, callback: "onClickQMDL", script: this })
-                hqq.setBtn(this.btngonggao, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btngonggao", widget: { isAlignTop: true, isAlignRight: true, isAlignLeft: true, isAlignBottom: true, top: 680, right: 700, left: 495, bottom: 10 }, callback: "onClickGG", script: this })
+                hqq.setBtn(this.btngonggao, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btngonggao", widget: { closetop: true, closeright: true, closeleft: false, closebottom: false, left: 495, bottom: 10 }, callback: "onClickGG", script: this })
 
                 hqq.setBtn(this.btnshouyi, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnshouyi", widget: { left: 45, bottom: 10 }, callback: "onClickSY", script: this })
                 hqq.setBtn(this.btnkefu, { Res:hqq["hall_"+hqq.app.pinpai],normal: hlpath + "btnkefu", widget: { left: 275, bottom: 5 }, callback: "onClickKF", script: this })
@@ -691,7 +691,7 @@ cc.Class({
                 let scroll = panel.getChildByName("noticescroll")
                 scroll.x = 10
                 hqq.setSprite(panel, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "dk1", y:-120})
-                hqq.setSkeleton(panel.getChildByName("sp_trumpet"), { Res:hqq["hall_"+hqq.app.pinpai],path:"juding/jd_ani_trumpet", x: -375 , aniname:"animation",loop:true})
+                hqq.setSkeleton(panel.getChildByName("sp_trumpet"), { Res:hqq["hall_"+hqq.app.pinpai],path:"huaxing/jd_ani_trumpet", x: -375 , aniname:"animation",loop:true})
 
                 hqq.addNode(this.node, { normal: "base/language/"+hqq.language+"/img/vip_diamond", widget:{horizontalCenter:220,bottom:-10} ,callback:"toogleManyCai",script:this});
                 
@@ -1765,15 +1765,6 @@ cc.Class({
                 cc.log('load subpackage script successfully.', subname);
             });
         }
-        if (!cc.assetManager.getBundle(subname +"Res")) {
-            cc.assetManager.loadBundle(subname , (err) => {
-                if (err) {
-                    return cc.log('load subpackage script fail.', subname + 'Res');
-                }
-                hqq[subname + 'Res'] = cc.assetManager.getBundle(subname);
-                cc.log('load subpackage script successfully.', subname );
-            });
-        }
     },
     /**
     * @Description: 根据id获取服务器子游戏信息
@@ -2003,8 +1994,10 @@ cc.Class({
     /** 子游戏初始化 */
     initSubGameBtn() {
         let width = (Math.ceil(Object.getOwnPropertyNames(this.subGameList).length / 2) * (this.itembtn.width + 15)) + 30;
-        if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "fuxin"  || hqq.app.pinpai == "xinlong"||hqq.app.pinpai=="juding"||hqq.app.pinpai=="huaxing") {
+        if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "fuxin" || hqq.app.pinpai=="juding" || hqq.app.pinpai=="huaxing") {
             width = (Math.ceil(Object.getOwnPropertyNames(this.subGameList).length / 2) * (290 + 15)) + 15;
+        } else if (hqq.app.pinpai == "xinlong") {
+            width = (Math.ceil(Object.getOwnPropertyNames(this.subGameList).length / 2) * (290 + 15)) + 320;
         }
         if(hqq.app.pinpai == "juding" ){
             this.selectType = "remen";
@@ -2068,7 +2061,7 @@ cc.Class({
                 itembtn.tempdata = tempdata;
                 itembtn.progresslabel = itembtn.getChildByName('progresslabel').getComponent(cc.Label);
                 btnnum++;
-                if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "xinlong" ) {
+                if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xingui") {
                     hqq.setNode(itembtn.downflag, { x: 0, y: 0, width: 235, height: 235, opacity: 200 })
                     hqq.setNode(itembtn.progress, { opacity: 100 })
                     hqq.setSprite(itemhot, { path: "base/language/" + hqq.language + "/img/hot2", position: { x: -60, y: 57 } })
@@ -2114,7 +2107,7 @@ cc.Class({
                     hqq.setSprite(itembtn.jiantou,{path:"base/test/img/jiantou"});
 
                     this.setSubBtnPos(itembtn, tempdata.hallid)
-                } else if(hqq.app.pinpai == "ninetwo" ){
+                } else if(hqq.app.pinpai == "ninetwo" || hqq.app.pinpai == "xinlong"){
                     // itembtn.scale = 1.2
                     // hqq.setNode(itembtn.progress, { opacity: 100 })
                     hqq.setSprite(itemhot, { Res:hqq["hall_"+hqq.app.pinpai],path: "language/" + hqq.language + "/ninetwo/img/huo" ,position: { x: -55, y: 57 }})
@@ -2216,9 +2209,11 @@ cc.Class({
                 }
             }
             let width = (Math.ceil(btnnum / 2) * (this.itembtn.width + 15)) + 30;
-            if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "fuxin"  || hqq.app.pinpai == "xinlong" ) {
+            if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xingui" || hqq.app.pinpai == "fuxin" ) {
                 // width = (Math.ceil(Object.getOwnPropertyNames(this.subGameList).length / 2) * (270 + 15)) + 15;
                 width = (Math.ceil(btnnum / 2) * (290 + 15)) + 15;
+            } else if (hqq.app.pinpai == "xinlong") {
+                width = (Math.ceil(btnnum / 2) * (290 + 15)) + 320;
             } else if( hqq.app.pinpai == "juding" ){
                 width = (Math.ceil(btnnum / 2) * (230))
             } else if( hqq.app.pinpai == "huaxing" ){
@@ -2733,7 +2728,7 @@ cc.Class({
                 // this.UISetHBY()
                 // this.UISetJFCJ()
                 for (let k in data.data) {
-                    if (data.data[k].name == "四季发财红包雨2" || data.data[k].name == "四季发财红包雨8" || data.data[k].name == "四季发财红包雨9" || data.data[k].name == "四季发财红包雨11") {
+                    if (data.data[k].name == "四季发财红包雨2" || data.data[k].name == "四季发财红包雨8" || data.data[k].name == "四季发财红包雨9" || data.data[k].name == "四季发财红包雨11" || data.data[k].name == "四季发财红包雨12") {
                         let info = JSON.parse(data.data[k].info)
                         // cc.log(info)
                         hqq.HBYinfo = info

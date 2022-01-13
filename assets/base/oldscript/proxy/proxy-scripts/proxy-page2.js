@@ -258,6 +258,9 @@ cc.Class({
                     cc.log("http data返回:", resData);
 
                     if (resData.code === 200) {
+                        if(resData.msg.game_gold){
+                            gHandler.gameGlobal.player.gold = resData.msg.game_gold
+                        }
                         canvasScript.onMessagePrefabNeeded(null, "领取成功");
                         Database.balance = resData.balance
                         //获取佣金余额

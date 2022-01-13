@@ -1444,6 +1444,9 @@ cc.Class({
 
                             Database.moveBalanceToGames = true
                             if (resData.code === 200) {
+                                if(resData.msg.game_gold){
+                                    gHandler.gameGlobal.player.gold = resData.msg.game_gold
+                                }
                                 if (typeof balances !== 'undefined') {
                                     if (gHandler.app.pinpai != 'ninetwo') {
                                         commonVal.p1_SaveEmailDetail(commonVal.account_name, balances)

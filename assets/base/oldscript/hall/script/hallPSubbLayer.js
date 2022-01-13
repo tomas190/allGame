@@ -139,15 +139,17 @@ cc.Class({
             hqq.setSprite(bankcard_form, { path: hlpath + "bankcard_form" })
             hqq.setSprite(title_signup, { path: xlpath + "zczszh", position: { x: -200, y: 250 } })
         } else if (hqq.app.pinpai == "xinlong") {
-            let xpath = "xinlong/img/"
-            let hlpath = "base/language/" + hqq.language + "/img/"
-            hqq.setSprite(this.back, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_p_bandalibg_2", width: 897, height: 609 })
+            let bpath = "base/xinlong/img/"
+            let blpath = "base/language/" + hqq.language + "/xinlong/"
+            let hpath = "xinlong/img/"
+            let hlpath = "language/" + hqq.language + "/xinlong/"
+            hqq.setSprite(this.back, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_bandalibg_2", width: 897, height: 609 })
             // hqq.addNode(this.back, { path: bpath + "tck", y: -10, width: 420, height: 640, anchorX: 1, scaleX: -1, type: cc.Sprite.Type.SLICED })
-            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_popup_btn_close", x: 385, y: 248 , width:119, height:70 })
-            hqq.setBtn(surecg, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_p_btn_1_3" })
+            hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_popup_btn_close", x: 385, y: 248 , width:119, height:70 })
+            hqq.setBtn(surecg, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_btn_1_3" })
             hqq.addNode(surecg, { string: "qr",fontSize:32,color:cc.color("#94510A"),y:-10,bold:true })
-            hqq.setBtn(getcodebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_p_btn_1_1" })
-            hqq.setBtn(getcodebtn2, { Res:hqq["hall_"+hqq.app.pinpai],path: xpath + "jd_p_btn_1_1" })
+            hqq.setBtn(getcodebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_1" })
+            hqq.setBtn(getcodebtn2, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_1_1" })
 
             hqq.setSprite(title_signup, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "zhucezhengshizhanghao", x:-300,y: 255 })
         } else if (hqq.app.pinpai == "huaxing" ) {
@@ -166,14 +168,14 @@ cc.Class({
             hqq.setSprite(title_signup, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "6", x:0,y: 285 })
         } else if (hqq.app.pinpai == "ninetwo" ) {
             let bpath = "base/ninetwo/img/"
-            let blpath = "base/language/" + hqq.language + "/ninetwo/"
+            let blpath = "base/language/" + hqq.language + "/ninetwo/img/"
             let hpath = "ninetwo/img/"
             let hlpath = "language/" + hqq.language + "/ninetwo/img/"
             hqq.setSprite(this.back, { path: bpath + "popup_win_bg3", width: 813, height: 562 , type: cc.Sprite.Type.SLICED})
             // hqq.addNode(this.back, { path: hpath + "d_tit" , y:300})
             hqq.setBtn(closebtn, { path: bpath + "guanbi", x: 400, y: 265 , width:60, height:60 })
-            hqq.setBtn(getcodebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "anniu1" ,pressed: hpath + "anniu2", transition: cc.Button.Transition.SPRITE, type: cc.Sprite.Type.SLICED,width:124,height:40})
-            hqq.setBtn(getcodebtn2, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "anniu1" ,pressed: hpath + "anniu2", transition: cc.Button.Transition.SPRITE, type: cc.Sprite.Type.SLICED,width:124,height:40})
+            hqq.setBtn(getcodebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: bpath + "anniu1" ,pressed: bpath + "anniu2", transition: cc.Button.Transition.SPRITE, type: cc.Sprite.Type.SLICED,width:124,height:40})
+            hqq.setBtn(getcodebtn2, { Res:hqq["hall_"+hqq.app.pinpai],path: bpath + "anniu1" ,pressed: bpath + "anniu2", transition: cc.Button.Transition.SPRITE, type: cc.Sprite.Type.SLICED,width:124,height:40})
 
             hqq.setSprite(this.title_resetpwd,{Res:hqq["hall_"+hqq.app.pinpai],path:hlpath+"titlegaimima",x:0,y:230})
             // this.title_resetpwd.setPosition(0,180);
@@ -185,7 +187,7 @@ cc.Class({
 
             this.btnlabel2.getComponent(cc.Label).string = hqq.getTip("sendcode2");
 
-            hqq.setSprite(cc.find("bigsublayer/officelogin/info_form"),{Res:hqq["hall_"+hqq.app.pinpai],path:hlpath+"registerAccount_frame",y:-10})
+            hqq.setSprite(cc.find("bigsublayer/officelogin/info_form"),{path:blpath+"registerAccount_frame",y:-10})
         } else if(hqq.app.pinpai == "tianqi" ) {
             let bpath = "base/img/"
             let bppath = "base/tianqi/personal/"
@@ -323,11 +325,51 @@ cc.Class({
                     lao2.color = new cc.Color(255, 255, 255)
                     this.exitbtn.x = 415
                     this.exitbtn.y = 235
-                } else if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xinlong") {
+                } else if (hqq.app.pinpai == "xinsheng") {
                     this.exitbtn.x = 430
                     this.exitbtn.y = 260
                     let xlpath = "base/language/" + hqq.language + "/xinsheng/"
                     hqq.setSprite(this.title_resetpwd, { path: xlpath + "czmm", position: { x: -245, y: 250 } })
+                } else if (hqq.app.pinpai == "xinlong" ) {
+                    let bpath = "base/xinlong/img/"
+                    let hpath = "xinlong/img/"
+                    let hlpath = "language/" + hqq.language + "/xinlong/"
+                    let info_form = cc.find("bigsublayer/resetpass/info_form")
+                    info_form.active = false
+                    let resetpass = cc.find("bigsublayer/resetpass")
+                    hqq.addNode(resetpass, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -2, width: 630, x: 30, y: 145, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(resetpass, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -2, width: 420, x: -75, y: 48, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(resetpass, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -2, width: 420, x: -75, y: -48, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(resetpass, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -2, width: 630, x: 30, y: -150, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(resetpass, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "shoujid", zIndex: -1, x: -250, y: 145 })
+                    hqq.addNode(resetpass, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "fang", zIndex: -1, x: -250, y: 48 })
+                    hqq.addNode(resetpass, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "duanxin", zIndex: -1, x: -250, y: -48 })
+                    hqq.addNode(resetpass, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "suotou", zIndex: -1, x: -250, y: -150 })
+                    this.btnlabel.color = new cc.Color(255, 255, 255)
+                    let lao = this.btnlabel.getComponent(cc.LabelOutline)
+                    lao.color = new cc.Color(67, 0, 0)
+                    lao.width = 2
+                    hqq.setSprite(this.title_resetpwd, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "chongzhimuma", x:-300,y: 260 })
+
+                    cc.find("bigsublayer/resetpass/phoneeditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/resetpass/phoneeditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/phoneeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/resetpass/phoneeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+
+                    cc.find("bigsublayer/resetpass/yanzheneditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/resetpass/yanzheneditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/yanzheneditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/resetpass/yanzheneditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+
+                    cc.find("bigsublayer/resetpass/capchaeditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/resetpass/capchaeditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/capchaeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/resetpass/capchaeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+
+                    cc.find("bigsublayer/resetpass/passeditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/resetpass/passeditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/passeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/resetpass/passeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
                 } else if (hqq.app.pinpai == "huaxing" ) {
                     let bpath = "base/huaxing/img/"
                     let hpath = "huaxing/img/"
@@ -455,6 +497,7 @@ cc.Class({
                     let bpath = "base/juding/img/"
                     let hpath = "juding/img/"
                     let hlpath = "language/" + hqq.language + "/juding/"
+                    this.back.height = 609
                     let bindyinhangka = cc.find("bigsublayer/bindyinhangka")
                     hqq.setNode(bindyinhangka, { y: -10 })
                     hqq.addNode(bindyinhangka, { path: bpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: 188, width: 500, type: cc.Sprite.Type.SLICED })
@@ -477,7 +520,7 @@ cc.Class({
                     hqq.setBtn(this.kaihushibtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "anniu6" })
                     hqq.setBtn(this.yinhangnamebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "anniu6" })
                     hqq.addNode(bindyinhangka, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "ts", zIndex: -1, y: -210, })
-                    this.ensurebtn.node.y = -280;
+                    this.ensurebtn.node.y = -272;
 
                     cc.find("bigsublayer/bindyinhangka/kahaoeditbox").x = 105;
                     cc.find("bigsublayer/bindyinhangka/kahaoeditbox/TEXT_LABEL").color = cc.color("#546277");
@@ -532,7 +575,7 @@ cc.Class({
                     hqq.addNode(this.back, {Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "khhzh", x: -200, y: -140 })
                     this.ensurebtn.node.y = -255
                     hqq.addNode(this.back, { string: "wxts", fontSize: 23, x: 50, y: -200, color: new cc.Color(255, 0, 0) })
-                } else if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xinlong") {
+                } else if (hqq.app.pinpai == "xinsheng") {
                     this.exitbtn.x = 450
                     this.exitbtn.y = 280
                     let xpath = "base/xinsheng/img/"
@@ -541,6 +584,61 @@ cc.Class({
                     hqq.setBtn(this.kaihushibtn, { path: xpath + "xiabtn" })
                     hqq.setBtn(this.yinhangnamebtn, { path: xpath + "xiabtn" })
                     hqq.setSprite(this.title_bdbankcard, { path: xlpath + "bdyhk", position: { x: -230, y: 269 } })
+                } else if (hqq.app.pinpai == "xinlong" ) {
+                    let bpath = "base/xinlong/img/"
+                    let hpath = "xinlong/img/"
+                    let hlpath = "language/" + hqq.language + "/xinlong/"
+                    let bindyinhangka = cc.find("bigsublayer/bindyinhangka")
+                    hqq.setNode(bindyinhangka, { y: -10 })
+                    hqq.addNode(bindyinhangka, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: 188, width: 500, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(bindyinhangka, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: 120, width: 500, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(bindyinhangka, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: 52, width: 500, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(bindyinhangka, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: -12, width: 500, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(bindyinhangka, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: -82, width: 500, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(bindyinhangka, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: -150, width: 500, type: cc.Sprite.Type.SLICED })
+                    cc.find("bigsublayer/bindyinhangka/kaihusheng").x = 105;
+                    cc.find("bigsublayer/bindyinhangka/kaihushi").x = 105;
+                    cc.find("bigsublayer/bindyinhangka/yinhangname").x = 105;
+                    hqq.addNode(bindyinhangka, { string: "yhkkh", zIndex: -1, x: -275, y: 188,fontSize:32,color:cc.color("#485E9A"),bold:true })
+                    hqq.addNode(bindyinhangka, { string: "skrxm", zIndex: -1, x: -275, y: 120,fontSize:32,color:cc.color("#485E9A"),bold:true })
+                    hqq.addNode(bindyinhangka, { string: "kfs", zIndex: -1, x: -300, y: 52,fontSize:32,color:cc.color("#485E9A"),bold:true })
+                    hqq.addNode(bindyinhangka, { string: "kfshi", zIndex: -1, x: -300, y: -12,fontSize:32,color:cc.color("#485E9A"),bold:true })
+                    hqq.addNode(bindyinhangka, { string: "khyh", zIndex: -1, x: -290, y: -82,fontSize:32,color:cc.color("#485E9A"),bold:true })
+                    hqq.addNode(bindyinhangka, { string: "khhzh", zIndex: -1, x: -275, y: -150,fontSize:32,color:cc.color("#485E9A"),bold:true })
+                    hqq.setSprite(this.title_bdbankcard, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "bangding3", x:-320,y: 265})
+                    hqq.setBtn(this.kaihushengbtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "anniu6" })
+                    hqq.setBtn(this.kaihushibtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "anniu6" })
+                    hqq.setBtn(this.yinhangnamebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "anniu6" })
+                    hqq.addNode(bindyinhangka, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "ts", zIndex: -1, y: -210, })
+                    this.ensurebtn.node.y = -280;
+
+                    cc.find("bigsublayer/bindyinhangka/kahaoeditbox").x = 105;
+                    cc.find("bigsublayer/bindyinhangka/kahaoeditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/bindyinhangka/kahaoeditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/bindyinhangka/kahaoeditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT
+                    cc.find("bigsublayer/bindyinhangka/kahaoeditbox/PLACEHOLDER_LABEL").color = cc.color("#8593BA");
+                    cc.find("bigsublayer/bindyinhangka/kahaoeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/bindyinhangka/kahaoeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT
+
+                    cc.find("bigsublayer/bindyinhangka/nameediftox").x = 105;
+                    cc.find("bigsublayer/bindyinhangka/nameediftox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/bindyinhangka/nameediftox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/bindyinhangka/nameediftox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT
+                    cc.find("bigsublayer/bindyinhangka/nameediftox/PLACEHOLDER_LABEL").color = cc.color("#8593BA");
+                    cc.find("bigsublayer/bindyinhangka/nameediftox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/bindyinhangka/nameediftox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT
+
+                    cc.find("bigsublayer/bindyinhangka/zhihang").x = 105;
+                    cc.find("bigsublayer/bindyinhangka/zhihang/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/bindyinhangka/zhihang/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/bindyinhangka/zhihang/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT
+                    cc.find("bigsublayer/bindyinhangka/zhihang/PLACEHOLDER_LABEL").color = cc.color("#8593BA");
+                    cc.find("bigsublayer/bindyinhangka/zhihang/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/bindyinhangka/zhihang/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT
+
+                    cc.find("bigsublayer/bindyinhangka/kaihusheng/kaihushenglabel").color = cc.color("#8593BA");
+                    cc.find("bigsublayer/bindyinhangka/kaihushi/kaihushilabel").color = cc.color("#8593BA");
+                    cc.find("bigsublayer/bindyinhangka/yinhangname/yinhanglabel").color = cc.color("#8593BA");
 				} else if (hqq.app.pinpai == "huaxing" ) {
                     let bpath = "base/huaxing/img/"
                     let hpath = "huaxing/img/"
@@ -685,9 +783,56 @@ cc.Class({
                 } else if (hqq.app.pinpai == "xingui") {
                     this.exitbtn.x = 415
                     this.exitbtn.y = 230
-                } else if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xinlong") {
+                } else if (hqq.app.pinpai == "xinsheng") {
                     this.exitbtn.x = 440
                     this.exitbtn.y = 255
+                } else if (hqq.app.pinpai == "xinlong" ) {
+                    let bpath = "base/xinlong/img/"
+                    let hpath = "xinlong/img/"
+                    let officelogin = cc.find("bigsublayer/officelogin")
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -2, width: 630, x: 30, y: 170, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -2, width: 420, x: -75, y: 60, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -2, width: 420, x: -75, y: -50, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_inputBox_1", zIndex: -2, width: 630, x: 30, y: -160, type: cc.Sprite.Type.SLICED })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "shoujid", zIndex: -1, x: -250, y: 170 })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "fang", zIndex: -1, x: -250, y: 60 })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "duanxin", zIndex: -1, x: -250, y: -50 })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "suotou", zIndex: -1, x: -250, y: -160 })
+
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_lisp_line", zIndex: -1, width:620 , x: 30, y: 110 })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_lisp_line", zIndex: -1, width:620 , x: 30, y: 0 })
+                    hqq.addNode(officelogin, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_lisp_line", zIndex: -1, width:620 , x: 30, y: -110 })
+
+                    cc.find("bigsublayer/officelogin/phoneeditbox").y = 170;
+                    cc.find("bigsublayer/officelogin/phoneeditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/officelogin/phoneeditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/phoneeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/officelogin/phoneeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    
+                    cc.find("bigsublayer/officelogin/yanzheneditbox").y = 60;
+                    cc.find("bigsublayer/officelogin/yanzheneditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/officelogin/yanzheneditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/yanzheneditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/officelogin/yanzheneditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+
+                    cc.find("bigsublayer/officelogin/capchaeditbox").y = -50;
+                    cc.find("bigsublayer/officelogin/capchaeditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/officelogin/capchaeditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/capchaeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/officelogin/capchaeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+
+                    cc.find("bigsublayer/officelogin/passeditbox").y = -160;
+                    cc.find("bigsublayer/officelogin/passeditbox/TEXT_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/officelogin/passeditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
+                    cc.find("bigsublayer/officelogin/passeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
+                    cc.find("bigsublayer/officelogin/passeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
+
+                    let info_form = cc.find("bigsublayer/officelogin/info_form")
+                    info_form.active = false
+                    this.btnlabel2.color = new cc.Color(255, 255, 255)
+                    let lao2 = this.btnlabel2.getComponent(cc.LabelOutline)
+                    lao2.color = new cc.Color(67, 0, 0)
+                    lao2.width = 2
                 } else if (hqq.app.pinpai == "huaxing" ) {
                     let bpath = "base/huaxing/img/"
                     let hpath = "huaxing/img/"
