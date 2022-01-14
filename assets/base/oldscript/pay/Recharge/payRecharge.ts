@@ -344,6 +344,21 @@ export default class NewClass extends cc.Component {
                             arr.push('极速充值')
                         }
                     }
+                    if ( this.zfbResults.data.pipei_pay.length > 0  ) {
+                        //先看大渠道是否显示
+                        let show = false
+                        this.zfbResults.data.pipei_pay.forEach(e=>{
+                            let package_ids = e.package_ids.split(",")
+                            package_ids.forEach(e=>{
+                                if(Number(e) == this.app.UrlData.package_id){
+                                    show = true
+                                }
+                            })
+                        })
+                        if(show){
+                            arr.push('匹配充值')
+                        }
+                    }
                     break
             }
         });
@@ -380,6 +395,8 @@ export default class NewClass extends cc.Component {
             node.getComponent('payNavToggle').addContent('digiccy')
         }else if(arr[0]=='极速充值' && this.zfbResults.data.pq_pay.length > 0  ){
             node.getComponent('payNavToggle').addJisu()
+        }else if(arr[0]=='匹配充值' && this.zfbResults.data.pipei_pay.length > 0  ){
+            node.getComponent('payNavToggle').addJisu2()
         }
     }
     //银商

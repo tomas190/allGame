@@ -226,7 +226,11 @@ export default class NewClass extends cc.Component {
                 }
                 self.fetchIndex();
             }else{
-                self.app.showAlert(response.msg)
+                if(response.msg.substring(0,4) == "频繁操作"){
+                    self.app.showAlert("操作频繁,请间隔30秒后重新提交")
+                }else{
+                    self.app.showAlert(response.msg)
+                }
             }
             self.DhBtn.getComponent(cc.Button).interactable  = true;
         },(errstatus)=>{

@@ -556,6 +556,22 @@ cc.Class({
             hqq.setNode(this.item.getChildByName("curline"), { x: -125 })
             hqq.setNode(this.item.getChildByName("choicebtn"), { x: 105 })
 
+        } else if(hqq.app.pinpai == "debi") {
+            let tpath = "base/img/"
+            let tlpath = "base/language/" + hqq.language + "/img/"
+            hqq.setSprite(background, {path: "base/debi/p_bandalibg2"})
+            hqq.setSprite(title_lt, { path: tlpath + "title_lt" })
+            hqq.setBtn(exitbtn, { normal: tpath + "p_close", callback: "onClickExit", script: this })
+            hqq.setBtn(btn_quickPick, { normal: tlpath + "btn_quickPick", callback: "onClickQuikLogin", script: this })
+            if ( this.data.choicetype ) {
+                hqq.setBtn(btn_refresh, { normal: tlpath + "btn_refresh", position: { x: 160, y: 185 }, callback: "onClickRefreshTest", script: this })
+            } else {
+                hqq.setBtn(btn_refresh, { normal: tlpath + "btn_refresh", position: { x: 0, y: 185 }, callback: "onClickRefreshTest", script: this })
+            }
+            hqq.setSprite(txt_t1, { path: tlpath + "txt_t1" })
+            hqq.setSprite(txt_t2, { path: tlpath + "txt_t2" })
+            hqq.setSprite(up, { path: tpath + "bg_white" })
+            hqq.setSprite(center, { path: tpath + "bg_white" })
         } else {
             let tpath = "base/img/"
             let tlpath = "base/language/" + hqq.language + "/img/"

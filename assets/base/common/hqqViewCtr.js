@@ -200,23 +200,13 @@ let hqqViewCtr = {
                 hqq.gameGlobal.pay.pay_host = url;
                 if (hqq.subModel.pay.lanchscene != "") {
                     hqq.gameGlobal.pay.from_scene = data
-                    let payStr = "pay_" + hqq.app.pinpai;
-                    for(let i = 0; i < hqq.loginMgr.payversionList.length;i++){
-                        if(hqq.app.pinpai == hqq.loginMgr.payversionList[i]){
-                            payStr = "pay_test";
-                            break;
-                        }
-                    }
-                    if(hqq.app.pinpai === "xinlong"){
-                        payStr = "pay_xinsheng";
-                    }
                     
-                    cc.assetManager.loadBundle(payStr, (err)=> {
+                    cc.assetManager.loadBundle(hqq.loginMgr.payStr, (err)=> {
                         if (err) {
-                            return cc.log('load subpackage script fail.', payStr + "_" + hqq.app.pinpai);
+                            return cc.log('load subpackage script fail.', hqq.loginMgr.payStr + "_" + hqq.app.pinpai);
                         }
-                        hqq[payStr] = cc.assetManager.getBundle(payStr);
-                        cc.log('load subpackage script successfully.', payStr);
+                        hqq[hqq.loginMgr.payStr] = cc.assetManager.getBundle(hqq.loginMgr.payStr);
+                        cc.log('load subpackage script successfully.', hqq.loginMgr.payStr);
                         cc.director.preloadScene(hqq.subModel.pay.lanchscene, (err, scene) => {
                             if (err) {
                                 cc.log(err)
@@ -239,23 +229,13 @@ let hqqViewCtr = {
         } else {
             if (hqq.subModel.pay.lanchscene != "") {
                 hqq.gameGlobal.pay.from_scene = data
-                let payStr = "pay_" + hqq.app.pinpai;
-                for(let i = 0; i < hqq.loginMgr.payversionList.length;i++){
-                    if(hqq.app.pinpai == hqq.loginMgr.payversionList[i]){
-                        payStr = "pay_test";
-                        break;
-                    }
-                }
-                if(hqq.app.pinpai === "xinlong"){
-                    payStr = "pay_xinsheng";
-                }
                 
-                cc.assetManager.loadBundle(payStr, (err)=> {
+                cc.assetManager.loadBundle(hqq.loginMgr.payStr, (err)=> {
                     if (err) {
-                        return cc.log('load subpackage script fail.', payStr + "_" + hqq.app.pinpai);
+                        return cc.log('load subpackage script fail.', hqq.loginMgr.payStr + "_" + hqq.app.pinpai);
                     }
-                    hqq[payStr] = cc.assetManager.getBundle(payStr);
-                    cc.log('load subpackage script successfully.', payStr);
+                    hqq[hqq.loginMgr.payStr] = cc.assetManager.getBundle(hqq.loginMgr.payStr);
+                    cc.log('load subpackage script successfully.', hqq.loginMgr.payStr);
                     cc.director.preloadScene(hqq.subModel.pay.lanchscene, (err, scene) => {
                         if (err) {
                             cc.log(err)
@@ -402,19 +382,12 @@ let hqqViewCtr = {
     },
     showJumpScene(data){
         if(data === "hall" ){
-            let hallStr = "hall_" + hqq.app.pinpai;
-            for(let i = 0; i < hqq.loginMgr.hallversionList.length;i++){
-                if(hqq.app.pinpai == hqq.loginMgr.hallversionList[i]){
-                    hallStr = "hall_test";
-                    break;
-                }
-            }
-            cc.assetManager.loadBundle(hallStr, (err)=>{
+            cc.assetManager.loadBundle(hqq.loginMgr.hallStr, (err)=>{
                 if (err) {
                     cc.log(err);
                     return;
                 }
-                hqq[hallStr] = cc.assetManager.getBundle(hallStr);
+                hqq[hqq.loginMgr.hallStr] = cc.assetManager.getBundle(hqq.loginMgr.hallStr);
                 
                 for(let i = 0; i < this.oldpinpailist.length; i++ ){
                     if(hqq.app.pinpai === this.oldpinpailist[ i ] ){
@@ -431,7 +404,7 @@ let hqqViewCtr = {
                         return;
                     }
                 }
-                hqq[hallStr].preloadScene("hall", (completedCount, totalCount, item)=>{
+                hqq[hqq.loginMgr.hallStr].preloadScene("hall", (completedCount, totalCount, item)=>{
                     hqq.eventMgr.dispatch(hqq.eventMgr.hotProgress, completedCount / totalCount, "jiazai")
                 }, (err7, scene) => {
                     if (err7) {
@@ -439,7 +412,7 @@ let hqqViewCtr = {
                         hqq.logMgr.logerror(err7)
                         return
                     }
-                    hqq[hallStr].loadScene("hall",(err8,scene)=>{
+                    hqq[hqq.loginMgr.hallStr].loadScene("hall",(err8,scene)=>{
                         if(err8){
                             cc.log(err8);
                             return;
@@ -450,23 +423,13 @@ let hqqViewCtr = {
             })
             return;
         } else if( data === "proxy" ){
-            let proxyStr = "proxy_" + hqq.app.pinpai;
-            for(let i = 0; i < hqq.loginMgr.proxyversionList.length;i++){
-                if(hqq.app.pinpai == hqq.loginMgr.proxyversionList[i]){
-                    proxyStr = "proxy_test";
-                    break;
-                }
-            }
-            if(hqq.app.pinpai === "debi"){
-                proxyStr = "proxy_xingba";
-            }
 
-            cc.assetManager.loadBundle(proxyStr, (err)=> {
+            cc.assetManager.loadBundle(hqq.loginMgr.proxyStr, (err)=> {
                 if (err) {
-                    return cc.log('load subpackage script fail.', proxyStr + "_" + hqq.app.pinpai);
+                    return cc.log('load subpackage script fail.', hqq.loginMgr.proxyStr + "_" + hqq.app.pinpai);
                 }
-                hqq[proxyStr] = cc.assetManager.getBundle(proxyStr);
-                cc.log('load subpackage script successfully.', proxyStr);
+                hqq[hqq.loginMgr.proxyStr] = cc.assetManager.getBundle(hqq.loginMgr.proxyStr);
+                cc.log('load subpackage script successfully.', hqq.loginMgr.proxyStr);
 
                 for(let i = 0; i < this.oldpinpailist.length; i++ ){
                     if(hqq.app.pinpai === this.oldpinpailist[ i ] ){
@@ -482,13 +445,13 @@ let hqqViewCtr = {
                     }
                 }
 
-                hqq[proxyStr].preloadScene(proxyStr,  (err7, scene) => {
+                hqq[hqq.loginMgr.proxyStr].preloadScene(hqq.loginMgr.proxyStr,  (err7, scene) => {
                     if (err7) {
                         cc.log(err7)
                         hqq.logMgr.logerror(err7)
                         return
                     }
-                    hqq[proxyStr].loadScene(proxyStr,(err8,scene)=>{
+                    hqq[hqq.loginMgr.proxyStr].loadScene(hqq.loginMgr.proxyStr,(err8,scene)=>{
                         if(err8){
                             cc.log(err8);
                             return;

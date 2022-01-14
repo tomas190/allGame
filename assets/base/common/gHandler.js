@@ -3,7 +3,7 @@ let gHandler = {
     needShowNotice: false, // 是否需要显示公告界面
     needShowBubble: false, // 是否显示公告泡泡提示讯息
     language: "CN", // 语言种类   汉语 CN 英语 EN 越南语 VI 泰语 TH
-    isDebug: true, // 是否是子游戏开发调试状态
+    isDebug: false, // 是否是子游戏开发调试状态
     gameGlobal: {
         gameNow: "hall", // 当前游戏的名字
         iconPath: "", // 头像地址前缀
@@ -3286,8 +3286,14 @@ let gHandler = {
             btn.clickEvents.push(clickEventHandler);
         }
         btn.target = node
-        btn.transition = cfg.transition || cc.Button.Transition.SCALE
-        if (btn.transition == cc.Button.Transition.SCALE) {
+        if( cfg.transition !== null && cfg.transition !== undefined ){
+            btn.transition = cfg.transition;
+        } else{
+            btn.transition = cc.Button.Transition.SCALE
+        }
+        
+        if (btn.transition == cc.Button.Transition.SCALE||
+            btn.transition == cc.Button.Transition.NONE ) {
             if (cfg.aniname) {
                 this.setSkeleton(node, cfg)
             } else if (cfg.path) {

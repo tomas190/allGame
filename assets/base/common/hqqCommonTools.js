@@ -88,6 +88,25 @@ let commonTools = {
                         }
                     }
                 })
+            } else if (hqq.app.pinpai == "xinlong") {
+                hqq["hall_xinlong"].load(`xinlong/imhead/im_head`, cc.SpriteAtlas, (err, t) => {
+                    if (t) {
+                        if( cc.isValid( headsprite ) )
+                        {
+                            this.headRes = t
+                            var spriteFrame = t.getSpriteFrame(`Avatar` + headid)
+                            if (spriteFrame) {
+                                headsprite.spriteFrame = spriteFrame;
+                            } else {
+                                headsprite.spriteFrame = t.getSpriteFrame(`Avatar0`);
+                            }
+                            if (size) {
+                                headsprite.node.width = size
+                                headsprite.node.height = size
+                            }
+                        }
+                    }
+                })
             } else if(hqq.app.pinpai == "wansheng") {
                 hqq["hall_wansheng"].load(`wansheng/imhead/im_head`, cc.SpriteAtlas, (err, t) => {
                     if (t) {
@@ -117,8 +136,10 @@ let commonTools = {
                 hqq["hall_debi"].load(`debi/imhead/Avatar` + headid, cc.SpriteFrame, (err, t) => {
                     if (cc.isValid(headsprite)) {
                         headsprite.spriteFrame = t;
-                        headsprite.node.width = size == null ? 155 : size
-                        headsprite.node.height = size == null ? 155 : size
+                        if (size) {
+                            headsprite.node.width = size
+                            headsprite.node.height = size
+                        }
                     }
                 })
             } else {

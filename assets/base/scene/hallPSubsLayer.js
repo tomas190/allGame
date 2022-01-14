@@ -370,16 +370,20 @@ cc.Class({
             cc.find("smallsublayer/proxycode/codeeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
 
             let bindusdt = cc.find("smallsublayer/bindusdt")
-            hqq.addNode(bindusdt, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -1, width: 570, x: 25, y: 105, type: cc.Sprite.Type.SLICED })
+            bindusdt.active = true;
+            hqq.addNode(bindusdt, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -1, width: 570, x: 80, y: 105, type: cc.Sprite.Type.SLICED })
             hqq.addNode(bindusdt, { Res:hqq["hall_"+hqq.app.pinpai], path: hpath + "jd_p_inputBox_1", zIndex: -1, width: 460, x: 25, y: -15, type: cc.Sprite.Type.SLICED })
             hqq.setSprite(usdttitle, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "UST", x:-270,y: 225 })
             hqq.addNode(bindusdt, { string: "usdtllx", x: -260, y: -15 ,fontSize:32,color:cc.color("#485E9A"),bold:true})
             hqq.addNode(bindusdt, { string: "usdtqbdz", x: -270, y: 105 ,fontSize:32,color:cc.color("#485E9A"),bold:true})
             bindusdt.getChildByName("type").color = cc.color("#546277");
+            bindusdt.getChildByName("type").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
             bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").color = cc.color("#546277");
             bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").color = cc.color("#546277");
             bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+            bindusdt.active = false;
+
             info.color = cc.color("#0B3460")
             info.getComponent(cc.Label).string = hqq.getTip("proxy2")
             this.tiplayerinfo.node.color = cc.color("#0B3460")
@@ -1083,6 +1087,16 @@ cc.Class({
 
             // downlabel.color = cc.color("#546277");
             // downlabel2.color = cc.color("#546277");
+        } else if(hqq.app.pinpai == "debi") {
+            let blpath = "base/language/" + hqq.language + "/img/"
+            hqq.setSprite(this.back, {Res:hqq["hall_"+hqq.app.pinpai], path: "debi/bigimg/p_bandalibg2" })
+            hqq.setBtn(closebtn, {Res:hqq["hall_"+hqq.app.pinpai], path: "debi/bigimg/p_close" , y:274})
+            hqq.setBtn(surecg, {Res:hqq["hall_"+hqq.app.pinpai], path: "debi/personal/btn11" ,x:0, y:-201})
+
+            hqq.setSprite(title_login, { path: blpath + "title_login" , y:239})
+            hqq.setBtn(txt_forgetpwd, { path: blpath + "txt_forgetpwd" })
+
+            title.y = 239;
         } else {
             let blpath = "base/language/" + hqq.language + "/img/"
             hqq.setSprite(this.back, { path: "base/img/p_bandalibg" })

@@ -12,6 +12,9 @@ export default class NewClass extends cc.Component {
     Jisu : cc.Prefab = null;
 
     @property(cc.Prefab)
+    Jisu2 : cc.Prefab = null;
+
+    @property(cc.Prefab)
     RgDc : cc.Prefab = null;
     
     @property(cc.Node)
@@ -300,6 +303,34 @@ export default class NewClass extends cc.Component {
                 }
             });
             this.setTishiLabel(percent)
+        }else if(this.text == "匹配充值"){
+            let percent = 0
+            if(this.app.UrlData.package_id == 9){
+                zi.getComponent( cc.Label ).string = Language_pay.Lg.ChangeByText( "匹配充值");  
+            }else if(this.app.UrlData.package_id == 15||this.app.UrlData.package_id == 20 || this.app.UrlData.package_id == 12 || this.app.UrlData.package_id == 22){
+                this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "匹配充值");  
+                this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "匹配充值");  
+            }else if(this.app.UrlData.package_id == 18){
+                this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "匹配充值");  
+                this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "匹配充值"); 
+            }else if(this.app.UrlData.package_id == 16){
+                this.normalIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "匹配充值");  
+                this.currentIcon.getComponent(cc.Label).string = Language_pay.Lg.ChangeByText( "匹配充值"); 
+                let normalIcon = this.node.getChildByName("Background").getChildByName("icon")
+                let currentIcon = this.node.getChildByName("checkmark").getChildByName("icon")
+                this.app.loadIcon(`${src}/menu/menu_pipei1`,normalIcon,44,44);
+                this.app.loadIcon(`${src}/menu/menu_pipei2`,currentIcon,44,44);
+            }else
+            {
+                this.app.loadIcon(`${src}/menu/menu_pipei1`,this.normalIcon,207,39);
+                this.app.loadIcon(`${src}/menu/menu_pipei2`,this.currentIcon,249,86);
+            }
+            discount_rate.usdt.forEach( (e,i) => {
+                if(e.package_id == this.app.UrlData.package_id) {
+                    percent = e.interval[0].percent
+                }
+            });
+            this.setTishiLabel(percent)
         } 
     }
     setTishiLabel(percent) {
@@ -358,6 +389,8 @@ export default class NewClass extends cc.Component {
             this.addContent('digiccy')
         }else if(this.text == '极速充值'){
             this.addJisu()
+        }else if(this.text == '匹配充值'){
+            this.addJisu2()
         }
     }
 
@@ -379,6 +412,12 @@ export default class NewClass extends cc.Component {
     addJisu(){
         var content = cc.find('Canvas/Recharge/Content');
         var node = cc.instantiate(this.Jisu);
+        content.removeAllChildren();
+        content.addChild(node);
+    }
+    addJisu2(){
+        var content = cc.find('Canvas/Recharge/Content');
+        var node = cc.instantiate(this.Jisu2);
         content.removeAllChildren();
         content.addChild(node);
     }

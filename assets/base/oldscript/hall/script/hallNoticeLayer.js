@@ -140,7 +140,8 @@ cc.Class({
             hqq.addNode(notice, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "jd_menu_announce"})
             hqq.setBtn(closebtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_p_btn_return", widget: { top: 0, left: 0 } })
             hqq.setSprite(title_gonggao, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "gonggaobiaoti" ,widget: { top: 15, left: 160 }})
-
+            let btncontainer = cc.find("noticelayer/btncontainer");
+            hqq.setWidget(btncontainer, { top: 82 })
             // let node = new cc.Node()
             // hqq.setSprite(node, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "gonggao" })
             // notice.addChild(node)
@@ -712,13 +713,31 @@ cc.Class({
                 hqq.addNode(tnode, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "scct" })
                 let subScrollback = cc.find("txtscroll", subback)
                 hqq.setNode(subScrollback, { y: 20 })
-            } else if (hqq.app.pinpai == "xinsheng" || hqq.app.pinpai == "xinlong") {
+            } else if (hqq.app.pinpai == "xinsheng") {
                 let xlpath = "language/" + hqq.language + "/"+hqq.app.pinpai+"/img/"
                 hqq.setSprite(subback, { path: "base/xinsheng/img/back1" })
                 hqq.setSprite(titleimg, { Res:hqq["hall_"+hqq.app.pinpai],path: xlpath + "title_gonggao", position: { x: -290, y: 220 } })
                 hqq.setSprite(subclosebtn, { path: "base/xinsheng/img/exit", position: { x: 400, y: 225 } })
                 deletebtn.x = 270
                 deletebtn.getComponent(cc.RichText).string = hqq.getTip("deletebtn")
+            } else if (hqq.app.pinpai == "xinlong" ) {
+                let bpath = "base/xinlong/img/";
+                let hpath = "xinlong/img/";
+                let hbpath = "xinlong/bigimg/";
+                let hlpath = "language/" + hqq.language + "/xinlong/";
+                hqq.setSprite( subback ,{path:bpath+"jd_p_bandalibg_1"})
+                hqq.addNode(subback,{Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "jd_popup_inBg",zIndex: -1});
+                
+                hqq.setSprite(titleimg, { Res:hqq["hall_"+hqq.app.pinpai],path: hlpath + "gonggaobiaoti", x:-320,y:217 })
+                hqq.setSprite(subclosebtn, { path: bpath + "jd_popup_btn_close",x:360,y:215})
+                subclosebtn.width = 119;
+                subclosebtn.height = 70;
+                let tnode = hqq.addNode(subback, { normal: bpath + "jd_p_btn_1_2", x: 300, y: -220, callback: "onClickDelete", script: this, })
+                let labelnode = hqq.addNode(tnode, { string:hqq.getTip("dc"),y:-10,fontSize:24 ,color:cc.color(148,81,10,255),bold:true})
+                
+                this.subtxt.node.color = cc.color("#0B3460");
+                this.subtxt.node.y = -22;
+                this.subtxt.enableBold = true;
             } else if (hqq.app.pinpai == "juding" ) {
                 let bpath = "base/juding/img/";
                 let hpath = "juding/img/";

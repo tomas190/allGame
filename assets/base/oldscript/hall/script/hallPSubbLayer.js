@@ -353,23 +353,31 @@ cc.Class({
 
                     cc.find("bigsublayer/resetpass/phoneeditbox/TEXT_LABEL").color = cc.color("#546277");
                     cc.find("bigsublayer/resetpass/phoneeditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/phoneeditbox/TEXT_LABEL").getComponent(cc.Label).HorizontalAlign = Label.HorizontalAlign.LEFT;
                     cc.find("bigsublayer/resetpass/phoneeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
                     cc.find("bigsublayer/resetpass/phoneeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/phoneeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).HorizontalAlign = Label.HorizontalAlign.LEFT;
 
                     cc.find("bigsublayer/resetpass/yanzheneditbox/TEXT_LABEL").color = cc.color("#546277");
                     cc.find("bigsublayer/resetpass/yanzheneditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/yanzheneditbox/TEXT_LABEL").getComponent(cc.Label).HorizontalAlign = Label.HorizontalAlign.LEFT;
                     cc.find("bigsublayer/resetpass/yanzheneditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
                     cc.find("bigsublayer/resetpass/yanzheneditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/yanzheneditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).HorizontalAlign = Label.HorizontalAlign.LEFT;
 
                     cc.find("bigsublayer/resetpass/capchaeditbox/TEXT_LABEL").color = cc.color("#546277");
                     cc.find("bigsublayer/resetpass/capchaeditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/capchaeditbox/TEXT_LABEL").getComponent(cc.Label).HorizontalAlign = Label.HorizontalAlign.LEFT;
                     cc.find("bigsublayer/resetpass/capchaeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
                     cc.find("bigsublayer/resetpass/capchaeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/capchaeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).HorizontalAlign = Label.HorizontalAlign.LEFT;
 
                     cc.find("bigsublayer/resetpass/passeditbox/TEXT_LABEL").color = cc.color("#546277");
                     cc.find("bigsublayer/resetpass/passeditbox/TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/passeditbox/TEXT_LABEL").getComponent(cc.Label).HorizontalAlign = Label.HorizontalAlign.LEFT;
                     cc.find("bigsublayer/resetpass/passeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
                     cc.find("bigsublayer/resetpass/passeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
+                    cc.find("bigsublayer/resetpass/passeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).HorizontalAlign = Label.HorizontalAlign.LEFT;
                 } else if (hqq.app.pinpai == "huaxing" ) {
                     let bpath = "base/huaxing/img/"
                     let hpath = "huaxing/img/"
@@ -805,21 +813,21 @@ cc.Class({
 
                     cc.find("bigsublayer/officelogin/phoneeditbox").y = 170;
                     cc.find("bigsublayer/officelogin/phoneeditbox/TEXT_LABEL").color = cc.color("#546277");
-                    cc.find("bigsublayer/officelogin/phoneeditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/phoneeditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
                     cc.find("bigsublayer/officelogin/phoneeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
-                    cc.find("bigsublayer/officelogin/phoneeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/phoneeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
                     
                     cc.find("bigsublayer/officelogin/yanzheneditbox").y = 60;
                     cc.find("bigsublayer/officelogin/yanzheneditbox/TEXT_LABEL").color = cc.color("#546277");
-                    cc.find("bigsublayer/officelogin/yanzheneditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/yanzheneditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
                     cc.find("bigsublayer/officelogin/yanzheneditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
-                    cc.find("bigsublayer/officelogin/yanzheneditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/yanzheneditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
 
                     cc.find("bigsublayer/officelogin/capchaeditbox").y = -50;
                     cc.find("bigsublayer/officelogin/capchaeditbox/TEXT_LABEL").color = cc.color("#546277");
-                    cc.find("bigsublayer/officelogin/capchaeditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/capchaeditbox/TEXT_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
                     cc.find("bigsublayer/officelogin/capchaeditbox/PLACEHOLDER_LABEL").color = cc.color("#546277");
-                    cc.find("bigsublayer/officelogin/capchaeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.CENTER;
+                    cc.find("bigsublayer/officelogin/capchaeditbox/PLACEHOLDER_LABEL").getComponent(cc.Label).horizontalAlign = cc.Label.HorizontalAlign.LEFT;
 
                     cc.find("bigsublayer/officelogin/passeditbox").y = -160;
                     cc.find("bigsublayer/officelogin/passeditbox/TEXT_LABEL").color = cc.color("#546277");

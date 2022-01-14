@@ -28,6 +28,9 @@ export default class NewClass extends cc.Component {
     @property(cc.Prefab)
     JisuOrderAlert: cc.Prefab = null;
 
+    @property(cc.Prefab)
+    JisuOrderAlert2: cc.Prefab = null;
+
     @property(cc.Node)
     wyfk: cc.Node = null;
 
@@ -56,7 +59,15 @@ export default class NewClass extends cc.Component {
         }
         this.amountLabel.string = this.app.config.toDecimal(data.amount);
         this.arrival_amount.string = this.app.config.toDecimal(data.arrival_amount);
-        this.statusLabel.string = data.status == 6 ?`${Language_pay.Lg.ChangeByText('已完成')}` :(data.status == 4 ? `${Language_pay.Lg.ChangeByText('已撤销')}` : `${Language_pay.Lg.ChangeByText('未完成')}` );
+        if(data.status == 6){
+            this.statusLabel.string = "已完成"
+        }else if(data.status == 4){
+            this.statusLabel.string = "已撤销"
+        }else if(data.status == 2){
+            this.statusLabel.string = "已过期"
+        }else{
+            this.statusLabel.string = "未完成"
+        }
         if(this.app.UrlData.package_id != 16){
             this.lastTimeLabel.string = data.lastTime == 0 ? `${Language_pay.Lg.ChangeByText('无')}` : this.app.config.getTime(data.lastTime);
             this.typeLabel.string = data.type == 1 ? `${Language_pay.Lg.ChangeByText('支付宝充值')}`  :
@@ -71,7 +82,9 @@ export default class NewClass extends cc.Component {
                                             ((data.type == 18 ||data.type == 19 ||data.type == 20 || data.type ==21)? `${Language_pay.Lg.ChangeByText("IM充值")}` :
                                                 (data.type == 23?`ERC20`:
                                                     (data.type == 24?`TRC20`:
-                                                        (data.type == 26?`极速充值`: "")
+                                                        (data.type == 26?`极速充值`: 
+                                                            (data.type == 27?`匹配充值`: "")
+                                                        )
                                                     )
                                                 )
                                             )
@@ -86,7 +99,7 @@ export default class NewClass extends cc.Component {
         }
         this.firstTimeLabel.string = data.firstTime == 0 ?`${Language_pay.Lg.ChangeByText('无')}`  : this.app.config.getTime(data.firstTime);
         this.results = data.results;
-        if(data.status != 6 && (data.type == 2 || data.type == 26)){
+        if(data.status != 6 && (data.type == 2 || data.type == 26 || data.type == 27)){
 
         }else {
             if(this.app.UrlData.package_id != 16){
@@ -110,6 +123,10 @@ export default class NewClass extends cc.Component {
                 //极速充值
                 console.log("data",data)
                 this.showJisuOrderAlert(2,data);
+            }else if(this.type == 27){
+                //极速充值
+                console.log("data",data)
+                this.showJisuOrderAlert2(2,data);
             }else{
                 if (this.app.gHandler.reflect) {
                     if (this.app.gHandler.reflect.setClipboard(this.results.order_id)) {
@@ -124,6 +141,9 @@ export default class NewClass extends cc.Component {
                 //极速充值
                 console.log("data",data)
                 this.showJisuOrderAlert(2,data);
+            }else if(this.type == 27){
+                //匹配充值
+                this.showJisuOrderAlert2(2,data);
             }else{
                 this.app.showOrderAlert(2,data,false);
             }
@@ -144,6 +164,16 @@ export default class NewClass extends cc.Component {
             canvas.addChild(node);
         }
         node.getComponent('payJisuOrderAlert').init(type,data,this.callback)
+    }
+    public showJisuOrderAlert2(type,data){
+        var node = null
+        node = cc.instantiate(this.JisuOrderAlert2);
+        var canvas = cc.find('Canvas');
+        //检测是否已存在弹窗，避免重复显示
+        if(!cc.find("Canvas/JisuOrderAlert")){
+            canvas.addChild(node);
+        }
+        node.getComponent('payJisuOrderAlert2').init(type,data,this.callback)
     }
     setLanguageResource(){
         let src = Language_pay.Lg.getLgSrc()

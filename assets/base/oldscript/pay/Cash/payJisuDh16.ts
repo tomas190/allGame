@@ -167,15 +167,13 @@ export default class NewClass extends cc.Component {
         var url = `${this.app.UrlData.host}/api/with_draw/getHighSpeedWithdrawSecurityRate?`;
         let self = this;
         this.app.ajax('GET',url,'',(response)=>{
-            self.app.hideLoading();
             if(response.status == 0){
-                
+                this.depostFee = Number(response.data.security_rate)
             }else{
                 self.app.showAlert(response.msg)
             }
         },(errstatus)=>{
             self.app.showAlert(`${Language_pay.Lg.ChangeByText('网络错误')}${errstatus}`)
-            self.app.hideLoading();
         })
     }
     //取得訂單
@@ -338,7 +336,13 @@ export default class NewClass extends cc.Component {
                 }
                 self.fetchIndex();
             }else{
-                self.app.showAlert(response.msg == "密码错误！"?"安全码错误！":response.msg)
+                if(response.msg.substring(0,4) == "密码错误"){
+                    self.app.showAlert("安全码错误！")
+                }else if(response.msg.substring(0,4) == "频繁操作"){
+                    self.app.showAlert("操作频繁,请间隔30秒后重新提交")
+                }else{
+                    self.app.showAlert(response.msg)
+                }
             }
             self.DhBtn.getComponent(cc.Button).interactable  = true;
         },(errstatus)=>{

@@ -23,11 +23,11 @@ export default class NewClass extends cc.Component {
     onLoad(){
         this.cash = cc.find('Canvas/Cash').getComponent('payCash')
         this.app = cc.find('Canvas/Main').getComponent('payMain');
-        this.fetchgetHighSpeedWithdrawRange()
+        this.fetchwith_drawjisuamounts()
     }
-    // 取得兑换确认倒数时间+獎勵%數
-    public fetchgetHighSpeedWithdrawRange(){
-        var url = `${this.app.UrlData.host}/api/with_draw/getHighSpeedWithdrawRange?`;
+    // 提現匹配 - 查詢可用提現額度 (根據後台設定 沒有回空陣列)
+    public fetchwith_drawjisuamounts(){
+        var url = `${this.app.UrlData.host}/api/with_draw/jisu/amounts?`;
         let self = this;
         this.app.ajax('GET',url,'',(response)=>{
             if(response.status == 0){
@@ -40,7 +40,7 @@ export default class NewClass extends cc.Component {
         })
     }
     renderBtn(data){
-        data.amount_list.forEach((e) => {
+        data.forEach((e) => {
             var node = cc.instantiate(this.btnNum)
             node.getComponent("payBtnNum").init(e,this.callBack.bind(this))
             this.content.addChild(node)

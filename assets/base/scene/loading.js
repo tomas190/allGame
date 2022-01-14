@@ -78,14 +78,16 @@ cc.Class({
                 this.setPinpaiRes()
                 this.runApplogin()
             }
-        } else if (hqq.app.pinpai != 'debi') {
+        } else {
             this.setPinpaiRes()
             this.layer.active = true;
             this.runApplogin()
-        } else {
-            this.setPinpaiRes()
-            this.layer.active = false;
         }
+        //  else {
+        //     cc.log("333333333333")
+        //     this.setPinpaiRes()
+        //     this.layer.active = false;
+        // }
         // hqq.eventMgr.dispatch(hqq.eventMgr.showLineChoiceLayer, {})
         // hqq.eventMgr.dispatch(hqq.eventMgr.showPerson, null)
         // hqq.eventMgr.dispatch(hqq.eventMgr.showNotice, null)
@@ -887,57 +889,19 @@ cc.Class({
         progress += "%"
         this.progress = progress
 
-        let hallStr = "hall_" + hqq.app.pinpai;
-        for(let i = 0; i < hqq.loginMgr.hallversionList.length;i++){
-            if(hqq.app.pinpai == hqq.loginMgr.hallversionList[i]){
-                hallStr = "hall_test";
-                break;
-            }
-        }
-
-        let proxyStr = "proxy_" + hqq.app.pinpai;
-        for(let i = 0; i < hqq.loginMgr.proxyversionList.length;i++){
-            if(hqq.app.pinpai == hqq.loginMgr.proxyversionList[i]){
-                proxyStr = "proxy_test";
-                break;
-            }
-        }
-        if(hqq.app.pinpai === "debi"){
-            proxyStr = "proxy_xingba";
-        }
-
-        let IMStr = "IM_test";
-        for(let i = 0; i < hqq.loginMgr.IMversionList.length;i++){
-            if(hqq.app.pinpai == hqq.loginMgr.IMversionList[i]){
-                IMStr = "IM_" + hqq.app.pinpai;
-                break;
-            }
-        }
-
-        let payStr = "pay_" + hqq.app.pinpai;
-        for(let i = 0; i < hqq.loginMgr.payversionList.length;i++){
-            if(hqq.app.pinpai == hqq.loginMgr.payversionList[i]){
-                payStr = "pay_test";
-                break;
-            }
-        }
-        if(hqq.app.pinpai === "xinlong"){
-            payStr = "pay_xinsheng";
-        }
-
         if (enname == "hall") {
             this.info = hqq.getTip("showtip77")
         } else if (enname == "apk") {
             this.info = hqq.getTip("showtip60")
         } else if (enname == "jiazai") {
             this.info = hqq.getTip("showtip78")
-        } else if(enname === hallStr ){
+        } else if(enname === hqq.loginMgr.hallStr ){
             this.info = hqq.getTip("showtip86")
-        } else if(enname === payStr ){
+        } else if(enname === hqq.loginMgr.payStr ){
             this.info = hqq.getTip("showtip89")
-        } else if(enname === proxyStr ){
+        } else if(enname === hqq.loginMgr.proxyStr ){
             this.info = hqq.getTip("showtip92")
-        } else if(enname === IMStr ){
+        } else if(enname === hqq.loginMgr.IMStr ){
             this.info = hqq.getTip("showtip95")
         } else {
             this.info = enname + hqq.getTip("showtip79")

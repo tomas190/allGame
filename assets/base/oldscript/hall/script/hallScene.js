@@ -2671,23 +2671,12 @@ cc.Class({
             return
         }
         if (hqq.subModel.cash.lanchscene != "") {
-            let payStr = "pay_" + hqq.app.pinpai;
-            for(let i = 0; i < hqq.loginMgr.payversionList.length;i++){
-                if(hqq.app.pinpai == hqq.loginMgr.payversionList[i]){
-                    payStr = "pay_test";
-                    break;
-                }
-            }
-            if(hqq.app.pinpai === "xinlong"){
-                payStr = "pay_xinsheng";
-            }
-            
-            cc.assetManager.loadBundle(payStr, (err)=> {
+            cc.assetManager.loadBundle(hqq.loginMgr.payStr, (err)=> {
                 if (err) {
-                    return cc.log('load subpackage script fail.', payStr + "_" + hqq.app.pinpai);
+                    return cc.log('load subpackage script fail.', hqq.loginMgr.payStr + "_" + hqq.app.pinpai);
                 }
-                hqq[payStr] = cc.assetManager.getBundle(payStr);
-                cc.log('load subpackage script successfully.', payStr);
+                hqq[hqq.loginMgr.payStr] = cc.assetManager.getBundle(hqq.loginMgr.payStr);
+                cc.log('load subpackage script successfully.', hqq.loginMgr.payStr);
                 cc.director.preloadScene(hqq.subModel.cash.lanchscene, this.preloadSceneOnProgress.bind(this), (err, scene) => {
                     if (err) {
                         cc.log(err)

@@ -61,7 +61,12 @@ export default class hqqWebview extends cc.Component {
                     hqq.setBtn(this.node.getChildByName("back"),{normal: "/base/juding/img/jd_popup_btn_close", callback: "onClose", script: this,x:485,y:320});
                     hqq.setSprite( cc.find( "main_top/title" , this.node ),{Res:hqq["hall_"+hqq.app.pinpai],path:"language/"+hqq.language+"/juding/jd_popup_event_title",width:332,height:72,y:-10});
                     hqq.setSprite( cc.find( "mask" , this.node ),{Res:hqq["hall_"+hqq.app.pinpai],path:"juding/bigimg/jd_popup_bg",width:1047,height:646,x:0,y:30});
-                } else if(hqq.app.pinpai=="xinsheng" || hqq.app.pinpai=="xinlong"){
+                } else if(hqq.app.pinpai=="xinlong"){
+                    this.node.getChildByName("eff_top_btn_back").active = false;
+                    hqq.setBtn(this.node.getChildByName("back"),{Res:hqq["hall_"+hqq.app.pinpai], normal: "/xinlong/img/jd_popup_btn_close", callback: "onClose", script: this,x:485,y:320});
+                    hqq.setSprite( cc.find( "main_top/title" , this.node ),{Res:hqq["hall_"+hqq.app.pinpai],path:"language/"+hqq.language+"/xinlong/jd_popup_event_title",width:332,height:72,y:-10});
+                    hqq.setSprite( cc.find( "mask" , this.node ),{Res:hqq["hall_"+hqq.app.pinpai],path:"xinlong/bigimg/jd_popup_bg",width:1047,height:646,x:0,y:30});
+                } else if(hqq.app.pinpai=="xinsheng"){
                     hqq.setSprite( this.node.getChildByName("main_top"),{path:"bigimg/zhibo_banner_top",width:1030,height:84,x:0,y:322});
                     // hqq.setSkeleton( this.node.getChildByName("eff_top_btn_back"),{path:"bigimg/fx_fh_hk/",aniname:"animation",x:-458,y:335,loop:true});
                     this.node.getChildByName("eff_top_btn_back").active = false;
