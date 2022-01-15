@@ -2,7 +2,7 @@
 let appGlobal = {
     isRelease: true, // 是否是版本发布状态
     /* ------------------------------------------------------------------- */
-    pinpai: "debi", // 渠道 test （特斯特） fuxin(富鑫) xingui (新贵) debi （德比） qibao （七宝） xingba （杏吧娱乐） yuyu （渔鱼游戏） nineone （91游戏） xinsheng （新盛更名为大喜发） xinhao (新豪) xinlong(新隆) huangshi(皇室游戏) juding(聚鼎娱乐) huaxing(华兴娱乐) ninetwo(92游戏) tianqi(天启) chaofan(超凡娱乐) wansheng(万盛娱乐) jiaxing(嘉兴娱乐)
+    pinpai: "test", // 渠道 test （特斯特） fuxin(富鑫) xingui (新贵) debi （德比） qibao （七宝） xingba （杏吧娱乐） yuyu （渔鱼游戏） nineone （91游戏） xinsheng （新盛更名为大喜发） xinhao (新豪) xinlong(新隆) huangshi(皇室游戏) juding(聚鼎娱乐) huaxing(华兴娱乐) ninetwo(92游戏) tianqi(天启) chaofan(超凡娱乐) wansheng(万盛娱乐) jiaxing(嘉兴娱乐)
     // huanjin: "dev", // dev pre online
     huanjin: "pre", // pre online
     // huanjin: "online", // pre online
@@ -36,7 +36,7 @@ let appGlobal = {
     version: "1.0.0",
 
     // hallVersionKey: "hallVersionKey",
-    hallVersion: "2.0.80",
+    hallVersion: "2.0.83",
 
     secretBookKey: "secretBookKey", // 密码本
     secretBook: "", // 密码本

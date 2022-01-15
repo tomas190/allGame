@@ -354,6 +354,10 @@ let hqqLanguage = {
         showtip94: "i更新检测失败",
         showtip95: "i更新中 5/5(更新过程中请勿退出)",
         b2bwebtip1: "游戏未开放",
+        showtip96: "我的排名",
+        showtip97: "未上榜",
+        showtip98: "我的投注額",
+        showtip99: "我的奖金",
     },
     EN: {
 

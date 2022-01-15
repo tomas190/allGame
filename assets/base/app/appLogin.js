@@ -60,6 +60,8 @@ let appLogin = {
         }
         if(hqq.app.pinpai === "debi"){
             this.payStr = "pay_jincheng";
+        } else if(hqq.app.pinpai === "xinlong"){
+            this.payStr = "pay_juding";
         }
 
         if (CC_JSB) {
@@ -846,7 +848,7 @@ let appLogin = {
 
                 hqq.localStorage.globalSet(hqq.app.versionKey, hqq.app.subGameVersion.hall)
                 
-                let localsubv = hqq.localStorage.get(hallStr, "versionKey") || null;
+                let localsubv = hqq.localStorage.get(this.hallStr, "versionKey") || null;
                 
                 hqq.hotUpdateMgr.checkUpdate({
                     subname: this.hallStr,
