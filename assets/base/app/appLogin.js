@@ -307,7 +307,7 @@ let appLogin = {
             failcallback: failcallback,
             needJsonParse: true,
         })
-        !hqq.isDebug && this.refreshServerList()
+        this.refreshServerList()
     },
     showChoiceLimeLayer() {
         let data = {
