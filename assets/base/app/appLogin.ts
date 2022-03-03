@@ -733,8 +733,7 @@ export let appLogin = {
             this.requestGameSeverInfo()
             return
         }
-        this.mainUpdataCheck("1.0.0")
-        return;
+        
         if (needUp && !cc.sys.isBrowser && cc.sys.os != "OS X" && cc.sys.os != "Windows") {
             hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, hqq.getTip("showtip60"))
             hqq.eventMgr.dispatch(hqq.eventMgr.showSamlllayer, { type: 8 })
