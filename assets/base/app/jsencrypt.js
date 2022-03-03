@@ -6,6 +6,7 @@
     'use strict';
 
     var BI_RM = "0123456789abcdefghijklmnopqrstuvwxyz";
+    var MAX_DECRYPT_BLOCK = 256;
     function int2char(n) {
         return BI_RM.charAt(n);
     }
@@ -88,47 +89,27 @@
         return ret;
     }
     // convert a base64 string to hex
-    function b64tohex(s) {
-        var ret = "";
-        var i;
-        var k = 0; // b64 state, 0-3
-        var slop = 0;
-        for (i = 0; i < s.length; ++i) {
-            if (s.charAt(i) == b64pad) {
-                break;
-            }
-            var v = b64map.indexOf(s.charAt(i));
-            if (v < 0) {
-                continue;
-            }
-            if (k == 0) {
-                ret += int2char(v >> 2);
-                slop = v & 3;
-                k = 1;
-            }
-            else if (k == 1) {
-                ret += int2char((slop << 2) | (v >> 4));
-                slop = v & 0xf;
-                k = 2;
-            }
-            else if (k == 2) {
-                ret += int2char(slop);
-                ret += int2char(v >> 2);
-                slop = v & 3;
-                k = 3;
-            }
-            else {
-                ret += int2char((slop << 2) | (v >> 4));
-                ret += int2char(v & 0xf);
-                k = 0;
-            }
+    function b64tohex(str) {
+        for (var i = 0, bin = atob(str.replace(/[ \r\n]+$/, "")), hex = []; i < bin.length; ++i) {
+            var tmp = bin.charCodeAt(i).toString(16);
+            if (tmp.length === 1) tmp = "0" + tmp;
+            hex[hex.length] = tmp;
         }
-        if (k == 1) {
-            ret += int2char(slop << 2);
-        }
-        return ret;
+        return hex.join("");
     }
 
+    function hexToBytes(hex) {
+        for (var bytes = [], c = 0; c < hex.length; c += 2)
+            bytes.push(parseInt(hex.substr(c, 2), 16));
+        return bytes;
+    }
+    function bytesToHex(bytes) {
+        for (var hex = [], i = 0; i < bytes.length; i++) {
+            hex.push((bytes[i] >>> 4).toString(16));
+            hex.push((bytes[i] & 0xF).toString(16));
+        }
+        return hex.join("");
+    }
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -5359,6 +5340,108 @@
             // Return the private representation of this key.
             return this.getKey().getPublicBaseKeyB64();
         };
+
+        JSEncrypt.prototype.encryptLong2 = function (string) {
+            var k = this.getKey();
+            try {
+                var lt = "";
+                var ct = "";
+                //RSA每次加密117bytes，需要辅助方法判断字符串截取位置
+                //1.获取字符串截取点
+                var bytes = new Array();
+                bytes.push(0);
+                var byteNo = 0;
+                var len, c;
+                len = string.length;
+                var temp = 0;
+                for (var i = 0; i < len; i++) {
+                    c = string.charCodeAt(i);
+                    if (c >= 0x010000 && c <= 0x10FFFF) {
+                        byteNo += 4;
+                    } else if (c >= 0x000800 && c <= 0x00FFFF) {
+                        byteNo += 3;
+                    } else if (c >= 0x000080 && c <= 0x0007FF) {
+                        byteNo += 2;
+                    } else {
+                        byteNo += 1;
+                    }
+                    if ((byteNo % 117) >= 114 || (byteNo % 117) == 0) {
+                        if (byteNo - temp >= 114) {
+                            bytes.push(i);
+                            temp = byteNo;
+                        }
+                    }
+                }
+                //2.截取字符串并分段加密
+                if (bytes.length > 1) {
+                    for (var i = 0; i < bytes.length - 1; i++) {
+                        var str;
+                        if (i == 0) {
+                            str = string.substring(0, bytes[i + 1] + 1);
+                        } else {
+                            str = string.substring(bytes[i] + 1, bytes[i + 1] + 1);
+                        }
+                        var t1 = k.encrypt(str);
+                        ct += addPreZero(t1,256);
+                    }
+                    ;
+                    if (bytes[bytes.length - 1] != string.length - 1) {
+                        var lastStr = string.substring(bytes[bytes.length - 1] + 1);
+           let rsaStr = k.encrypt(lastStr)                
+                        ct += addPreZero(rsaStr,256);
+                    }
+                    //console.log("加密完的数据："+ct);
+                    return hex2b64(ct);
+                }
+                var t = k.encrypt(string);
+                var y = hex2b64(t);
+                return y;
+            } catch (ex) {
+                return false;
+            }
+        }
+        JSEncrypt.prototype.decryptLong2 = function (string) {
+            var k = this.getKey();
+            // var maxLength = ((k.n.bitLength()+7)>>3);
+            try {
+                var ct = "";
+                var t1;
+                var bufTmp;
+                var hexTmp;
+                var str = b64tohex(string);
+                var buf = hexToBytes(str);
+                var inputLen = buf.length;
+
+                //开始长度
+                var offSet = 0;
+                //结束长度
+                var endOffSet = MAX_DECRYPT_BLOCK;
+        
+                //分段解密
+                console.log(inputLen +"----"+offSet)
+                while (inputLen - offSet > 0) {
+                    if (inputLen - offSet > MAX_DECRYPT_BLOCK) {
+                        bufTmp = buf.slice(offSet, endOffSet); 
+                        hexTmp = bytesToHex(bufTmp);
+                        t1 = k.decrypt(hexTmp);
+                        ct += t1;
+        
+                    } else {
+                        bufTmp = buf.slice(offSet, inputLen);
+                        hexTmp = bytesToHex(bufTmp);
+                        t1 = k.decrypt(hexTmp);
+                        ct += t1;
+        
+                    }
+                    offSet += MAX_DECRYPT_BLOCK;
+                    endOffSet += MAX_DECRYPT_BLOCK;
+                }
+                return ct;
+            } catch (ex) {
+                return false;
+            }
+        }
+
         JSEncrypt.version = "3.0.0-rc.1";
         return JSEncrypt;
     }());

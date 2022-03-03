@@ -1,5 +1,0 @@
-
-
-node deluselesspng.js
-
-pause

@@ -1,10 +1,11 @@
 {
-  "ver": "1.2.3",
+  "ver": "1.2.5",
+  "importer": "spine-data",
+  "imported": true,
   "uuid": "a6c1dae8-e17b-4ff4-a300-7621c6ea8cae",
-  "textures": [
-    "2a3d085b-de8d-4300-a240-3f35969f6e6d",
-    "ea125e80-866a-43ad-9df4-b22623222905"
+  "files": [
+    ".json"
   ],
-  "scale": 1,
-  "subMetas": {}
+  "subMetas": {},
+  "userData": {}
 }

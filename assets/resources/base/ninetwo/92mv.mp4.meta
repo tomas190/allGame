@@ -1,5 +1,12 @@
 {
-  "ver": "1.0.1",
+  "ver": "1.0.0",
+  "importer": "video-clip",
+  "imported": true,
   "uuid": "846f5f46-5239-4802-962b-c0f1dc632ce9",
-  "subMetas": {}
+  "files": [
+    ".mp4",
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {}
 }

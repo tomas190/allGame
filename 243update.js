@@ -2,7 +2,7 @@
  * @Author: burt
  * @Date: 2020-10-27 14:12:04
  * @LastEditors: burt
- * @LastEditTime: 2020-11-02 16:46:43
+ * @LastEditTime: 2020-12-25 22:53:37
  * @Description:
  */
 const Fs = require('fs');
@@ -41,18 +41,16 @@ let parseArguments = function () {
                 pinpai = process.argv[i + 1];
                 i += 2;
                 break;
+            case '-hv':
+                hall_version = process.argv[i + 1];
+                i += 2;
+                break;
             default:
                 i++;
                 break;
         }
     }
-    // if (Os.platform() == "win32") {
-    gitSubPath = "\\com." + pinpai + "." + huanjin + ".android"
-    // } else {
-    //     throw "对于苹果系统未做兼容"
-    // }
-    moveFileToGitPath3()
-    // changeVersion()
+    changeVersion()
 }
 
 // 修改版本文件中的内容

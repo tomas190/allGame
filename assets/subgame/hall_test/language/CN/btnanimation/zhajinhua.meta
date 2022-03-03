@@ -1,12 +1,12 @@
 {
-  "ver": "1.1.2",
-  "uuid": "cf39d494-30f7-4add-b3f0-aaf85c2f2886",
-  "isBundle": false,
-  "bundleName": "",
-  "priority": 1,
-  "compressionType": {},
-  "optimizeHotUpdate": {},
-  "inlineSpriteFrames": {},
-  "isRemoteBundle": {},
-  "subMetas": {}
+  "ver": "1.1.0",
+  "importer": "directory",
+  "imported": true,
+  "uuid": "3e1084e1-f410-4fd2-b401-78f27ca16501",
+  "files": [],
+  "subMetas": {},
+  "userData": {
+    "compressionType": {},
+    "isRemoteBundle": {}
+  }
 }

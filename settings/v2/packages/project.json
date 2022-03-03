@@ -1,0 +1,104 @@
+{
+  "layer": [
+    {
+      "name": "default",
+      "value": 1
+    },
+    {
+      "name": "Bullet",
+      "value": 2
+    },
+    {
+      "name": "Fish",
+      "value": 4
+    },
+    {
+      "name": "LockingBullet",
+      "value": 8
+    },
+    {
+      "name": "LockedFish",
+      "value": 16
+    },
+    {
+      "name": "Top",
+      "value": 32
+    },
+    {
+      "name": "wall",
+      "value": 64
+    },
+    {
+      "name": "pig",
+      "value": 128
+    },
+    {
+      "name": "bonuscoin",
+      "value": 256
+    },
+    {
+      "name": "coin",
+      "value": 512
+    }
+  ],
+  "general": {
+    "designResolution": {
+      "width": 1334,
+      "height": 750,
+      "fitHeight": true,
+      "fitWidth": false
+    }
+  },
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "Bullet"
+      },
+      {
+        "index": 2,
+        "name": "Fish"
+      },
+      {
+        "index": 3,
+        "name": "LockingBullet"
+      },
+      {
+        "index": 4,
+        "name": "LockedFish"
+      },
+      {
+        "index": 5,
+        "name": "Top"
+      },
+      {
+        "index": 6,
+        "name": "wall"
+      },
+      {
+        "index": 7,
+        "name": "pig"
+      },
+      {
+        "index": 8,
+        "name": "bonuscoin"
+      },
+      {
+        "index": 9,
+        "name": "coin"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 0,
+      "1": 16,
+      "2": 0,
+      "3": 16,
+      "4": 10,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 256,
+      "9": 512
+    }
+  }
+}

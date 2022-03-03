@@ -1,20 +1,20 @@
+import * as cc from "cc";
+
 const {ccclass, property} = cc._decorator;
 
-@ccclass
+@ccclass('hqqItemDay')
 export default class hqqItemDay extends cc.Component{
     @property(cc.Label)
-    lbDay:cc.Label = null;
+    lbDay:cc.Label | null = null;
     @property(cc.Sprite)
-    spSel:cc.Sprite = null;
+    spSel:cc.Sprite | null = null;
     @property(cc.Sprite)
-    spSel2:cc.Sprite = null;
-
+    spSel2:cc.Sprite | null = null;
     index:number = null;
     year:number = null;
     month:number = null;
     day:number = null;
     cb:Function = null;
-
     setDay(index, year, month, day, sel, sel2,cb) {
         this.index = index;
         this.year = year;
@@ -26,11 +26,10 @@ export default class hqqItemDay extends cc.Component{
         this.spSel.enabled = sel;
         this.spSel2.enabled = sel2;
     }
-
     onClickItem() {
         if (this.cb) {
-            cc.log("this.index=",this.index, " this.year=",this.year, " this.month=",this.month, " this.day=",this.day," this.spSel2.enabled=",this.spSel2.enabled)
-            this.cb(this.index, this.year, this.month, this.day,this.spSel2.enabled);
+        cc.log("this.index=",this.index, " this.year=",this.year, " this.month=",this.month, " this.day=",this.day," this.spSel2.enabled=",this.spSel2.enabled)
+        this.cb(this.index, this.year, this.month, this.day,this.spSel2.enabled);
         }
     }
 }
