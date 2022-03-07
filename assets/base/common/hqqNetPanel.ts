@@ -116,14 +116,14 @@ export class hqqNetPanel extends cc.Component {
             hqq.setNode(curcenterline, { x: 10 })
             let centerspeed = cc.find("curline/speed", center)
             hqq.setNode(centerspeed, { x: 110 })
-            this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -40);
+            this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -40);
             this.upScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.upScrollview.node.getComponent(cc.UITransform).width = 340;
             this.upScrollview.node.getComponent(cc.UITransform).height = 250;
             this.upScrollview.view.setContentSize(340, 250);
             this.upScrollview.content.getComponent(cc.UITransform).width = 340;
 
-            this.centerScrollview.node.setPosition(this.centerScrollview.node.getPosition().x, -40);
+            this.centerScrollview.node.setPositionEx(this.centerScrollview.node.getPosition().x, -40);
             this.centerScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.centerScrollview.node.getComponent(cc.UITransform).width = 340;
             this.centerScrollview.node.getComponent(cc.UITransform).height = 250;
@@ -200,14 +200,14 @@ export class hqqNetPanel extends cc.Component {
             hqq.setNode(curcenterline, { x: 10 })
             let centerspeed = cc.find("curline/speed", center)
             hqq.setNode(centerspeed, { x: 110 })
-            this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -40);
+            this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -40);
             this.upScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.upScrollview.node.getComponent(cc.UITransform).width = 340;
             this.upScrollview.node.getComponent(cc.UITransform).height = 250;
             this.upScrollview.view.setContentSize(340, 250);
             this.upScrollview.content.getComponent(cc.UITransform).width = 340;
 
-            this.centerScrollview.node.setPosition(this.centerScrollview.node.getPosition().x, -40);
+            this.centerScrollview.node.setPositionEx(this.centerScrollview.node.getPosition().x, -40);
             this.centerScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.centerScrollview.node.getComponent(cc.UITransform).width = 340;
             this.centerScrollview.node.getComponent(cc.UITransform).height = 250;
@@ -249,14 +249,14 @@ export class hqqNetPanel extends cc.Component {
             hqq.setNode(curcenterline, { x: 10 })
             let centerspeed = cc.find("curline/speed", center)
             hqq.setNode(centerspeed, { x: 110 })
-            this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -40);
+            this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -40);
             this.upScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.upScrollview.node.getComponent(cc.UITransform).width = 340;
             this.upScrollview.node.getComponent(cc.UITransform).height = 250;
             this.upScrollview.view.setContentSize(340, 250);
             this.upScrollview.content.getComponent(cc.UITransform).width = 340;
 
-            this.centerScrollview.node.setPosition(this.centerScrollview.node.getPosition().x, -40);
+            this.centerScrollview.node.setPositionEx(this.centerScrollview.node.getPosition().x, -40);
             this.centerScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.centerScrollview.node.getComponent(cc.UITransform).width = 340;
             this.centerScrollview.node.getComponent(cc.UITransform).height = 250;
@@ -296,7 +296,7 @@ export class hqqNetPanel extends cc.Component {
                 hqq.setBtn(btn_refresh, { normal: xpath + "btn_3", x: 180, y: 200, callback: "onClickRefreshTest", script: this })
                 hqq.setSprite(up, { path: xpath + "xiaokuang", x: 0, y: -40, width: 648, height: 425, type: cc.Sprite.Type.SLICED })
                 hqq.setSprite(txt_t1, { path: xlpath + "gxfwxxl", x: -40, y: 240 })
-                this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -20);
+                this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -20);
                 this.upScrollview.node.getComponent(cc.UITransform).setContentSize(620, 360);
                 this.upScrollview.node.getComponent(cc.UITransform).width = 620;
                 this.upScrollview.node.getComponent(cc.UITransform).height = 360;
@@ -314,14 +314,14 @@ export class hqqNetPanel extends cc.Component {
                 hqq.setSprite(up, { path: xpath + "xiaokuang", x: -250, y: -40, width: 486, height: 425, type: cc.Sprite.Type.SLICED })
                 hqq.setSprite(txt_t1, { path: xlpath + "gxfwxxl", x: 0, y: 240 })
 
-                this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -20);
+                this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -20);
                 this.upScrollview.node.getComponent(cc.UITransform).setContentSize(460, 360);
                 this.upScrollview.node.getComponent(cc.UITransform).width = 460;
                 this.upScrollview.node.getComponent(cc.UITransform).height = 360;
                 this.upScrollview.view.setContentSize(460, 360);
                 this.upScrollview.content.getComponent(cc.UITransform).width = 460;
 
-                this.centerScrollview.node.setPosition(this.centerScrollview.node.getPosition().x, -20);
+                this.centerScrollview.node.setPositionEx(this.centerScrollview.node.getPosition().x, -20);
                 this.centerScrollview.node.getComponent(cc.UITransform).setContentSize(460, 360);
                 this.centerScrollview.node.getComponent(cc.UITransform).width = 460;
                 this.centerScrollview.node.getComponent(cc.UITransform).height = 360;
@@ -349,13 +349,13 @@ export class hqqNetPanel extends cc.Component {
                 let upcurline = up.getChildByName("curline")
                 upcurline.getComponent(cc.Sprite).spriteFrame = null;
                 upcurline.getComponent(cc.UITransform).width = 360;
-                upcurline.setPosition(50, 110);
+                upcurline.setPositionEx(50, 110);
                 hqq.setSprite(up.getChildByName("frame_1"), { path: xpath + "shurukuang" })
                 hqq.setNode(btn_refresh, { x: 250, y: 150 })
                 hqq.setSprite(up, { path: xpath + "xiaodifd", x: 0, y: -40, width: 366, height: 344, type: cc.Sprite.Type.SLICED })
                 hqq.setSprite(txt_t1, { path: xlpath + "eqwq", x: 0, y: 153 })
 
-                this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -45);
+                this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -45);
                 this.upScrollview.node.getComponent(cc.UITransform).setContentSize(366, 255);
                 this.upScrollview.node.getComponent(cc.UITransform).width = 366;
                 this.upScrollview.node.getComponent(cc.UITransform).height = 255;
@@ -368,32 +368,32 @@ export class hqqNetPanel extends cc.Component {
                 let upcurline = up.getChildByName("curline")
                 upcurline.getComponent(cc.Sprite).spriteFrame = null;
                 upcurline.getComponent(cc.UITransform).width = 360;
-                upcurline.setPosition(50, 110);
+                upcurline.setPositionEx(50, 110);
                 hqq.setSprite(up.getChildByName("frame_1"), { path: xpath + "shurukuang" })
                 let centercurline = center.getChildByName("curline")
                 centercurline.getComponent(cc.Sprite).spriteFrame = null;
                 centercurline.getComponent(cc.UITransform).width = 360;
-                centercurline.setPosition(50, 110);
+                centercurline.setPositionEx(50, 110);
                 hqq.setSprite(center.getChildByName("frame_1"), { path: xpath + "shurukuang" })
                 hqq.setNode(btn_refresh, { x: 0, y: 175 })
                 hqq.setSprite(up, { path: xpath + "xiaodifd", x: -190, y: -20, width: 366, height: 344, type: cc.Sprite.Type.SLICED })
                 hqq.setSprite(txt_t1, { path: xlpath + "eqwq", x: -20, y: 153 })
 
-                this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -45);
+                this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -45);
                 this.upScrollview.node.getComponent(cc.UITransform).setContentSize(366, 255);
                 this.upScrollview.node.getComponent(cc.UITransform).width = 366;
                 this.upScrollview.node.getComponent(cc.UITransform).height = 255;
                 this.upScrollview.view.setContentSize(366, 255);
                 this.upScrollview.content.getComponent(cc.UITransform).width = 366;
-                this.upScrollview.content.setPosition(this.upScrollview.content.getPosition().x, 127.5);
+                this.upScrollview.content.setPositionEx(this.upScrollview.content.getPosition().x, 127.5);
 
-                this.centerScrollview.node.setPosition(this.centerScrollview.node.getPosition().x, -45);
+                this.centerScrollview.node.setPositionEx(this.centerScrollview.node.getPosition().x, -45);
                 this.centerScrollview.node.getComponent(cc.UITransform).setContentSize(366, 255);
                 this.centerScrollview.node.getComponent(cc.UITransform).width = 366;
                 this.centerScrollview.node.getComponent(cc.UITransform).height = 255;
                 this.centerScrollview.view.setContentSize(366, 255);
                 this.centerScrollview.content.getComponent(cc.UITransform).width = 366;
-                this.centerScrollview.content.setPosition(this.upScrollview.content.getPosition().x, 127.5);
+                this.centerScrollview.content.setPositionEx(this.upScrollview.content.getPosition().x, 127.5);
 
                 this.item.getComponent(cc.UITransform).width = 366
             }
@@ -448,14 +448,14 @@ export class hqqNetPanel extends cc.Component {
             let centerspeed = cc.find("curline/speed", center)
             hqq.setNode(centerspeed, { x: 110 })
 
-            this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -40);
+            this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -40);
             this.upScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.upScrollview.node.getComponent(cc.UITransform).width = 340;
             this.upScrollview.node.getComponent(cc.UITransform).height = 250;
             this.upScrollview.view.setContentSize(340, 250);
             this.upScrollview.content.getComponent(cc.UITransform).width = 340;
 
-            this.centerScrollview.node.setPosition(this.centerScrollview.node.getPosition().x, -40);
+            this.centerScrollview.node.setPositionEx(this.centerScrollview.node.getPosition().x, -40);
             this.centerScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.centerScrollview.node.getComponent(cc.UITransform).width = 340;
             this.centerScrollview.node.getComponent(cc.UITransform).height = 250;
@@ -495,7 +495,7 @@ export class hqqNetPanel extends cc.Component {
                 hqq.setBtn(btn_refresh, { normal: xpath + "btn_3", x: 180, y: 200, callback: "onClickRefreshTest", script: this })
                 hqq.setSprite(up, { path: xpath + "xiaokuang", x: 0, y: -40, width: 648, height: 425, type: cc.Sprite.Type.SLICED })
                 hqq.setSprite(txt_t1, { path: xlpath + "gxfwxxl", x: -40, y: 240 })
-                this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -20);
+                this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -20);
                 this.upScrollview.node.getComponent(cc.UITransform).setContentSize(620, 360);
                 this.upScrollview.node.getComponent(cc.UITransform).width = 620;
                 this.upScrollview.node.getComponent(cc.UITransform).height = 360;
@@ -513,14 +513,14 @@ export class hqqNetPanel extends cc.Component {
                 hqq.setSprite(up, { path: xpath + "xiaokuang", x: -250, y: -40, width: 486, height: 425, type: cc.Sprite.Type.SLICED })
                 hqq.setSprite(txt_t1, { path: xlpath + "gxfwxxl", x: 0, y: 240 })
 
-                this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -20);
+                this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -20);
                 this.upScrollview.node.getComponent(cc.UITransform).setContentSize(460, 360);
                 this.upScrollview.node.getComponent(cc.UITransform).width = 460;
                 this.upScrollview.node.getComponent(cc.UITransform).height = 360;
                 this.upScrollview.view.setContentSize(460, 360);
                 this.upScrollview.content.getComponent(cc.UITransform).width = 460;
 
-                this.centerScrollview.node.setPosition(this.centerScrollview.node.getPosition().x, -20);
+                this.centerScrollview.node.setPositionEx(this.centerScrollview.node.getPosition().x, -20);
                 this.centerScrollview.node.getComponent(cc.UITransform).setContentSize(460, 360);
                 this.centerScrollview.node.getComponent(cc.UITransform).width = 460;
                 this.centerScrollview.node.getComponent(cc.UITransform).height = 360;
@@ -579,14 +579,14 @@ export class hqqNetPanel extends cc.Component {
             hqq.setNode(curcenterline, { x: 10 })
             let centerspeed = cc.find("curline/speed", center)
             hqq.setNode(centerspeed, { x: 110 })
-            this.upScrollview.node.setPosition(this.upScrollview.node.getPosition().x, -40);
+            this.upScrollview.node.setPositionEx(this.upScrollview.node.getPosition().x, -40);
             this.upScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.upScrollview.node.getComponent(cc.UITransform).width = 340;
             this.upScrollview.node.getComponent(cc.UITransform).height = 250;
             this.upScrollview.view.setContentSize(340, 250);
             this.upScrollview.content.getComponent(cc.UITransform).width = 340;
 
-            this.centerScrollview.node.setPosition(this.centerScrollview.node.getPosition().x, -40);
+            this.centerScrollview.node.setPositionEx(this.centerScrollview.node.getPosition().x, -40);
             this.centerScrollview.node.getComponent(cc.UITransform).setContentSize(340, 250);
             this.centerScrollview.node.getComponent(cc.UITransform).width = 340;
             this.centerScrollview.node.getComponent(cc.UITransform).height = 250;
@@ -645,7 +645,8 @@ export class hqqNetPanel extends cc.Component {
                     data.exitFunc();
                     hqq.http.stopTestLint();
                     hqq.app.checkSubServer();
-                    //    cc.audioEngine.stopAll();
+                    hqq.audioMgr.stopBg();
+                    hqq.audioMgr.stopEffect();
                     cc.game.restart();
                 }
             } else {
@@ -663,7 +664,8 @@ export class hqqNetPanel extends cc.Component {
                 this.node.destroy()
                 hqq.http.stopTestLint();
                 hqq.app.checkSubServer();
-                //    cc.audioEngine.stopAll();
+                hqq.audioMgr.stopBg();
+                hqq.audioMgr.stopEffect();
                 cc.game.restart();
             }
         }
@@ -688,7 +690,7 @@ export class hqqNetPanel extends cc.Component {
         }
         if (this.data.choicetype) {
             this.centernode.active = false
-            this.upnode.setPosition(0, this.upnode.getPosition().y);
+            this.upnode.setPositionEx(0, this.upnode.getPosition().y);
             this.exitbtn.active = false
             this.tiplabelnode.active = false
         } else {
@@ -845,7 +847,7 @@ export class hqqNetPanel extends cc.Component {
                 }
                 let x = 0
                 let y = -i * this.item.getComponent(cc.UITransform).height
-                item.setPosition(x, y)
+                item.setPositionEx(x, y)
                 item.active = true
                 this.upScrollview.content.addChildEx(item)
                 if (hqq.app.pinpai == "huaxing" || hqq.app.pinpai == "jiaxing") {
@@ -910,7 +912,7 @@ export class hqqNetPanel extends cc.Component {
                 }
                 let x = 0
                 let y = -i * this.item.getComponent(cc.UITransform).height
-                item.setPosition(x, y)
+                item.setPositionEx(x, y)
                 item.active = true
                 this.centerScrollview.content.addChildEx(item)
                 if (hqq.app.pinpai == "huaxing" || hqq.app.pinpai == "jiaxing") {

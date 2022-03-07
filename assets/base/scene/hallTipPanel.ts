@@ -65,12 +65,12 @@ export class hallTipPanel extends cc.Component {
         this.bg.getComponent(cc.UITransform).width = this.label.getComponent(cc.UITransform).width + 100
         this.bg.getComponent(cc.UITransform).height = this.label.getComponent(cc.UITransform).height
         if (this.data && this.data.position) {
-            this.node.setPosition(this.data.position.x, this.data.position.y - this.movedis)
+            this.node.setPositionEx(this.data.position.x, this.data.position.y - this.movedis)
         } else {
-            this.node.setPosition(cc.view.getVisibleSize().width / 2, cc.view.getVisibleSize().height / 2 - this.movedis)
+            this.node.setPositionEx(cc.view.getVisibleSize().width / 2, cc.view.getVisibleSize().height / 2 - this.movedis)
         }
         if (cc.isValid(this.closeSprite)) {
-            this.closeSprite.setPosition(-((this.bg.getComponent(cc.UITransform).width / 2) - 24), this.closeSprite.getPosition().y);
+            this.closeSprite.setPositionEx(-((this.bg.getComponent(cc.UITransform).width / 2) - 24), this.closeSprite.getPosition().y);
         }
         if(!cc.isValid(this.node.getComponent(cc.UIOpacity))){
             this.node.addComponent(cc.UIOpacity);

@@ -43,7 +43,7 @@ export default class hqqWebview_test extends hqqWebview {
     public onWebviewEvent(webview: cc.WebView, eventType: cc.__private._cocos_web_view_web_view_enums__EventType): void {
         if (eventType === cc.__private._cocos_web_view_web_view_enums__EventType.LOADED) {
             this.loadcount++;
-            cc.log("hqqWebview_jiaxing ===============onWebviewEvent cc.WebView.EventType.LOADED")
+            cc.log("hqqWebview_jiaxing ===============onWebviewEvent cc.__private._cocos_web_view_web_view_enums__EventType.LOADED")
             if (cc.isValid(this.web)) {
                 if (this.jiaziTimerID) {
                     clearInterval(this.jiaziTimerID);
@@ -55,7 +55,7 @@ export default class hqqWebview_test extends hqqWebview {
                 this.web.node.getComponent(cc.UIOpacity).opacity = 255;
                 this.web.node.getComponent(cc.UITransform).width = 1030;
                 this.web.node.getComponent(cc.UITransform).height = 570;
-                this.web.node.setPosition(0, 0);
+                this.web.node.setPositionEx(0, 0);
 
                 if (hqq.app.pinpai == "fuxin") {
                     hqq.setSprite(this.node.getChildByName("main_top"), { path: "bigimg/fx_banner_top", width: 1030, height: 84, x: 0, y: 322 });

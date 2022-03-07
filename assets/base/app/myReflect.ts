@@ -12,7 +12,7 @@ export let myReflect = {
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                // ret = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/NativeAndroidClass", "getUniqueIdAction", "()Ljava/lang/String;");
+                // ret = jsb.reflection.callStaticMethod("com/cocos/game/NativeAndroidClass", "getUniqueIdAction", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 ret = jsb.reflection.callStaticMethod("AppController", "requestUrl:", urllist);
             }
@@ -25,7 +25,7 @@ export let myReflect = {
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                ret = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/NativeAndroidClass", "getUniqueIdAction", "()Ljava/lang/String;");
+                ret = jsb.reflection.callStaticMethod("com/cocos/game/NativeAndroidClass", "getUniqueIdAction", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 ret = jsb.reflection.callStaticMethod("NativeOcClass", "getIDFAAction",null);
             }
@@ -38,7 +38,7 @@ export let myReflect = {
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                ret = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getClipBoardText", "()Ljava/lang/String;");
+                ret = jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "getClipBoardText", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 ret = jsb.reflection.callStaticMethod("NativeOcClass", "getClipBoardText",null);
             }
@@ -62,7 +62,7 @@ export let myReflect = {
             document.body.removeChild(input);
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                ret = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "clipBoardAction", "(Ljava/lang/String;)Z", text.toString());
+                ret = jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "clipBoardAction", "(Ljava/lang/String;)Z", text.toString());
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 ret = jsb.reflection.callStaticMethod("NativeOcClass", "clipBoardAction:", text);
             }
@@ -110,9 +110,9 @@ export let myReflect = {
             cc.view.setDesignResolutionSize(width, height, cc.ResolutionPolicy.SHOW_ALL);
             if (cc.sys.os === cc.sys.OS.ANDROID) {
                 if (orientation == "portrait") {
-                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "setOrientation", "(Ljava/lang/String;)V", "V");
+                    jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "setOrientation", "(Ljava/lang/String;)V", "V");
                 } else {
-                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "setOrientation", "(Ljava/lang/String;)V", "L");
+                    jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "setOrientation", "(Ljava/lang/String;)V", "L");
                 }
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 if (orientation == "portrait") {
@@ -131,7 +131,7 @@ export let myReflect = {
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                ret = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/NativeAndroidClass", "savePicture", "(Ljava/lang/String;)Z", base64png.toString());
+                ret = jsb.reflection.callStaticMethod("com/cocos/game/NativeAndroidClass", "savePicture", "(Ljava/lang/String;)Z", base64png.toString());
             } else if (cc.sys.os === cc.sys.OS.IOS) {
 
             }
@@ -145,7 +145,7 @@ export let myReflect = {
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "saveTextureToLocal", "(Ljava/lang/String;)V", pngPath.toString());
+                jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "saveTextureToLocal", "(Ljava/lang/String;)V", pngPath.toString());
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 let ret = jsb.reflection.callStaticMethod("AppController", "saveTextureToLocal:", pngPath);
             }
@@ -159,7 +159,7 @@ export let myReflect = {
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                versionname = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getAppVersionName", "()Ljava/lang/String;");
+                versionname = jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "getAppVersionName", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 versionname = jsb.reflection.callStaticMethod("NativeOcClass", "getAppBuildVersion",null);
             }
@@ -175,9 +175,9 @@ export let myReflect = {
             permission = true
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                permission = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "isHasStoragePermission", "()Z");
+                permission = jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "isHasStoragePermission", "()Z");
                 if (!permission) {
-                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "requestPermissionAction", "()V");
+                    jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "requestPermissionAction", "()V");
                 }
             } else if (cc.sys.os === cc.sys.OS.IOS) {
 
@@ -193,7 +193,7 @@ export let myReflect = {
             return false;
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                return jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "renameFile", "(Ljava/lang/String;Ljava/lang/String;)Z", oldpath.toString(), newpath.toString());
+                return jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "renameFile", "(Ljava/lang/String;Ljava/lang/String;)Z", oldpath.toString(), newpath.toString());
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 return false;
             }
@@ -208,7 +208,7 @@ export let myReflect = {
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                name = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getAppPackageName", "()Ljava/lang/String;");
+                name = jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "getAppPackageName", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 name = jsb.reflection.callStaticMethod("NativeOcClass", "getAppPackageName",null);
             }
@@ -223,7 +223,7 @@ export let myReflect = {
         if (cc.sys.isBrowser) {
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                localip = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getLocalIpAddress", "()Ljava/lang/String;");
+                localip = jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "getLocalIpAddress", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 localip = jsb.reflection.callStaticMethod("NativeOcClass", "getIPAddress",null);
             }
@@ -239,7 +239,7 @@ export let myReflect = {
             // return '{"pinpai":"test","huanjin":"dev","system":"android","version":"1.0.9","proxyid":"123456"}';
         } else {
             if (cc.sys.os === cc.sys.OS.ANDROID) {
-                packageinfo = jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "getHqqPackageInfo", "()Ljava/lang/String;");
+                packageinfo = jsb.reflection.callStaticMethod("com/cocos/game/AppActivity", "getHqqPackageInfo", "()Ljava/lang/String;");
             } else if (cc.sys.os === cc.sys.OS.IOS) {
                 packageinfo = jsb.reflection.callStaticMethod("NativeOcClass", "getHqqPackageInfo",null);
             }

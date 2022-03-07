@@ -400,7 +400,7 @@ export let appLogin = {
     /** 请求最快的select服务器 */
     requestFastestSelectServer() {
         let urllist = hqq.localStorage.globalGet(hqq.app.codeBookKey)
-        if(DEBUG && hqq.app.huanjin === "dev" ){
+        if(hqq.app.huanjin === "dev" ){
             urllist = ["http://select.539316.com/Get/EntryHosts?mode=dev"]
         }
         hqq.eventMgr.dispatch(hqq.eventMgr.showLoadingInfo, hqq.getTip("showtip55"))

@@ -286,15 +286,15 @@ export class hallPersonLayer_test extends cc.Component {
             // hqq.addNode(background, { path: xpath + "bg", widget: { right: 0, left: cc.view.getVisibleSize().width / 2, }, anchorX: 1, scaleX: -1, type: cc.Sprite.Type.SLICED })
             hqq.setSprite(title_personal, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "jd_title_personal", widget: { top: 11, left: 162 } })
             this.nicklabel.color = cc.color(84, 98, 119, 255);
-            this.nicklabel.node.setPosition(180, -50);
+            this.nicklabel.node.setPositionEx(180, -50);
             this.idlabel.color = cc.color(84, 98, 119, 255);
-            this.idlabel.node.setPosition(90, -50);
+            this.idlabel.node.setPositionEx(90, -50);
             this.phonelabel.color = cc.color(84, 98, 119, 255);
-            this.phonelabel.node.setPosition(0, -50);
+            this.phonelabel.node.setPositionEx(0, -50);
             this.alipaylabel.color = cc.color(84, 98, 119, 255);
-            this.alipaylabel.node.setPosition(-50, this.alipaylabel.node.getPosition().y);
+            this.alipaylabel.node.setPositionEx(-50, this.alipaylabel.node.getPosition().y);
             this.yinghangkalabel.color = cc.color(84, 98, 119, 255);
-            this.yinghangkalabel.node.setPosition(-50, -175);
+            this.yinghangkalabel.node.setPositionEx(-50, -175);
             hqq.setSprite(personal_form, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "jd_personal_form" })
 
             hqq.setBtn(closebtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_p_btn_return", widget: { top: 0, left: 0 } })
@@ -316,8 +316,8 @@ export class hallPersonLayer_test extends cc.Component {
             hqq.setSprite(txt_bgm, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "jd_personal_txt_music", x: 375, y: 51 })
 
             hqq.setSprite(headfram3, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_personal_headframe_1", widget: { left: 90 } })
-            yinyuetoggle.node.setPosition(532, 46);
-            yinxiaotoggle.node.setPosition(532, -62);
+            yinyuetoggle.node.setPositionEx(532, 46);
+            yinxiaotoggle.node.setPositionEx(532, -62);
 
             hqq["hall_" + hqq.app.pinpai].load(hlpath + "jd_personal_turnOn/spriteFrame", cc.SpriteFrame, (err, frame) => {
                 if (err) {
@@ -370,15 +370,15 @@ export class hallPersonLayer_test extends cc.Component {
             // // hqq.addNode(background, { path: xpath + "bg", widget: { right: 0, left: cc.view.getVisibleSize().width / 2, }, anchorX: 1, scaleX: -1, type: cc.Sprite.Type.SLICED })
             hqq.setSprite(title_personal, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "jd_title_personal", widget: { top: 11, left: 162 } })
             this.nicklabel.color = cc.color(84, 98, 119, 255);
-            this.nicklabel.node.setPosition(180, -50);
+            this.nicklabel.node.setPositionEx(180, -50);
             this.idlabel.color = cc.color(84, 98, 119, 255);
-            this.idlabel.node.setPosition(90, -50);
+            this.idlabel.node.setPositionEx(90, -50);
             this.phonelabel.color = cc.color(84, 98, 119, 255);
-            this.phonelabel.node.setPosition(0, -50);
+            this.phonelabel.node.setPositionEx(0, -50);
             this.alipaylabel.color = cc.color(84, 98, 119, 255);
-            this.alipaylabel.node.setPosition(-50, this.alipaylabel.node.getPosition().y);
+            this.alipaylabel.node.setPositionEx(-50, this.alipaylabel.node.getPosition().y);
             this.yinghangkalabel.color = cc.color(84, 98, 119, 255);
-            this.yinghangkalabel.node.setPosition(-50, -175);
+            this.yinghangkalabel.node.setPositionEx(-50, -175);
             hqq.setSprite(personal_form, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "jd_personal_form" })
 
             hqq.setBtn(closebtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_p_btn_return", widget: { top: 0, left: 0 } })
@@ -400,8 +400,8 @@ export class hallPersonLayer_test extends cc.Component {
             hqq.setSprite(txt_bgm, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "jd_personal_txt_music", x: 375, y: 51 })
 
             hqq.setSprite(headfram3, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_personal_headframe_1", widget: { left: 90 } })
-            yinyuetoggle.node.setPosition(532, 46);
-            yinxiaotoggle.node.setPosition(532, -62);
+            yinyuetoggle.node.setPositionEx(532, 46);
+            yinxiaotoggle.node.setPositionEx(532, -62);
 
             hqq["hall_" + hqq.app.pinpai].load(hlpath + "jd_personal_turnOn/spriteFrame", cc.SpriteFrame, (err, frame) => {
                 if (err) {
@@ -461,23 +461,23 @@ export class hallPersonLayer_test extends cc.Component {
             // // cc.find("Canvas/personallayer/person/personal_form/nick").color = cc.color(84,98,119,255);
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { path: xpath + "4", x: -10, y: 180, width: 230, height: 40, type: cc.Sprite.Type.SLICED, zIndex: -1 });
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { string: "grxxnick", x: -165, y: 168, color: cc.color(232, 169, 98), zIndex: -2, fontSize: 24, bold: true });
-            this.nicklabel.node.setPosition(180, -120);
+            this.nicklabel.node.setPositionEx(180, -120);
             // // cc.find("Canvas/personallayer/person/personal_form/id").color = cc.color(84,98,119,255);
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { path: xpath + "4", x: -10, y: 90, width: 230, height: 40, type: cc.Sprite.Type.SLICED, zIndex: -1 });
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { string: "grxxid", x: -165, y: 78, color: cc.color(232, 169, 98), zIndex: -2, fontSize: 24, bold: true });
-            this.idlabel.node.setPosition(90, -120);
+            this.idlabel.node.setPositionEx(90, -120);
             // // cc.find("Canvas/personallayer/person/personal_form/phone").color = cc.color(84,98,119,255);
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { path: xpath + "4", x: -10, y: 0, width: 230, height: 40, type: cc.Sprite.Type.SLICED, zIndex: -1 });
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { string: "grxxphone", x: -165, y: -12, color: cc.color(232, 169, 98), zIndex: -2, fontSize: 24, bold: true });
-            this.phonelabel.node.setPosition(0, -120);
+            this.phonelabel.node.setPositionEx(0, -120);
             // // cc.find("Canvas/personallayer/person/personal_form/alipay").color = cc.color(84,98,119,255);
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { path: xpath + "4", x: 5, y: -90, width: 265, height: 40, type: cc.Sprite.Type.SLICED, zIndex: -1 });
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { string: "grxxusdt", x: -195, y: -102, color: cc.color(232, 169, 98), zIndex: -2, fontSize: 24, bold: true });
-            this.alipaylabel.node.setPosition(-120, this.alipaylabel.node.getPosition().y);
+            this.alipaylabel.node.setPositionEx(-120, this.alipaylabel.node.getPosition().y);
             // // cc.find("Canvas/personallayer/person/personal_form/yinhangka").color = cc.color(84,98,119,255);
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { path: xpath + "4", x: 5, y: -175, width: 265, height: 40, type: cc.Sprite.Type.SLICED, zIndex: -1 });
             hqq.addNode(cc.find("Canvas/personallayer/person/personal_form"), { string: "grxxyhk", x: -175, y: -187, color: cc.color(232, 169, 98), zIndex: -2, fontSize: 24, bold: true });
-            this.yinghangkalabel.node.setPosition(-120, -175);
+            this.yinghangkalabel.node.setPositionEx(-120, -175);
 
             hqq.setBtn(closebtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "btn_fh", widget: { top: 0, left: 0 } })
             hqq.setBtn(changebt, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "7", widget: { left: 90 } })
@@ -493,8 +493,8 @@ export class hallPersonLayer_test extends cc.Component {
             hqq.setSprite(txt_bgm, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "1", x: 303, y: 81 })
 
             hqq.setSprite(headfram3, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "3", widget: { left: 80 } })
-            yinyuetoggle.node.setPosition(460, 76);
-            yinxiaotoggle.node.setPosition(460, -32);
+            yinyuetoggle.node.setPositionEx(460, 76);
+            yinxiaotoggle.node.setPositionEx(460, -32);
 
             hqq.addNode(yinyuetoggle.node.getChildByName("Background"), { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "24", x: 40 })
             hqq.addNode(yinyuetoggle.node.getChildByName("checkmark"), { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "24", x: -40 })
@@ -629,19 +629,19 @@ export class hallPersonLayer_test extends cc.Component {
         if (player.phonenum) {
             this.phonelabel.string = player.phonenum
             if (hqq.app.pinpai != "xinlong") {
-                this.phonelabel.color = new cc.Color(225, 225, 225)
+                this.phonelabel.color = cc.color(225, 225, 225)
             }
             this.phonebindbtn.active = false
         }
         // // if (player.alipay) {
         // //     this.alipaylabel.string = player.alipay.substring(0, 2) + "** **** **" + player.alipay.substring(player.alipay.length - 2, player.alipay.length)
-        // //     this.alipaylabel.node.color = new cc.Color(225, 225, 225)
+        // //     this.alipaylabel.node.color = cc.color(225, 225, 225)
         // //     // this.alipaybindbtn.active = false
         // // }
         if (player.usdtaddr) {
             this.alipaylabel.string = player.usdtaddr.substring(0, 3) + "* **** **" + player.usdtaddr.substring(player.usdtaddr.length - 4, player.usdtaddr.length)
             if (hqq.app.pinpai != "xinlong") {
-                this.alipaylabel.color = new cc.Color(225, 225, 225)
+                this.alipaylabel.color = cc.color(225, 225, 225)
             }
             this.alipaybindbtn.active = false
 
@@ -650,7 +650,7 @@ export class hallPersonLayer_test extends cc.Component {
             let kahaostr = player.yinhangka.toString()
             this.yinghangkalabel.string = kahaostr.substring(0, 3) + "* **** **** " + kahaostr.substring(kahaostr.length - 4, kahaostr.length)
             if (hqq.app.pinpai != "xinlong") {
-                this.yinghangkalabel.color = new cc.Color(225, 225, 225)
+                this.yinghangkalabel.color = cc.color(225, 225, 225)
             }
             this.yinhangkabindbtn.active = false
         }
@@ -676,7 +676,7 @@ export class hallPersonLayer_test extends cc.Component {
                         let kahaostr = hqq.gameGlobal.player.yinhangka.toString()
                         this.yinghangkalabel.string = kahaostr.substring(0, 3) + "* **** **** " + kahaostr.substring(kahaostr.length - 4, kahaostr.length)
                         if (hqq.app.pinpai != "xinlong") {
-                            this.yinghangkalabel.color = new cc.Color(225, 225, 225)
+                            this.yinghangkalabel.color = cc.color(225, 225, 225)
                         }
                         this.yinhangkabindbtn.active = false
                         isNotyinhang = false
@@ -684,7 +684,7 @@ export class hallPersonLayer_test extends cc.Component {
                         // // hqq.gameGlobal.player.alipay = JSON.parse(list[i].info).account_card
                         // // let alistr = hqq.gameGlobal.player.alipay
                         // // this.alipaylabel.string = alistr.substring(0, 2) + "** **** **" + alistr.substring(alistr.length - 2, alistr.length)
-                        // // this.alipaylabel.node.color = new cc.Color(225, 225, 225)
+                        // // this.alipaylabel.node.color = cc.color(225, 225, 225)
                         // // // this.alipaybindbtn.active = false
                         // // isNoAlipay = false
                     } else if (list[i].type == "4") {
@@ -692,7 +692,7 @@ export class hallPersonLayer_test extends cc.Component {
                         let usdtaddr = JSON.parse(list[i].info).wallet_addr.toString()
                         this.alipaylabel.string = usdtaddr.substring(0, 3) + "* **** **** " + usdtaddr.substring(usdtaddr.length - 4, usdtaddr.length)
                         if (hqq.app.pinpai != "xinlong") {
-                            this.alipaylabel.color = new cc.Color(225, 225, 225)
+                            this.alipaylabel.color = cc.color(225, 225, 225)
                         }
                         isNoAlipay = false
                         this.alipaybindbtn.active = false
@@ -702,14 +702,14 @@ export class hallPersonLayer_test extends cc.Component {
                     // // this.alipaylabel.string = hqq.getTip("notbindaliypay")
                     this.alipaylabel.string = hqq.getTip("notbindusdt")
                     if (hqq.app.pinpai != "xinlong") {
-                        this.alipaylabel.color = new cc.Color(152, 152, 152)
+                        this.alipaylabel.color = cc.color(152, 152, 152)
                     }
                     this.alipaybindbtn.active = true
                 }
                 if (isNotyinhang && cc.isValid(this.yinghangkalabel)) {
                     this.yinghangkalabel.string = hqq.getTip("notbindyinhangka")
                     if (hqq.app.pinpai != "xinlong") {
-                        this.yinghangkalabel.color = new cc.Color(152, 152, 152)
+                        this.yinghangkalabel.color = cc.color(152, 152, 152)
                     }
                     this.yinhangkabindbtn.active = true
                 }
@@ -774,32 +774,32 @@ export class hallPersonLayer_test extends cc.Component {
         if (msg.phone_number) {
             this.phonelabel.string = msg.phone_number
             if (hqq.app.pinpai != "xinlong") {
-                this.phonelabel.color = new cc.Color(225, 225, 225)
+                this.phonelabel.color = cc.color(225, 225, 225)
             }
             this.phonebindbtn.active = false
         } else if (msg.ischangeAccount) {
             this.phonelabel.string = hqq.getTip("showtip71")
             if (hqq.app.pinpai != "xinlong") {
-                this.phonelabel.color = new cc.Color(152, 152, 152)
+                this.phonelabel.color = cc.color(152, 152, 152)
             }
             this.phonebindbtn.active = true
         }
         // // if (msg.alipay) {
         // //     this.alipaylabel.string = msg.alipay.substring(0, 2) + "** **** **" + msg.alipay.substring(msg.alipay.length - 2, msg.alipay.length)
-        // //     this.alipaylabel.node.color = new cc.Color(225, 225, 225)
+        // //     this.alipaylabel.node.color = cc.color(225, 225, 225)
         // //     // this.alipaybindbtn.active = false
         // // }
         if (msg.usdtaddr) {
             this.alipaylabel.string = msg.usdtaddr.substring(0, 3) + "* **** **" + msg.usdtaddr.substring(msg.usdtaddr.length - 4, msg.usdtaddr.length)
             if (hqq.app.pinpai != "xinlong") {
-                this.alipaylabel.color = new cc.Color(225, 225, 225)
+                this.alipaylabel.color = cc.color(225, 225, 225)
             }
             this.alipaybindbtn.active = false
         }
         if (msg.yinhangka) {
             this.yinghangkalabel.string = msg.yinhangka.substring(0, 3) + "* **** **** " + msg.yinhangka.substring(msg.yinhangka.length - 4, msg.yinhangka.length)
             if (hqq.app.pinpai != "xinlong") {
-                this.yinghangkalabel.color = new cc.Color(225, 225, 225)
+                this.yinghangkalabel.color = cc.color(225, 225, 225)
             }
             this.yinhangkabindbtn.active = false
         }

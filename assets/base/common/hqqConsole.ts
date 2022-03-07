@@ -134,7 +134,7 @@ export class hqqConsole extends Component {
         pos = this.node.getComponent(UITransform).convertToNodeSpaceAR(pos)
         if (pos.x <= -view.getVisibleSize().width / 2 + 50 || pos.y >= -25 || pos.x >= view.getVisibleSize().width / 2 - 50 || pos.y <= -view.getVisibleSize().height + 25) {
         } else if (this.btnpos.x != pos.x || this.btnpos.y != pos.y) {
-           this.btn.setPosition(pos)
+           this.btn.setPositionEx(pos)
         } else {
         }
         event.stopPropagation();

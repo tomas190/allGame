@@ -43,11 +43,11 @@ export class hallRegisterLayer_test extends cc.Component {
             this.chongzhi.font = this.xsnumfont
             this.chongzhi.fontSize = 50
             this.chongzhi.string = "3-"
-            this.chongzhi.node.setPosition(-35, -70)
+            this.chongzhi.node.setPositionEx(-35, -70)
             this.goldlabel.font = this.xsnumfont
             this.goldlabel.fontSize = 50
             this.goldlabel.string = "388"
-            this.goldlabel.node.setPosition(80, -70)
+            this.goldlabel.node.setPositionEx(80, -70)
             hqq.setSprite(aninode, { Res: hqq["hall_" + hqq.app.pinpai], path: "language/" + hqq.language + "/bigimg/d", width: 1096, height: 750, widget: { horizontalCenter: 0, verticalCenter: 0 } })
             hqq.setSprite(registerbtn, { Res: hqq["hall_" + hqq.app.pinpai], path: "language/" + hqq.language + "/xinsheng/btn", position: { x: 0, y: -230 } })
             hqq.setBtn(closebtn, { path: "base/xinsheng/img/exit" })
@@ -61,11 +61,11 @@ export class hallRegisterLayer_test extends cc.Component {
             this.chongzhi.font = this.xsnumfont
             this.chongzhi.fontSize = 65
             this.chongzhi.string = "200"
-            this.chongzhi.node.setPosition(-45, -180)
+            this.chongzhi.node.setPositionEx(-45, -180)
             this.goldlabel.font = this.xsnumfont
             this.goldlabel.fontSize = 80
             this.goldlabel.string = "60"
-            this.goldlabel.node.setPosition(270, -174)
+            this.goldlabel.node.setPositionEx(270, -174)
             hqq.setSprite(givejinbi, { path: "base/language/" + hqq.language + "/img/givejinbi3", position: { x: 400, y: -205 } })
             hqq.skeletonLoad(aninode, "language/" + hqq.language + "/huodong_signupbonus2", "xunhuan", true, hqq["hall_" + hqq.app.pinpai])
             hqq.setBtn(closebtn, { path: "base/xinsheng/img/exit" })
@@ -73,7 +73,7 @@ export class hallRegisterLayer_test extends cc.Component {
             this.goldlabel.font = this.xsnumfont
             this.goldlabel.fontSize = 80
             this.goldlabel.string = "2"
-            this.goldlabel.node.setPosition(220, -174)
+            this.goldlabel.node.setPositionEx(220, -174)
             hqq.setSprite(givejinbi, { path: "base/language/" + hqq.language + "/img/givejinbi", position: { x: 345, y: -194 } })
             hqq.skeletonLoad(aninode, "bigimg/language/" + hqq.language + "/xinshenghuodong", "xunhuan", true)
             hqq.setBtn(closebtn, { path: "base/xinsheng/img/exit" })
@@ -81,18 +81,18 @@ export class hallRegisterLayer_test extends cc.Component {
             this.chongzhi.font = this.xhnumfont
             this.chongzhi.fontSize = 65
             this.chongzhi.string = "3-"
-            this.chongzhi.node.setPosition(15, -180)
+            this.chongzhi.node.setPositionEx(15, -180)
             this.goldlabel.font = this.xhnumfont
             this.goldlabel.fontSize = 65
             this.goldlabel.string = "388"
-            this.goldlabel.node.setPosition(180, -180)
+            this.goldlabel.node.setPositionEx(180, -180)
             hqq.setSprite(givejinbi, { Res: hqq["hall_test"], path: "language/" + hqq.language + "/xinhao/givejinbi4", position: { x: 380, y: -185 } })
             hqq.skeletonLoad(aninode, "language/" + hqq.language + "/huodong_signupbonus3", "xunhuan", true, hqq["hall_test"])
             hqq.setBtn(closebtn, { path: "base/xinsheng/img/exit" })
         } else if (hqq.app.pinpai == "nineone") {
             this.goldlabel.font = this.numfont
             this.goldlabel.fontSize = 60
-            this.goldlabel.node.setPosition(240, -185)
+            this.goldlabel.node.setPositionEx(240, -185)
             this.goldlabel.string = "10"
             hqq.setSprite(givejinbi, { path: "base/language/" + hqq.language + "/img/givejinbi", position: { x: 400, y: -210 } })
             hqq.skeletonLoad(aninode, "language/" + hqq.language + "/huodong_signupbonus4", "xunhuan", true, hqq["hall_test"])
@@ -100,7 +100,7 @@ export class hallRegisterLayer_test extends cc.Component {
         } else {
             this.goldlabel.font = this.numfont
             this.goldlabel.fontSize = 60
-            this.goldlabel.node.setPosition(220, -185)
+            this.goldlabel.node.setPositionEx(220, -185)
             this.goldlabel.string = "3"
             hqq.setSprite(givejinbi, { path: "base/language/" + hqq.language + "/img/givejinbi", position: { x: 380, y: -210 } })
             hqq.skeletonLoad(aninode, "language/" + hqq.language + "/huodong", "xunhuan", true, hqq["hall_test"])

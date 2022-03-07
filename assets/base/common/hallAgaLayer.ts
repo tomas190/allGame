@@ -352,7 +352,8 @@ export class hallAgaLayer extends cc.Component {
                    msg: hqq.getTip("showtip69") + "\nlocalv:" + mainversion + "remotev:" + hqq.app.subGameVersion.hall,
                    ensurefunc: () => {
                        hqq.hallWebSocket.close();
-                    //    cc.audioEngine.stopAll();
+                       hqq.audioMgr.stopBg();
+                       hqq.audioMgr.stopEffect();
                        cc.game.restart();
                    }
                })

@@ -382,7 +382,7 @@ export class hallScene_test extends cc.Component {
                     }
                     this.btnlist[i].setPositionEx(cc.v2(Math.cos(dpr * this.rad) * this.radii - 100, Math.sin(dpr * this.rad) * this.radii))
                     this.btnlist[i].active = true
-                    // this.btnlist[i].setScale(scale)
+                    // this.btnlist[i].setScaleEx(scale)
                     this.btnlist[i].customIndex = customIndex
                     this.btnlist[i].dpr = dpr
                     let clickEventHandler = new cc.EventHandler();
@@ -1746,7 +1746,7 @@ export class hallScene_test extends cc.Component {
     // 网络连接
     initWebSoketAndHttp() {
         if (!hqq.isDebug && !hqq.hallWebSocket) {
-            hqq.hallWebSocket = new hallWebSocket.hqqWebSocket();
+            hqq.hallWebSocket = new hallWebSocket.hqqWebSocket2();
             hqq.hallWebSocket.init();
             let url = hqq.app.server;
             if (url.indexOf("://") == -1) {
@@ -2461,7 +2461,7 @@ export class hallScene_test extends cc.Component {
                 this.menuBtnListNode.children[i].getComponent(cc.Button).interactable = false
                 if (this.btnMenuSelect) {
                     let pos = this.menuBtnListNode.children[i].getPosition().add(this.menuBtnListNode.getPosition())
-                    this.btnMenuSelect.setPosition(pos);
+                    this.btnMenuSelect.setPositionEx(pos);
                     //    this.btnMenuSelect.x = pos.x
                     //    this.btnMenuSelect.y = pos.y
                 }
@@ -2973,7 +2973,7 @@ export class hallScene_test extends cc.Component {
             })
             numlabel.string = gold
             ani2node.setScaleEx(0.2)
-           cc.tween(ani2node)
+            cc.tween(ani2node)
                 .to(0.2,{scale:cc.v3(1,1.1,1)})
                 .to(0.2,{scale:cc.v3(1,1,1)})
                 .start()
@@ -3199,7 +3199,8 @@ export class hallScene_test extends cc.Component {
                     msg: hqq.getTip("showtip69") + "\nlocalv:" + mainversion + "remotev:" + hqq.app.subGameVersion.hall,
                     ensurefunc: () => {
                         hqq.hallWebSocket.close();
-                        // cc.audioEngine.stopAll();
+                        hqq.audioMgr.stopBg();
+                        hqq.audioMgr.stopEffect();
                         cc.game.restart();
                     }
                 })
@@ -3290,7 +3291,7 @@ export class hallScene_test extends cc.Component {
         if (hqq.app.pinpai == "ninetwo") {
             itembtn.x = this.itembtn.getComponent(cc.UITransform).width / 2 + index * (this.itembtn.getComponent(cc.UITransform).width + 10);
             itembtn.y = 0;
-            itembtn.getChildByName("wait").setPosition(-40, 150)
+            itembtn.getChildByName("wait").setPositionEx(-40, 150)
             itembtn.getChildByName("wait").opacity = 255;
         }
     }
@@ -3675,9 +3676,9 @@ export class hallScene_test extends cc.Component {
                 node.name = "goldlabel"
                 let tempzindex = 0;
                 if (/* hqq.app.pinpai == "xinsheng" || */ hqq.app.pinpai == "xingui" || hqq.app.pinpai == "xinlong") {
-                    node.setPosition(0, 0)
+                    node.setPositionEx(0, 0)
                     let node0 = new cc.Node();
-                    node0.setPosition(0, 3)
+                    node0.setPositionEx(0, 3)
                     hqq.setSprite(node0, { path: "base/xinsheng/img/poolback" })
                     if (hqq.app.pinpai == "xinlong") {
                         this.subGameBtnMap["sgj"].addChildEx(node0);
@@ -3699,7 +3700,7 @@ export class hallScene_test extends cc.Component {
                     }
                 } else if (hqq.app.pinpai == "huaxing") {
                     hqq.addNode(this.subGameBtnMap["sgj"].getChildByName("ani"), { Res: hqq["hall_" + hqq.app.pinpai], path: "huaxing/img/jjck", x: 0, y: 70, zIndex: -1 });
-                    node.setPosition(0, 68)
+                    node.setPositionEx(0, 68)
                 } else if (hqq.app.pinpai == "ninetwo") {
                     label.fontSize = 22
                     let tempbool = this.subGameBtnMap["sgj"].active;
@@ -3710,9 +3711,9 @@ export class hallScene_test extends cc.Component {
                     if (!tempbool) {
                         this.subGameBtnMap["sgj"].active = false;
                     }
-                    node.setPosition(0, 63)
+                    node.setPositionEx(0, 63)
                 } else {
-                    node.setPosition(0, 68)
+                    node.setPositionEx(0, 68)
                 }
                 this.subGameBtnMap["sgj"].addChildEx(node, tempzindex)
             }
@@ -3769,9 +3770,9 @@ export class hallScene_test extends cc.Component {
                 node.name = "goldlabel"
                 let tempzindex = 0;
                 if (/* hqq.app.pinpai == "xinsheng" || */ hqq.app.pinpai == "xingui" || hqq.app.pinpai == "xinlong") {
-                    node.setPosition(0, 0)
+                    node.setPositionEx(0, 0)
                     let node0 = new cc.Node();
-                    node0.setPosition(0, 3)
+                    node0.setPositionEx(0, 3)
                     hqq.setSprite(node0, { path: "base/xinsheng/img/poolback" })
                     if (hqq.app.pinpai == "xinlong") {
                         this.subGameBtnMap["hbsl"].addChildEx(node0);
@@ -3793,7 +3794,7 @@ export class hallScene_test extends cc.Component {
                     }
                 } else if (hqq.app.pinpai == "huaxing") {
                     hqq.addNode(this.subGameBtnMap["hbsl"].getChildByName("ani"), { Res: hqq["hall_" + hqq.app.pinpai], path: "huaxing/img/jjck", x: 0, y: 70, zIndex: -1 });
-                    node.setPosition(0, 68)
+                    node.setPositionEx(0, 68)
                 } else if (hqq.app.pinpai == "ninetwo") {
                     label.fontSize = 22
                     let tempbool = this.subGameBtnMap["hbsl"].active;
@@ -3804,9 +3805,9 @@ export class hallScene_test extends cc.Component {
                     if (!tempbool) {
                         this.subGameBtnMap["hbsl"].active = false;
                     }
-                    node.setPosition(0, 63)
+                    node.setPositionEx(0, 63)
                 } else {
-                    node.setPosition(0, 68)
+                    node.setPositionEx(0, 68)
                 }
                 this.subGameBtnMap["hbsl"].addChildEx(node, tempzindex)
             }
@@ -3863,9 +3864,9 @@ export class hallScene_test extends cc.Component {
                 node.name = "goldlabel"
                 let tempzindex = 0;
                 if (/* hqq.app.pinpai == "xinsheng" || */ hqq.app.pinpai == "xingui" || hqq.app.pinpai == "xinlong") {
-                    node.setPosition(0, 0)
+                    node.setPositionEx(0, 0)
                     let node0 = new cc.Node();
-                    node0.setPosition(0, 3)
+                    node0.setPositionEx(0, 3)
                     hqq.setSprite(node0, { path: "base/xinsheng/img/poolback" })
                     if (hqq.app.pinpai == "xinlong") {
                         this.subGameBtnMap["hbld"].addChildEx(node0);
@@ -3887,7 +3888,7 @@ export class hallScene_test extends cc.Component {
                     }
                 } else if (hqq.app.pinpai == "huaxing") {
                     hqq.addNode(this.subGameBtnMap["hbld"].getChildByName("ani"), { Res: hqq["hall_" + hqq.app.pinpai], path: "huaxing/img/jjck", x: 0, y: 70, zIndex: -1 });
-                    node.setPosition(0, 68)
+                    node.setPositionEx(0, 68)
                 } else if (hqq.app.pinpai == "ninetwo") {
                     label.fontSize = 22
                     let tempbool = this.subGameBtnMap["hbld"].active;
@@ -3898,9 +3899,9 @@ export class hallScene_test extends cc.Component {
                     if (!tempbool) {
                         this.subGameBtnMap["hbld"].active = false;
                     }
-                    node.setPosition(0, 63)
+                    node.setPositionEx(0, 63)
                 } else {
-                    node.setPosition(0, 68)
+                    node.setPositionEx(0, 68)
                 }
                 this.subGameBtnMap["hbld"].addChildEx(node, tempzindex)
             }

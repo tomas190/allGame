@@ -80,7 +80,7 @@ export default class zhibo_panel extends cc.Component {
             this.buttonHover.active = false;
             this.onClose(false);
             this.webView.url = url;
-            this.node.setPosition(this.node.getPosition().x, this.node.getPosition().y + cc.view.getVisibleSize().height * 2);
+            this.node.setPositionEx(this.node.getPosition().x, this.node.getPosition().y + cc.view.getVisibleSize().height * 2);
         } else {
             cc.log('zhiboPanel - no url');
             hqq.eventMgr.dispatch(hqq.eventMgr.openZhiBoPanel, false);
@@ -113,7 +113,7 @@ export default class zhibo_panel extends cc.Component {
             this.onOverScene();
             this.viewAni.active = true;
             this.webViewSize = new cc.Size(this.web.getComponent(cc.UITransform).contentSize);
-            this.web.setPosition(this.web.getPosition().x, this.web.getPosition().y + this.webViewSize.height);
+            this.web.setPositionEx(this.web.getPosition().x, this.web.getPosition().y + this.webViewSize.height);
             return
         }
         this.clearZhiBoPanel();
@@ -152,7 +152,7 @@ export default class zhibo_panel extends cc.Component {
         this.dragTime = new Date().getTime();
         this.viewAni.active = true;
         this.webViewSize = new cc.Size(this.web.getComponent(cc.UITransform).contentSize);
-        this.web.setPosition(this.web.getPosition().x, this.web.getPosition().y + this.webViewSize.height);
+        this.web.setPositionEx(this.web.getPosition().x, this.web.getPosition().y + this.webViewSize.height);
         if (evt.currentTarget == this.button) {
             this.scheduleOnce(this.showButtonHover, .1);
         }
@@ -160,7 +160,7 @@ export default class zhibo_panel extends cc.Component {
     onDragMove(evt: cc.EventTouch) {
         if (!this.dragStart) return
         // cc.log("zhibo - onDragMove",evt.getDelta());
-        this.node.setPosition(this.node.getPosition().x + evt.getDelta().x, this.node.getPosition().y + evt.getDelta().y)
+        this.node.setPositionEx(this.node.getPosition().x + evt.getDelta().x, this.node.getPosition().y + evt.getDelta().y)
     }
     onDragCancel(evt: cc.EventTouch) {
         if (!this.dragStart) return
@@ -168,7 +168,7 @@ export default class zhibo_panel extends cc.Component {
         this.dragStart = false;
         if (this.webViewLoaded) {
             this.viewAni.active = false;
-            this.web.setPosition(this.web.getPosition().x, 0);
+            this.web.setPositionEx(this.web.getPosition().x, 0);
         }
         hqq.gameGlobal.zhibo.WebViewPosition = this.node.position;
         let isTouch = new Date().getTime() - this.dragTime < 200; // 判断拖弋或点击

@@ -256,7 +256,7 @@ export class hallNoticeLayer_test extends cc.Component {
             let content = noticescroll.getComponent(cc.ScrollView).content;
             content.getComponent(cc.UITransform).width = 784;
             content.getComponent(cc.UITransform).height = 382;
-            content.setPosition(0, 191);
+            content.setPositionEx(0, 191);
 
             this.allread = hqq.addNode(back, { Res: hqq["hall_" + hqq.app.pinpai], normal: hpath + "notice1", x: -300, y: -230, callback: "onClickReadAllItem", script: this });
             hqq.addNode(this.allread, { string: "allread", y: -10, color: cc.color(72, 47, 7), fontSize: 26, bold: true })
@@ -265,7 +265,7 @@ export class hallNoticeLayer_test extends cc.Component {
 
             hqq.setSprite(deletebtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "xiaoanniu", width: 135, height: 51 });
             deletebtn.getComponent(cc.Sprite).color = cc.Color.WHITE;
-            deletebtn.setPosition(320, 160)
+            deletebtn.setPositionEx(320, 160)
             let richtext = deletebtn.getComponent(cc.RichText);
             if (cc.isValid(richtext)) {
                 deletebtn._removeComponent(richtext);
@@ -370,7 +370,7 @@ export class hallNoticeLayer_test extends cc.Component {
             clickEventHandler.handler = "onClickReadItem";
             let btn = notice.getChildByName("btn").getComponent(cc.Button);
             btn.clickEvents.push(clickEventHandler);
-            mitem.setPosition(0, -(0.5 + i) * (mitem.getComponent(cc.UITransform).height + 16) - 22)
+            mitem.setPositionEx(0, -(0.5 + i) * (mitem.getComponent(cc.UITransform).height + 16) - 22)
             mitem.active = true
             if (hqq.app.pinpai == "juding") {
                 if (this.noticedata[i].isread) {
@@ -378,11 +378,11 @@ export class hallNoticeLayer_test extends cc.Component {
                 } else {
                     hqq.setSprite(mitem.getChildByName("readstate"), { Res: hqq["hall_" + hqq.app.pinpai], path: "juding/img/jd_letteClose" })
                 }
-                mitem.getChildByName("readstate").setPosition(mitem.getChildByName("readstate").getPosition().x + 80, mitem.getChildByName("readstate").getPosition().y)
+                mitem.getChildByName("readstate").setPositionEx(mitem.getChildByName("readstate").getPosition().x + 80, mitem.getChildByName("readstate").getPosition().y)
 
-                title.node.setPosition(title.node.getPosition().x + 50, title.node.getPosition().y);
+                title.node.setPositionEx(title.node.getPosition().x + 50, title.node.getPosition().y);
                 title.color = cc.color(49, 98, 141);
-                time.node.setPosition(time.node.getPosition().x - 15, time.node.getPosition().y);
+                time.node.setPositionEx(time.node.getPosition().x - 15, time.node.getPosition().y);
                 time.color = cc.color(49, 98, 141);
 
                 if (btn.node.getComponent(cc.Sprite)) {
@@ -398,8 +398,8 @@ export class hallNoticeLayer_test extends cc.Component {
                 }
             } else if (hqq.app.pinpai == "ninetwo") {
                 readstate.node.active = false;
-                title.node.setPosition(-220, 0);
-                time.node.setPosition(190, 30);
+                title.node.setPositionEx(-220, 0);
+                time.node.setPositionEx(190, 30);
                 time.fontSize = 20;
                 time.lineHeight = 25;
                 let label = btn.node.getComponent(cc.Label);
@@ -414,7 +414,7 @@ export class hallNoticeLayer_test extends cc.Component {
                 }
                 btn.node.getComponent(cc.UITransform).width = 763;
                 btn.node.getComponent(cc.UITransform).height = 91;
-                btn.node.setPosition(-381.5, 0);
+                btn.node.setPositionEx(-381.5, 0);
                 mitem.getComponent(cc.UITransform).width = 763;
                 mitem.getComponent(cc.UITransform).height = 91;
                 if (this.noticedata[i].isread) {
@@ -422,17 +422,17 @@ export class hallNoticeLayer_test extends cc.Component {
                 } else {
                     hqq.setSprite(mitem, { Res: hqq["hall_" + hqq.app.pinpai], path: "ninetwo/img/d2", type: cc.Sprite.Type.SLICED, width: 763, height: 91 })
                 }
-                mitem.setPosition(0, -(0.5 + i) * (mitem.getComponent(cc.UITransform).height + 9))
+                mitem.setPositionEx(0, -(0.5 + i) * (mitem.getComponent(cc.UITransform).height + 9))
             } else if (hqq.app.pinpai == "xinlong") {
                 if (this.noticedata[i].isread) {
                     hqq.setSprite(mitem.getChildByName("readstate"), { Res: hqq["hall_" + hqq.app.pinpai], path: "xinlong/img/jd_letterOpen" })
                 } else {
                     hqq.setSprite(mitem.getChildByName("readstate"), { Res: hqq["hall_" + hqq.app.pinpai], path: "xinlong/img/jd_letteClose" })
                 }
-                mitem.getChildByName("readstate").setPosition(mitem.getChildByName("readstate").getPosition().x + 80, mitem.getChildByName("readstate").getPosition().y);
-                title.node.setPosition(title.node.getPosition().x + 50, title.node.getPosition().y);
+                mitem.getChildByName("readstate").setPositionEx(mitem.getChildByName("readstate").getPosition().x + 80, mitem.getChildByName("readstate").getPosition().y);
+                title.node.setPositionEx(title.node.getPosition().x + 50, title.node.getPosition().y);
                 title.color = cc.color(49, 98, 141);
-                time.node.setPosition(time.node.getPosition().x - 15, time.node.getPosition().y);
+                time.node.setPositionEx(time.node.getPosition().x - 15, time.node.getPosition().y);
                 time.color = cc.color(49, 98, 141);
                 if (btn.node.getComponent(cc.Sprite)) {
                     btn.node.getComponent(cc.Sprite).color = cc.color(49, 98, 141);
@@ -485,7 +485,7 @@ export class hallNoticeLayer_test extends cc.Component {
             // btnsprite.spriteFrame = this.emaildata[i].isread ? this.ehasreadframe : this.enoreadframe;
             let btn = btnnode.getComponent(cc.Button);
             btn.clickEvents.push(clickEventHandler);
-            mitem.setPosition(0, -(0.5 + i) * (mitem.getComponent(cc.UITransform).height + 16) - 22)
+            mitem.setPositionEx(0, -(0.5 + i) * (mitem.getComponent(cc.UITransform).height + 16) - 22)
             mitem.active = true
             if (hqq.app.pinpai == "juding") {
                 if (this.emaildata[i].isread) {
@@ -494,10 +494,10 @@ export class hallNoticeLayer_test extends cc.Component {
                     hqq.setSprite(mitem.getChildByName("readstate"), { Res: hqq["hall_" + hqq.app.pinpai], path: "juding/img/jd_mailboxClose" })
                 }
 
-                mitem.getChildByName("readstate").setPosition(mitem.getChildByName("readstate").getPosition().x + 80, mitem.getChildByName("readstate").getPosition().y);
-                title.node.setPosition(title.node.getPosition().x + 200, title.node.getPosition().y);
+                mitem.getChildByName("readstate").setPositionEx(mitem.getChildByName("readstate").getPosition().x + 80, mitem.getChildByName("readstate").getPosition().y);
+                title.node.setPositionEx(title.node.getPosition().x + 200, title.node.getPosition().y);
                 title.color = cc.color(49, 98, 141);
-                time.node.setPosition(time.node.getPosition().x - 20, time.node.getPosition().y);
+                time.node.setPositionEx(time.node.getPosition().x - 20, time.node.getPosition().y);
                 time.color = cc.color(49, 98, 141);
                 if (btn.node.getComponent(cc.Sprite)) {
                     btn.node.getComponent(cc.Sprite).color = cc.color(49, 98, 141);
@@ -516,17 +516,17 @@ export class hallNoticeLayer_test extends cc.Component {
                 } else {
                     hqq.setSprite(mitem.getChildByName("readstate"), { Res: hqq["hall_" + hqq.app.pinpai], path: "xinlong/img/jd_mailboxClose" })
                 }
-                mitem.getChildByName("readstate").setPosition(mitem.getChildByName("readstate").getPosition().x + 80, mitem.getChildByName("readstate").getPosition().y);
-                title.node.setPosition(title.node.getPosition().x + 200, title.node.getPosition().y);
+                mitem.getChildByName("readstate").setPositionEx(mitem.getChildByName("readstate").getPosition().x + 80, mitem.getChildByName("readstate").getPosition().y);
+                title.node.setPositionEx(title.node.getPosition().x + 200, title.node.getPosition().y);
                 title.color = cc.color(49, 98, 141);
-                time.node.setPosition(time.node.getPosition().x - 20, time.node.getPosition().y);
+                time.node.setPositionEx(time.node.getPosition().x - 20, time.node.getPosition().y);
                 time.color = cc.color(49, 98, 141);
                 if (btn.node.getComponent(cc.Sprite)) {
                     btn.node.getComponent(cc.Sprite).color = cc.color(49, 98, 141);
                 } else if (btn.node.getComponent(cc.Label)) {
                     btn.node.getComponent(cc.Label).color = cc.color(49, 98, 141);
                 }
-                btn.node.setPosition(0, -41);
+                btn.node.setPositionEx(0, -41);
             }
             this.eamilscroll.content.addChildEx(mitem)
             this.emailItemList.push(mitem)
@@ -769,7 +769,7 @@ export class hallNoticeLayer_test extends cc.Component {
             let tnode = hqq.addNode(subback, { normal: bpath + "jd_p_btn_1_2", x: 300, y: -220, callback: "onClickEmailDelete", script: this, })
             let labelnode = hqq.addNode(tnode, { string: hqq.getTip("dc"), y: -10, fontSize: 24, color: cc.color(148, 81, 10), bold: true })
             this.subtxt.color = cc.color(11, 52, 96, 255);
-            this.subtxt.node.setPosition(this.subtxt.node.getPosition().x, -22)
+            this.subtxt.node.setPositionEx(this.subtxt.node.getPosition().x, -22)
             this.subtxt.isBold = true;
         } else {
             if (hqq.app.pinpai == "xingui") {
@@ -798,7 +798,7 @@ export class hallNoticeLayer_test extends cc.Component {
                 hqq.setSprite(subback, { path: "base/xinsheng/img/back1" })
                 hqq.setSprite(titleimg, { Res: hqq["hall_" + hqq.app.pinpai], path: xlpath + "title_gonggao", position: { x: -290, y: 220 } })
                 hqq.setSprite(subclosebtn, { path: "base/xinsheng/img/exit", position: { x: 400, y: 225 } })
-                deletebtn.setPosition(270, deletebtn.getPosition().y);
+                deletebtn.setPositionEx(270, deletebtn.getPosition().y);
                 deletebtn.getComponent(cc.RichText).string = hqq.getTip("deletebtn")
             } else if (hqq.app.pinpai == "xinlong") {
                 let bpath = "base/xinlong/img/";
@@ -816,7 +816,7 @@ export class hallNoticeLayer_test extends cc.Component {
                 let labelnode = hqq.addNode(tnode, { string: hqq.getTip("dc"), y: -10, fontSize: 24, color: cc.color(148, 81, 10, 255), bold: true })
 
                 this.subtxt.color = cc.color(11, 52, 96, 255);
-                this.subtxt.node.setPosition(this.subtxt.node.getPosition().x, -22)
+                this.subtxt.node.setPositionEx(this.subtxt.node.getPosition().x, -22)
                 this.subtxt.isBold = true;
             } else if (hqq.app.pinpai == "juding") {
                 let bpath = "base/juding/img/";
@@ -834,7 +834,7 @@ export class hallNoticeLayer_test extends cc.Component {
                 let labelnode = hqq.addNode(tnode, { string: hqq.getTip("dc"), y: -10, fontSize: 24, color: cc.color(148, 81, 10, 255), bold: true })
 
                 this.subtxt.color = cc.color(11, 52, 96, 255);
-                this.subtxt.node.setPosition(this.subtxt.node.getPosition().x, -22)
+                this.subtxt.node.setPositionEx(this.subtxt.node.getPosition().x, -22)
                 this.subtxt.isBold = true;
             } else if (hqq.app.pinpai == "huaxing") {
                 let bpath = "base/huaxing/img/";
@@ -845,12 +845,12 @@ export class hallNoticeLayer_test extends cc.Component {
                 hqq.setSprite(titleimg, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "tit_gg", x: 0, y: 240 })
                 hqq.setSprite(subclosebtn, { path: bpath + "btn_x", x: 425, y: 250 })
                 hqq.addNode(subback, { path: bpath + "d_tit", y: 240, zIndex: -1 });
-                deletebtn.setPosition(-320, 220);
+                deletebtn.setPositionEx(-320, 220);
                 deletebtn.getComponent(cc.RichText).string = hqq.getTip("deletebtn")
                 // // let subScrollback = cc.find("txtscroll", subback)
                 // // hqq.setNode(subScrollback, { y: 20 })
                 // // this.subtxt.node.color = cc.color(11,52,96,255);
-                this.subtxt.node.setPosition(this.subtxt.node.getPosition().x, -22)
+                this.subtxt.node.setPositionEx(this.subtxt.node.getPosition().x, -22)
                 this.subtxt.isBold = true;
             } else if (hqq.app.pinpai == "ninetwo") {
                 let bpath = "base/ninetwo/img/";
@@ -863,7 +863,7 @@ export class hallNoticeLayer_test extends cc.Component {
                 hqq.addNode(subclosebtn, { string: "fanhui", y: -10, color: cc.color(72, 47, 7), fontSize: 26, bold: true })
 
                 let subScrollback = cc.find("txtscroll", subback)
-                subScrollback.setPosition(subScrollback.getPosition().x, 0);
+                subScrollback.setPositionEx(subScrollback.getPosition().x, 0);
                 subScrollback.getComponent(cc.UITransform).width = 784;
                 subScrollback.getComponent(cc.UITransform).height = 382
                 let view = subScrollback.getComponent(cc.ScrollView).content.parent;
@@ -872,18 +872,18 @@ export class hallNoticeLayer_test extends cc.Component {
                 let content = subScrollback.getComponent(cc.ScrollView).content;
                 content.getComponent(cc.UITransform).width = 784;
                 content.getComponent(cc.UITransform).height = 382;
-                content.setPosition(content.getPosition().x, 191);
+                content.setPositionEx(content.getPosition().x, 191);
 
-                this.subtxt.node.setPosition(this.subtxt.node.getPosition().x, -60)
+                this.subtxt.node.setPositionEx(this.subtxt.node.getPosition().x, -60)
                 this.subtxt.isBold = true;
                 this.subtime.isBold = true;
-                this.subtime.node.setPosition(250, -25);
+                this.subtime.node.setPositionEx(250, -25);
                 this.subtime.node.getComponent(cc.UITransform).anchorX = 1;
                 this.subtime.color = cc.Color.WHITE;
                 if (!cc.isValid(this.sublayertitle)) {
                     this.sublayertitle = hqq.addNode(cc.find("Canvas/noticelayer/sublayer/back/txtscroll/view/content"), { string: "", x: -182, y: -40, anchorX: 0, fontSize: 26 })
                 }
-                this.sublayertitle.getComponent(cc.Label).enableBold = true;
+                this.sublayertitle.getComponent(cc.Label).isBold = true;
                 this.sublayertitle.getComponent(cc.Label).string = this.subData.title;
             } else {
                 this.subtitle.spriteFrame = this.notice

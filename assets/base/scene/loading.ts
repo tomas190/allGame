@@ -399,7 +399,7 @@ export class loading extends cc.Component {
            barEff_widget.right = 0;
            barEff_widget.top = -26;
            barEff.setScaleEx(1,0.8);
-           barEff.setPosition(0, 0);
+           barEff.setPositionEx(0, 0);
            barEff.active = false;
         } else if(hqq.app.pinpai == "wansheng") {
            hqq.setSprite(background, { path: "bigimg/wansheng/loading" })
@@ -986,7 +986,7 @@ export class loading extends cc.Component {
         }
         this.label.string = this.info + " " + this.progress;
         if(cc.isValid(this.progressicon)){
-            this.progressicon.setPosition( -385.5 + (this.progressBar.progress * this.progressnode.getComponent(cc.UITransform).width),this.progressicon.getPosition().y)
+            this.progressicon.setPositionEx( -385.5 + (this.progressBar.progress * this.progressnode.getComponent(cc.UITransform).width),this.progressicon.getPosition().y)
         }
         if(hqq.app.pinpai === "tianqi") {
            if(this.progressnode.getChildByName('bar').getChildByName('tianqi_barEff')) {
@@ -1014,7 +1014,7 @@ export class loading extends cc.Component {
     showLoadingInfo (info: any) {
         if(info === "showChoiceLimeLayer" ){
            if(cc.isValid(this.video)){
-               this.video.setPosition(5000,5000);
+               this.video.setPositionEx(5000,5000);
                this.video.getComponent(cc.VideoPlayer).mute = true;
                this.video.getComponent(cc.VideoPlayer).pause();
            }
@@ -1022,7 +1022,7 @@ export class loading extends cc.Component {
         }else if(info === "closeChoiceLimeLayer" ){
            if(cc.isValid(this.video)){
                this.video.active = true;
-               this.video.setPosition(0,0);
+               this.video.setPositionEx(0,0);
                this.video.getComponent(cc.VideoPlayer).mute = false;
                if(this.video.getComponent(cc.VideoPlayer).isPlaying){
                    this.video.getComponent(cc.VideoPlayer).resume();

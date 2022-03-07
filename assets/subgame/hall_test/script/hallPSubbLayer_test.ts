@@ -222,7 +222,7 @@ export class hallPSubbLayer_test extends cc.Component {
                         hqq.setBtn(getcodebtn2, { path: bpath + "anniu1", pressed: bpath + "anniu2", transition: cc.Button.Transition.SPRITE, type: cc.Sprite.Type.SLICED, width: 124, height: 40 })
 
                         hqq.setSprite(this.title_resetpwd, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "titlegaimima", x: 0, y: 230 })
-                        // // this.title_resetpwd.setPosition(0,180);
+                        // // this.title_resetpwd.setPositionEx(0,180);
                         // // hqq.addNode(this.title_resetpwd, { string: "resetpwd",fontSize:40,lineHeight:45,bold:true ,color:cc.color(190,168,111)})
                         hqq.setSprite(title_signup, { path: blpath + "titlezczszh", x: 0, y: 230 })
                         hqq.addNode(title_signup, { path: bpath + "16", x: -150 })
@@ -270,11 +270,11 @@ export class hallPSubbLayer_test extends cc.Component {
                         hqq.setSprite(title_signup, { path: blpath + "title_signup" })
 
                         let kaihushengscrorll = cc.find("Canvas/bigsublayer/bindyinhangka/kaihushengscrorll");
-                        kaihushengscrorll.setPosition(160, kaihushengscrorll.getPosition().y);
+                        kaihushengscrorll.setPositionEx(160, kaihushengscrorll.getPosition().y);
                         let kaihushiscrorll = cc.find("Canvas/bigsublayer/bindyinhangka/kaihushiscrorll");
-                        kaihushiscrorll.setPosition(160, kaihushiscrorll.getPosition().y);
+                        kaihushiscrorll.setPositionEx(160, kaihushiscrorll.getPosition().y);
                         let yinghangnamescrorll = cc.find("Canvas/bigsublayer/bindyinhangka/yinghangnamescrorll");
-                        yinghangnamescrorll.setPosition(160, yinghangnamescrorll.getPosition().y);
+                        yinghangnamescrorll.setPositionEx(160, yinghangnamescrorll.getPosition().y);
 
                         hqq.setBtn(this.kaihushengbtn, { Res: hqq["hall_test"], path: hppath + "1", x: 209 })
                         hqq.setBtn(this.kaihushibtn, { Res: hqq["hall_test"], path: hppath + "1", x: 209 })
@@ -318,9 +318,9 @@ export class hallPSubbLayer_test extends cc.Component {
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "aq", zIndex: -1, x: -250, y: 48 })
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "yj", zIndex: -1, x: -250, y: -48 })
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "lock", zIndex: -1, x: -250, y: -150 })
-                                        this.btnlabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                                        this.btnlabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
                                         let lao = this.btnlabel.getComponent(cc.LabelOutline)
-                                        lao.color = new cc.Color(67, 0, 0)
+                                        lao.color = cc.color(67, 0, 0)
                                         lao.width = 2
                                         hqq.setSprite(this.title_resetpwd, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "czmm", y: 260 })
                                 } else if (hqq.app.pinpai == "juding") {
@@ -338,9 +338,9 @@ export class hallPSubbLayer_test extends cc.Component {
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "fang", zIndex: -1, x: -250, y: 48 })
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "duanxin", zIndex: -1, x: -250, y: -48 })
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "suotou", zIndex: -1, x: -250, y: -150 })
-                                        this.btnlabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                                        this.btnlabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
                                         let lao = this.btnlabel.getComponent(cc.LabelOutline)
-                                        lao.color = new cc.Color(67, 0, 0)
+                                        lao.color = cc.color(67, 0, 0)
                                         lao.width = 2
                                         hqq.setSprite(this.title_resetpwd, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "chongzhimuma", x: -300, y: 260 })
 
@@ -367,15 +367,15 @@ export class hallPSubbLayer_test extends cc.Component {
                                 } else if (hqq.app.pinpai == "xingui") {
                                         let hlpath = "language/" + hqq.language + "/xingui/"
                                         hqq.setSprite(this.title_resetpwd, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "cz", y: 240 })
-                                        this.btnlabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                                        this.btnlabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
                                         let lao = this.btnlabel.getComponent(cc.LabelOutline)
-                                        lao.color = new cc.Color(255, 255, 255)
-                                        this.btnlabel2.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                                        lao.color = cc.color(255, 255, 255)
+                                        this.btnlabel2.getComponent(cc.Label).color = cc.color(255, 255, 255)
                                         let lao2 = this.btnlabel2.getComponent(cc.LabelOutline)
-                                        lao2.color = new cc.Color(255, 255, 255)
-                                        this.exitbtn.setPosition(415, 235);
+                                        lao2.color = cc.color(255, 255, 255)
+                                        this.exitbtn.setPositionEx(415, 235);
                                 } else if (hqq.app.pinpai == "xinsheng") {
-                                        this.exitbtn.setPosition(430, 260);
+                                        this.exitbtn.setPositionEx(430, 260);
                                         let xlpath = "base/language/" + hqq.language + "/xinsheng/"
                                         hqq.setSprite(this.title_resetpwd, { path: xlpath + "czmm", position: { x: -245, y: 250 } })
                                 } else if (hqq.app.pinpai == "xinlong") {
@@ -393,9 +393,9 @@ export class hallPSubbLayer_test extends cc.Component {
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "fang", zIndex: -1, x: -250, y: 48 })
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "duanxin", zIndex: -1, x: -250, y: -48 })
                                         hqq.addNode(resetpass, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "suotou", zIndex: -1, x: -250, y: -150 })
-                                        this.btnlabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                                        this.btnlabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
                                         let lao = this.btnlabel.getComponent(cc.LabelOutline)
-                                        lao.color = new cc.Color(67, 0, 0)
+                                        lao.color = cc.color(67, 0, 0)
                                         lao.width = 2
                                         hqq.setSprite(this.title_resetpwd, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "chongzhimuma", x: -300, y: 260 })
 
@@ -508,22 +508,22 @@ export class hallPSubbLayer_test extends cc.Component {
                                         let imageback = cc.find("Canvas/bigsublayer/resetpass/imgback");
                                         hqq.setNode(imageback, { width: 240, height: 80 })
                                         hqq.setNode(imageback.getChildByName("captchaimg"), { width: 240, height: 80 })
-                                        imageback.setPosition(200, 50);
+                                        imageback.setPositionEx(200, 50);
                                         // // hqq.setNode(imageback,{width:106,height:42,x:200,y:33})
                                         // // hqq.setNode(imageback.getChildByName("captchaimg"),{width:106,height:42,x:0,y:0})
-                                        this.btnlabel.parent.setPosition(250, -43);
+                                        this.btnlabel.parent.setPositionEx(250, -43);
                                         this.btnlabel.getComponent(cc.Label).fontSize = 18;
                                         let info_form = cc.find("Canvas/bigsublayer/resetpass/info_form")
                                         info_form.active = false
                                 } else {
-                                        this.exitbtn.setPosition(this.exitbtn.getPosition().x, 290);
+                                        this.exitbtn.setPositionEx(this.exitbtn.getPosition().x, 290);
                                 }
                                 break;
                         case 2: // 绑定银行卡
                                 this.resetpass.active = false
                                 this.bindyinhangka.active = true
                                 this.officelogin.active = false
-                                this.ensurebtn.node.setPosition(this.ensurebtn.node.getPosition().x, -300);
+                                this.ensurebtn.node.setPositionEx(this.ensurebtn.node.getPosition().x, -300);
                                 // // this.back.height = 665
                                 this.ensurefunc = this.bindyinhangkaEnsure
                                 if (hqq.app.pinpai == "fuxin") {
@@ -563,11 +563,11 @@ export class hallPSubbLayer_test extends cc.Component {
                                         hqq.addNode(bindyinhangka, { path: bpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: -82, width: 500, type: cc.Sprite.Type.SLICED })
                                         hqq.addNode(bindyinhangka, { path: bpath + "jd_p_inputBox_1", zIndex: -2, x: 100, y: -150, width: 500, type: cc.Sprite.Type.SLICED })
                                         let kaihusheng = cc.find("Canvas/bigsublayer/bindyinhangka/kaihusheng");
-                                        kaihusheng.setPosition(105, kaihusheng.getPosition().y);
+                                        kaihusheng.setPositionEx(105, kaihusheng.getPosition().y);
                                         let kaihushi = cc.find("Canvas/bigsublayer/bindyinhangka/kaihushi");
-                                        kaihushi.setPosition(105, kaihushi.getPosition().y);
+                                        kaihushi.setPositionEx(105, kaihushi.getPosition().y);
                                         let yinhangname = cc.find("Canvas/bigsublayer/bindyinhangka/yinhangname");
-                                        yinhangname.setPosition(105, yinhangname.getPosition().y);
+                                        yinhangname.setPositionEx(105, yinhangname.getPosition().y);
                                         hqq.addNode(bindyinhangka, { string: "yhkkh", zIndex: -1, x: -275, y: 188, fontSize: 32, color: cc.color(72, 94, 154, 255), bold: true })
                                         hqq.addNode(bindyinhangka, { string: "skrxm", zIndex: -1, x: -275, y: 120, fontSize: 32, color: cc.color(72, 94, 154, 255), bold: true })
                                         hqq.addNode(bindyinhangka, { string: "kfs", zIndex: -1, x: -300, y: 52, fontSize: 32, color: cc.color(72, 94, 154, 255), bold: true })
@@ -579,7 +579,7 @@ export class hallPSubbLayer_test extends cc.Component {
                                         hqq.setBtn(this.kaihushibtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "anniu6" })
                                         hqq.setBtn(this.yinhangnamebtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "anniu6" })
                                         hqq.addNode(bindyinhangka, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "ts", zIndex: -1, y: -210, })
-                                        this.ensurebtn.node.setPosition(this.ensurebtn.node.getPosition().x, -272);
+                                        this.ensurebtn.node.setPositionEx(this.ensurebtn.node.getPosition().x, -272);
 
                                         cc.find("Canvas/bigsublayer/bindyinhangka/kahaoeditbox").x = 105;
                                         cc.find("Canvas/bigsublayer/bindyinhangka/kahaoeditbox/TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
@@ -633,7 +633,7 @@ export class hallPSubbLayer_test extends cc.Component {
                                         hqq.addNode(this.back, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "khyh", x: -200, y: -72 })
                                         hqq.addNode(this.back, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "khhzh", x: -200, y: -140 })
                                         this.ensurebtn.node.y = -255
-                                        hqq.addNode(this.back, { string: "wxts", fontSize: 23, x: 50, y: -200, color: new cc.Color(255, 0, 0) })
+                                        hqq.addNode(this.back, { string: "wxts", fontSize: 23, x: 50, y: -200, color: cc.color(255, 0, 0) })
                                 } else if (hqq.app.pinpai == "xinsheng") {
                                         this.back.getComponent(cc.UITransform).height = 665
                                         this.exitbtn.x = 450
@@ -790,9 +790,9 @@ export class hallPSubbLayer_test extends cc.Component {
                                         hqq.addNode(officelogin, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "lock", zIndex: -1, x: -250, y: -150 })
                                         let info_form = cc.find("Canvas/bigsublayer/officelogin/info_form")
                                         info_form.active = false
-                                        this.btnlabel2.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                                        this.btnlabel2.getComponent(cc.Label).color = cc.color(255, 255, 255)
                                         let lao2 = this.btnlabel2.getComponent(cc.LabelOutline)
-                                        lao2.color = new cc.Color(67, 0, 0)
+                                        lao2.color = cc.color(67, 0, 0)
                                         lao2.width = 2
                                 } else if (hqq.app.pinpai == "juding") {
                                         let bpath = "base/juding/img/"
@@ -837,9 +837,9 @@ export class hallPSubbLayer_test extends cc.Component {
 
                                         let info_form = cc.find("Canvas/bigsublayer/officelogin/info_form")
                                         info_form.active = false
-                                        this.btnlabel2.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                                        this.btnlabel2.getComponent(cc.Label).color = cc.color(255, 255, 255)
                                         let lao2 = this.btnlabel2.getComponent(cc.LabelOutline)
-                                        lao2.color = new cc.Color(67, 0, 0)
+                                        lao2.color = cc.color(67, 0, 0)
                                         lao2.width = 2
                                 } else if (hqq.app.pinpai == "xingui") {
                                         this.exitbtn.x = 415
@@ -890,9 +890,9 @@ export class hallPSubbLayer_test extends cc.Component {
 
                                         let info_form = cc.find("Canvas/bigsublayer/officelogin/info_form")
                                         info_form.active = false
-                                        this.btnlabel2.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                                        this.btnlabel2.getComponent(cc.Label).color = cc.color(255, 255, 255)
                                         // // let lao2 = this.btnlabel2.getComponent(cc.LabelOutline)
-                                        // // lao2.color = new cc.Color(67, 0, 0)
+                                        // // lao2.color = cc.color(67, 0, 0)
                                         // // lao2.width = 2
                                 } else if (hqq.app.pinpai == "huaxing") {
                                         let bpath = "base/huaxing/img/"
@@ -984,10 +984,10 @@ export class hallPSubbLayer_test extends cc.Component {
                                         let imageback = cc.find("Canvas/bigsublayer/officelogin/imgback");
                                         hqq.setNode(imageback, { width: 240, height: 80 })
                                         hqq.setNode(imageback.getChildByName("captchaimg"), { width: 240, height: 80 })
-                                        imageback.setPosition(240, 35);
+                                        imageback.setPositionEx(240, 35);
                                         // // hqq.setNode(imageback,{width:106,height:42,x:200,y:33})
                                         // // hqq.setNode(imageback.getChildByName("captchaimg"),{width:106,height:42,x:0,y:0})
-                                        this.btnlabel2.parent.setPosition(250, -43);
+                                        this.btnlabel2.parent.setPositionEx(250, -43);
                                         this.btnlabel2.getComponent(cc.Label).fontSize = 18;
                                 } else {
                                         this.exitbtn.y = 290
@@ -1045,7 +1045,7 @@ export class hallPSubbLayer_test extends cc.Component {
                 if (hqq.app.pinpai === "juding" || hqq.app.pinpai === "xinlong") {
                         templabel.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
                 } else {
-                        templabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                        templabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
                 }
                 this.onClickKaihushengXiala()
         }
@@ -1095,7 +1095,7 @@ export class hallPSubbLayer_test extends cc.Component {
                 if (hqq.app.pinpai === "juding" || hqq.app.pinpai === "xinlong") {
                         templabel.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
                 } else {
-                        templabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                        templabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
                 }
                 this.onClickKaihushiXiala()
         }
@@ -1180,7 +1180,7 @@ export class hallPSubbLayer_test extends cc.Component {
                 if (hqq.app.pinpai === "juding" || hqq.app.pinpai === "xinlong") {
                         templabel.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
                 } else {
-                        templabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+                        templabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
                 }
                 this.onClickKaihuhangXiala()
         }
@@ -1437,11 +1437,11 @@ export class hallPSubbLayer_test extends cc.Component {
                                 la.string = hqq.getTip("str0") + "（60）"
                                 let lao = btnlabel.getComponent(cc.LabelOutline)
                                 if (hqq.app.pinpai == "xingui") {
-                                        btnlabel.color = new cc.Color(255, 0, 0)
-                                        lao.color = new cc.Color(255, 0, 0)
+                                        btnlabel.color = cc.color(255, 0, 0)
+                                        lao.color = cc.color(255, 0, 0)
                                 } else {
-                                        btnlabel.color = new cc.Color(67, 67, 67)
-                                        lao.color = new cc.Color(67, 67, 67)
+                                        btnlabel.color = cc.color(67, 67, 67)
+                                        lao.color = cc.color(67, 67, 67)
                                 }
                                 let time2 = 0
                                 this.timer = setInterval(() => {
@@ -1455,11 +1455,11 @@ export class hallPSubbLayer_test extends cc.Component {
                                                 btn.interactable = true
                                                 la.string = hqq.getTip("getcode")
                                                 if (hqq.app.pinpai == "xingui") {
-                                                        btnlabel.color = new cc.Color(255, 255, 255)
-                                                        lao.color = new cc.Color(255, 255, 255)
+                                                        btnlabel.color = cc.color(255, 255, 255)
+                                                        lao.color = cc.color(255, 255, 255)
                                                 } else {
-                                                        btnlabel.color = new cc.Color(67, 0, 0)
-                                                        lao.color = new cc.Color(67, 0, 0)
+                                                        btnlabel.color = cc.color(67, 0, 0)
+                                                        lao.color = cc.color(67, 0, 0)
                                                 }
                                         }
                                 }, 1000)

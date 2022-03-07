@@ -654,7 +654,7 @@ function _buildHotUpdata243(options, result) {
 function _checkPackageName(options, result) {
     // log("<--Myplugin--> _checkPackageName")
     var root = Path.normalize(Editor.Project.path);
-    var url = Path.join(root, m_pathTag + "build-templates" + m_pathTag + "jsb-link" + m_pathTag + "frameworks" + m_pathTag + "runtime-src" + m_pathTag + "proj.android-studio" + m_pathTag + "app");
+    var url = Path.join(root, m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "app");
     var url0 = Path.join(url, m_pathTag + "res" + m_pathTag + "xml" + m_pathTag + "file_paths.xml");
     Fs.readFile(url0, "utf8", function (err, data) {
         if (err) {
@@ -670,7 +670,7 @@ function _checkPackageName(options, result) {
 function _changeTemplatesPackageName(options, result) {
     // log("<--Myplugin--> _changeTemplatesPackageName")
     var root = Path.normalize(Editor.Project.path);
-    var url = Path.join(root, m_pathTag + "build-templates" + m_pathTag + "jsb-link" + m_pathTag + "frameworks" + m_pathTag + "runtime-src" + m_pathTag + "proj.android-studio" + m_pathTag + "app");
+    var url = Path.join(root, m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "app");
     var url0 = Path.join(url, m_pathTag + "res" + m_pathTag + "xml" + m_pathTag + "file_paths.xml");
     Fs.readFile(url0, "utf8", function (err, data) {
         if (err) {
@@ -732,14 +732,14 @@ function _changeTemplatesPackageName(options, result) {
  */
 function _replaceIcons() {
     // log("<--Myplugin--> _replaceIcons")
-    copyFile(m_projectPath + "/packages/hqq/icon/" + m_pinpai + "/mipmap-hdpi/ic_launcher.png", m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.android-studio/res/mipmap-hdpi/ic_launcher.png");
-    copyFile(m_projectPath + "/packages/hqq/icon/" + m_pinpai + "/mipmap-mdpi/ic_launcher.png", m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.android-studio/res/mipmap-mdpi/ic_launcher.png");
-    copyFile(m_projectPath + "/packages/hqq/icon/" + m_pinpai + "/mipmap-xhdpi/ic_launcher.png", m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.android-studio/res/mipmap-xhdpi/ic_launcher.png");
-    copyFile(m_projectPath + "/packages/hqq/icon/" + m_pinpai + "/mipmap-xxhdpi/ic_launcher.png", m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.android-studio/res/mipmap-xxhdpi/ic_launcher.png");
-    copyFile(m_projectPath + "/packages/hqq/icon/" + m_pinpai + "/mipmap-ldpi/ic_launcher.png", m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.android-studio/res/mipmap-ldpi/ic_launcher.png");
-    copyFile(m_projectPath + "/packages/hqq/icon/" + m_pinpai + "/mipmap-xxxhdpi/ic_launcher.png", m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.android-studio/res/mipmap-xxxhdpi/ic_launcher.png");
-    copyFile(m_projectPath + "/packages/hqq/icon/" + m_pinpai + "/Icon.icns", m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.ios_mac/mac/Icon.icns");
-    copyFile(m_projectPath + "/packages/hqq/icon/" + m_pinpai + "/game.ico", m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.win32/res/game.ico");
+    copyFile(m_projectPath + m_pathTag + "extensions" + m_pathTag + "hqq" + m_pathTag + "icon" + m_pathTag + m_pinpai + "" + m_pathTag + "mipmap-hdpi" + m_pathTag + "ic_launcher.png", m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "mipmap-hdpi" + m_pathTag + "ic_launcher.png");
+    copyFile(m_projectPath + m_pathTag + "extensions" + m_pathTag + "hqq" + m_pathTag + "icon" + m_pathTag + m_pinpai + "" + m_pathTag + "mipmap-mdpi" + m_pathTag + "ic_launcher.png", m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "mipmap-hdpi" + m_pathTag + "ic_launcher.png");
+    copyFile(m_projectPath + m_pathTag + "extensions" + m_pathTag + "hqq" + m_pathTag + "icon" + m_pathTag + m_pinpai + "" + m_pathTag + "mipmap-xhdpi" + m_pathTag + "ic_launcher.png", m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "mipmap-hdpi" + m_pathTag + "ic_launcher.png");
+    copyFile(m_projectPath + m_pathTag + "extensions" + m_pathTag + "hqq" + m_pathTag + "icon" + m_pathTag + m_pinpai + "" + m_pathTag + "mipmap-xxhdpi" + m_pathTag + "ic_launcher.png", m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "mipmap-hdpi" + m_pathTag + "ic_launcher.png");
+    copyFile(m_projectPath + m_pathTag + "extensions" + m_pathTag + "hqq" + m_pathTag + "icon" + m_pathTag + m_pinpai + "" + m_pathTag + "mipmap-ldpi" + m_pathTag + "ic_launcher.png", m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "mipmap-hdpi" + m_pathTag + "ic_launcher.png");
+    copyFile(m_projectPath + m_pathTag + "extensions" + m_pathTag + "hqq" + m_pathTag + "icon" + m_pathTag + m_pinpai + "" + m_pathTag + "mipmap-xxxhdpi" + m_pathTag + "ic_launcher.png", m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "mipmap-hdpi" + m_pathTag + "ic_launcher.png");
+    copyFile(m_projectPath + m_pathTag + "extensions" + m_pathTag + "hqq" + m_pathTag + "icon" + m_pathTag + m_pinpai + "" + m_pathTag + "Icon.icns", m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "Icon.icns");
+    copyFile(m_projectPath + m_pathTag + "extensions" + m_pathTag + "hqq" + m_pathTag + "icon" + m_pathTag + m_pinpai + "" + m_pathTag + "game.ico", m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "game.ico");
 }
 /**
  * @Description: 修改保存在java代码中的包信息
@@ -766,7 +766,7 @@ function _changePackageInfoInJava() {
                     + '\\\",\\\"country\\\":\\\"' + m_country
                     + '\\\",\\\"currency\\\":\\\"' + m_currency
                     + '\\\",\\\"engine_version\\\":\\\"' + cccversion + '\\\"}\"';
-                let path = m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.android-studio/app/src/org/cocos2dx/javascript/AppActivity.java";
+                let path = m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "app" + m_pathTag + "src" + m_pathTag + "com" + m_pathTag + "cocos" + m_pathTag + "game" + m_pathTag + "AppActivity.java";
                 Fs.readFile(path, "utf8", function (err, data) {
                     if (err) {
                         log("<--Myplugin--> _changePackageInfoInJava readFile", err);
@@ -794,7 +794,7 @@ function _changePackageInfoInJava() {
  * @Description: 修改app的名字
  */
 function _changeApkName() {
-    let path = m_projectPath + "/build-templates/jsb-link/frameworks/runtime-src/proj.android-studio/res/values/strings.xml";
+    let path = m_projectPath + m_pathTag + "native" + m_pathTag + "engine" + m_pathTag + "android" + m_pathTag + "res" + m_pathTag + "values" + m_pathTag + "strings.xml";
     let end = "";
     if (m_huanjin == "dev" || m_huanjin == "pre") { // || m_huanjin == "pre"
         end = m_huanjin;

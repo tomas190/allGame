@@ -35,8 +35,8 @@ export class hallPSubsLayer_test extends cc.Component {
     private headindex: string = "";
     private itemlist: Array<cc.Node> = [];
 
-    private onMusicChangeTimer: number = null;
-    private onSoundChangeTimer: number = null;
+    private onMusicChangeTimer: any = null;
+    private onSoundChangeTimer: any = null;
 
     private sliderBGM: hqqSlider = null;
     private sliderSound: hqqSlider = null;
@@ -48,7 +48,7 @@ export class hallPSubsLayer_test extends cc.Component {
     private captchaimg: cc.Sprite = null;
     private captchaimg2: cc.Sprite = null;
 
-    private timer: number = null;
+    private timer: any = null;
 
     private num0: number = 0;
     private num1: number = 0;
@@ -226,8 +226,8 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.setSprite(title, { path: blpath + "kefubiaoti", y: 245 })
             hqq.setBtn(webbtn, { path: bpath + "anniu3" })
             hqq.setBtn(appbtn, { path: bpath + "anniu3", active: false })
-            weblabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
-            applabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+            weblabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
+            applabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
 
@@ -274,8 +274,8 @@ export class hallPSubsLayer_test extends cc.Component {
 
             hqq.setBtn(webbtn, { path: "base/xingui/img/btn_1" })
             hqq.setBtn(appbtn, { path: "base/xingui/img/btn_1", active: false })
-            weblabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
-            applabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+            weblabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
+            applabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
 
             hqq.setSprite(usdttitle, { path: blpath + "bd", y: 220 })
             hqq.setSprite(usdteditboxback, { path: blpath + "z1" })
@@ -310,7 +310,7 @@ export class hallPSubsLayer_test extends cc.Component {
             // hqq.setSprite(titile_tip, { path: blpath + "titile_tip" })
             // hqq.setSprite(inputurnickname, { path: blpath + "inputurnickname" })
             hqq.setBtn(copybtn, { path: xpath + "btnback" });
-            btnlabel.setPosition(btnlabel.getPosition().x, 10);
+            btnlabel.setPositionEx(btnlabel.getPosition().x, 10);
 
             hqq.setSprite(title_login, { path: xlpath + "denglu", position: { x: -300, y: 235 } })
             hqq.setBtn(txt_forgetpwd, { path: xlpath + "wjmm" })
@@ -321,11 +321,11 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.setSprite(usdttitle, { path: xlpath + "title_usdt", x: -160, y: 235 })
             hqq.setSprite(usdteditboxback, { path: xlpath + "popup_usdt_frame" })
 
-            title.setPosition(title.getPosition().x, 235);
+            title.setPositionEx(title.getPosition().x, 235);
             title.getComponent(cc.Label).string = hqq.getTip("imchoice")
-            weblabel.setPosition(weblabel.getPosition().x, 10);
+            weblabel.setPositionEx(weblabel.getPosition().x, 10);
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
-            applabel.setPosition(applabel.getPosition().x, 10);
+            applabel.setPositionEx(applabel.getPosition().x, 10);
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
         } else if (hqq.app.pinpai == "xinlong") {
             // let bpath = "xinlong/img/"
@@ -386,8 +386,8 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.addNode(this.imnode, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "kffkxz", x: -280, y: 230 })
             hqq.setBtn(webbtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_p_btn_1_1" })
             hqq.setBtn(appbtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_p_btn_1_1", active: false })
-            weblabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
-            applabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+            weblabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
+            applabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
 
@@ -402,17 +402,17 @@ export class hallPSubsLayer_test extends cc.Component {
             title0.active = false;
             title1.active = false;
             title2.active = false;
-            accountnode.setPosition(120, 115);
+            accountnode.setPositionEx(120, 115);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass0node.setPosition(120, 5);
+            pass0node.setPositionEx(120, 5);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass1node.setPosition(120, -105);
+            pass1node.setPositionEx(120, -105);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             pass1node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
@@ -449,7 +449,7 @@ export class hallPSubsLayer_test extends cc.Component {
             info.getComponent(cc.Label).color = cc.color(11, 52, 96, 255)
             info.getComponent(cc.Label).string = hqq.getTip("proxy2")
             this.tiplayerinfo.color = cc.color(11, 52, 96, 255)
-            this.tiplayerinfo.node.setPosition(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
+            this.tiplayerinfo.node.setPositionEx(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
 
             downlabel.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             downlabel2.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
@@ -503,8 +503,8 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.addNode(this.imnode, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "kffkxz", x: -280, y: 230 })
             hqq.setBtn(webbtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_p_btn_1_1" })
             hqq.setBtn(appbtn, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_p_btn_1_1", active: false })
-            weblabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
-            applabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+            weblabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
+            applabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
 
@@ -519,17 +519,17 @@ export class hallPSubsLayer_test extends cc.Component {
             title0.active = false;
             title1.active = false;
             title2.active = false;
-            accountnode.setPosition(120, 115);
+            accountnode.setPositionEx(120, 115);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass0node.setPosition(120, 5);
+            pass0node.setPositionEx(120, 5);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass1node.setPosition(120, -105);
+            pass1node.setPositionEx(120, -105);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             pass1node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
@@ -565,7 +565,7 @@ export class hallPSubsLayer_test extends cc.Component {
             info.getComponent(cc.Label).color = cc.color(11, 52, 96, 255)
             info.getComponent(cc.Label).string = hqq.getTip("proxy2")
             this.tiplayerinfo.color = cc.color(11, 52, 96, 255)
-            this.tiplayerinfo.node.setPosition(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
+            this.tiplayerinfo.node.setPositionEx(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
 
             label.getComponent(cc.Label).color = cc.color(11, 52, 96, 255)
 
@@ -620,8 +620,8 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.addNode(this.imnode, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "tit_kffk", x: 0, y: 260 })
             hqq.setBtn(webbtn, { path: bpath + "btn_2" })
             hqq.setBtn(appbtn, { path: bpath + "btn_2", active: false })
-            weblabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
-            applabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+            weblabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
+            applabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
 
@@ -644,17 +644,17 @@ export class hallPSubsLayer_test extends cc.Component {
             title0.active = false;
             title1.active = false;
             title2.active = false;
-            accountnode.setPosition(0, 150);
+            accountnode.setPositionEx(0, 150);
             // accountnode.getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // accountnode.getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass0node.setPosition(0, 40);
+            pass0node.setPositionEx(0, 40);
             // pass0node.getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // pass0node.getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            passeditboxnode.setPosition(0, -70);
+            passeditboxnode.setPositionEx(0, -70);
             // pass1node.getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // pass1node.getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
@@ -662,11 +662,11 @@ export class hallPSubsLayer_test extends cc.Component {
             // tip0.color = cc.color(236,105,65,255)
             tip0.getComponent(cc.Label).fontSize = 24;
             tip0.getComponent(cc.Label).string = hqq.getTip("tip2")
-            tip0.setPosition(tip0.getPosition().x, 95);
+            tip0.setPositionEx(tip0.getPosition().x, 95);
             // tip1.color = cc.color(236,105,65,255)
             tip1.getComponent(cc.Label).fontSize = 24;
             tip1.getComponent(cc.Label).string = hqq.getTip("tip3")
-            tip1.setPosition(tip1.getPosition().x, -15);
+            tip1.setPositionEx(tip1.getPosition().x, -15);
             register.active = false;
 
             let proxycodechangehead_di = cc.find("Canvas/smallsublayer/proxycode/changehead_di")
@@ -685,9 +685,9 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.addNode(bindusdt, { string: "usdtqbdz", x: -290, y: 95, fontSize: 32, color: cc.color(232, 169, 98), bold: true })
             // bindusdt.getChildByName("type").color = cc.color(84,98,119,255);
             // bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
-            bindusdt.getChildByName("type").setPosition(-120, -20);
+            bindusdt.getChildByName("type").setPositionEx(-120, -20);
 
-            bindusdt.getChildByName("adress").setPosition(-170, 95);
+            bindusdt.getChildByName("adress").setPositionEx(-170, 95);
             bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
             bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
@@ -695,7 +695,7 @@ export class hallPSubsLayer_test extends cc.Component {
             // info.color = cc.color(11,52,96,255)
             info.getComponent(cc.Label).string = hqq.getTip("proxy2")
             // this.tiplayerinfo.node.color = cc.color(11,52,96,255)
-            this.tiplayerinfo.node.setPosition(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
+            this.tiplayerinfo.node.setPositionEx(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
 
             // downlabel.color = cc.color(84,98,119,255);
             // downlabel2.color = cc.color(84,98,119,255);
@@ -754,9 +754,9 @@ export class hallPSubsLayer_test extends cc.Component {
                 hqq.setSprite(this.back, { path: bpath + "popup_win_bg3", width: 813, height: 562 })
                 hqq.setBtn(closebtn, { path: bpath + "guanbi", x: 400, y: 275, width: 71, height: 72 })
                 let login2account = cc.find("Canvas/smallsublayer/login2/account");
-                login2account.setPosition(40, login2account.getPosition().y);
+                login2account.setPositionEx(40, login2account.getPosition().y);
                 let login2pass = cc.find("Canvas/smallsublayer/login2/pass");
-                login2pass.setPosition(40, login2pass.getPosition().y);
+                login2pass.setPositionEx(40, login2pass.getPosition().y);
                 surecg.active = false;
             } else if (this.data.type === 9) {
                 hqq.setSprite(this.back, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "kuangti2", width: 673, height: 464 })
@@ -824,8 +824,8 @@ export class hallPSubsLayer_test extends cc.Component {
             // hqq.addNode(this.imnode, { path: hlpath + "tit_kffk", x:0,y: 260 })
             // hqq.setBtn(webbtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "btn_2" })
             // hqq.setBtn(appbtn, { Res:hqq["hall_"+hqq.app.pinpai],path: hpath + "btn_2", active: false })
-            weblabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
-            applabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+            weblabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
+            applabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
 
@@ -860,7 +860,7 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.setNode(pass1node.getChildByName("PLACEHOLDER_LABEL"), { width: 480, height: 36, color: cc.color(129, 129, 126, 255) });
 
             registertitle.getComponent(cc.Label).string = "";
-            registertitle.setPosition(0, 240);
+            registertitle.setPositionEx(0, 240);
             hqq.addNode(registertitle, { path: blpath + "titlezczszh" });
             title0.active = false;
             title1.active = false;
@@ -869,11 +869,11 @@ export class hallPSubsLayer_test extends cc.Component {
             // tip0.color = cc.color(236,105,65,255)
             tip0.getComponent(cc.Label).fontSize = 24;
             tip0.getComponent(cc.Label).string = hqq.getTip("tip4")
-            tip0.setPosition(tip0.getPosition().x, 95);
+            tip0.setPositionEx(tip0.getPosition().x, 95);
             // tip1.color = cc.color(236,105,65,255)
             tip1.getComponent(cc.Label).fontSize = 24;
             tip1.getComponent(cc.Label).string = hqq.getTip("tip5")
-            tip1.setPosition(tip1.getPosition().x, -15);
+            tip1.setPositionEx(tip1.getPosition().x, -15);
 
             let proxycodechangehead_di = cc.find("Canvas/smallsublayer/proxycode/changehead_di")
             hqq.setSprite(proxycodechangehead_di, { path: bpath + "shurukuang", width: 251, height: 36, x: 90, y: -10, type: cc.Sprite.Type.SLICED })
@@ -894,12 +894,12 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.addNode(bindusdt, { string: "usdtqbdz", x: -290, y: 95, fontSize: 32, color: cc.color(232, 169, 98), bold: true })
             // bindusdt.getChildByName("type").color = cc.color(84,98,119,255);
             // bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
-            bindusdt.getChildByName("adress").setPosition(-163, bindusdt.getChildByName("adress").getPosition().y);
+            bindusdt.getChildByName("adress").setPositionEx(-163, bindusdt.getChildByName("adress").getPosition().y);
             bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
             bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
             // this.tiplayerinfo.node.color = cc.color(11,52,96,255)
-            this.tiplayerinfo.node.setPosition(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 40);
+            this.tiplayerinfo.node.setPositionEx(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 40);
             hqq.addNode(this.nologin, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "title_tips", y: 200 });
             hqq.addNode(this.download, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "title_tips", y: 240 });
 
@@ -935,7 +935,7 @@ export class hallPSubsLayer_test extends cc.Component {
 
             // hqq.setSprite(title_bdali, { path: blpath + "title_bdali" })
             // hqq.setSprite(bdali_form, { path: blpath + "bdali_form" })
-            title.setPosition(title.getPosition().x, 235);
+            title.setPositionEx(title.getPosition().x, 235);
             hqq.setSprite(titile_tip, { path: blpath + "titile_tip" })
             hqq.setSprite(inputurnickname, { path: blpath + "inputurnickname" })
 
@@ -953,7 +953,7 @@ export class hallPSubsLayer_test extends cc.Component {
             bindusdtAddress.getChildByName("TEXT_LABEL").getComponent(cc.Widget).left = 0;
             bindusdtAddress.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Widget).left = 0;
 
-            registertitle.setPosition(registertitle.getPosition().x, 235);
+            registertitle.setPositionEx(registertitle.getPosition().x, 235);
 
             title.getComponent(cc.Label).string = hqq.getTip("imchoice")
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
@@ -985,7 +985,7 @@ export class hallPSubsLayer_test extends cc.Component {
             info.getComponent(cc.Label).color = cc.color(11, 52, 96, 255)
             info.getComponent(cc.Label).string = hqq.getTip("proxy2")
             this.tiplayerinfo.color = cc.color(11, 52, 96, 255)
-            this.tiplayerinfo.node.setPosition(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
+            this.tiplayerinfo.node.setPositionEx(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
 
             downlabel.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             downlabel2.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
@@ -1002,17 +1002,17 @@ export class hallPSubsLayer_test extends cc.Component {
             title0.active = false;
             title1.active = false;
             title2.active = false;
-            accountnode.setPosition(120, 115);
+            accountnode.setPositionEx(120, 115);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass0node.setPosition(120, 5);
+            pass0node.setPositionEx(120, 5);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass1node.setPosition(120, -105);
+            pass1node.setPositionEx(120, -105);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             pass1node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
@@ -1075,8 +1075,8 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.addNode(this.imnode, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "tit_kffk", x: 0, y: 260 })
             hqq.setBtn(webbtn, { path: bpath + "btn_2" })
             hqq.setBtn(appbtn, { path: bpath + "btn_2", active: false })
-            weblabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
-            applabel.getComponent(cc.Label).color = new cc.Color(255, 255, 255)
+            weblabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
+            applabel.getComponent(cc.Label).color = cc.color(255, 255, 255)
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
 
@@ -1099,17 +1099,17 @@ export class hallPSubsLayer_test extends cc.Component {
             title0.active = false;
             title1.active = false;
             title2.active = false;
-            accountnode.setPosition(0, 150);
+            accountnode.setPositionEx(0, 150);
             // accountnode.getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // accountnode.getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass1node.setPosition(0, 40);
+            pass1node.setPositionEx(0, 40);
             // pass0node.getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // pass0node.getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass1node.setPosition(0, -70);
+            pass1node.setPositionEx(0, -70);
             // pass1node.getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // pass1node.getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
@@ -1117,11 +1117,11 @@ export class hallPSubsLayer_test extends cc.Component {
             // tip0.color = cc.color(236,105,65,255)
             tip0.getComponent(cc.Label).fontSize = 24;
             tip0.getComponent(cc.Label).string = hqq.getTip("tip2")
-            tip0.setPosition(tip0.getPosition().x, 95);
+            tip0.setPositionEx(tip0.getPosition().x, 95);
             // tip1.color = cc.color(236,105,65,255)
             tip1.getComponent(cc.Label).fontSize = 24;
             tip1.getComponent(cc.Label).string = hqq.getTip("tip3")
-            tip1.setPosition(tip1.getPosition().x, -15);
+            tip1.setPositionEx(tip1.getPosition().x, -15);
 
             register.active = false;
 
@@ -1140,14 +1140,14 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.addNode(bindusdt, { string: "usdtqbdz", x: -290, y: 95, fontSize: 32, color: cc.color(232, 169, 98), bold: true })
             // bindusdt.getChildByName("type").color = cc.color(84,98,119,255);
             // bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").color = cc.color(84,98,119,255);
-            bindusdt.getChildByName("adress").setPosition(-163, bindusdt.getChildByName("adress").getPosition().y);
+            bindusdt.getChildByName("adress").setPositionEx(-163, bindusdt.getChildByName("adress").getPosition().y);
             bindusdt.getChildByName("adress").getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             // bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").color = cc.color(84,98,119,255);
             bindusdt.getChildByName("adress").getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
             // info.color = cc.color(11,52,96,255)
             info.getComponent(cc.Label).string = hqq.getTip("proxy2")
             // this.tiplayerinfo.node.color = cc.color(11,52,96,255)
-            this.tiplayerinfo.node.setPosition(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
+            this.tiplayerinfo.node.setPositionEx(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
 
             // downlabel.color = cc.color(84,98,119,255);
             // downlabel2.color = cc.color(84,98,119,255);
@@ -1160,7 +1160,7 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.setSprite(title_login, { path: blpath + "title_login", y: 239 })
             hqq.setBtn(txt_forgetpwd, { path: blpath + "txt_forgetpwd" })
 
-            title.setPosition(title.getPosition().x, 239);
+            title.setPositionEx(title.getPosition().x, 239);
         } else if (hqq.app.pinpai == "letian") {
             tip0.getComponent(cc.Label).fontSize = 28
             tip0.getComponent(cc.Label).lineHeight = 28
@@ -1188,7 +1188,7 @@ export class hallPSubsLayer_test extends cc.Component {
             info.getComponent(cc.Label).color = cc.color(11, 52, 96, 255)
             info.getComponent(cc.Label).string = hqq.getTip("proxy2")
             this.tiplayerinfo.color = cc.color(11, 52, 96, 255)
-            this.tiplayerinfo.node.setPosition(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
+            this.tiplayerinfo.node.setPositionEx(this.tiplayerinfo.node.getPosition().x, this.tiplayerinfo.node.getPosition().y - 30);
 
             downlabel.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             downlabel2.getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
@@ -1205,17 +1205,17 @@ export class hallPSubsLayer_test extends cc.Component {
             title0.active = false;
             title1.active = false;
             title2.active = false;
-            accountnode.setPosition(120, 115);
+            accountnode.setPositionEx(120, 115);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             accountnode.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             accountnode.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass0node.setPosition(120, 5);
+            pass0node.setPositionEx(120, 5);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass0node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass0node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).fontSize = 28;
-            pass1node.setPosition(120, -105);
+            pass1node.setPositionEx(120, -105);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
             pass1node.getChildByName("TEXT_LABEL").getComponent(cc.Label).fontSize = 28;
             pass1node.getChildByName("PLACEHOLDER_LABEL").getComponent(cc.Label).color = cc.color(84, 98, 119, 255);
@@ -1252,7 +1252,7 @@ export class hallPSubsLayer_test extends cc.Component {
             hqq.setSprite(usdttitle, { path: blpath + "title_usdt", y: 230 })
             hqq.setSprite(usdteditboxback, { path: blpath + "popup_usdt_frame" })
 
-            title.setPosition(title.getPosition().x, 235);
+            title.setPositionEx(title.getPosition().x, 235);
             title.getComponent(cc.Label).string = hqq.getTip("imchoice")
             weblabel.getComponent(cc.Label).string = hqq.getTip("weblabel")
             applabel.getComponent(cc.Label).string = hqq.getTip("applabel")
@@ -1339,9 +1339,9 @@ export class hallPSubsLayer_test extends cc.Component {
                 this.nologin.active = true
                 this.exitbtn.active = false
                 if (hqq.app.pinpai == "fuxin" || hqq.app.pinpai == "juding") {
-                    this.surecg.setPosition(this.surecg.getPosition().x, -220);
+                    this.surecg.setPositionEx(this.surecg.getPosition().x, -220);
                 } else {
-                    this.surecg.setPosition(this.surecg.getPosition().x, -140);
+                    this.surecg.setPositionEx(this.surecg.getPosition().x, -140);
                 }
                 /* if(hqq.app.pinpai == "test"){
                     this.exitbtn.y = 240;
@@ -1375,7 +1375,7 @@ export class hallPSubsLayer_test extends cc.Component {
                     label.string = data.msg || hqq.getTip("reinstall")
                 }
                 this.exitbtn.active = false
-                this.surecg.setPosition(this.surecg.getPosition().x, -10);
+                this.surecg.setPositionEx(this.surecg.getPosition().x, -10);
                 if (hqq.app.pinpai === "huaxing" || hqq.app.pinpai === "jiaxing") {
                     hqq.addNode(this.back, { string: "下载", y: 260, bold: true, color: cc.color(240, 220, 143) })
                 }
@@ -1385,9 +1385,9 @@ export class hallPSubsLayer_test extends cc.Component {
                 this.tiplayerinfo.string = data.msg || hqq.getTip("jumptoweb")
                 this.tiplayer.active = true
                 if (hqq.app.pinpai == "fuxin" || hqq.app.pinpai == "juding") {
-                    this.surecg.setPosition(this.surecg.getPosition().x, -220);
+                    this.surecg.setPositionEx(this.surecg.getPosition().x, -220);
                 } else {
-                    this.surecg.setPosition(this.surecg.getPosition().x, -140);
+                    this.surecg.setPositionEx(this.surecg.getPosition().x, -140);
                     /* if(hqq.app.pinpai == "test"){
                         this.exitbtn.y = 240;
                     } */
@@ -1409,11 +1409,11 @@ export class hallPSubsLayer_test extends cc.Component {
                 if (hqq.app.pinpai == "fuxin") {
                     let blpath = "base/language/" + hqq.language + "/fuxin/";
                     hqq.addNode(this.tiplayerinfo.node, { path: blpath + "gonggaobiaoti2", y: 200, type: cc.Sprite.Type.SLICED })
-                    this.surecg.setPosition(this.surecg.getPosition().x, -220);
+                    this.surecg.setPositionEx(this.surecg.getPosition().x, -220);
                 } else if (hqq.app.pinpai == "juding") {
                     let hlpath = "language/" + hqq.language + "/juding/";
                     hqq.addNode(this.tiplayerinfo.node, { Res: hqq["hall_" + hqq.app.pinpai], path: hlpath + "gg", x: -350, y: 205, type: cc.Sprite.Type.SLICED })
-                    this.surecg.setPosition(this.surecg.getPosition().x, -205);
+                    this.surecg.setPositionEx(this.surecg.getPosition().x, -205);
                     let hpath = "juding/img/"
                     hqq.addNode(this.back, { Res: hqq["hall_" + hqq.app.pinpai], path: hpath + "jd_popup_inBg" });
                 } else if (hqq.app.pinpai == "huaxing") {
@@ -1423,7 +1423,7 @@ export class hallPSubsLayer_test extends cc.Component {
                     hqq.addNode(this.back, { path: "base/jiaxing/img/d_tit", y: 260 })
                     hqq.addNode(this.back, { string: "gg", y: 255, bold: true, fontSize: 45, lineHeight: 50, color: cc.color(242, 222, 149) })
                 } else {
-                    this.surecg.setPosition(this.surecg.getPosition().x, -140);
+                    this.surecg.setPositionEx(this.surecg.getPosition().x, -140);
                     /* if(hqq.app.pinpai == "test"){
                         this.exitbtn.y = 240;
                     } */
@@ -1950,10 +1950,10 @@ export class hallPSubsLayer_test extends cc.Component {
             let headconver = [0, 3, 6, 8];
             if (hqq.app.pinpai == "ninetwo") {
                 hqq.commonTools.loadHeadRes(headconver[i], head, 101)
-                headitem.setPosition(140 * (i - 1.5), -130)
+                headitem.setPositionEx(140 * (i - 1.5), -130)
             } else {
                 hqq.commonTools.loadHeadRes(i, head, 101)
-                headitem.setPosition(156 * (x - 2), 155 * (-0.5 - y))
+                headitem.setPositionEx(156 * (x - 2), 155 * (-0.5 - y))
             }
             headitem.active = true
             this.itemlist.push(headitem)
@@ -2147,7 +2147,7 @@ export class hallPSubsLayer_test extends cc.Component {
         cc.log("weblogin_login============", this.node)
         hqq.setSprite(cc.find("form", this.weblogin), { path: "base/language/CN/img/web_signIn_form" });
         let account = cc.find("account", this.weblogin);
-        account.setPosition(35, 25);
+        account.setPositionEx(35, 25);
         let url = window.location.search;
         let accountstr = null;
         let passstr = null;
@@ -2176,7 +2176,7 @@ export class hallPSubsLayer_test extends cc.Component {
             account.getComponent(cc.EditBox).string = accountstr;
         }
         let pass0 = cc.find("pass0", this.weblogin);
-        pass0.setPosition(35, -80);
+        pass0.setPositionEx(35, -80);
         if (passstr) {
             pass0.getComponent(cc.EditBox).string = passstr;
         }
@@ -2188,10 +2188,10 @@ export class hallPSubsLayer_test extends cc.Component {
         cc.log("weblogin_register============")
         hqq.setSprite(cc.find("form", this.weblogin), { path: "base/language/CN/img/web_signUp_form" });
         let account = cc.find("account", this.weblogin);
-        account.setPosition(35, 39);
+        account.setPositionEx(35, 39);
         account.getComponent(cc.EditBox).string = "";
         let pass0 = cc.find("pass0", this.weblogin);
-        pass0.setPosition(35, -40);
+        pass0.setPositionEx(35, -40);
         pass0.getComponent(cc.EditBox).string = "";
         let pass1 = cc.find("pass1", this.weblogin);
         pass1.active = true;
@@ -2428,7 +2428,7 @@ export class hallPSubsLayer_test extends cc.Component {
             hcdxvalue.getComponent(cc.Label).string = hqq.localStorage.getSize();
         }
         if (cc.isValid(toggle)) {
-            toggle.check();
+            toggle.isChecked=true;
         }
     }
     onSettingLoginSaveAccountCallback() {
@@ -2491,7 +2491,7 @@ export class hallPSubsLayer_test extends cc.Component {
             cc.find("account/PLACEHOLDER_LABEL", this.login2).getComponent(cc.Label).string = hqq.getTip("showtip32");
         }
         if (cc.isValid(toggle)) {
-            toggle.check();
+            toggle.isChecked=true;
         }
     }
 
@@ -2720,8 +2720,8 @@ export class hallPSubsLayer_test extends cc.Component {
                 let la = btnlabel.getComponent(cc.Label)
                 la.string = hqq.getTip("str0") + "（60）"
                 let lao = btnlabel.getComponent(cc.LabelOutline)
-                la.color = new cc.Color(67, 67, 67)
-                lao.color = new cc.Color(67, 67, 67)
+                la.color = cc.color(67, 67, 67)
+                lao.color = cc.color(67, 67, 67)
                 let time2 = 0
                 this.timer = setInterval(() => {
                     if (!cc.isValid(this.node)) return;
@@ -2733,8 +2733,8 @@ export class hallPSubsLayer_test extends cc.Component {
                         clearInterval(this.timer);
                         btn.interactable = true
                         la.string = hqq.getTip("sendcode")
-                        la.color = new cc.Color(67, 0, 0)
-                        lao.color = new cc.Color(67, 0, 0)
+                        la.color = cc.color(67, 0, 0)
+                        lao.color = cc.color(67, 0, 0)
                     }
                 }, 1000)
             } else {
@@ -2796,8 +2796,8 @@ export class hallPSubsLayer_test extends cc.Component {
                 let la = btnlabel.getComponent(cc.Label)
                 la.string = hqq.getTip("str0") + "（60）"
                 let lao = btnlabel.getComponent(cc.LabelOutline)
-                la.color = new cc.Color(67, 67, 67)
-                lao.color = new cc.Color(67, 67, 67)
+                la.color = cc.color(67, 67, 67)
+                lao.color = cc.color(67, 67, 67)
                 let time2 = 0
                 this.timer = setInterval(() => {
                     if (!cc.isValid(this.node)) return;
@@ -2809,8 +2809,8 @@ export class hallPSubsLayer_test extends cc.Component {
                         clearInterval(this.timer);
                         btn.interactable = true
                         la.string = hqq.getTip("sendcode")
-                        la.color = new cc.Color(67, 0, 0)
-                        lao.color = new cc.Color(67, 0, 0)
+                        la.color = cc.color(67, 0, 0)
+                        lao.color = cc.color(67, 0, 0)
                     }
                 }, 1000)
             } else {

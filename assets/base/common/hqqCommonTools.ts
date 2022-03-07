@@ -222,7 +222,7 @@ export let commonTools = {
         // let moveAction = cc.moveTo(0.5, targetPos);
         // let spawn = cc.spawn(scaleAction, moveAction);
         // let node = new cc.Node();
-        // node.setPosition(cc.v2(cc.visibleRect.width / 2, cc.visibleRect.height / 2));
+        // node.setPositionEx(cc.v2(cc.visibleRect.width / 2, cc.visibleRect.height / 2));
         // node.zIndex = cc.macro.MAX_ZINDEX;
         // node.on(cc.Node.EventType.TOUCH_START, () => {
         //     node.parent = null;

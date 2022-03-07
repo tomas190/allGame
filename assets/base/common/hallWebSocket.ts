@@ -1,7 +1,7 @@
 import * as cc from 'cc';
 import { DEBUG } from 'cc/env';
-export let hqqWebSocket = function () { }
-hqqWebSocket.prototype = {
+export let hqqWebSocket2 = function () { }
+hqqWebSocket2.prototype = {
     ip: "",
     ws: null,
     pingTime: 0,
@@ -16,6 +16,7 @@ hqqWebSocket.prototype = {
     isConected: false,
     sgjmsg: null,
     isReconnect: false,
+    heartbeat:null,
 
     init(param) {
         this.isConected = false;
@@ -300,7 +301,7 @@ hqqWebSocket.prototype = {
             this.isReconnect = true
             if (cc.director.getScene().name == "hall") {
                 if(!cc.isValid(this.loading)){
-                    this.loading = hqq.addNode(cc.director.getScene(),{normal:"",widget:{left:0,right:0,top:0,bottom:0}})
+                    this.loading = hqq.addNode(cc.find("Canvas"),{normal:"",widget:{left:0,right:0,top:0,bottom:0}})
                     hqq.addNode(this.loading,{skeleton:"base/language/"+hqq.language+"/jiazai",aniname:"animation",loop:true});
                 }
                 // hqq.eventMgr.dispatch(hqq.eventMgr.showTip, hqq.getTip("showtip46"))

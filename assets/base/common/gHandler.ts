@@ -3257,10 +3257,10 @@ export let gHandler = {
         
         if (node instanceof cc.Node) {
             if (typeof cfg.x == "number") {
-                node.setPosition(cfg.x,node.getPosition().y);
+                node.setPositionEx(cfg.x,node.getPosition().y);
             }
             if (typeof cfg.y == "number") {
-                node.setPosition(node.getPosition().x,cfg.y);
+                node.setPositionEx(node.getPosition().x,cfg.y);
             }
 
         } else {
@@ -3303,10 +3303,10 @@ export let gHandler = {
         // }
         if (node instanceof cc.Node) {
             if (typeof cfg.x == "number") {
-                node.setPosition(cfg.x,node.getPosition().y);
+                node.setPositionEx(cfg.x,node.getPosition().y);
             }
             if (typeof cfg.y == "number") {
-                node.setPosition(node.getPosition().x,cfg.y);
+                node.setPositionEx(node.getPosition().x,cfg.y);
             }
 
         } else {
@@ -3455,10 +3455,10 @@ export let gHandler = {
         }
         if (node instanceof cc.Node) {
             if (typeof cfg.x == "number") {
-                node.setPosition(cfg.x,node.getPosition().y);
+                node.setPositionEx(cfg.x,node.getPosition().y);
             }
             if (typeof cfg.y == "number") {
-                node.setPosition(node.getPosition().x,cfg.y);
+                node.setPositionEx(node.getPosition().x,cfg.y);
             }
         } else {
             cc.log("setSkeleton 传入的节点不是cc.node")

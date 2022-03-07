@@ -20,7 +20,7 @@ export class hallDownTip extends cc.Component {
         this.movedis = this.node.getComponent(cc.UITransform).contentSize.height
         this.delaytime = 3
         this.flytime = 0.5
-        this.node.setPosition(cc.view.getVisibleSize().width / 2, cc.view.getVisibleSize().height + this.node.getComponent(cc.UITransform).contentSize.height / 2)
+        this.node.setPositionEx(cc.view.getVisibleSize().width / 2, cc.view.getVisibleSize().height + this.node.getComponent(cc.UITransform).contentSize.height / 2)
     }
 
     start () {

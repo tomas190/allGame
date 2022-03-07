@@ -74,7 +74,7 @@ export class hallNoticeBoard extends cc.Component {
            let time = text.length * 0.1 + 15;
            this.label.string = text;
            let x = this.noticeScroll.node.getComponent(cc.UITransform).contentSize.width / 2 + this.label.node.getComponent(cc.UITransform).width / 2;
-           this.label.node.setPosition(x, 0);
+           this.label.node.setPositionEx(x, 0);
         //    let move1 = cc.moveTo(time / 3, cc.v2(0, 0));
         //    let move2 = cc.moveTo(time / 3, cc.v2(-x, 0));
         //    let callfunc = cc.callFunc(() => {

@@ -416,7 +416,8 @@ export let hotUpdateMgr = {
         }
         
         if (this.data.subname == 'hall') {
-            // cc.audioEngine.stopAll();
+            hqq.audioMgr.stopBg();
+            hqq.audioMgr.stopEffect();
             cc.game.restart();
         }
     },
@@ -518,12 +519,12 @@ export let hotUpdateMgr = {
         let storagePath = this._storagePath
         this._am = new jsb.AssetsManager('', storagePath, this.versionCompareHandle);
         this._am.setVerifyCallback((storagePath, asset) => { // 资源检查
-            cc.log("------VerifyCallback storagePath", storagePath," asset=",asset)
+            this.log("------VerifyCallback storagePath", storagePath," asset=",asset)
             let localmd5 = this.calculateMD5(storagePath)
             // var compressed = asset.compressed; // 是否为压缩文件
             // var relativePath = asset.path; // 服务器端相对路径
-            cc.log("localmd5, asset.md5,", localmd5, asset.md5)
-            cc.log("storagePath", storagePath)
+            this.log("localmd5, asset.md5,", localmd5, asset.md5)
+            this.log("storagePath", storagePath)
             if (localmd5 == asset.md5) {
                 return true;
             }
@@ -735,7 +736,7 @@ export let hotUpdateMgr = {
         let dirpath = jsb.fileUtils.getWritablePath() + "data/";
         let filepath = dirpath + "app-release.apk";
         hqq.eventMgr.dispatch(hqq.eventMgr.hotFinish, "apk")
-        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity",
+        jsb.reflection.callStaticMethod("com/cocos/game/AppActivity",
             "installApkAction",
             "(Ljava/lang/String;)V", filepath);
         this.log("down success!!!!");

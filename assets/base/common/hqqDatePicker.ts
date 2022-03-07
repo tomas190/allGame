@@ -95,7 +95,7 @@ export default class hqqDatePicker extends Component{
         let col = index % 7;
         let x = -(this.ndDays.getComponent(cc.UITransform).width - node.getComponent(cc.UITransform).width) * 0.5 + col * node.getComponent(cc.UITransform).width;
         let y = (this.ndDays.getComponent(cc.UITransform).height - node.getComponent(cc.UITransform).height) * 0.5 - row * node.getComponent(cc.UITransform).height;
-        node.setPosition(x, y);
+        node.setPositionEx(x, y);
         let script = node.getComponent("hqqItemDay");
         let cansecondselect = false;
 
@@ -207,7 +207,7 @@ export default class hqqDatePicker extends Component{
         let col = index % 7;
         let x = -(this.ndDays2.getComponent(cc.UITransform).width - node.getComponent(cc.UITransform).width) * 0.5 + col * node.getComponent(cc.UITransform).width;
         let y = (this.ndDays2.getComponent(cc.UITransform).height - node.getComponent(cc.UITransform).height) * 0.5 - row * node.getComponent(cc.UITransform).height;
-        node.setPosition(x, y);
+        node.setPositionEx(x, y);
         let script = node.getComponent("hqqItemDay");
         let cansecondselect2 = false;
 
