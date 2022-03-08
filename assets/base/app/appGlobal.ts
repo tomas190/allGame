@@ -4,7 +4,7 @@ export let appGlobal = {
     /* ------------------------------------------------------------------- */
     pinpai: "test", // 渠道 test （特斯特） fuxin(富鑫) xingui (新贵) debi （德比） qibao （七宝） xingba （杏吧娱乐） yuyu （渔鱼游戏） nineone （91游戏） xinsheng （新盛更名为大喜发） xinhao (新豪) xinlong(新隆) huangshi(皇室游戏) juding(聚鼎娱乐) huaxing(华兴娱乐) ninetwo(92游戏) tianqi(天启) chaofan(超凡娱乐) wansheng(万盛娱乐) jiaxing(嘉兴娱乐) tetu(特兔游戏) fiveone(51游戏) letian(乐天游戏)  xingyao(B2B--杏耀娱乐) ninethree(93游戏)
     // huanjin: "dev", // dev pre online
-    huanjin: "dev", // pre online
+    huanjin: "pre", // pre online
     // huanjin: "online", // pre online
 
     // account_name: "341499998", // 账号,  
@@ -36,7 +36,7 @@ export let appGlobal = {
     version: "1.0.0",
 
     // hallVersionKey: "hallVersionKey",
-    hallVersion: "2.1.37",
+    hallVersion: "3.0.0",
 
     secretBookKey: "secretBookKey", // 密码本
     secretBook: "", // 密码本
@@ -285,7 +285,7 @@ export let appGlobal = {
             }
         } else {
             this.hotupdatePath = "com.test." + this.huanjin + ".android";
-            this.hotupdatePath += "/ccc3.4.1"
+            this.hotupdatePath += "/ccc2.4.3"
         }
         this.platform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
         this.androidPlatform = "/com." + this.pinpai + "." + this.huanjin + ".android/";
