@@ -6,5 +6,11 @@
   "creator": {
     "version": "3.4.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "protobufjs": "^6.11.2"
+  },
+  "scripts": {
+    "build-proto:pbjs": "pbjs --dependency protobufjs/minimal.js --target static-module --wrap commonjs --out ./assets/subgame/zrsx/zrsx/proto/zrsx_proto_msg.js ./assets/subgame/zrsx/zrsx/proto/*.proto",
+    "build-proto:pbts": "pbts --main --out ./assets/subgame/zrsx/zrsx/proto/zrsx_proto_msg.d.ts ./assets/subgame/zrsx/zrsx/proto/*.js"
+  }
 }

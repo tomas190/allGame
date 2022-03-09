@@ -362,3 +362,16 @@ gHanler.gameGlobal.player.name
 gHandler.Reflect.setOrientation("portrait", 640, 1136)  // 竖屏 宽 高
 gHandler.Reflect.setOrientation("landscape", 1334, 750) // 横屏 宽 高
 ```
+
+## protobuf的產生方式
+第一次設定:
+將.proto複製到assets/subgame/子遊戲名稱/子遊戲名稱/proto
+接著到package.json中
+  "scripts": {
+    "build-proto:pbjs": "pbjs --dependency protobufjs/minimal.js --target static-module --wrap commonjs --out ./assets/subgame/zrsx/zrsx/proto/zrsx_proto_msg.js ./assets/subgame/zrsx/zrsx/proto/*.proto",
+    "build-proto:pbts": "pbts --main --out ./assets/subgame/zrsx/zrsx/proto/zrsx_proto_msg.d.ts ./assets/subgame/zrsx/zrsx/proto/*.js"
+  }
+將zrsx_proto_msg調整成"子遊戲名稱_proto_msg"
+之後更新proto:
+將.proto複製到assets/subgame/子遊戲名稱/子遊戲名稱/proto
+執行scripts上面的偵錯，依序執行build-proto:pbjs跟build-proto:pbts就會產生出對應的proto.js跟proto.d.ts
